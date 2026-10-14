@@ -9,6 +9,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | Statistikk | Kortnavn | Status | Sist endret |
 |---|---|---|---|
 | [Regionale befolkningsframskrivinger](regfram/) | `regfram` | Til faglig kontroll | 14.10.2026 |
+| [Utenrikshandel med varer](muh/) | `muh` | Under arbeid, ikke faglig kontrollert | 14.10.2026 |
 
 ## Arbeidsprosess
 
