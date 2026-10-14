@@ -26,7 +26,8 @@ Bakgrunnen står i:
 - [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som er tolket i grafikken
 - [docs/03-kildekart.md](docs/03-kildekart.md): tabeller, spørringer, hierarkiet og bidragsmetoden
 - [docs/04-byggenotat.md](docs/04-byggenotat.md): hva som er bygget, kontroller og kjente svakheter
-- [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
+- [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md): samlet kvalitetssikring
+- - [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
 
 ## Kilder
 
