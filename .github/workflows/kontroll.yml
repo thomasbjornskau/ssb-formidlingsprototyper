@@ -1,0 +1,27 @@
+# Bygger alle prototyper på nytt og sjekker at innsjekket index.html er oppdatert.
+# Datakontrollene i hver statistikks lag_data.py stopper bygget hvis summene ikke går opp.
+name: Kontroll
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  bygg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bygg alle prototyper
+        run: |
+          for mal in */src/index.template.html; do
+            python felles/bygg.py "${mal%%/*}"
+          done
+      - name: Sjekk at index.html er bygget fra gjeldende kilde og data
+        run: git diff --exit-code -- '*/index.html'
