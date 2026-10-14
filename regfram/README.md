@@ -2,7 +2,7 @@
 
 > **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger og overskrifter er ikke kvalitetssikret ennå.
 
-**Se prototypen:** [index.html](index.html) (på GitHub Pages: `…/ssb-formidlingsprototyper/regfram/`)
+**Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/regfram/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/regfram/index.html)
 
 Prototypen viser framskrevet folkemengde for landet, alle fylker og alle 357 kommuner fram mot 2050, basert på SSBs publisering 12. juni 2026. Alle sider kan vises for én kommune eller ett fylke, og valget ligger i adressen, for eksempel `#omrade=1804` for Bodø.
 
