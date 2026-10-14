@@ -1,1 +1,0 @@
-{"hentet": "2026-10-13", "merknad": "Rådata rekonstruert som json-stat2 fra svar hentet gjennom SSB-tilkoblingen. Kjør scripts/hent_data.py for å erstatte dem med svar rett fra API-et."}
