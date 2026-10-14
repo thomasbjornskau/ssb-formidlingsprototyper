@@ -19,3 +19,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Lisensen gjelder koden i repoet. Statistikken er fra Statistisk sentralbyrå (SSB)
+og kan brukes etter SSBs vilkår for gjenbruk (CC BY 4.0). d3 og Open Sans har egne
+lisenser, se felles/vendor/.

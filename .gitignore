@@ -1,0 +1,5 @@
+# Mellomresultater fra lag_data.py, lages på nytt ved hvert bygg
+*/build/
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formidlingsprototyper for SSB-statistikk</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototyper som prøver ut ny formidling av mye brukt statistikk fra SSB. Ikke offisielle publiseringer.">
+<style>
+:root { color-scheme: light; --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --gronn: #00824d; --oker: #c78800; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 16px; line-height: 1.5; }
+main { max-width: 880px; margin: 0 auto; padding: 40px 24px 56px; display: grid; gap: 24px; }
+@media (max-width: 480px) { main { padding: 24px 16px 40px; } }
+h1 { font-size: 30px; line-height: 1.2; margin: 0; }
+p { margin: 0; }
+.varsel { border-left: 3px solid var(--oker); padding: 6px 0 6px 12px; color: var(--tekst); max-width: 42rem; }
+.liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.liste a { display: grid; gap: 4px; background: var(--flate); padding: 20px; color: inherit; text-decoration: none; border-left: 4px solid var(--gronn); }
+.liste a:hover h2, .liste a:focus-visible h2 { text-decoration: underline; }
+.liste a:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.liste h2 { font-size: 19px; margin: 0; }
+.meta { color: var(--sek); font-size: 14px; }
+footer { color: var(--sek); font-size: 14px; display: grid; gap: 6px; }
+footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Formidlingsprototyper for SSB-statistikk</h1>
+  <p>Hver prototype tar en mye brukt statistikk fra Statistisk sentralbyrå (SSB) og viser det viktigste på en pedagogisk måte: hva statistikken måler, hva som er vanskelig å forstå, og hva brukerne ofte misforstår.</p>
+  <p class="varsel"><b>Prototyper, ikke offisielle publiseringer.</b> Tallene er hentet fra SSBs statistikkbank, men tolkninger og utforming er ikke kvalitetssikret før status sier det.</p>
+  <ul class="liste">
+    <li><a href="regfram/">
+      <h2>Regionale befolkningsframskrivinger 2026–2050</h2>
+      <span>Hvor mange blir vi, hvor vokser det, hvorfor, og hvor raskt eldes befolkningen? For landet, fylkene og alle kommuner.</span>
+      <span class="meta">Status: til faglig kontroll · Tall fra SSB, tabell 14746, 14747 og 14740 · Sist endret 14.10.2026</span>
+    </a></li>
+  </ul>
+  <footer>
+    <p>Tallene er fra SSBs statistikkbank (CC BY 4.0). Les mer om statistikkene på <a href="https://www.ssb.no">ssb.no</a>.</p>
+    <p>Kontakt: Thomas Bjørnskau.</p>
+  </footer>
+</main>
+</body>
+</html>
