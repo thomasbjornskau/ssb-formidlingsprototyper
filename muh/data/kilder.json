@@ -1,0 +1,101 @@
+{
+  "statistikk": "Utenrikshandel med varer",
+  "kortnavn": "muh",
+  "versjon": "1.0",
+  "dato_valg": "2026-10-14",
+  "merknad": "URL-ene følger PxWebApi v2 i samme form som kpi og regfram (selection[...]). De er ikke kjørt fra arbeidsområdet, som ikke når data.ssb.no. Rådataene i data/raw/ er hentet gjennom SSB-tilkoblingen og gjenoppbygd som json-stat2.",
+  "datasett": [
+    {
+      "id": "hovedtall_aar",
+      "tabell": "08800",
+      "svarer_paa": [
+        1,
+        3
+      ],
+      "beskrivelse": "Hovedtall per år: eksport, import, olje og gass, fastlandseksport, skip og plattformer, handelsbalansen og fastlandsbalansen.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/08800/data?lang=no&outputFormat=json-stat2&selection%5BHovedVareStrommer%5D=*&selection%5BContentsCode%5D=Verdi&selection%5BTid%5D=*",
+      "omfang": "26 varestrømmer × 1960–2025 (66 år) = 1 716 celler. Mill. kr."
+    },
+    {
+      "id": "hovedtall_mnd",
+      "tabell": "08792",
+      "svarer_paa": [
+        1,
+        3
+      ],
+      "beskrivelse": "Hovedtall per måned, ujusterte verdier. Gir siste måned og sammenligning med samme måned året før.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/08792/data?lang=no&outputFormat=json-stat2&selection%5BHovedVareStrommer%5D=*&selection%5BContentsCode%5D=VerdiUjustert&selection%5BTid%5D=from(2024M01)",
+      "omfang": "26 varestrømmer × 2024M01–2026M08 (32 måneder) = 832 celler. Mill. kr. Vokser med én måned per publisering."
+    },
+    {
+      "id": "land_aar",
+      "tabell": "08804",
+      "svarer_paa": [
+        5
+      ],
+      "beskrivelse": "Landvalget: eksport, fastlandseksport, olje og gass, skip og plattformer, import og import av skip og plattformer per land og år.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/08804/data?lang=no&outputFormat=json-stat2&selection%5BHovedVareStrommer%5D=Etot,Etotusorn,Eoljegass,Eskipplat,Itot,Iskipplat&selection%5BLand%5D=*&selection%5BContentsCode%5D=Verdi&selection%5BTid%5D=from(2015)",
+      "omfang": "6 varestrømmer × 278 landkoder × 2015–2025 (11 år) = 18 348 celler. Mill. kr."
+    },
+    {
+      "id": "land_varer",
+      "tabell": "08809",
+      "svarer_paa": [
+        4,
+        5
+      ],
+      "beskrivelse": "Eksport og import per land etter ensifret SITC, 2025. Viser hva Norge selger til og kjøper fra det valgte landet.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/08809/data?lang=no&outputFormat=json-stat2&selection%5BImpEks%5D=1,2&selection%5BLand%5D=*&selection%5BSITC%5D=-,0,1,2,3,4,5,6,7,8,9&selection%5BContentsCode%5D=Verdi&selection%5BTid%5D=2025",
+      "omfang": "2 retninger × 278 landkoder × 11 varegrupper × 1 år = 6 116 celler. 1 000 kr."
+    },
+    {
+      "id": "varer_aar",
+      "tabell": "08819",
+      "svarer_paa": [
+        4
+      ],
+      "beskrivelse": "Eksport og import etter varegruppe (SITC til og med tre siffer) per år. Grunnlag for hva fastlands-Norge eksporterer.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/08819/data?lang=no&outputFormat=json-stat2&selection%5BImpEks%5D=1,2&selection%5BSITC%5D=*&selection%5BContentsCode%5D=Verdi&selection%5BTid%5D=from(2015)",
+      "omfang": "2 retninger × 263 varekoder × 2015–2025 (11 år) = 5 786 celler. 1 000 kr."
+    },
+    {
+      "id": "indekser",
+      "tabell": "06322",
+      "svarer_paa": [
+        2
+      ],
+      "beskrivelse": "Pris- og volumindekser (2000 = 100) og publiserte årlige endringer for eksport og import etter varegruppe.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/06322/data?lang=no&outputFormat=json-stat2&selection%5BImpEks%5D=1,2&selection%5BImpEkspGr%5D=*&selection%5BContentsCode%5D=Prisindeks,Volumindeks,PrisEndr,VolumEndr&selection%5BTid%5D=from(2000)",
+      "omfang": "2 retninger × 81 varegrupper × 4 statistikkvariabler × 2000–2025 (26 år) = 16 848 celler."
+    },
+    {
+      "id": "revisjoner",
+      "tabell": "12308",
+      "svarer_paa": [
+        "lesehjelp"
+      ],
+      "beskrivelse": "Foreløpige og reviderte månedstall: hvert månedstall slik det var ved hver publisering, fram til endelige tall.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12308/data?lang=no&outputFormat=json-stat2&selection%5BImpEks%5D=1,2&selection%5BSITC%5D=-,T01&selection%5BPubliseringMnd%5D=*&selection%5BContentsCode%5D=Verdi&selection%5BTid%5D=*",
+      "omfang": "2 retninger × 2 varegrupper × 14 publiseringer × 2016M01–2026M08 (128 måneder) = 7 168 celler. 1 000 kr."
+    }
+  ],
+  "manglende_verdier": {
+    ".": "Kan ikke forekomme. Brukes for land som ikke fantes i perioden (for eksempel Sovjetunionen) og for aggregater før de ble innført (EU unntatt Storbritannia før 2017, Uspesifisert før 2023).",
+    "-": "Null: ingen handel registrert.",
+    "0": "Mindre enn halvparten av enheten, altså under 0,5 mill. kr i 08804. Ikke det samme som ingen handel. Tolkningen følger SSBs vanlige symbolbruk og er ikke sjekket mot «Om statistikken».",
+    "null": "Tilkoblingen bevarer ikke symbolet i json. I 08800, 08809, 08819, 06322 og 12308 er tomme celler derfor ført med status «?». I 08804 er symbolene bevart fra CSV."
+  },
+  "fallgruver": [
+    "Bruk publiserte endringsrater (PrisEndr, VolumEndr). I 06322 gir indeksene samme rate til første desimal (kontroll K10), men regelen holdes fordi andre tabeller avrunder indeksene.",
+    "Landkodene 90 og 97 heter begge «Uspesifisert» og har like verdier. 90 er en gruppe, 97 er koden som summerer med landene. Tell bare 97.",
+    "Aggregatene endrer innhold over tid. EU (03) følger medlemskapet hvert år: i 2020 er Storbritannia med for januar. Bruk 16 (EU unntatt Storbritannia) for sammenligning over tid, og den finnes først fra 2017.",
+    "Aggregatene er ikke like mellom tabellene: OECD (04) har eksport 1 624 084 mill. kr i 2025 i 08809 og 1 508 846 i 08804. Bruk bare enkeltland og «Alle land».",
+    "«Uspesifisert» import (97) finnes fra 2023 og var 29 874 mill. kr i 2025. Den er med i totalen, men ikke på noe land.",
+    "SITC 793 (skip og båter) er ikke det samme som «skip og oljeplattformer» i hovedtallene. Bruk Eskipplat og Iskipplat fra 08800 og 08804 når fastlandseksporten skal regnes ut.",
+    "Tresifret SITC (08819) summerer ikke til «Varer i alt». I 2025 manglet 16 790 mill. kr av eksporten på tresifret nivå, nesten alt i gruppe 5 Kjemiske produkter. Bruk ensifret nivå når andeler skal summere til 100.",
+    "Fastlandseksporten kan regnes fra varegruppene som total minus 333 (råolje og kondensater) minus 343 (naturgass) minus skip og plattformer. 342 (flytende propan og butan) og 35 (strøm) er med i fastlandseksporten.",
+    "Fastlandsbalansen er fastlandseksport minus import utenom skip og plattformer. Importen omfatter råolje, så balansen er ikke en ren «fastland mot fastland»-størrelse.",
+    "Verdiene i 08804 er i mill. kr, i 08809, 08819 og 12308 i 1 000 kr. Summer av avrundede landtall avviker fra «Alle land» med inntil 9 mill. kr.",
+    "Månedstallene i 08792 endres ved hver publisering. 12308 viser hvor mye."
+  ]
+}

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img">
+<title>Eksportverdien følger prisene, ikke mengden</title>
+<desc>Pris- og volumindeks for vareeksporten 2015–2025, 2000 = 100. I 2022 steg prisene 81,8 prosent og volumet 0,2 prosent.</desc>
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40" y="46" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">UTENRIKSHANDEL MED VARER · 2022</text>
+<text x="40" y="122" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="66" font-weight="700" fill="#274246" text-anchor="start">+82 %</text>
+<text x="40" y="164" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#274246" text-anchor="start">Eksportprisene steg 82 prosent i 2022.</text>
+<text x="40" y="191" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#274246" text-anchor="start">Mengden sto nesten stille.</text>
+<text x="40" y="225" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Volumet økte 0,2 prosent. Eksportverdien gikk fra 1 493 til</text>
+<text x="40" y="246" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">2 663 mrd. kr.</text>
+<text x="40" y="267" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Mest av økningen kom fra høyere gasspriser.</text>
+<text x="640" y="48" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start">indeks, 2000 = 100</text>
+<line x1="684" y1="252.0" x2="1150" y2="252.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="676" y="256.0" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">0</text>
+<line x1="684" y1="214.08333333333331" x2="1150" y2="214.08333333333331" stroke="#d9dfe0" stroke-width="1"/>
+<text x="676" y="218.08333333333331" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">100</text>
+<line x1="684" y1="176.16666666666666" x2="1150" y2="176.16666666666666" stroke="#d9dfe0" stroke-width="1"/>
+<text x="676" y="180.16666666666666" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">200</text>
+<line x1="684" y1="138.25" x2="1150" y2="138.25" stroke="#d9dfe0" stroke-width="1"/>
+<text x="676" y="142.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">300</text>
+<line x1="684" y1="100.33333333333331" x2="1150" y2="100.33333333333331" stroke="#d9dfe0" stroke-width="1"/>
+<text x="676" y="104.33333333333331" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">400</text>
+<polyline points="704.0,214.2 735.6,214.5 767.2,213.0 798.8,213.4 830.4,213.6 862.0,211.5 893.6,208.3 925.2,208.2 956.8,208.3 988.4,207.2 1020.0,206.2" fill="none" stroke="#00824d" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="925.2" cy="208.24416666666667" r="4.5" fill="#00824d"/>
+<text x="1030.0" y="211.19666666666666" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start">Mengde</text>
+<polyline points="704.0,191.8 735.6,197.7 767.2,192.0 798.8,181.4 830.4,187.1 862.0,199.6 893.6,158.7 925.2,82.4 956.8,131.9 988.4,140.0 1020.0,143.5" fill="none" stroke="#c78800" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="925.2" cy="82.39875" r="4.5" fill="#c78800"/>
+<text x="1030.0" y="148.52041666666668" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start">Pris</text>
+<text x="925.2" y="70.39875" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#274246" text-anchor="middle">447,3</text>
+<text x="925.2" y="196.24416666666667" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#274246" text-anchor="middle">115,4</text>
+<text x="704.0" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2015</text>
+<text x="767.2" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2017</text>
+<text x="830.4" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2019</text>
+<text x="893.6" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2021</text>
+<text x="956.8" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2023</text>
+<text x="1020.0" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2025</text>
+<text x="1150" y="318" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">Kilde: SSB, tabell 06322. Sist oppdatert: 15.05.2026.</text>
+</svg>

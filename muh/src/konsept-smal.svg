@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1636" viewBox="0 0 390 1636" role="img">
+<title>Slik lages tallene</title>
+<desc>Fire trinn fra varen krysser grensen til tallene publiseres og revideres, og hva som ikke er med.</desc>
+<rect x="0" y="0" width="390" height="1636" fill="#ffffff"/>
+<text x="16" y="38" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="24" font-weight="700" fill="#274246" text-anchor="start">Slik lages tallene</text>
+<text x="16" y="64" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Utenrikshandel med varer: fra grensen til</text>
+<text x="16" y="83" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">publisert tall</text>
+<rect x="16" y="102" width="358" height="256" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="128" r="14" fill="#274246"/>
+<text x="48" y="133.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="72" y="134" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Varen krysser grensen</text>
+<text x="34" y="164" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">De fleste varer meldes i en</text>
+<text x="34" y="185" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">tolldeklarasjon når de går inn eller ut</text>
+<text x="34" y="206" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">av landet.</text>
+<circle cx="37" cy="232" r="2.5" fill="#5e787a"/>
+<text x="46" y="237" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Olje og gass: operatørene og</text>
+<text x="46" y="256" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Sokkeldirektoratet</text>
+<circle cx="37" cy="274" r="2.5" fill="#5e787a"/>
+<text x="46" y="279" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Strøm: målt ved kablene til utlandet</text>
+<circle cx="37" cy="297" r="2.5" fill="#5e787a"/>
+<text x="46" y="302" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Skip og plattformer: registre og</text>
+<text x="46" y="321" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">selskaper</text>
+<line x1="48" y1="364" x2="48.0" y2="377.0" stroke="#274246" stroke-width="2"/>
+<polygon points="48.0,386.0 43.0,377.0 53.0,377.0" fill="#274246"/>
+<rect x="16" y="392" width="358" height="266" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="418" r="14" fill="#274246"/>
+<text x="48" y="423.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="72" y="424" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Verdien settes ved grensen</text>
+<text x="34" y="454" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Eksport regnes uten frakt videre fra</text>
+<text x="34" y="475" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">grensen, import med frakt og forsikring</text>
+<text x="34" y="496" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">fram til grensen. Toll og merverdiavgift</text>
+<text x="34" y="517" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">er ikke med.</text>
+<rect x="34" y="542" width="322" height="92" fill="#f3f5f5"/>
+<text x="44" y="560" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Olje og gass får først en anslått</text>
+<text x="44" y="579" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">pris, fra Brent og europeiske</text>
+<text x="44" y="598" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">spotpriser for gass. Den byttes senere</text>
+<text x="44" y="617" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">ut med faktisk pris.</text>
+<line x1="48" y1="664" x2="48.0" y2="677.0" stroke="#274246" stroke-width="2"/>
+<polygon points="48.0,686.0 43.0,677.0 53.0,677.0" fill="#274246"/>
+<rect x="16" y="692" width="358" height="340" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="718" r="14" fill="#274246"/>
+<text x="48" y="723.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="72" y="724" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Fordelt på vare og land</text>
+<text x="34" y="754" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Eksport føres på landet varen sendes</text>
+<text x="34" y="775" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">til, import på landet den er laget i. Så</text>
+<text x="34" y="796" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">trekkes olje, gass, skip og plattformer</text>
+<text x="34" y="817" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">fra.</text>
+<rect x="34" y="842" width="322" height="166" fill="#ecfeed"/>
+<text x="44" y="860" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">August 2026, mrd. kr</text>
+<text x="44" y="884" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Eksport i alt</text>
+<text x="346" y="884" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">191,0</text>
+<text x="44" y="904" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Råolje</text>
+<text x="346" y="904" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">−42,6</text>
+<text x="44" y="924" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Naturgass</text>
+<text x="346" y="924" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">−77,7</text>
+<text x="44" y="944" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Kondensater, skip og</text>
+<text x="44" y="962" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">plattformer</text>
+<text x="346" y="962" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">−0,01</text>
+<line x1="44" y1="969" x2="346" y2="969" stroke="#00824d" stroke-width="1"/>
+<text x="44" y="984" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#00824d" text-anchor="start">Fastlandseksport</text>
+<text x="346" y="984" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#00824d" text-anchor="end">70,6</text>
+<line x1="48" y1="1038" x2="48.0" y2="1051.0" stroke="#274246" stroke-width="2"/>
+<polygon points="48.0,1060.0 43.0,1051.0 53.0,1051.0" fill="#274246"/>
+<rect x="16" y="1066" width="358" height="327" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="1092" r="14" fill="#274246"/>
+<text x="48" y="1097.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="72" y="1098" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Publisert, så revidert</text>
+<text x="34" y="1128" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Tallene kommer rundt den 15. i måneden</text>
+<text x="34" y="1149" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">etter. Hver ny måned kan endre de</text>
+<text x="34" y="1170" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">tidligere månedene i året.</text>
+<text x="34" y="1209" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">Eksport juli 2026, mrd. kr</text>
+<text x="34" y="1233" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start">Først publisert</text>
+<rect x="34" y="1239" width="265.6871289945985" height="14" fill="#b9c5c6"/>
+<text x="305.6871289945985" y="1251" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#274246" text-anchor="start">173,6</text>
+<text x="34" y="1273" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start">En måned senere</text>
+<rect x="34" y="1279" width="274.0" height="14" fill="#00824d"/>
+<text x="314.0" y="1291" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#274246" text-anchor="start">179,0</text>
+<line x1="34" y1="1231" x2="34" y2="1299" stroke="#a9b5b7" stroke-width="1"/>
+<rect x="34" y="1315" width="322" height="54" fill="#f3f5f5"/>
+<text x="44" y="1333" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Endelige tall kommer i mai to år</text>
+<text x="44" y="1352" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">etter.</text>
+<rect x="16" y="1417" width="358" height="157" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="32" y="1445" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#5e787a" text-anchor="start">Ikke med i tallene</text>
+<text x="32" y="1471" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1471" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Tjenester, som frakt, reiser og</text>
+<text x="48" y="1490" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">konsulentarbeid</text>
+<text x="32" y="1513" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1513" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Renter og utbytte</text>
+<text x="32" y="1534" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1534" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Varer i transitt gjennom Norge</text>
+<text x="32" y="1555" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1555" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Småsendinger under om lag 1 000 kr</text>
+<text x="16" y="1598" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start">Kilde: SSB, Om statistikken (arkivversjon 2015) og tabell</text>
+<text x="16" y="1614" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start">08792 og 12308. Sist oppdatert: 15.09.2026.</text>
+</svg>

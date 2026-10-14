@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utenrikshandel med varer</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: utenrikshandel med varer, med olje og gass skilt fra fastlandet, pris og mengde, handelsbalansen og alle Norges handelspartnere. Tall fra SSB, tabell 08800, 08792, 08804, 08809, 08819, 06322 og 12308.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --gronn-f: #339b71; --bla: #1d9de2; --bla-f: #3face6; --oker: #c78800; --oker-f: #d5a640; --marine: #0f2080; --marine-f: #5763a6;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+.bf a { color: var(--tekst); text-underline-offset: 3px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+:is(button, input, select, summary, a):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 6px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+
+/* Alle land */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: 2px 32px; }
+.bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
+.bf-tre .v { color: var(--sek); font-size: 13px; white-space: nowrap; }
+
+/* Kortet */
+.bf-kort { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 32px; border-top: 4px solid var(--gronn); }
+@media (max-width: 860px) { .bf-kort { grid-template-columns: 1fr; padding: 20px; } }
+.bf-kort-topp { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+.bf-kort h2 { margin: 0; font-size: 24px; line-height: 1.25; }
+.bf-lukk { flex: none; }
+.bf-treffinfo { font-size: 13px; color: var(--sek); margin: 4px 0 0; }
+.bf-stort { font-size: clamp(36px, 6vw, 52px); font-weight: 700; line-height: 1.1; margin: 4px 0; }
+.bf-setning { font-size: 17px; margin: 0 0 12px; }
+.bf-fakta { display: grid; gap: 10px; margin: 0; font-size: 14px; }
+.bf-fakta p { margin: 0; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; }
+.bf-under { grid-column: 1 / -1; border-top: 1px solid var(--stotte); padding-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 16px 32px; }
+.bf-under h3 { font-size: 15px; margin: 0 0 6px; }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-topp-under { color: var(--sek); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; min-width: 0; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-klikk { cursor: pointer; }
+.bf-klikk:hover text { text-decoration: underline; }
+.bf-klikk:focus-visible { outline: 2px solid var(--tekst); }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-line { width: 18px; height: 0; border-top: 3px solid; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tablewrap { max-height: 18rem; overflow: auto; margin-top: 6px; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 5px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-table tr.sum td { font-weight: 700; border-top: 1px solid var(--tekst); }
+.bf-valg { display: flex; flex-wrap: wrap; gap: 6px; }
+.bf-valg .bf-knapp { padding: 6px 10px; font-size: 13px; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-valg { display: none; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Utenrikshandel med varer</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok" role="search">
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Hvor mye handler Norge med …</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="Søk etter land, for eksempel Polen" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle land</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle land" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite" hidden></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du utenrikshandelen</h2>
+    <ul>
+      <li><b>Kroner, ikke tonn.</b> <span data-t="les-1"></span></li>
+      <li><b>Overskuddet kommer fra olje og gass.</b> <span data-t="les-2"></span></li>
+      <li><b>Bare varer er med.</b> Frakt, reiser, konsulentarbeid, renter og utbytte er ikke med. Hele regnskapet med utlandet står i utenriksregnskapet.</li>
+      <li><b>De siste månedene er foreløpige.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Varene registreres når de krysser grensen, verdsettes ved grensen og fordeles på vare og land. Fastlandseksporten er det som blir igjen når olje, gass, skip og plattformer er trukket fra.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <p class="bf-note" data-t="topp-note"></p>
+      <div class="bf-legend" data-leg="topp"></div>
+      <div class="bf-chart" id="fig-topp" style="min-height:280px"></div>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-kilde="08800,08792"></p>
+  </section>
+
+  <section class="bf-section" id="olje">
+    <h2 class="bf-sh">Hvor mye av eksporten er olje og gass?</h2>
+    <p class="bf-ingress">Fastlandseksporten er alt Norge selger til utlandet utenom råolje, naturgass, kondensater, skip og oljeplattformer. Strøm, raffinerte oljeprodukter og propan er med i fastlandseksporten.</p>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="andel"></h3>
+        <p class="bf-note">Eksport per år, milliarder kroner i løpende priser.</p>
+        <div class="bf-legend" data-leg="andel"></div>
+        <div class="bf-chart" id="fig-andel" style="min-height:300px"></div>
+        <details class="bf-tall" data-tall="andel"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="08800"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="regne"></h3>
+        <p class="bf-note">Milliarder kroner. Endring fra samme måned året før.</p>
+        <div class="bf-tablewrap" style="max-height:none" id="bf-regne"></div>
+        <p class="bf-note" data-t="regne-merk"></p>
+        <p class="bf-src" data-kilde="08792"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="pris">
+    <h2 class="bf-sh">Pris eller mengde?</h2>
+    <p class="bf-ingress">Eksportverdien er pris ganger mengde. SSB lager egne indekser som skiller de to. Når prisene på olje og gass svinger, kan verdien endre seg mye uten at Norge selger mer.</p>
+    <article class="bf-card">
+      <h3 class="bf-h" data-h="pris"></h3>
+      <p class="bf-note">Pris- og volumindeks for eksporten, 2000 = 100. Velg varegruppe.</p>
+      <div class="bf-valg" id="bf-indeksvalg" role="group" aria-label="Velg varegruppe"></div>
+      <div class="bf-legend" data-leg="pris"></div>
+      <div class="bf-chart" id="fig-pris" style="min-height:300px"></div>
+      <details class="bf-tall" data-tall="pris"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+      <p class="bf-note" data-t="pris-merk"></p>
+      <p class="bf-src" data-kilde="06322"></p>
+    </article>
+  </section>
+
+  <section class="bf-section" id="balanse">
+    <h2 class="bf-sh">Hva forteller handelsoverskuddet?</h2>
+    <p class="bf-ingress">Handelsbalansen er eksport minus import av varer. Fastlandsbalansen er fastlandseksporten minus importen utenom skip og plattformer. Forskjellen mellom dem er i hovedsak olje og gass.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="mnd"></h3>
+        <p class="bf-note">Milliarder kroner per måned. Ujusterte tall.</p>
+        <div class="bf-legend" data-leg="mnd"></div>
+        <div class="bf-chart" id="fig-mnd" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="mnd"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="mnd-merk"></p>
+        <p class="bf-src" data-kilde="08792"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="lang"></h3>
+        <p class="bf-note">Milliarder kroner per år, løpende priser.</p>
+        <div class="bf-legend" data-leg="lang"></div>
+        <div class="bf-chart" id="fig-lang" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="lang"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="08800"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="fastland">
+    <h2 class="bf-sh">Hva selger fastlands-Norge?</h2>
+    <p class="bf-ingress">De største varegruppene i fastlandseksporten. Råolje, kondensater og naturgass er holdt utenfor.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="varer"></h3>
+        <p class="bf-note" data-t="varer-note"></p>
+        <div class="bf-chart" id="fig-varer" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="varer"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="varer-merk"></p>
+        <p class="bf-src" data-kilde="08819"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="varetid"></h3>
+        <p class="bf-note">Milliarder kroner per år, løpende priser.</p>
+        <div class="bf-legend" data-leg="varetid"></div>
+        <div class="bf-chart" id="fig-varetid" style="min-height:300px"></div>
+        <details class="bf-tall" data-tall="varetid"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="08819"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="land">
+    <h2 class="bf-sh">Hvem handler Norge med?</h2>
+    <p class="bf-ingress">Eksporten føres på landet varen sendes til, importen på landet den er laget i. Olje og gass i rør føres på landet røret går til, selv om den selges videre derfra. Klikk på et land for å se mer.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="eland"></h3>
+        <p class="bf-note">Milliarder kroner.</p>
+        <div class="bf-legend" data-leg="eland"></div>
+        <div class="bf-chart" id="fig-eland" style="min-height:460px"></div>
+        <details class="bf-tall" data-tall="eland"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="08804"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="iland"></h3>
+        <p class="bf-note">Milliarder kroner.</p>
+        <div class="bf-chart" id="fig-iland" style="min-height:460px"></div>
+        <details class="bf-tall" data-tall="iland"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="iland-merk"></p>
+        <p class="bf-src" data-kilde="08804"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="revisjon">
+    <h2 class="bf-sh">Hvor sikre er de siste tallene?</h2>
+    <p class="bf-ingress">Månedstallene publiseres foreløpig og endres når nye opplysninger kommer inn. Olje og gass føres først med en anslått pris. Endelige tall kommer i mai to år etter.</p>
+    <article class="bf-card">
+      <h3 class="bf-h" data-h="rev"></h3>
+      <p class="bf-note">Endring fra første publiserte tall til siste kjente tall for eksporten, prosent.</p>
+      <div class="bf-legend" data-leg="rev"></div>
+      <div class="bf-chart" id="fig-rev" style="min-height:260px"></div>
+      <details class="bf-tall" data-tall="rev"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+      <p class="bf-src" data-kilde="12308"></p>
+    </article>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Utenrikshandel med varer måler verdien av varer som krysser Norges grense, i løpende kroner. Eksport er regnet ved grensen uten frakt videre, import med frakt og forsikring fram til grensen. Toll og merverdiavgift er ikke med.</p>
+    <p>Egne beregninger: andeler, fastlandsbalansen per land, fastlandseksporten per varegruppe og størrelsen på revisjonene er regnet av oss fra tallene i statistikkbanken. Søkeordene som ikke står i SSBs landnavn, er vårt valg.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 08800, 08792, 08804, 08809, 08819, 06322 og 12308. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/muh">ssb.no/muh</a>.</p>
+  </footer>
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/muh.json__*/;
+</script>
+<script>
+(() => {
+  'use strict';
+  const D = DATA;
+  const MNDNAVN = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+  const FARGE = { gronn: '#00824d', gronnF: '#339b71', bla: '#1d9de2', blaF: '#3face6', oker: '#c78800', okerF: '#d5a640', marine: '#0f2080', marineF: '#5763a6', dempet: '#c3cdcf', tekst: '#274246', sek: '#5e787a', stotte: '#d9dfe0', null: '#a9b5b7' };
+  const TIP = document.querySelector('.bf-tip');
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  // ---------- Format ----------
+  const nf = {};
+  const nb = (n, des = 1) => {
+    if (n == null || Number.isNaN(n)) return '–';
+    nf[des] = nf[des] || new Intl.NumberFormat('nb-NO', { minimumFractionDigits: des, maximumFractionDigits: des });
+    return nf[des].format(n).replace(/-/g, '−').replace(/ | /g, ' ');
+  };
+  const sgn = (n, des = 1) => n == null ? '–' : (n > 0 ? '+' : '') + nb(n, des);
+  const mrd = v => v / 1000;
+  // Beløp i mill. kr som tekst: milliarder over 1 000, ellers millioner. 0 betyr under 0,5 mill. kr.
+  const belop = v => v == null ? 'ingen' : v === 0 ? 'under 0,5 mill. kr' : Math.abs(v) >= 1000 ? `${nb(v / 1000)} mrd. kr` : `${nb(v, 0)} mill. kr`;
+  const mndTekst = k => `${MNDNAVN[+k.slice(5) - 1]} ${k.slice(0, 4)}`;
+  const tidTekst = k => k.length === 4 ? k : mndTekst(k);
+  const tilDato = k => k.length === 4 ? new Date(+k, 0, 1) : new Date(+k.slice(0, 4), +k.slice(5) - 1, 1);
+  const fjor = k => `${+k.slice(0, 4) - 1}${k.slice(4)}`;
+  const dato = s => s.split('-').reverse().join('.');
+  const OPPD = { '08800': D.oppdatert_aar, '08804': D.oppdatert_aar, '08809': D.oppdatert_aar, '08819': D.oppdatert_aar, '06322': D.oppdatert_ind, '08792': D.oppdatert_mnd, '12308': D.oppdatert_mnd };
+  document.querySelectorAll('[data-kilde]').forEach(el => {
+    const t = el.dataset.kilde.split(',');
+    const dd = Array.from(new Set(t.map(x => dato(OPPD[x]))));
+    el.textContent = `Kilde: SSB, tabell ${t.join(' og ')}. Sist oppdatert: ${dd.join(' og ')}.`;
+  });
+  document.querySelectorAll('[data-hentet]').forEach(el => { el.textContent = dato(D.hentet); });
+
+  // ---------- Data ----------
+  const A = D.aar.s, AT = D.aar.tid, M = D.mnd.s, MT = D.mnd.tid;
+  const SISTAAR = AT.at(-1), ai = AT.length - 1;
+  const SISTMND = MT.at(-1), mi = MT.length - 1;
+  const LT = D.land.tid, li = LT.length - 1;
+  const L = new Map(D.land.liste.map(l => [l.k, l]));
+  const LAND = D.land.liste.filter(l => l.k !== '97');
+  const omset = l => (l.e[li] || 0) + (l.i[li] || 0);
+  const rangE = LAND.filter(l => l.e[li] > 0).sort((a, b) => b.e[li] - a.e[li]).map(l => l.k);
+  const rangI = D.land.liste.filter(l => l.i[li] > 0).sort((a, b) => b.i[li] - a.i[li]).map(l => l.k);
+  const hittil = (s, aar) => d3.sum(MT.filter(k => k.startsWith(aar) && k.slice(5) <= SISTMND.slice(5)), k => M[s][MT.indexOf(k)]);
+  const T = n => document.querySelector(`[data-t="${n}"]`);
+  const H = n => document.querySelector(`[data-h="${n}"]`);
+
+  // ---------- Tooltip ----------
+  function visTip(html, evt) {
+    TIP.innerHTML = html; TIP.hidden = false;
+    const r = document.querySelector('.bf').getBoundingClientRect();
+    const tw = TIP.offsetWidth, th = TIP.offsetHeight;
+    let x = evt.clientX - r.left + 14, y = evt.clientY - r.top - th - 10;
+    if (x + tw > r.width - 8) x = evt.clientX - r.left - tw - 14;
+    if (x < 4) x = 4;
+    if (y < 4) y = evt.clientY - r.top + 18;
+    TIP.style.transform = `translate(${x}px, ${y}px)`;
+  }
+  const skjulTip = () => { TIP.hidden = true; };
+  const tipRad = (farge, navn, verdi) => `<div class="bf-tip-r"><i style="background:${farge}"></i>${esc(navn)}<b>${verdi}</b></div>`;
+
+  // ---------- Tabeller og tegnforklaring ----------
+  function tabell(navn, hoder, rader, sumRad) {
+    const el = document.querySelector(`[data-tall="${navn}"] .bf-tablewrap`) || document.getElementById(navn);
+    if (!el) return;
+    const rad = (r, cls) => `<tr${cls ? ` class="${cls}"` : ''}>${r.map((c, i) => i === 0 ? `<td>${esc(c)}</td>` : `<td>${c}</td>`).join('')}</tr>`;
+    el.innerHTML = `<table class="bf-table"><thead><tr>${hoder.map(h => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rader.map(r => rad(r)).join('')}${sumRad ? rad(sumRad, 'sum') : ''}</tbody></table>`;
+  }
+  const legend = (navn, deler, el) => { el = el || document.querySelector(`[data-leg="${navn}"]`); if (el) el.innerHTML = deler.map(([cls, farge, t]) => `<span><i class="${cls}" style="${cls === 'bf-sw-line' ? 'border-color' : 'background'}:${farge}"></i>${esc(t)}</span>`).join(''); };
+
+  // ---------- Responsiv tegning ----------
+  function responsiv(el, tegn) {
+    let b = 0;
+    const kjor = () => { const w = el.clientWidth; if (w && w !== b) { b = w; tegn(w); } };
+    new ResizeObserver(kjor).observe(el);
+    kjor();
+  }
+  const nyttEl = el => { const ny = el.cloneNode(false); el.replaceWith(ny); return ny; };
+  const klikkbar = (sel, navn, fn) => sel.attr('tabindex', 0).attr('role', 'button').attr('aria-label', navn)
+    .on('click', fn).on('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+
+  // ---------- Linjediagram ----------
+  // serier: [{navn, kortNavn, farge, tid:[koder], v:[verdier], bredde}]
+  function linjediagram(el, serier, o = {}) {
+    const tegn = w => {
+      const h = o.hoyde || 280, m = { t: 18, r: o.hoyreMarg ?? 100, b: 26, l: o.venstre || 44 };
+      if (w < 520) m.r = Math.min(m.r, 72);
+      const iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const alle = serier.flatMap(s => s.tid.filter((_, i) => s.v[i] != null));
+      const x = d3.scaleTime().domain(d3.extent(alle.map(tilDato))).range([0, iw]);
+      const vals = serier.flatMap(s => s.v.filter(v => v != null));
+      let lo = d3.min(vals), hi = d3.max(vals);
+      if (o.null !== false) { lo = Math.min(0, lo); hi = Math.max(0, hi); }
+      const y = d3.scaleLinear().domain([lo, hi]).nice(5).range([ih, 0]);
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+      y.ticks(5).forEach(t => {
+        g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', -8).attr('y', y(t) + 4).attr('text-anchor', 'end').text(nb(t, o.ydes ?? 0));
+      });
+      // Årsmerker: ett per år eller hvert 2., 5., 10. eller 20. år, aldri samme år to ganger
+      const [d0, d1] = x.domain(), spenn = d1.getFullYear() - d0.getFullYear(), maksN = w < 520 ? 4 : 7;
+      const steg = [1, 2, 5, 10, 20].find(s => spenn / s <= maksN) || 25;
+      d3.timeYear.every(steg).range(d0, d3.timeDay.offset(d1, 1)).forEach(t => g.append('text').attr('class', 'bf-tick').attr('x', x(t)).attr('y', ih + 18).attr('text-anchor', 'middle').text(t.getFullYear()));
+      const linje = d3.line().defined(d => d[1] != null).x(d => x(tilDato(d[0]))).y(d => y(d[1]));
+      serier.forEach(s => g.append('path').attr('d', linje(s.tid.map((k, i) => [k, s.v[i]]))).attr('fill', 'none').attr('stroke', s.farge)
+        .attr('stroke-width', s.bredde || 2).attr('stroke-linejoin', 'round'));
+      const fmt = o.fmt || (v => nb(v));
+      const ender = serier.map(s => { let i = s.v.length - 1; while (i >= 0 && s.v[i] == null) i--; return { s, i, v: s.v[i], y: y(s.v[i]) }; })
+        .filter(e => e.i >= 0).sort((a, b) => a.y - b.y);
+      for (let k = 1; k < ender.length; k++) if (ender[k].y - ender[k - 1].y < 15) ender[k].y = ender[k - 1].y + 15;
+      ender.forEach(e => {
+        const ex = x(tilDato(e.s.tid[e.i]));
+        g.append('circle').attr('cx', ex).attr('cy', y(e.v)).attr('r', 3).attr('fill', e.s.farge);
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', ex + 7).attr('y', e.y + 4)
+          .text(`${w < 520 && e.s.kortNavn ? e.s.kortNavn : e.s.navn} ${fmt(e.v)}`);
+      });
+      (o.marker || []).forEach(mk => {
+        g.append('circle').attr('cx', x(tilDato(mk.k))).attr('cy', y(mk.v)).attr('r', 4).attr('fill', mk.farge);
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', x(tilDato(mk.k))).attr('y', y(mk.v) - 9).attr('text-anchor', 'middle').text(mk.tekst);
+      });
+      const regel = g.append('line').attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.null).style('display', 'none');
+      const prikker = serier.map(s => g.append('circle').attr('r', 4).attr('fill', '#fff').attr('stroke', s.farge).attr('stroke-width', 2).style('display', 'none'));
+      const allT = Array.from(new Set(serier.flatMap(s => s.tid))).sort();
+      g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent')
+        .on('pointermove', evt => {
+          const [px] = d3.pointer(evt);
+          const k = allT[Math.max(0, Math.min(allT.length - 1, d3.bisector(tilDato).center(allT, x.invert(px))))];
+          regel.style('display', null).attr('x1', x(tilDato(k))).attr('x2', x(tilDato(k)));
+          let html = `<div class="bf-tip-h">${tidTekst(k)}</div>`;
+          serier.forEach((s, j) => {
+            const i = s.tid.indexOf(k), v = i >= 0 ? s.v[i] : null;
+            prikker[j].style('display', v == null ? 'none' : null).attr('cx', x(tilDato(k))).attr('cy', v == null ? 0 : y(v));
+            html += tipRad(s.farge, s.navn, v == null ? 'ikke tall' : fmt(v));
+          });
+          visTip(html, evt);
+        })
+        .on('pointerleave', () => { regel.style('display', 'none'); prikker.forEach(p => p.style('display', 'none')); skjulTip(); });
+    };
+    responsiv(el, tegn);
+  }
+
+  // ---------- Stående stolper, stablet eller gruppert ----------
+  // kat: [{k, navn, farge}], rader: [{t: tidskode, verdier per k}]
+  function kolonner(el, kat, rader, o = {}) {
+    const tegn = w => {
+      const h = o.hoyde || 280, m = { t: 14, r: 12, b: 26, l: o.venstre || 44 }, iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const x = d3.scaleBand().domain(rader.map(r => r.t)).range([0, iw]).paddingInner(o.gruppert ? 0.3 : 0.33);
+      let lo, hi, serier;
+      if (o.gruppert) {
+        lo = Math.min(0, d3.min(rader, r => d3.min(kat, c => r[c.k]))); hi = Math.max(0, d3.max(rader, r => d3.max(kat, c => r[c.k])));
+      } else {
+        serier = d3.stack().keys(kat.map(c => c.k)).value((d, k) => d[k] || 0).offset(d3.stackOffsetDiverging)(rader);
+        lo = Math.min(0, d3.min(serier, s => d3.min(s, d => d[0]))); hi = Math.max(0, d3.max(serier, s => d3.max(s, d => d[1])));
+      }
+      const y = d3.scaleLinear().domain([lo, hi]).nice(5).range([ih, 0]);
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+      y.ticks(5).forEach(t => {
+        g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', -8).attr('y', y(t) + 4).attr('text-anchor', 'end').text(nb(t, o.ydes ?? 0));
+      });
+      const plass = Math.max(1, Math.ceil(46 / x.step()));
+      if (o.xvis) {
+        // Merk bare utvalgte kategorier (for eksempel januar), tynnet ut etter bredden
+        const valgt = rader.filter(r => o.xvis(r.t)), hopp = Math.max(1, Math.ceil(valgt.length / (w < 520 ? 4 : 12)));
+        valgt.forEach((r, i) => { if ((valgt.length - 1 - i) % hopp === 0) g.append('text').attr('class', 'bf-tick').attr('x', x(r.t)).attr('y', ih + 18).attr('text-anchor', 'start').text(o.xtekst ? o.xtekst(r.t) : r.t); });
+      } else rader.forEach((r, i) => { if ((rader.length - 1 - i) % plass === 0) g.append('text').attr('class', 'bf-tick').attr('x', x(r.t) + x.bandwidth() / 2).attr('y', ih + 18).attr('text-anchor', 'middle').text(o.xtekst ? o.xtekst(r.t) : r.t); });
+      if (o.gruppert) {
+        const xi = d3.scaleBand().domain(kat.map(c => c.k)).range([0, x.bandwidth()]);
+        rader.forEach(r => kat.forEach(c => { const v = r[c.k]; if (v == null) return;
+          g.append('rect').attr('x', x(r.t) + xi(c.k)).attr('width', xi.bandwidth()).attr('y', y(Math.max(0, v))).attr('height', Math.abs(y(v) - y(0))).attr('fill', r.farge?.[c.k] || c.farge); }));
+      } else {
+        serier.forEach((s, j) => g.append('g').selectAll('rect').data(s).join('rect')
+          .attr('x', d => x(d.data.t)).attr('width', x.bandwidth()).attr('y', d => y(Math.max(d[0], d[1]))).attr('height', d => Math.abs(y(d[0]) - y(d[1])))
+          .attr('fill', d => d.data.farge?.[kat[j].k] || kat[j].farge));
+      }
+      g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', FARGE.null);
+      (o.merk || []).forEach(mk => {
+        const r = rader.find(rr => rr.t === mk.t); if (!r) return;
+        const topp = o.gruppert ? d3.max(kat, c => r[c.k]) : d3.sum(kat, c => Math.max(0, r[c.k] || 0));
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', x(mk.t) + x.bandwidth() / 2).attr('y', y(topp) - 6).attr('text-anchor', 'middle').text(mk.tekst);
+      });
+      const regel = g.append('rect').attr('y', 0).attr('height', ih).attr('fill', FARGE.tekst).attr('opacity', 0.07).style('display', 'none');
+      g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent').on('pointermove', evt => {
+        const [px] = d3.pointer(evt); const r = rader[Math.max(0, Math.min(rader.length - 1, Math.floor(px / x.step())))];
+        regel.style('display', null).attr('x', x(r.t) - 1).attr('width', x.bandwidth() + 2);
+        visTip(o.tip ? o.tip(r) : `<div class="bf-tip-h">${tidTekst(r.t)}</div>${kat.map(c => tipRad(c.farge, c.navn, o.fmt(r[c.k]))).join('')}`, evt);
+      }).on('pointerleave', () => { regel.style('display', 'none'); skjulTip(); });
+    };
+    responsiv(el, tegn);
+  }
+
+  // ---------- Liggende stolper, med valgfri stabling ----------
+  // rader: [{k, navn, deler: [{v, farge}], sum}]
+  function liggende(el, rader, o = {}) {
+    const tegn = w => {
+      const smal = w < 560;
+      const radH = o.radH || 26, venstre = smal ? 0 : Math.min(o.venstreMaks || 200, w * 0.34), etikettH = smal ? 16 : 0;
+      const h = rader.length * (radH + etikettH) + 26;
+      const m = { l: venstre, r: 64 };
+      const iw = w - m.l - m.r;
+      const x = d3.scaleLinear().domain([0, d3.max(rader, r => r.sum)]).nice().range([0, iw]);
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},4)`);
+      x.ticks(smal ? 3 : 5).forEach(t => {
+        g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 0).attr('y2', h - 30).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', x(t)).attr('y', h - 14).attr('text-anchor', 'middle').text(nb(t, o.tickDes ?? 0));
+      });
+      rader.forEach((r, j) => {
+        const y0 = j * (radH + etikettH) + etikettH;
+        const rad = g.append('g').attr('class', o.klikk && r.klikk !== false ? 'bf-klikk' : null);
+        if (o.klikk && r.klikk !== false) klikkbar(rad, `${r.navn}: ${o.fmt(r.sum)}`, () => o.klikk(r.k));
+        rad.append('rect').attr('x', -venstre).attr('y', y0 - etikettH).attr('width', w).attr('height', radH + etikettH).attr('fill', 'transparent');
+        if (smal) rad.append('text').attr('class', 'bf-lab').attr('x', 0).attr('y', y0 - 3).text(r.navn);
+        else rad.append('text').attr('class', 'bf-lab').attr('x', -10).attr('y', y0 + radH * 0.5 + 4).attr('text-anchor', 'end').text(r.navn);
+        const bh = radH * 0.6, by = y0 + (radH - bh) / 2;
+        let x0 = 0;
+        r.deler.forEach(d => { if (!d.v) return; rad.append('rect').attr('x', x(x0)).attr('y', by).attr('width', Math.max(0, x(x0 + d.v) - x(x0))).attr('height', bh).attr('fill', d.farge); x0 += d.v; });
+        rad.append('text').attr('class', 'bf-lab bf-strong').attr('x', x(r.sum) + 6).attr('y', by + bh / 2 + 4).text(o.fmt(r.sum));
+        rad.on('pointermove', evt => o.tip && visTip(o.tip(r), evt)).on('pointerleave', skjulTip);
+      });
+    };
+    responsiv(el, tegn);
+  }
+
+  // ---------- Ingress og lesehjelp ----------
+  const andel = i => 100 * A.Eoljegass[i] / A.Etot[i];
+  const forsteNeg = (() => { let i = ai; while (i > 0 && A.Hbtusorn[i - 1] < 0) i--; return AT[i]; })();
+  $('#ingress').textContent = `Norge solgte varer for ${nb(mrd(A.Etot[ai]), 0)} milliarder kroner til utlandet i ${SISTAAR} og kjøpte for ${nb(mrd(A.Itot[ai]), 0)} milliarder. Olje og gass sto for ${nb(andel(ai), 0)} prosent av eksporten. Søk etter et land for å se hva Norge selger dit og kjøper derfra.`;
+  const iMax = d3.maxIndex(AT, (_, i) => AT[i] >= '2000' ? A.Etot[i] : -Infinity);
+  const ind0 = D.ind.grupper['-'], it = D.ind.tid, ix = it.indexOf(AT[iMax]);
+  T('les-1').textContent = ix > 0
+    ? `Tallene måler verdi. I ${AT[iMax]} steg eksportprisene ${nb(ind0.pe[ix])} prosent, mens volumet endret seg ${sgn(ind0.ve[ix])} prosent.`
+    : 'Tallene måler verdi. Når prisene stiger, stiger eksporten uten at Norge selger mer.';
+  T('les-2').textContent = `Uten olje og gass har Norge underskudd i varehandelen. Fastlandsbalansen har vært negativ hvert år siden ${forsteNeg}.`;
+  const RV = D.rev, rnest = RV.mnd.length - 2;
+  const revNest = RV.e.s[rnest] - RV.e.f[rnest];
+  T('les-4').textContent = `Eksporten i ${mndTekst(RV.mnd[rnest])} ble endret med ${sgn(revNest / 1e6)} mrd. kr fra første publisering til nå. Endelige tall kommer i mai to år etter.`;
+
+  // ---------- Toppgrafikk: handelsbalansen og fastlandsbalansen ----------
+  const fb = mrd(A.Hbtusorn[ai]), hb = mrd(A.Hbtot[ai]);
+  const rundt = v => Math.round(v / 10) * 10;
+  T('omr').textContent = `Utenrikshandel med varer · ${SISTAAR}`;
+  T('stort').textContent = `${nb(rundt(fb), 0)} mrd. kr`;
+  T('setning').textContent = `Fastlands-Norge kjøpte varer for om lag ${nb(Math.abs(rundt(fb)), 0)} milliarder kroner mer enn det solgte i ${SISTAAR}.`;
+  T('under').innerHTML = `<p>Med olje og gass ble det likevel et overskudd på ${nb(hb, 0)} milliarder kroner. Handelsoverskuddet følger prisene på olje og gass, ikke hvordan det går i fastlandsøkonomien.</p>
+    <p>Fastlandsbalansen har vært negativ hvert år siden ${forsteNeg}.</p>`;
+  const TOPPFRA = AT.indexOf('2015');
+  const toppRader = AT.slice(TOPPFRA).map((t, j) => ({ t, hb: mrd(A.Hbtot[TOPPFRA + j]), fb: mrd(A.Hbtusorn[TOPPFRA + j]) }));
+  const toppKat = [{ k: 'hb', navn: 'Handelsbalansen', farge: FARGE.okerF }, { k: 'fb', navn: 'Fastlandsbalansen', farge: FARGE.gronnF }];
+  T('topp-note').textContent = `Milliarder kroner per år, ${AT[TOPPFRA]}–${SISTAAR}.`;
+  legend('topp', toppKat.map(c => ['bf-sw-sq', c.farge, c.navn]));
+  kolonner($('#fig-topp'), toppKat, toppRader, {
+    gruppert: true, aria: 'Handelsbalansen og fastlandsbalansen per år', fmt: v => `${nb(v)} mrd. kr`,
+    merk: [{ t: SISTAAR, tekst: `${nb(hb, 0)}` }],
+  });
+  tabell('topp', ['År', 'Handelsbalansen, mrd. kr', 'Fastlandsbalansen, mrd. kr'], toppRader.map(r => [r.t, nb(r.hb), nb(r.fb)]).reverse());
+  const sa = SISTMND.slice(0, 4), fa = String(+sa - 1), mn = MNDNAVN[+SISTMND.slice(5) - 1];
+  const periode = SISTMND.slice(5) === '01' ? `januar ${sa}` : `januar–${mn} ${sa}`;
+  T('t1-lab').textContent = `Eksport ${SISTAAR}`; T('t1').innerHTML = `${nb(mrd(A.Etot[ai]))} <span class="bf-unit">mrd. kr</span>`;
+  T('t2-lab').textContent = `Import ${SISTAAR}`; T('t2').innerHTML = `${nb(mrd(A.Itot[ai]))} <span class="bf-unit">mrd. kr</span>`;
+  T('t3-lab').textContent = `Handelsbalansen, ${periode}`; T('t3').innerHTML = `${nb(mrd(hittil('Hbtot', sa)))} <span class="bf-unit">mrd. kr</span>`;
+  T('t4-lab').textContent = `Fastlandsbalansen, ${periode}`; T('t4').innerHTML = `${nb(mrd(hittil('Hbtusorn', sa)))} <span class="bf-unit">mrd. kr</span>`;
+
+  // ---------- Olje, gass og fastland ----------
+  const OLJEFRA = AT.indexOf('1970');
+  const andelKat = [{ k: 'f', navn: 'Fastlandseksport', farge: FARGE.gronnF }, { k: 'o', navn: 'Olje og gass', farge: FARGE.blaF }, { k: 's', navn: 'Skip og plattformer', farge: FARGE.dempet }];
+  const andelRader = AT.slice(OLJEFRA).map((t, j) => { const i = OLJEFRA + j; return { t, f: mrd(A.Etotusorn[i] || 0), o: mrd(A.Eoljegass[i] || 0), s: mrd(A.Eskipplat[i] || 0), a: andel(i) }; });
+  const iTopp = d3.maxIndex(andelRader, r => r.a);
+  H('andel').textContent = `Olje og gass var ${nb(andel(ai), 0)} prosent av eksporten i ${SISTAAR}. Høyest var andelen i ${andelRader[iTopp].t}, med ${nb(andelRader[iTopp].a, 0)} prosent.`;
+  legend('andel', andelKat.map(c => ['bf-sw-sq', c.farge, c.navn]));
+  kolonner($('#fig-andel'), andelKat, andelRader, {
+    hoyde: 300, aria: 'Eksport per år fordelt på fastland, olje og gass, og skip og plattformer',
+    tip: r => `<div class="bf-tip-h">${r.t}</div>${andelKat.map(c => tipRad(c.farge, c.navn, `${nb(r[c.k])} mrd. kr`)).join('')}${tipRad('transparent', 'Andel olje og gass', `${nb(r.a, 0)} %`)}`,
+    merk: [{ t: andelRader[iTopp].t, tekst: `${nb(andelRader[iTopp].a, 0)} %` }],
+  });
+  tabell('andel', ['År', 'Fastland, mrd. kr', 'Olje og gass, mrd. kr', 'Skip og plattformer, mrd. kr', 'Andel olje og gass, prosent'], andelRader.map(r => [r.t, nb(r.f), nb(r.o), nb(r.s), nb(r.a)]).reverse());
+
+  const fmi = MT.indexOf(fjor(SISTMND));
+  const mval = (s, i) => M[s][i];
+  H('regne').textContent = `Slik regnes fastlandseksporten, ${mndTekst(SISTMND)}`;
+  const regneRad = (navn, s, minus) => {
+    const v = mval(s, mi), f = fmi >= 0 ? mval(s, fmi) : null;
+    return [navn, `${minus ? '−' : ''}${nb(mrd(v))}`, f ? sgn(100 * (v / f - 1)) + ' %' : '–'];
+  };
+  // Kondensater = olje og gass i alt minus råolje og naturgass. Skip og plattformer hentes direkte.
+  const restAv = i => M.Eoljegass[i] - M.Eolje[i] - M.Egass[i] + M.Eskipplat[i];
+  const rest = restAv(mi), restF = fmi >= 0 ? restAv(fmi) : null;
+  tabell('bf-regne', ['', 'Mrd. kr', 'Endring'], [
+    regneRad('Eksport i alt', 'Etot'), regneRad('Råolje', 'Eolje', true), regneRad('Naturgass', 'Egass', true),
+    // Prosentendring vises ikke når beløpet er under 0,5 mrd. kr: liten base gir meningsløse prosenter
+    ['Kondensater, skip og plattformer', `−${nb(mrd(rest), 2)}`, restF >= 500 && rest >= 500 ? sgn(100 * (rest / restF - 1)) + ' %' : '–'],
+  ], regneRad('Fastlandseksport', 'Etotusorn'));
+  const andelM = 100 * (M.Eolje[mi] + M.Egass[mi]) / M.Etot[mi];
+  T('regne-merk').textContent = `Råolje og naturgass var ${nb(andelM, 0)} prosent av eksporten i ${mndTekst(SISTMND)}. Andelen svinger mye fra måned til måned.`;
+
+  // ---------- Pris eller mengde ----------
+  const IG = D.ind.grupper;
+  const INAVN = { '-': 'Alle varer', 'T02': 'Fastlandsvarer', '333': 'Råolje', '34': 'Naturgass', '03': 'Fisk' };
+  let gruppe = '-';
+  $('#bf-indeksvalg').innerHTML = Object.keys(INAVN).map(k => `<button type="button" class="bf-knapp" data-g="${k}" aria-pressed="${k === gruppe}">${INAVN[k]}</button>`).join('');
+  legend('pris', [['bf-sw-line', FARGE.oker, 'Pris'], ['bf-sw-line', FARGE.gronn, 'Volum (mengde)']]);
+  function tegnPris() {
+    const g = IG[gruppe];
+    const iMaxP = d3.maxIndex(g.pe, v => v == null ? -Infinity : Math.abs(v));
+    H('pris').textContent = `${INAVN[gruppe]}: størst prisendring i ${it[iMaxP]}, ${sgn(g.pe[iMaxP])} prosent. Volumet endret seg ${sgn(g.ve[iMaxP])} prosent.`;
+    linjediagram(nyttEl($('#fig-pris')), [
+      { navn: 'Pris', farge: FARGE.oker, tid: it, v: g.p, bredde: 2.5 },
+      { navn: 'Volum', farge: FARGE.gronn, tid: it, v: g.v, bredde: 2.5 },
+    ], { aria: `Pris- og volumindeks for ${INAVN[gruppe]}`, hoyde: 300, hoyreMarg: 96, marker: [{ k: it[iMaxP], v: g.p[iMaxP], farge: FARGE.oker, tekst: sgn(g.pe[iMaxP], 0) + ' %' }] });
+    tabell('pris', ['År', 'Prisindeks', 'Volumindeks', 'Pris, endring i prosent', 'Volum, endring i prosent'], it.map((t, i) => [t, nb(g.p[i]), nb(g.v[i]), sgn(g.pe[i]), sgn(g.ve[i])]).reverse());
+    T('pris-merk').textContent = `SSBs navn på gruppen: ${g.n}. Endringene er publiserte tall fra SSB.`;
+  }
+  $('#bf-indeksvalg').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    gruppe = b.dataset.g; document.querySelectorAll('#bf-indeksvalg button').forEach(x => x.setAttribute('aria-pressed', x === b)); tegnPris();
+  });
+  tegnPris();
+
+  // ---------- Handelsbalansen ----------
+  const mHb = mrd(M.Hbtot[mi]), mFb = mrd(M.Hbtusorn[mi]);
+  H('mnd').textContent = `Handelsoverskuddet var ${nb(mHb)} mrd. kr i ${mndTekst(SISTMND)}. Fastlandsbalansen var ${nb(mFb)} mrd. kr.`;
+  legend('mnd', [['bf-sw-line', FARGE.oker, 'Handelsbalansen'], ['bf-sw-line', FARGE.gronn, 'Fastlandsbalansen']]);
+  linjediagram($('#fig-mnd'), [
+    { navn: 'Handelsbalansen', kortNavn: 'Handel', farge: FARGE.oker, tid: MT, v: M.Hbtot.map(mrd), bredde: 2.5 },
+    { navn: 'Fastlandsbalansen', kortNavn: 'Fastland', farge: FARGE.gronn, tid: MT, v: M.Hbtusorn.map(mrd), bredde: 2.5 },
+  ], { aria: 'Handelsbalansen og fastlandsbalansen per måned', hoyreMarg: 150 });
+  tabell('mnd', ['Måned', 'Handelsbalansen, mrd. kr', 'Fastlandsbalansen, mrd. kr'], MT.map((k, i) => [mndTekst(k), nb(mrd(M.Hbtot[i])), nb(mrd(M.Hbtusorn[i]))]).reverse());
+  if (fmi >= 0) {
+    const f0 = mrd(M.Hbtusorn[fmi]), endr = 100 * (M.Hbtusorn[mi] - M.Hbtusorn[fmi]) / Math.abs(M.Hbtusorn[fmi]);
+    T('mnd-merk').textContent = `Prosent på et underskudd kan lure. Fastlandsbalansen gikk fra ${nb(f0)} mrd. kr i ${mndTekst(fjor(SISTMND))} til ${nb(mFb)} mrd. kr i ${mndTekst(SISTMND)}. Det vises gjerne som ${sgn(endr)} prosent, men ${endr > 0 ? 'plusset betyr et mindre underskudd' : 'minuset betyr et større underskudd'}. Sammenlign med samme måned året før, fordi tallene ikke er sesongjustert.`;
+  }
+  H('lang').textContent = `Fastlandsbalansen har vært negativ hvert år siden ${forsteNeg}`;
+  legend('lang', [['bf-sw-line', FARGE.oker, 'Handelsbalansen'], ['bf-sw-line', FARGE.gronn, 'Fastlandsbalansen']]);
+  linjediagram($('#fig-lang'), [
+    { navn: 'Handelsbalansen', kortNavn: 'Handel', farge: FARGE.oker, tid: AT, v: A.Hbtot.map(mrd), bredde: 2.5 },
+    { navn: 'Fastlandsbalansen', kortNavn: 'Fastland', farge: FARGE.gronn, tid: AT, v: A.Hbtusorn.map(mrd), bredde: 2.5 },
+  ], { aria: 'Handelsbalansen og fastlandsbalansen per år fra 1960', hoyreMarg: 150, fmt: v => nb(v, 0) });
+  tabell('lang', ['År', 'Handelsbalansen, mrd. kr', 'Fastlandsbalansen, mrd. kr'], AT.map((t, i) => [t, nb(mrd(A.Hbtot[i])), nb(mrd(A.Hbtusorn[i]))]).reverse());
+
+  // ---------- Fastlands-Norge ----------
+  const VT = D.varer.tid, vi = VT.length - 1;
+  const VAR = D.varer.fastland.slice().sort((a, b) => b.v[vi] - a.v[vi]);
+  const VTOPP = VAR.slice(0, 12);
+  const vnavn = r => r.kn || r.n;
+  const sumFast = d3.sum(D.varer.fastland, r => r.v[vi]);
+  H('varer').textContent = `${vnavn(VTOPP[0])} er den største varen i fastlandseksporten`;
+  T('varer-note').textContent = `Milliarder kroner, ${VT[vi]}. De tolv største av ${D.varer.fastland.length} varegrupper.`;
+  liggende($('#fig-varer'), VTOPP.map(r => ({ k: r.k, navn: vnavn(r), sum: mrd(r.v[vi]), deler: [{ v: mrd(r.v[vi]), farge: FARGE.gronn }] })), {
+    fmt: v => nb(v), aria: 'Største varegrupper i fastlandseksporten', venstreMaks: 210,
+    tip: r => `<div class="bf-tip-h">${esc(VAR.find(x => x.k === r.k).n)}</div>${tipRad(FARGE.gronn, String(VT[vi]), `${nb(r.sum)} mrd. kr`)}`,
+  });
+  tabell('varer', ['Varegruppe (SITC)', `${VT[vi]}, mrd. kr`, 'Andel, prosent'], VAR.slice(0, 40).map(r => [`${r.n} (${r.k})`, nb(mrd(r.v[vi])), nb(100 * r.v[vi] / sumFast)]));
+  T('varer-merk').textContent = `${nb(mrd(D.varer.uford[vi]))} mrd. kr av eksporten er ikke fordelt på varegrupper i denne tabellen, mest kjemiske produkter. Skip og båter er med her, men det SSB fører som skip og plattformer i hovedtallene, er trukket fra fastlandseksporten.`;
+  const V4 = VAR.slice(0, 4), VF = [FARGE.gronn, FARGE.bla, FARGE.oker, FARGE.marine];
+  H('varetid').textContent = `De fire største varegruppene, ${VT[0]}–${VT[vi]}`;
+  legend('varetid', V4.map((r, j) => ['bf-sw-line', VF[j], vnavn(r)]));
+  linjediagram($('#fig-varetid'), V4.map((r, j) => ({ navn: vnavn(r), kortNavn: vnavn(r).split(' ')[0], farge: VF[j], tid: VT, v: r.v.map(mrd), bredde: 2.5 })),
+    { aria: 'De største varegruppene i fastlandseksporten over tid', hoyde: 300, hoyreMarg: 180 });
+  tabell('varetid', ['År', ...V4.map(vnavn)], VT.map((t, i) => [t, ...V4.map(r => nb(mrd(r.v[i])))]).reverse());
+
+  // ---------- Land ----------
+  const landKat = [{ navn: 'Fastlandseksport', farge: FARGE.gronnF }, { navn: 'Olje og gass', farge: FARGE.blaF }, { navn: 'Skip og plattformer', farge: FARGE.dempet }];
+  const TOPPN = 15;
+  H('eland').textContent = `De ${TOPPN} største eksportlandene i ${LT[li]}`;
+  legend('eland', landKat.map(c => ['bf-sw-sq', c.farge, c.navn]));
+  const eRader = rangE.slice(0, TOPPN).map(k => { const l = L.get(k); return { k, navn: l.n, sum: mrd(l.e[li]), deler: [mrd(l.f[li] || 0), mrd(l.o[li] || 0), mrd(l.s[li] || 0)].map((v, j) => ({ v, farge: landKat[j].farge })) }; });
+  liggende($('#fig-eland'), eRader, {
+    fmt: v => nb(v), aria: 'Største eksportland', klikk: k => apne(k, { rull: true }), venstreMaks: 150,
+    tip: r => `<div class="bf-tip-h">${esc(r.navn)}, ${LT[li]}</div>${r.deler.map((d, j) => tipRad(d.farge, landKat[j].navn, `${nb(d.v)} mrd. kr`)).join('')}`,
+  });
+  tabell('eland', ['Land', 'Eksport, mrd. kr', 'Fastland', 'Olje og gass', 'Andel olje og gass, prosent'], rangE.slice(0, 40).map(k => { const l = L.get(k); return [l.n, nb(mrd(l.e[li])), nb(mrd(l.f[li])), nb(mrd(l.o[li] || 0)), nb(100 * (l.o[li] || 0) / l.e[li], 0)]; }));
+  const andelTopp10 = 100 * d3.sum(rangE.slice(0, 10), k => L.get(k).e[li]) / A.Etot[AT.indexOf(LT[li])];
+  H('eland').textContent += `. De ti største tok ${nb(andelTopp10, 0)} prosent av eksporten.`;
+  H('iland').textContent = `De ${TOPPN} største importlandene i ${LT[li]}`;
+  const iRader = rangI.slice(0, TOPPN).map(k => { const l = L.get(k); return { k, navn: l.n, sum: mrd(l.i[li]), deler: [{ v: mrd(l.i[li]), farge: k === '97' ? FARGE.dempet : FARGE.marineF }] }; });
+  liggende($('#fig-iland'), iRader, {
+    fmt: v => nb(v), aria: 'Største importland', klikk: k => apne(k, { rull: true }), venstreMaks: 150,
+    tip: r => `<div class="bf-tip-h">${esc(r.navn)}, ${LT[li]}</div>${tipRad(r.deler[0].farge, 'Import', `${nb(r.sum)} mrd. kr`)}`,
+  });
+  tabell('iland', ['Land', 'Import, mrd. kr'], rangI.slice(0, 40).map(k => [L.get(k).n, nb(mrd(L.get(k).i[li]))]));
+  const usp = L.get('97');
+  T('iland-merk').textContent = usp && usp.i[li] ? `«Uspesifisert» er import der landet ikke er oppgitt. Den finnes fra ${LT[usp.i.findIndex(v => v > 0)]} og var ${nb(mrd(usp.i[li]))} mrd. kr i ${LT[li]}.` : '';
+
+  // ---------- Revisjoner ----------
+  const revRader = RV.mnd.map((t, i) => ({ t, v: RV.e.f[i] ? 100 * (RV.e.s[i] / RV.e.f[i] - 1) : null, p: RV.e.p[i] }))
+    .filter(r => r.v != null && r.t.slice(0, 4) >= '2016');
+  revRader.forEach(r => { r.farge = { v: r.p === '14' ? FARGE.gronnF : FARGE.dempet }; });
+  const endelig = revRader.filter(r => r.p === '14');
+  const snitt = d3.mean(endelig, r => Math.abs(r.v));
+  const storst = endelig[d3.maxIndex(endelig, r => Math.abs(r.v))];
+  H('rev').textContent = `Eksporten i en måned ble i snitt endret ${nb(snitt)} prosent fra første til endelige tall. Mest i ${mndTekst(storst.t)}, ${sgn(storst.v)} prosent.`;
+  legend('rev', [['bf-sw-sq', FARGE.gronnF, 'Endelige tall'], ['bf-sw-sq', FARGE.dempet, 'Ikke endelige ennå']]);
+  kolonner($('#fig-rev'), [{ k: 'v', navn: 'Revisjon', farge: FARGE.gronnF }], revRader, {
+    hoyde: 260, ydes: 0, aria: 'Revisjon av eksporten per måned', xtekst: t => t.slice(0, 4), xvis: t => t.endsWith('M01'),
+    tip: r => `<div class="bf-tip-h">${mndTekst(r.t)}</div>${tipRad(r.farge.v, r.p === '14' ? 'Endelige tall' : 'Foreløpig', `${sgn(r.v)} %`)}`,
+  });
+  tabell('rev', ['Måned', 'Første tall, mrd. kr', 'Siste tall, mrd. kr', 'Endring, prosent', 'Status'], revRader.map(r => { const i = RV.mnd.indexOf(r.t); return [mndTekst(r.t), nb(RV.e.f[i] / 1e6), nb(RV.e.s[i] / 1e6), sgn(r.v), r.p === '14' ? 'endelig' : 'foreløpig']; }).reverse());
+
+  // ---------- Søk ----------
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-̂̄-̇̉-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøå]+/g, ' ').trim();
+  const INDEKS = D.land.liste.map(l => ({ l, n: norm(l.n) }));
+  const SYN = Object.entries(D.synonymer).map(([o, ks]) => ({ o: norm(o), ord: o, ks }));
+  function sok(q) {
+    const n = norm(q); if (!n) return [];
+    const treff = new Map();
+    const legg = (k, poeng, via) => { const t = treff.get(k); if (!t || t.poeng < poeng) treff.set(k, { k, poeng, via }); };
+    SYN.forEach(s => { if (s.o === n) s.ks.forEach(k => legg(k, 100, s.ord)); else if (s.o.startsWith(n) && n.length >= 2) s.ks.forEach(k => legg(k, 70, s.ord)); });
+    INDEKS.forEach(({ l, n: navn }) => {
+      if (navn === n) legg(l.k, 95);
+      else if (navn.startsWith(n)) legg(l.k, 80);
+      else if ((' ' + navn).includes(' ' + n)) legg(l.k, 60);
+      else if (n.length >= 3 && navn.includes(n)) legg(l.k, 40);
+    });
+    return [...treff.values()].sort((a, b) => b.poeng - a.poeng || omset(L.get(b.k)) - omset(L.get(a.k))).slice(0, 8);
+  }
+  const inp = $('#bf-sok'), liste = $('#bf-forslag');
+  const tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+  let forslag = [], aktiv = -1;
+  function visForslag() {
+    forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+    if (!inp.value.trim()) { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); return; }
+    liste.innerHTML = forslag.length ? forslag.map((t, i) => {
+      const l = L.get(t.k);
+      return `<li role="option" id="fs-${i}" data-k="${t.k}" aria-selected="${i === aktiv}">${esc(l.n)}<span class="s">${t.via ? `Søkeord «${esc(t.via)}» · ` : ''}Handel ${LT[li]}: ${esc(belop(omset(l)))}</span></li>`;
+    }).join('') : `<li class="tom" role="option" aria-disabled="true" data-alle>Ingen treff. Prøv et annet ord, eller <button type="button" class="bf-lenke">se alle land</button>.</li>`;
+    liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+    inp.setAttribute('aria-activedescendant', aktiv >= 0 ? `fs-${aktiv}` : '');
+  }
+  function merk(i) {
+    aktiv = i;
+    liste.querySelectorAll('li[data-k]').forEach((li_, j) => li_.setAttribute('aria-selected', j === i));
+    inp.setAttribute('aria-activedescendant', `fs-${i}`);
+    const el = $(`#fs-${i}`); if (el) el.scrollIntoView({ block: 'nearest' });
+  }
+  function velg(i) {
+    const t = forslag[i]; if (!t) return;
+    liste.hidden = true; inp.setAttribute('aria-expanded', 'false');
+    inp.value = L.get(t.k).n;
+    apne(t.k, { via: t.via });
+  }
+  inp.addEventListener('input', visForslag);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visForslag(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) velg(aktiv); }
+    else if (e.key === 'Escape') { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); }
+  });
+  liste.addEventListener('mousedown', e => {
+    if (e.target.closest('[data-alle] button')) { e.preventDefault(); liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({ behavior: 'smooth' }); return; }
+    const el = e.target.closest('li[data-k]'); if (el) { e.preventDefault(); velg([...liste.querySelectorAll('li[data-k]')].indexOf(el)); } });
+  inp.addEventListener('blur', () => setTimeout(() => { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); }, 150));
+  const EKS = ['Storbritannia', 'USA', 'Kina', 'Polen', 'England', 'Holland'];
+  $('#bf-eksempler').innerHTML = EKS.map(o => `<button type="button" class="bf-lenke" data-eks="${o}">${o}</button>`).join(', ');
+  $('#bf-eksempler').addEventListener('click', e => {
+    const b = e.target.closest('[data-eks]'); if (!b) return;
+    const t = sok(b.dataset.eks)[0];
+    if (t) { inp.value = L.get(t.k).n; apne(t.k, { via: t.via ? b.dataset.eks : null }); }
+  });
+
+  // ---------- Alle land ----------
+  alleKnapp.addEventListener('click', () => {
+    const vis = tre.hidden;
+    if (vis && !tre.innerHTML) {
+      const sortert = D.land.liste.slice().sort((a, b) => omset(b) - omset(a) || a.n.localeCompare(b.n, 'nb'));
+      tre.innerHTML = `<p class="bf-note" style="margin-bottom:10px">Alle ${D.land.liste.length - 1} land og «Uspesifisert», sortert etter eksport pluss import i ${LT[li]}. Klikk på et navn for å se mer.</p><ol>${sortert.map(l => `<li><button type="button" class="bf-lenke" data-k="${l.k}">${esc(l.n)}</button><span class="v">${esc(belop(omset(l)))}</span></li>`).join('')}</ol>`;
+    }
+    tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', vis);
+  });
+  tre.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) { e.preventDefault(); apne(b.dataset.k, { rull: true }); } });
+
+  // ---------- Kortet ----------
+  const kortEl = $('#bf-kort');
+  function apne(k, o = {}) {
+    const l = L.get(k); if (!l) return;
+    try { history.replaceState(null, '', `#land=${encodeURIComponent(k)}`); } catch (e) { /* ignorer */ }
+    const e = l.e[li], i = l.i[li], f = l.f[li], ol = l.o[li] || 0, sk = l.s[li] || 0, isk = l.is[li] || 0;
+    const harNoe = [...l.e, ...l.i].some(v => v != null && v > 0);
+    // «Uspesifisert» (97) er ikke et land og får ingen plass i rekkefølgen
+    const rE = rangE.filter(x => x !== '97').indexOf(k), rI = rangI.filter(x => x !== '97').indexOf(k);
+    const info = [rE >= 0 ? `Nr. ${rE + 1} av eksportlandene` : null, rI >= 0 ? `nr. ${rI + 1} av importlandene i ${LT[li]}` : null].filter(Boolean).join(', ').replace(/^nr\./, 'Nr.');
+    let hoved, fakta = [];
+    if (!harNoe) {
+      hoved = `<p class="bf-stort">Ingen handel</p><p class="bf-setning">Ingen registrert handel med ${esc(l.n)} på minst 0,5 mill. kr i årene ${LT[0]}–${LT[li]}.</p>`;
+    } else if (k === '97') {
+      hoved = `<p class="bf-stort">${esc(belop(i))}</p><p class="bf-setning">import i ${LT[li]} der landet ikke er oppgitt.</p>`;
+      fakta.push(`<p class="bf-varsel">«Uspesifisert» er med i totalen for importen, men ikke på noe land. Den finnes fra ${LT[l.i.findIndex(v => v > 0)]}. Hvorfor landet mangler, er ikke avklart i denne prototypen.</p>`);
+    } else {
+      const bal = (e || 0) - (i || 0), fbal = (f || 0) - ((i || 0) - isk);
+      hoved = `<p class="bf-stort">${esc(belop(e))}</p><p class="bf-setning">var eksporten til ${esc(l.n)} i ${LT[li]}. Importen derfra var ${esc(belop(i))}, og det gir et ${bal >= 0 ? 'overskudd' : 'underskudd'} på ${esc(belop(Math.abs(bal)))}.</p>`;
+      if (e > 0) {
+        const a = 100 * ol / e;
+        if (ol > 0) fakta.push(`<p><b>${nb(a, 0)} prosent av eksporten var olje og gass.</b> Uten olje og gass solgte Norge varer for ${esc(belop(f))}.</p>`);
+        else fakta.push(`<p><b>Ingen olje eller gass.</b> Alt Norge solgte til ${esc(l.n)}, var fastlandsvarer${sk > 0 ? ', skip og plattformer' : ''}.</p>`);
+        if (a >= 50) fakta.push(`<p class="bf-varsel">Olje og gass i rør føres som eksport til landet røret går til, selv om den kan selges videre derfra. Eksporten til ${esc(l.n)} sier derfor ikke alene hvor mye som brukes der.</p>`);
+      }
+      fakta.push(`<p><b>Fastlandsbalansen:</b> fastlandseksporten minus importen utenom skip og plattformer gir et ${fbal >= 0 ? 'overskudd' : 'underskudd'} på ${esc(belop(Math.abs(fbal)))}.</p>`);
+      if (sk > 0 || isk > 0) fakta.push(`<p>Skip og plattformer: eksport ${esc(belop(sk))}, import ${esc(belop(isk))}. Enkeltleveranser kan gi store hopp fra år til år.</p>`);
+      const e0 = l.e[0];
+      if (e0 > 0 && e > 0) fakta.push(`<p>Eksporten var ${esc(belop(e0))} i ${LT[0]}.</p>`);
+    }
+    const vis = (arr, ie) => arr.map((v, j) => ({ s: String(j), v: v == null ? 0 : v / 1000 })).filter(r => r.v >= 0.5).sort((a, b) => b.v - a.v);
+    const ve = vis(l.ve), vi_ = vis(l.vi);
+    kortEl.innerHTML = `
+      <div class="bf-kort-topp"><div>
+        <h2>${esc(l.n)}</h2>
+        <p class="bf-treffinfo">${esc(info || (k === '97' ? 'Ikke fordelt på land' : 'Land'))}${o.via ? ` · Funnet med søkeordet «${esc(o.via)}»` : ''}</p>
+      </div><button type="button" class="bf-knapp bf-lukk" aria-label="Lukk kortet">Lukk</button></div>
+      <div>${hoved}<div class="bf-fakta">${fakta.join('')}</div></div>
+      <div>${harNoe ? `<p class="bf-note" id="kort-enhet"></p><div class="bf-legend" data-leg="kort"></div><div class="bf-chart" id="fig-kort" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="kort"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>` : ''}
+        <p class="bf-src">Kilde: SSB, tabell 08804. Sist oppdatert: ${dato(D.oppdatert_aar)}.</p></div>
+      ${harNoe && (ve.length || vi_.length) ? `<div class="bf-under">
+        <div><h3>Hva Norge solgte til ${esc(l.n)}, ${LT[li]}</h3>${ve.length ? '<div class="bf-chart" id="fig-ve"></div>' : '<p class="bf-note">Ingen varegruppe over 0,5 mill. kr.</p>'}</div>
+        <div><h3>Hva Norge kjøpte fra ${esc(l.n)}, ${LT[li]}</h3>${vi_.length ? '<div class="bf-chart" id="fig-vi"></div>' : '<p class="bf-note">Ingen varegruppe over 0,5 mill. kr.</p>'}</div>
+        <p class="bf-note" style="grid-column:1/-1">Millioner kroner, etter hovedgruppe i SITC. «Olje, gass, strøm og annen energi» omfatter også raffinerte produkter og propan. Kilde: SSB, tabell 08809. Sist oppdatert: ${dato(D.oppdatert_aar)}.</p>
+      </div>` : ''}`;
+    kortEl.hidden = false;
+    kortEl.querySelector('.bf-lukk').addEventListener('click', lukk);
+    if (harNoe) {
+      const stor = d3.max([...l.e, ...l.i], v => v || 0) >= 1000;
+      const sk_ = v => v == null ? null : stor ? v / 1000 : v;
+      $('#kort-enhet').textContent = `${stor ? 'Milliarder' : 'Millioner'} kroner per år.`;
+      const serier = [
+        { navn: 'Eksport', farge: FARGE.bla, tid: LT, v: l.e.map(sk_), bredde: 2.5 },
+        { navn: 'Fastlandseksport', kortNavn: 'Fastland', farge: FARGE.gronn, tid: LT, v: l.f.map(sk_), bredde: 2.5 },
+        { navn: 'Import', farge: FARGE.marine, tid: LT, v: l.i.map(sk_), bredde: 2.5 },
+      ].filter(s => !(s.navn === 'Fastlandseksport' && l.f.every((v, j) => v === l.e[j])));
+      legend('kort', serier.map(s => ['bf-sw-line', s.farge, s.navn]));
+      linjediagram($('#fig-kort'), serier, { aria: `Handel med ${l.n} per år`, hoyde: 260, hoyreMarg: 150, fmt: v => nb(v, stor ? 1 : 0) });
+      tabell('kort', ['År', `Eksport, ${stor ? 'mrd.' : 'mill.'} kr`, 'Fastland', 'Olje og gass', 'Import'], LT.map((t, j) => [t, nb(sk_(l.e[j]), stor ? 1 : 0), nb(sk_(l.f[j]), stor ? 1 : 0), nb(sk_(l.o[j] || 0), stor ? 1 : 0), nb(sk_(l.i[j]), stor ? 1 : 0)]).reverse());
+      const sitcR = (arr, farge) => arr.slice(0, 8).map(r => ({ k: r.s, navn: D.kort_sitc1[r.s], sum: r.v, deler: [{ v: r.v, farge }] }));
+      const sitcTip = r => `<div class="bf-tip-h">${esc(D.sitc1[r.k])}</div>${tipRad(r.deler[0].farge, String(LT[li]), `${nb(r.sum, 0)} mill. kr`)}`;
+      if (ve.length) liggende($('#fig-ve'), sitcR(ve, FARGE.blaF), { fmt: v => nb(v, 0), aria: 'Eksport etter varegruppe', venstreMaks: 190, tip: sitcTip });
+      if (vi_.length) liggende($('#fig-vi'), sitcR(vi_, FARGE.marineF), { fmt: v => nb(v, 0), aria: 'Import etter varegruppe', venstreMaks: 190, tip: sitcTip });
+    }
+    if (o.rull !== false) kortEl.scrollIntoView({ behavior: o.rull ? 'smooth' : 'auto', block: 'start' });
+  }
+  function lukk() {
+    kortEl.hidden = true; kortEl.innerHTML = '';
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignorer */ }
+  }
+  const fraHash = decodeURIComponent((location.hash.match(/land=([^&]+)/) || [])[1] || '');
+  if (fraHash && L.has(fraHash)) apne(fraHash, { rull: false });
+  // Følger adressen også når den endres uten ny innlasting (tilbakeknapp, lenke i siden)
+  window.addEventListener('hashchange', () => {
+    const k = decodeURIComponent((location.hash.match(/land=([^&]+)/) || [])[1] || '');
+    if (k && L.has(k)) apne(k, { rull: true }); else if (!k && !kortEl.hidden) lukk();
+  });
+})();
+</script>
+</body>
+</html>

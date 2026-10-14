@@ -1,0 +1,91 @@
+{
+ "hentet": "2026-10-14",
+ "metode": "SSB-tilkoblingen (ssb_get_data), store svar lagret direkte til fil; ingen tall er skrevet av for hånd i rådataene",
+ "merknad": "Månedstallene (08792, 12308) gjelder publiseringen 15.09.2026. Neste publisering er 15.10.2026.",
+ "datasett": [
+  {
+   "id": "hovedtall_aar",
+   "tabell": "08800",
+   "updated": "2026-05-15T06:00:00Z",
+   "celler": 1716,
+   "tomme": 134,
+   "status": {
+    "?": 134
+   },
+   "fil": "data/raw/hovedtall_aar.json",
+   "bytes": 15391
+  },
+  {
+   "id": "hovedtall_mnd",
+   "tabell": "08792",
+   "updated": "2026-09-15T06:00:00Z",
+   "celler": 832,
+   "tomme": 0,
+   "status": {},
+   "fil": "data/raw/hovedtall_mnd.json",
+   "bytes": 7427
+  },
+  {
+   "id": "land_aar",
+   "tabell": "08804",
+   "updated": "2026-05-15T06:00:00Z",
+   "celler": 18348,
+   "tomme": 2570,
+   "status": {
+    ".": 695,
+    "-": 877,
+    "?": 998
+   },
+   "fil": "data/raw/land_aar.json",
+   "bytes": 98001
+  },
+  {
+   "id": "indekser",
+   "tabell": "06322",
+   "updated": "2026-05-15T06:00:00Z",
+   "celler": 16848,
+   "tomme": 140,
+   "status": {
+    "?": 140
+   },
+   "fil": "data/raw/indekser.json",
+   "bytes": 84589
+  },
+  {
+   "id": "varer_aar",
+   "tabell": "08819",
+   "updated": "2026-05-15T06:00:00Z",
+   "celler": 5786,
+   "tomme": 145,
+   "status": {
+    "?": 145
+   },
+   "fil": "data/raw/varer_aar.json",
+   "bytes": 66378
+  },
+  {
+   "id": "revisjoner",
+   "tabell": "12308",
+   "updated": "2026-09-15T06:00:00Z",
+   "celler": 7168,
+   "tomme": 2992,
+   "status": {
+    "?": 2992
+   },
+   "fil": "data/raw/revisjoner.json",
+   "bytes": 91650
+  },
+  {
+   "id": "land_varer",
+   "tabell": "08809",
+   "updated": "2026-05-15T06:00:00Z",
+   "celler": 6116,
+   "tomme": 22,
+   "status": {
+    ".": 22
+   },
+   "fil": "data/raw/land_varer.json",
+   "bytes": 34147
+  }
+ ]
+}

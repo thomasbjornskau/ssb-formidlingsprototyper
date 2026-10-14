@@ -1,0 +1,110 @@
+{
+  "merknad": "Søkeord folk bruker om land, koblet til landkodene i tabell 08804. Listen er vårt valg og må leses av fagkontakten. Koblinger i «usikker» er forenklinger som kan diskuteres. lag_data.py stopper hvis en kode ikke finnes.",
+  "ord": {
+    "england": [
+      "GB"
+    ],
+    "uk": [
+      "GB"
+    ],
+    "britain": [
+      "GB"
+    ],
+    "skottland": [
+      "GB"
+    ],
+    "wales": [
+      "GB"
+    ],
+    "nord-irland": [
+      "GB"
+    ],
+    "amerika": [
+      "US"
+    ],
+    "usa": [
+      "US"
+    ],
+    "us": [
+      "US"
+    ],
+    "statene": [
+      "US"
+    ],
+    "holland": [
+      "NL"
+    ],
+    "tsjekkia": [
+      "CZ"
+    ],
+    "tsjekkiske republikk": [
+      "CZ"
+    ],
+    "korea": [
+      "KR"
+    ],
+    "sør-korea": [
+      "KR"
+    ],
+    "hviterussland": [
+      "BY"
+    ],
+    "emiratene": [
+      "AE"
+    ],
+    "dubai": [
+      "AE"
+    ],
+    "abu dhabi": [
+      "AE"
+    ],
+    "elfenbenskysten": [
+      "CI"
+    ],
+    "hongkong": [
+      "HK"
+    ],
+    "burma": [
+      "MM"
+    ],
+    "makedonia": [
+      "MK"
+    ],
+    "swaziland": [
+      "SZ"
+    ],
+    "kongo-kinshasa": [
+      "CD"
+    ],
+    "dr kongo": [
+      "CD"
+    ],
+    "tyrkiye": [
+      "TR"
+    ],
+    "kypros": [
+      "CY"
+    ],
+    "vatikanet": [
+      "VA"
+    ],
+    "øst-timor": [
+      "TL"
+    ],
+    "uspesifisert": [
+      "97"
+    ],
+    "ukjent land": [
+      "97"
+    ]
+  },
+  "usikker": [
+    "england",
+    "skottland",
+    "wales",
+    "nord-irland",
+    "korea",
+    "dubai",
+    "abu dhabi"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "merknad": "Utkast for steg 2. Tallene er hentet gjennom SSB-tilkoblingen 14.10.2026 og erstattes av data/raw/ i steg 3. Verdier i mill. kr der ikke annet står.",
+  "hentet": "2026-10-14",
+  "aar": ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"],
+  "aarstall": {
+    "kilde": "SSB, tabell 08800. Sist oppdatert: 15.05.2026.",
+    "Etot": [835267, 751583, 863624, 1000272, 915496, 779453, 1493060, 2662626, 1883387, 1809900, 1778791],
+    "Eoljegass": [422356, 352542, 431163, 533545, 433764, 330780, 931525, 1968966, 1171344, 1085623, 1010476],
+    "Etotusorn": [403973, 386536, 418165, 458226, 474197, 443276, 546698, 685027, 708151, 711231, 768063],
+    "Eskipplat": [8937, 12506, 14295, 8501, 7534, 5396, 14837, 8633, 3892, 13046, 251],
+    "Hbtot": [219782, 122541, 179289, 289941, 157628, 10598, 640471, 1631724, 831349, 720920, 660852],
+    "Hbtusorn": [-184546, -222841, -243281, -248936, -275716, -310721, -293038, -336415, -325099, -360716, -347737]
+  },
+  "indekser_eksport_i_alt": {
+    "kilde": "SSB, tabell 06322. Sist oppdatert: 15.05.2026.",
+    "basis": "2000 = 100",
+    "Prisindeks": [158.8, 143.1, 158.3, 186.2, 171.2, 138.3, 246.0, 447.3, 316.8, 295.5, 286.1],
+    "Volumindeks": [99.7, 98.9, 102.8, 101.8, 101.3, 106.9, 115.2, 115.4, 115.3, 118.2, 120.8],
+    "endring_2022": {"PrisEndr": 81.8, "VolumEndr": 0.2}
+  },
+  "august_2026": {
+    "kilde": "SSB, tabell 08792. Sist oppdatert: 15.09.2026.",
+    "Etot": 190996,
+    "Eolje": 42614,
+    "Egass": 77740,
+    "Ekondens": 10,
+    "Eskipplat": 4,
+    "Etotusorn": 70627,
+    "merknad": "Etot minus delene gir 70 628. Avviket på 1 skyldes avrunding i kilden."
+  },
+  "revisjon_juli_2026": {
+    "kilde": "SSB, tabell 12308. Sist oppdatert: 15.09.2026.",
+    "forste_publisert_1000kr": 173591631,
+    "publisert_september_1000kr": 179023000
+  }
+}
