@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konsumprisindeksen</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: konsumprisindeksen (KPI) med søk på varer og tjenester, bidrag til prisveksten, vekter, de avledede indeksene og pengeverdi. Tall fra SSB, tabell 14700, 14706 og 14710.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --gronn-m: #066049; --bla: #1d9de2; --oker: #c78800; --lilla: #a3136c; --morkbla: #0f2080;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+.bf a { color: var(--tekst); text-underline-offset: 3px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+:is(button, input, select, summary, a):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 6px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+
+/* Treet */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre ul { list-style: none; margin: 0; padding-left: 18px; }
+.bf-tre > ul { padding-left: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 0 32px; }
+.bf-tre li { margin: 2px 0; }
+.bf-tre summary { cursor: pointer; }
+.bf-tre .v { color: var(--sek); font-size: 13px; margin-left: 6px; white-space: nowrap; }
+.bf-tre .hg { font-weight: 600; }
+
+/* Kortet */
+.bf-kort { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 32px; border-top: 4px solid var(--gronn); }
+@media (max-width: 860px) { .bf-kort { grid-template-columns: 1fr; padding: 20px; } }
+.bf-kort-topp { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+.bf-sti { font-size: 13px; color: var(--sek); margin: 0 0 4px; }
+.bf-sti button { font-size: 13px; }
+.bf-kort h2 { margin: 0; font-size: 24px; line-height: 1.25; }
+.bf-lukk { flex: none; }
+.bf-treffinfo { font-size: 13px; color: var(--sek); margin: 4px 0 0; }
+.bf-stort { font-size: clamp(36px, 6vw, 52px); font-weight: 700; line-height: 1.1; margin: 4px 0; }
+.bf-setning { font-size: 17px; margin: 0 0 12px; }
+.bf-fakta { display: grid; gap: 10px; margin: 0; font-size: 14px; }
+.bf-fakta p { margin: 0; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; }
+.bf-under { grid-column: 1 / -1; border-top: 1px solid var(--stotte); padding-top: 12px; }
+.bf-under h3 { font-size: 15px; margin: 0 0 6px; }
+.bf-bytt { display: flex; gap: 0; margin-bottom: 8px; flex-wrap: wrap; }
+.bf-bytt .bf-knapp { padding: 6px 12px; font-size: 13px; }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-topp-under { color: var(--sek); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; min-width: 0; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-klikk { cursor: pointer; }
+.bf-klikk:hover text { text-decoration: underline; }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-line { width: 18px; height: 0; border-top: 3px solid; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-sw-tick { width: 3px; height: 12px; background: var(--tekst); }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tablewrap { max-height: 18rem; overflow: auto; margin-top: 6px; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 5px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+
+/* Serier og pengeverdi */
+.bf-valg { display: flex; flex-wrap: wrap; gap: 6px; }
+.bf-valg .bf-knapp { padding: 6px 10px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; }
+.bf-valg .bf-knapp i { width: 12px; height: 3px; display: inline-block; }
+.bf-serieliste { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; }
+.bf-serieliste li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; border-bottom: 1px solid var(--stotte); padding-bottom: 8px; }
+.bf-serieliste .t { font-weight: 600; }
+.bf-serieliste .x { grid-column: 1; color: var(--sek); font-size: 13px; }
+.bf-serieliste .n { grid-row: 1 / span 2; grid-column: 2; font-size: 20px; font-weight: 600; align-self: center; }
+.bf-penger { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; }
+.bf-penger label { display: grid; gap: 4px; font-size: 14px; font-weight: 600; }
+.bf-penger input, .bf-penger select { font: inherit; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 7px 10px; }
+.bf-penger input { width: 8rem; }
+.bf-svar { font-size: 20px; margin: 8px 0 0; }
+.bf-svar b { font-size: 30px; font-weight: 700; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-bytt, .bf-valg { display: none; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Konsumprisindeksen</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok" role="search">
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Hvordan har prisen utviklet seg på …</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="Søk etter vare eller tjeneste, for eksempel strøm" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle grupper</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle vare- og tjenestegrupper" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite" hidden></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du KPI</h2>
+    <ul>
+      <li><b>Prisvekst er endring fra året før.</b> Tallet som omtales, er endringen fra samme måned året før, kalt tolvmånedersveksten. Indeksen selv er bare et nivå der gjennomsnittet for 2025 er satt til 100.</li>
+      <li><b>Gjennomsnitt for alle husholdninger.</b> KPI veier prisene etter hva husholdningene i Norge bruker penger på til sammen. Din egen prisvekst kan være høyere eller lavere.</li>
+      <li><b>Store utslag på en vare betyr lite alene.</b> En vare som har steget mye, men veier lite, trekker hele indeksen lite opp. Det er vekt ganger endring som teller.</li>
+      <li><b>Bolig er med, boligkjøp er ikke.</b> Selveiere er med gjennom en beregnet husleie. Kjøp av bolig regnes som investering og er ikke med.</li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Prisene samles inn hver måned. Prisendringen beregnes for samme vare over tid og veies etter hvor mye husholdningene bruker på hver gruppe. Resultatet er én indeks for alt. Kilde: SSB, «Om statistikken» for konsumprisindeksen, og tabell 14700.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <div class="bf-legend" data-leg="topp"></div>
+      <div class="bf-chart" id="fig-topp" style="min-height:280px"></div>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab">Endring fra forrige måned</div><div class="bf-num" data-t="t-mnd"></div></div>
+      <div><div class="bf-tile-lab">Underliggende (KPI-JAE), siste tolv måneder</div><div class="bf-num" data-t="t-jae"></div></div>
+      <div><div class="bf-tile-lab" data-t="t-ind-lab"></div><div class="bf-num" data-t="t-ind"></div></div>
+      <div><div class="bf-tile-lab" data-t="t-kr-lab"></div><div class="bf-num" data-t="t-kr"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-kilde="14706"></p>
+  </section>
+
+  <section class="bf-section" id="bidrag">
+    <h2 class="bf-sh">Hva driver prisveksten?</h2>
+    <p class="bf-ingress">Hvor mye en gruppe trekker prisveksten opp, avhenger både av hvor mye prisene har steget og av hvor mye gruppen veier. Klikk på en gruppe for å se mer.</p>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="bidrag"></h3>
+        <p class="bf-note">Prosentpoeng. Vekt i prosent av husholdningenes forbruk og endring fra samme måned året før, i prosent.</p>
+        <div class="bf-chart" id="fig-bidrag" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="bidrag"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="bidrag-merk"></p>
+        <p class="bf-src" data-kilde="14700"></p>
+      </article>
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h">Bidraget fra de største gruppene har skiftet over tid</h3>
+        <p class="bf-note">Bidrag til tolvmånedersveksten i KPI per måned, prosentpoeng. Linjen er publisert tolvmånedersvekst.</p>
+        <div class="bf-legend" data-leg="stabel"></div>
+        <div class="bf-chart" id="fig-stabel" style="min-height:300px"></div>
+        <details class="bf-tall" data-tall="stabel"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14700"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="handlekurven">
+    <h2 class="bf-sh">Hva er med i KPI, og hvor mye veier det?</h2>
+    <p class="bf-ingress">Vektene viser hvor stor del av husholdningenes samlede forbruk hver gruppe utgjør. De bygger på nasjonalregnskapet og oppdateres hver januar.</p>
+    <article class="bf-card">
+      <h3 class="bf-h" data-h="vekt"></h3>
+      <p class="bf-note">Prosent av forbruket. Den svarte streken viser vekten i 2015. Klikk på en gruppe for å se prisutviklingen.</p>
+      <div class="bf-legend" data-leg="vekt"></div>
+      <div class="bf-chart" id="fig-vekt" style="min-height:420px"></div>
+      <details class="bf-tall" data-tall="vekt"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+      <p class="bf-src" data-kilde="14700"></p>
+    </article>
+  </section>
+
+  <section class="bf-section" id="flere">
+    <h2 class="bf-sh">Hvorfor finnes det flere KPI-er?</h2>
+    <p class="bf-ingress">SSB lager også indekser der avgiftsendringer eller energipriser er tatt ut. De skiller varige endringer i prisveksten fra kortvarige utslag. Norges Bank legger vekt på KPI-JAE.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h">Tolvmånedersvekst i KPI og de avledede indeksene</h3>
+        <p class="bf-note">Prosent. Velg indekser og periode.</p>
+        <div class="bf-valg" id="bf-seriervalg"></div>
+        <div class="bf-bytt" id="bf-periode"></div>
+        <div class="bf-chart" id="fig-serier" style="min-height:300px"></div>
+        <details class="bf-tall" data-tall="serier"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14706"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="serieliste"></h3>
+        <ul class="bf-serieliste" id="bf-serieliste"></ul>
+        <p class="bf-note" data-t="serie-merk"></p>
+        <p class="bf-src" data-kilde="14706"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="pengeverdi">
+    <h2 class="bf-sh">Hva er en krone verdt over tid?</h2>
+    <p class="bf-ingress">KPI går tilbake til 1920. Med indeksen kan et beløp fra et tidligere tidspunkt regnes om til dagens prisnivå.</p>
+    <article class="bf-card">
+      <form class="bf-penger" id="bf-penger" onsubmit="return false">
+        <label>Beløp i kroner <input id="pv-belop" type="number" min="1" step="1" value="100" inputmode="numeric"></label>
+        <label>Måned <select id="pv-mnd"></select></label>
+        <label>År <select id="pv-aar"></select></label>
+      </form>
+      <p class="bf-svar" id="pv-svar" aria-live="polite"></p>
+      <div class="bf-chart" id="fig-penger" style="min-height:260px"></div>
+      <p class="bf-note">Regnet som beløp × indeksen nå / indeksen da. Indeksen er avrundet til én desimal, og de eldste tallene er så lave at avrundingen kan gi et avvik på noen prosent. SSBs priskalkulator kan gi litt andre tall.</p>
+      <p class="bf-src" data-kilde="14710"></p>
+    </article>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: KPI måler prisutviklingen på varer og tjenester som husholdningene i Norge etterspør. Fra januar 2026 er indeksen basert på klassifikasjonen COICOP 2018, med 2025 = 100. SSB har regnet gruppene bakover til 2015, men en del nye grupper har bare tall fra 2026.</p>
+    <p>Bidrag til prisveksten er regnet av oss med SSBs metode, i to ledd før og etter desember fordi vektene skifter i januar. Vekter finnes bare ned til tredje nivå, så bidrag kan ikke regnes for enkeltvarer. Søkeordene som ikke står i SSBs gruppenavn, er vårt valg.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 14700, 14706 og 14710. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/kpi">ssb.no/kpi</a>.</p>
+  </footer>
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/kpi.json__*/;
+</script>
+<script>
+(() => {
+  'use strict';
+  const D = DATA;
+  const MNDNAVN = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+  const MNDKORT = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'];
+  const FARGE = { gronn: '#00824d', gronnM: '#066049', bla: '#1d9de2', oker: '#c78800', lilla: '#a3136c', morkbla: '#0f2080', dempet: '#c3cdcf', tekst: '#274246', sek: '#5e787a', stotte: '#d9dfe0', null: '#a9b5b7' };
+  const TIP = document.querySelector('.bf-tip');
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  // ---------- Format ----------
+  const nf = {};
+  const nb = (n, des = 1) => {
+    if (n == null || Number.isNaN(n)) return '–';
+    nf[des] = nf[des] || new Intl.NumberFormat('nb-NO', { minimumFractionDigits: des, maximumFractionDigits: des });
+    return nf[des].format(n).replace(/-/g, '−').replace(/ /g, ' ');
+  };
+  const sgn = (n, des = 1) => n == null ? '–' : (n > 0 ? '+' : '') + nb(n, des);
+  const mndTekst = k => `${MNDNAVN[+k.slice(5) - 1]} ${k.slice(0, 4)}`;
+  const mndKort = k => `${MNDKORT[+k.slice(5) - 1]}. ${k.slice(0, 4)}`;
+  const tilDato = k => new Date(+k.slice(0, 4), +k.slice(5) - 1, 1);
+  const mndListe = (start, n) => {
+    const ut = []; let a = +start.slice(0, 4), m = +start.slice(5);
+    for (let i = 0; i < n; i++) { ut.push(`${a}M${String(m).padStart(2, '0')}`); if (++m > 12) { m = 1; a++; } }
+    return ut;
+  };
+  const SIST = D.sist;
+  const fjor = k => `${+k.slice(0, 4) - 1}${k.slice(4)}`;
+  const oppd = D.oppdatert.split('-').reverse().join('.');
+  document.querySelectorAll('[data-kilde]').forEach(el => { el.textContent = `Kilde: SSB, tabell ${el.dataset.kilde}. Sist oppdatert: ${oppd}.`; });
+  document.querySelectorAll('[data-hentet]').forEach(el => { el.textContent = D.hentet.split('-').reverse().join('.'); });
+
+  // ---------- Data ----------
+  const GMND = mndListe(D.start, D.grupper[0].i.length);
+  const G = new Map(D.grupper.map(g => [g.k, g]));
+  const BARN = new Map();
+  D.grupper.forEach(g => { if (g.f) { if (!BARN.has(g.f)) BARN.set(g.f, []); BARN.get(g.f).push(g.k); } });
+  const TOT = G.get('00');
+  const sistI = GMND.length - 1;
+  const SER = D.serier.data;
+  const SMND = mndListe(D.serier.start, SER.KPI.KPIJustIndMnd.length);
+  const HMND = mndListe(D.historisk.start, D.historisk.i.length);
+  const VEKTAAR = D.vekt_aar;
+  const kort = k => D.kortnavn[k] || G.get(k).n;
+  const sti = k => { const s = []; let g = G.get(k); while (g && g.f) { g = G.get(g.f); s.unshift(g.k); } return s; };
+  const sisteVerdi = arr => { for (let i = arr.length - 1; i >= 0; i--) if (arr[i] != null) return [i, arr[i]]; return [-1, null]; };
+  const forsteVerdi = arr => arr.findIndex(v => v != null);
+  const NIVA = ['Totalindeks', 'Hovedgruppe', 'Gruppe', 'Undergruppe', 'Undergruppe', 'Vare eller varegruppe'];
+
+  // ---------- Tooltip ----------
+  function visTip(html, evt, holder) {
+    TIP.innerHTML = html; TIP.hidden = false;
+    const r = document.querySelector('.bf').getBoundingClientRect();
+    const tw = TIP.offsetWidth, th = TIP.offsetHeight;
+    let x = evt.clientX - r.left + 14, y = evt.clientY - r.top - th - 10;
+    if (x + tw > r.width - 8) x = evt.clientX - r.left - tw - 14;
+    if (x < 4) x = 4;
+    if (y < 4) y = evt.clientY - r.top + 18;
+    TIP.style.transform = `translate(${x}px, ${y}px)`;
+  }
+  const skjulTip = () => { TIP.hidden = true; };
+  const tipRad = (farge, navn, verdi) => `<div class="bf-tip-r"><i style="background:${farge}"></i>${esc(navn)}<b>${verdi}</b></div>`;
+
+  // ---------- Tabeller ----------
+  function tabell(navn, hoder, rader) {
+    const el = document.querySelector(`[data-tall="${navn}"] .bf-tablewrap`);
+    if (!el) return;
+    el.innerHTML = `<table class="bf-table"><thead><tr>${hoder.map(h => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rader.map(r => `<tr>${r.map((c, i) => i === 0 ? `<td>${esc(c)}</td>` : `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  }
+  const legend = (navn, deler) => { const el = document.querySelector(`[data-leg="${navn}"]`); if (el) el.innerHTML = deler.map(([cls, farge, t]) => `<span><i class="${cls}" style="${cls === 'bf-sw-line' ? 'border-color' : 'background'}:${farge}"></i>${esc(t)}</span>`).join(''); };
+
+  // ---------- Responsiv tegning ----------
+  const tegnere = [];
+  function responsiv(el, tegn) {
+    let b = 0;
+    const kjor = () => { const nb_ = el.clientWidth; if (nb_ && nb_ !== b) { b = nb_; tegn(nb_); } };
+    tegnere.push({ el, tegn: () => { b = 0; kjor(); } });
+    new ResizeObserver(kjor).observe(el);
+    kjor();
+  }
+
+  // ---------- Linjediagram ----------
+  // serier: [{navn, farge, mnd:[koder], v:[verdier], bredde, sist:true}]
+  function linjediagram(el, serier, o = {}) {
+    const tegn = w => {
+      const h = o.hoyde || 280, m = { t: 18, r: o.hoyreMarg ?? 92, b: 26, l: 40 };
+      if (w < 520) m.r = o.hoyreMarg != null ? Math.min(o.hoyreMarg, 64) : 64;
+      const iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const alleM = serier.flatMap(s => s.mnd.filter((_, i) => s.v[i] != null));
+      const xs = d3.extent(alleM.map(tilDato));
+      const x = d3.scaleTime().domain(o.xdomene || xs).range([0, iw]);
+      const vals = serier.flatMap(s => s.v.filter(v => v != null));
+      let lo = d3.min(vals), hi = d3.max(vals);
+      if (o.null !== false) { lo = Math.min(0, lo); hi = Math.max(0, hi); }
+      const y = (o.log ? d3.scaleLog() : d3.scaleLinear()).domain([lo, hi]).nice(5).range([ih, 0]);
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h)
+        .attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+      const ticks = o.log ? y.ticks(5).filter(t => [1, 2, 5].includes(+String(t)[0]) && String(t).replace(/0/g, '').length === 1) : y.ticks(5);
+      ticks.forEach(t => {
+        g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', t === 0 && !o.log ? FARGE.null : FARGE.stotte).attr('stroke-width', 1);
+        g.append('text').attr('class', 'bf-tick').attr('x', -8).attr('y', y(t) + 4).attr('text-anchor', 'end').text(nb(t, o.ydes ?? 0));
+      });
+      const xt = x.ticks(w < 520 ? 4 : 7);
+      xt.forEach(t => g.append('text').attr('class', 'bf-tick').attr('x', x(t)).attr('y', ih + 18).attr('text-anchor', 'middle').text(t.getFullYear()));
+      const linje = d3.line().defined(d => d[1] != null).x(d => x(tilDato(d[0]))).y(d => y(d[1]));
+      serier.forEach(s => {
+        g.append('path').attr('d', linje(s.mnd.map((k, i) => [k, s.v[i]]))).attr('fill', 'none').attr('stroke', s.farge)
+          .attr('stroke-width', s.bredde || 2).attr('stroke-linejoin', 'round').attr('stroke-dasharray', s.dash || null);
+      });
+      // Etiketter ved siste punkt, flyttet fra hverandre
+      const ender = serier.filter(s => s.etikett !== false).map(s => { const [i, v] = sisteVerdi(s.v); return { s, i, v, y: y(v) }; }).filter(e => e.i >= 0).sort((a, b) => a.y - b.y);
+      for (let k = 1; k < ender.length; k++) if (ender[k].y - ender[k - 1].y < 15) ender[k].y = ender[k - 1].y + 15;
+      ender.forEach(e => {
+        g.append('circle').attr('cx', x(tilDato(e.s.mnd[e.i]))).attr('cy', y(e.v)).attr('r', 3).attr('fill', e.s.farge);
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', x(tilDato(e.s.mnd[e.i])) + 7).attr('y', e.y + 4)
+          .text(w < 520 && e.s.kortNavn ? `${e.s.kortNavn} ${o.fmt ? o.fmt(e.v) : nb(e.v)}` : `${e.s.navn} ${o.fmt ? o.fmt(e.v) : nb(e.v)}`);
+      });
+      (o.marker || []).forEach(mk => {
+        g.append('circle').attr('cx', x(tilDato(mk.k))).attr('cy', y(mk.v)).attr('r', 4).attr('fill', mk.farge || FARGE.gronn);
+        g.append('text').attr('class', 'bf-lab bf-halo').attr('x', x(tilDato(mk.k))).attr('y', y(mk.v) - 9).attr('text-anchor', 'middle').text(mk.tekst);
+      });
+      // Hover
+      const regel = g.append('line').attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.null).attr('stroke-width', 1).style('display', 'none');
+      const prikker = serier.map(s => g.append('circle').attr('r', 4).attr('fill', '#fff').attr('stroke', s.farge).attr('stroke-width', 2).style('display', 'none'));
+      const allM = Array.from(new Set(serier.flatMap(s => s.mnd))).sort();
+      g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent')
+        .on('pointermove', evt => {
+          const [px] = d3.pointer(evt);
+          const dato = x.invert(px);
+          const k = allM[Math.max(0, Math.min(allM.length - 1, d3.bisector(tilDato).center(allM, dato)))];
+          regel.style('display', null).attr('x1', x(tilDato(k))).attr('x2', x(tilDato(k)));
+          let html = `<div class="bf-tip-h">${mndTekst(k)}</div>`;
+          serier.forEach((s, j) => {
+            const i = s.mnd.indexOf(k); const v = i >= 0 ? s.v[i] : null;
+            prikker[j].style('display', v == null ? 'none' : null).attr('cx', x(tilDato(k))).attr('cy', v == null ? 0 : y(v));
+            html += tipRad(s.farge, s.navn, v == null ? 'ikke tall' : (o.fmt ? o.fmt(v) : nb(v)));
+          });
+          visTip(html, evt);
+        })
+        .on('pointerleave', () => { regel.style('display', 'none'); prikker.forEach(p => p.style('display', 'none')); skjulTip(); });
+    };
+    responsiv(el, tegn);
+  }
+
+  // ---------- Liggende stolper ----------
+  // rader: [{k, navn, v, farge, merke, ekstra}]
+  function stolper(el, rader, o = {}) {
+    const tegn = w => {
+      const smal = w < 560;
+      const radH = o.radH || 30, venstre = smal ? 0 : Math.min(250, w * 0.36);
+      const etikettH = smal ? 16 : 0;
+      const h = rader.length * (radH + etikettH) + 26 + (o.hoyreTekst && !smal ? 18 : 0);
+      const hoyreTekst = o.hoyreTekst ? (smal ? 0 : 150) : 0;
+      const m = { l: venstre, r: 56 + hoyreTekst, t: o.hoyreTekst && !smal ? 22 : 4 };
+      const iw = w - m.l - m.r;
+      const vals = rader.flatMap(r => [r.v, r.merke ?? r.v]);
+      const neg = d3.min(vals) < 0 ? 48 : 0;
+      const x = d3.scaleLinear().domain([Math.min(0, d3.min(vals)), Math.max(0, d3.max(vals))]).nice().range([neg, iw]);
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+      x.ticks(smal ? 3 : 5).forEach(t => {
+        g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 0).attr('y2', h - 26 - m.t).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', x(t)).attr('y', h - 10 - m.t).attr('text-anchor', 'middle').text(nb(t, o.tickDes ?? 0));
+      });
+      if (o.hoyreTekst && !smal) g.append('text').attr('class', 'bf-tick').attr('x', iw + 56 + hoyreTekst).attr('y', -8).attr('text-anchor', 'end').text(o.hoyreHode || '');
+      rader.forEach((r, j) => {
+        const y0 = j * (radH + etikettH) + etikettH;
+        const rad = g.append('g').attr('class', o.klikk ? 'bf-klikk' : null);
+        if (o.klikk) rad.attr('tabindex', 0).attr('role', 'button').attr('aria-label', `${r.navn}: ${o.fmt(r.v)}`)
+          .on('click', () => o.klikk(r.k)).on('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); o.klikk(r.k); } });
+        rad.append('rect').attr('x', -venstre).attr('y', y0 - etikettH).attr('width', w).attr('height', radH + etikettH).attr('fill', 'transparent');
+        if (smal) rad.append('text').attr('class', 'bf-lab').attr('x', 0).attr('y', y0 - 3).text(r.navn);
+        else rad.append('text').attr('class', 'bf-lab').attr('x', -10).attr('y', y0 + radH * 0.5 + 4).attr('text-anchor', 'end').text(r.navn);
+        const bh = radH * 0.55, by = y0 + (radH - bh) / 2;
+        rad.append('rect').attr('x', Math.min(x(0), x(r.v))).attr('y', by).attr('width', Math.abs(x(r.v) - x(0))).attr('height', bh).attr('fill', r.farge || FARGE.gronn);
+        if (r.merke != null) rad.append('rect').attr('x', x(r.merke) - 1.5).attr('y', by - 3).attr('width', 3).attr('height', bh + 6).attr('fill', FARGE.tekst);
+        const ut = Math.max(x(r.v), r.merke != null ? x(r.merke) : -Infinity);
+        rad.append('text').attr('class', 'bf-lab bf-strong').attr('x', r.v < 0 ? x(r.v) - 6 : ut + 6).attr('y', by + bh / 2 + 4)
+          .attr('text-anchor', r.v < 0 ? 'end' : 'start').text(o.fmt(r.v));
+        if (o.hoyreTekst && !smal) rad.append('text').attr('class', 'bf-lab').attr('x', iw + 56 + hoyreTekst).attr('y', by + bh / 2 + 4).attr('text-anchor', 'end').attr('fill', FARGE.sek).text(o.hoyreTekst(r));
+        rad.on('pointermove', evt => o.tip && visTip(o.tip(r), evt)).on('pointerleave', skjulTip);
+      });
+    };
+    responsiv(el, tegn);
+  }
+
+  // ---------- Ingress og toppgrafikk ----------
+  const kpiT = SER.KPI.Tolvmanedersendring, jaeT = SER['KPI-JAE'].Tolvmanedersendring;
+  const sT = kpiT[kpiT.length - 1], sJ = jaeT[jaeT.length - 1], sM = SER.KPI.Manedsendring.at(-1);
+  const fra15 = SMND.indexOf('2015M01');
+  const toppI = fra15 + d3.maxIndex(kpiT.slice(fra15));
+  $('#ingress').textContent = `Prisene på varer og tjenester var ${nb(sT)} prosent høyere i ${mndTekst(SIST)} enn ett år før. Søk etter en vare eller tjeneste for å se hvordan prisen har utviklet seg, og hvor mye den betyr for prisveksten.`;
+  const T = n => document.querySelector(`[data-t="${n}"]`);
+  T('omr').textContent = `Konsumprisindeksen · ${mndTekst(SIST)}`;
+  T('stort').textContent = `${nb(sT)} prosent`;
+  T('setning').textContent = `høyere priser enn i ${mndTekst(fjor(SIST))}`;
+  T('under').innerHTML = `<p>Underliggende prisvekst, målt med KPI-JAE, var ${nb(sJ)} prosent. Den holder avgiftsendringer og energipriser utenfor.</p>
+    <p>Siden 2015 var prisveksten høyest i ${mndTekst(SMND[toppI])}, med ${nb(kpiT[toppI])} prosent.</p>`;
+  T('t-mnd').innerHTML = `${sgn(sM)} <span class="bf-unit">prosent</span>`;
+  T('t-jae').innerHTML = `${nb(sJ)} <span class="bf-unit">prosent</span>`;
+  T('t-ind-lab').textContent = `Indeks ${mndTekst(SIST)} (2025 = 100)`;
+  T('t-ind').textContent = nb(TOT.i[sistI]);
+  const kr15 = 100 * TOT.i[sistI] / TOT.i[GMND.indexOf(`2015${SIST.slice(4)}`)];
+  T('t-kr-lab').textContent = `Det som kostet 100 kroner i ${mndTekst(`2015${SIST.slice(4)}`)}`;
+  T('t-kr').innerHTML = `${nb(kr15, 0)} <span class="bf-unit">kroner nå</span>`;
+  legend('topp', [['bf-sw-line', FARGE.gronn, 'KPI'], ['bf-sw-line', FARGE.bla, 'KPI-JAE (underliggende)']]);
+  const sm15 = SMND.slice(fra15);
+  linjediagram($('#fig-topp'), [
+    { navn: 'KPI-JAE', farge: FARGE.bla, mnd: sm15, v: jaeT.slice(fra15) },
+    { navn: 'KPI', farge: FARGE.gronn, mnd: sm15, v: kpiT.slice(fra15), bredde: 2.5 },
+  ], { aria: 'Tolvmånedersvekst i KPI og KPI-JAE fra 2015', hoyreMarg: 84, marker: [{ k: SMND[toppI], v: kpiT[toppI], tekst: `Topp ${nb(kpiT[toppI])}` }] });
+  tabell('topp', ['Måned', 'KPI, prosent', 'KPI-JAE, prosent'], sm15.map((k, i) => [mndTekst(k), nb(kpiT[fra15 + i]), nb(jaeT[fra15 + i])]).reverse());
+
+  // ---------- Bidrag ----------
+  const HOVED = D.grupper.filter(g => g.l === 1);
+  const vi = VEKTAAR.length - 1;
+  const bidragRader = HOVED.map(g => ({ k: g.k, navn: kort(g.k), v: g.b, w: g.w[vi], t: g.t[sistI] })).sort((a, b) => b.v - a.v);
+  const sumB = d3.sum(bidragRader, r => r.v);
+  document.querySelector('[data-h="bidrag"]').textContent = `Bidrag til prisveksten fra hver hovedgruppe, ${mndTekst(SIST)}`;
+  bidragRader.forEach((r, i) => { r.farge = i < 3 ? FARGE.gronn : FARGE.dempet; });
+  stolper($('#fig-bidrag'), bidragRader, {
+    fmt: v => nb(v, 2), tickDes: 1, aria: 'Bidrag til tolvmånedersveksten per hovedgruppe',
+    hoyreTekst: r => `${nb(r.w / 10)} % × ${sgn(r.t)} %`, hoyreHode: 'vekt × endring',
+    tip: r => `<div class="bf-tip-h">${esc(G.get(r.k).n)}</div>${tipRad(r.farge, 'Bidrag', `${nb(r.v, 2)} prosentpoeng`)}${tipRad('transparent', 'Vekt', `${nb(r.w / 10)} %`)}${tipRad('transparent', 'Endring siste tolv måneder', `${sgn(r.t)} %`)}`,
+    klikk: k => apne(k, { rull: true }),
+  });
+  T('bidrag-merk').textContent = `Bidragene summerer til ${nb(sumB, 2)} prosentpoeng. Publisert tolvmånedersvekst er ${nb(sT)} prosent. Forskjellen skyldes at indeksene er avrundet til én desimal.`;
+  tabell('bidrag', ['Hovedgruppe', 'Vekt, prosent', 'Endring, prosent', 'Bidrag, prosentpoeng'], bidragRader.map(r => [G.get(r.k).n, nb(r.w / 10), sgn(r.t), nb(r.v, 2)]));
+
+  // Stablede søyler over tid
+  const BMND = mndListe(D.bidrag.start, D.bidrag.serier['01'].length);
+  const storste = bidragRader.slice(0, 4).map(r => r.k);
+  const SFARGE = [FARGE.gronn, FARGE.bla, FARGE.oker, FARGE.lilla];
+  const kat = [...storste.map((k, i) => ({ k, navn: kort(k), farge: SFARGE[i] })), { k: 'andre', navn: 'Andre grupper', farge: FARGE.dempet }];
+  const stabelData = BMND.map((m, i) => {
+    const o = { m };
+    storste.forEach(k => { o[k] = D.bidrag.serier[k][i]; });
+    o.andre = d3.sum(HOVED.filter(g => !storste.includes(g.k)), g => D.bidrag.serier[g.k][i]);
+    o.tolv = TOT.t[GMND.indexOf(m)];
+    return o;
+  });
+  legend('stabel', [...kat.map(c => ['bf-sw-sq', c.farge, c.navn]), ['bf-sw-line', FARGE.tekst, 'Tolvmånedersvekst i KPI']]);
+  responsiv($('#fig-stabel'), w => {
+    const h = 300, m = { t: 12, r: 12, b: 26, l: 36 }, iw = w - m.l - m.r, ih = h - m.t - m.b;
+    const serier = d3.stack().keys(kat.map(c => c.k)).offset(d3.stackOffsetDiverging)(stabelData);
+    const x = d3.scaleBand().domain(BMND).range([0, iw]).paddingInner(0.25);
+    const y = d3.scaleLinear().domain([Math.min(0, d3.min(serier, s => d3.min(s, d => d[0]))), Math.max(d3.max(serier, s => d3.max(s, d => d[1])), d3.max(stabelData, d => d.tolv))]).nice().range([ih, 0]);
+    const svg = d3.select('#fig-stabel').html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', 'Bidrag til tolvmånedersveksten per måned fra 2017');
+    const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+    y.ticks(5).forEach(t => {
+      g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+      g.append('text').attr('class', 'bf-tick').attr('x', -8).attr('y', y(t) + 4).attr('text-anchor', 'end').text(nb(t, 0));
+    });
+    BMND.filter(k => k.endsWith('M01') && (w > 560 || +k.slice(0, 4) % 2 === 1)).forEach(k => g.append('text').attr('class', 'bf-tick').attr('x', x(k)).attr('y', ih + 18).text(k.slice(0, 4)));
+    serier.forEach((s, j) => g.append('g').attr('fill', kat[j].farge).selectAll('rect').data(s).join('rect')
+      .attr('x', d => x(d.data.m)).attr('width', x.bandwidth()).attr('y', d => y(Math.max(d[0], d[1]))).attr('height', d => Math.abs(y(d[0]) - y(d[1]))));
+    g.append('path').attr('d', d3.line().x(d => x(d.m) + x.bandwidth() / 2).y(d => y(d.tolv))(stabelData)).attr('fill', 'none').attr('stroke', FARGE.tekst).attr('stroke-width', 1.5);
+    const regel = g.append('rect').attr('y', 0).attr('height', ih).attr('fill', FARGE.tekst).attr('opacity', 0.08).style('display', 'none');
+    g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent').on('pointermove', evt => {
+      const [px] = d3.pointer(evt); const i = Math.max(0, Math.min(BMND.length - 1, Math.floor(px / x.step()))); const d = stabelData[i];
+      regel.style('display', null).attr('x', x(d.m) - 1).attr('width', x.bandwidth() + 2);
+      visTip(`<div class="bf-tip-h">${mndTekst(d.m)}</div>${kat.map(c => tipRad(c.farge, c.navn, nb(d[c.k], 2))).join('')}${tipRad(FARGE.tekst, 'Tolvmånedersvekst', `${nb(d.tolv)} %`)}`, evt);
+    }).on('pointerleave', () => { regel.style('display', 'none'); skjulTip(); });
+  });
+  tabell('stabel', ['Måned', ...kat.map(c => c.navn), 'Tolvmånedersvekst'], stabelData.map(d => [mndTekst(d.m), ...kat.map(c => nb(d[c.k], 2)), nb(d.tolv)]).reverse());
+
+  // ---------- Handlekurven ----------
+  const vekRader = HOVED.map(g => ({ k: g.k, navn: kort(g.k), v: g.w[vi] / 10, merke: g.w[0] / 10, farge: FARGE.gronn })).sort((a, b) => b.v - a.v);
+  document.querySelector('[data-h="vekt"]').textContent = `Vekter i KPI ${VEKTAAR[vi]}`;
+  legend('vekt', [['bf-sw-sq', FARGE.gronn, String(VEKTAAR[vi])], ['bf-sw-tick', FARGE.tekst, String(VEKTAAR[0])]]);
+  stolper($('#fig-vekt'), vekRader, {
+    fmt: v => `${nb(v)} %`, aria: 'Vekter per hovedgruppe', klikk: k => apne(k, { rull: true }),
+    tip: r => `<div class="bf-tip-h">${esc(G.get(r.k).n)}</div>${tipRad(FARGE.gronn, String(VEKTAAR[vi]), `${nb(r.v)} %`)}${tipRad(FARGE.tekst, String(VEKTAAR[0]), `${nb(r.merke)} %`)}`,
+  });
+  tabell('vekt', ['Hovedgruppe', ...VEKTAAR.map(String)], HOVED.map(g => [g.n, ...g.w.map(w => nb(w / 10))]));
+
+  // ---------- Flere KPI-er ----------
+  const SERIEINFO = {
+    'KPI': { farge: FARGE.gronn, tekst: 'Alle varer og tjenester, med avgifter og energi.' },
+    'KPI-JAE': { farge: FARGE.bla, tekst: 'Avgiftsendringer holdt utenfor, og uten energivarer. Brukes ofte som mål på underliggende prisvekst.' },
+    'KPI-JA': { farge: FARGE.oker, tekst: 'Avgiftsendringer holdt utenfor. Ellers som KPI.' },
+    'KPI-JE': { farge: FARGE.lilla, tekst: 'Uten energivarer som strøm og drivstoff.' },
+    'KPI-JEL': { farge: FARGE.morkbla, tekst: 'Uten elektrisitet.' },
+    'KPI-XADM': { farge: '#7a5c00', tekst: 'Uten priser som i stor grad fastsettes av myndighetene.' },
+    'KPI-JA-XADM': { farge: '#4c6970', tekst: 'Avgiftsendringer holdt utenfor, og uten administrerte priser.' },
+    'KPI-JAE-XADM': { farge: '#8a9ea0', tekst: 'Avgiftsendringer holdt utenfor, uten energivarer og uten administrerte priser.' },
+  };
+  const valgte = new Set(['KPI', 'KPI-JAE', 'KPI-JA']);
+  let periode = '2015M01';
+  $('#bf-seriervalg').innerHTML = Object.keys(SERIEINFO).map(s => `<button type="button" class="bf-knapp" data-s="${s}" aria-pressed="${valgte.has(s)}"><i style="background:${SERIEINFO[s].farge}"></i>${s}</button>`).join('');
+  $('#bf-periode').innerHTML = [['2015M01', 'Fra 2015'], [D.serier.start, `Fra ${D.serier.start.slice(0, 4)}`]].map(([k, t]) => `<button type="button" class="bf-knapp" data-p="${k}" aria-pressed="${k === periode}">${t}</button>`).join('');
+  function tegnSerier() {
+    const fra = SMND.indexOf(periode);
+    const valgt = Object.keys(SERIEINFO).filter(s => valgte.has(s));
+    linjediagram($('#fig-serier'), valgt.map(s => ({ navn: s, farge: SERIEINFO[s].farge, mnd: SMND.slice(fra), v: SER[s].Tolvmanedersendring.slice(fra), bredde: s === 'KPI' ? 2.5 : 2 })), { aria: 'Tolvmånedersvekst i KPI og avledede indekser', hoyreMarg: 110 });
+    tabell('serier', ['Måned', ...valgt], SMND.slice(fra).map((k, i) => [mndTekst(k), ...valgt.map(s => nb(SER[s].Tolvmanedersendring[fra + i]))]).reverse());
+  }
+  $('#bf-seriervalg').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const s = b.dataset.s;
+    if (valgte.has(s) && valgte.size > 1) valgte.delete(s); else valgte.add(s);
+    b.setAttribute('aria-pressed', valgte.has(s));
+    tegnSerierPaaNytt();
+  });
+  $('#bf-periode').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    periode = b.dataset.p;
+    document.querySelectorAll('#bf-periode button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    tegnSerierPaaNytt();
+  });
+  function tegnSerierPaaNytt() {
+    const el = $('#fig-serier');
+    const i = tegnere.findIndex(t => t.el === el); if (i >= 0) tegnere.splice(i, 1);
+    const ny = el.cloneNode(false); el.replaceWith(ny); tegnSerier();
+  }
+  tegnSerier();
+  document.querySelector('[data-h="serieliste"]').textContent = `Siste tolv måneder, ${mndTekst(SIST)}`;
+  $('#bf-serieliste').innerHTML = Object.keys(SERIEINFO).map(s => `<li><span class="t">${esc(D.serier.navn[s] || s)}</span><span class="x">${esc(SERIEINFO[s].tekst)}</span><span class="n">${nb(SER[s].Tolvmanedersendring.at(-1))} %</span></li>`).join('');
+  const sJA = SER['KPI-JA'].Tolvmanedersendring.at(-1);
+  T('serie-merk').textContent = sJA > sT
+    ? `KPI-JA er nå ${nb(sJA - sT)} prosentpoeng høyere enn KPI. Det betyr at endringer i avgifter har trukket prisveksten i KPI ned.`
+    : `KPI-JA er nå ${nb(sT - sJA)} prosentpoeng lavere enn KPI. Det betyr at endringer i avgifter har trukket prisveksten i KPI opp.`;
+
+  // ---------- Pengeverdi ----------
+  const HI = D.historisk.i;
+  const aarListe = Array.from(new Set(HMND.map(k => k.slice(0, 4)))).reverse();
+  $('#pv-aar').innerHTML = aarListe.map(a => `<option>${a}</option>`).join('');
+  $('#pv-mnd').innerHTML = MNDNAVN.map((n, i) => `<option value="${String(i + 1).padStart(2, '0')}">${n}</option>`).join('');
+  $('#pv-aar').value = String(+SIST.slice(0, 4) - 10); $('#pv-mnd').value = SIST.slice(5);
+  function pengeverdi() {
+    const belop = Math.max(0, +$('#pv-belop').value || 0);
+    let k = `${$('#pv-aar').value}M${$('#pv-mnd').value}`;
+    if (HMND.indexOf(k) < 0) { k = k < HMND[0] ? HMND[0] : HMND.at(-1); $('#pv-aar').value = k.slice(0, 4); $('#pv-mnd').value = k.slice(5); }
+    const i0 = HMND.indexOf(k), iN = HMND.length - 1;
+    const verdi = belop * HI[iN] / HI[i0];
+    $('#pv-svar').innerHTML = `${nb(belop, 0)} kroner i ${mndTekst(k)} tilsvarer <b>${nb(verdi, 0)} kroner</b> i ${mndTekst(HMND[iN])}.`;
+    const el = $('#fig-penger');
+    const j = tegnere.findIndex(t => t.el === el); if (j >= 0) tegnere.splice(j, 1);
+    const ny = el.cloneNode(false); el.replaceWith(ny);
+    const mnd = HMND.slice(i0), v = HI.slice(i0).map(x => belop * x / HI[i0]);
+    linjediagram(ny, [{ navn: 'Samme kjøpekraft', kortNavn: 'Nå', farge: FARGE.gronn, mnd, v, bredde: 2.5 }],
+      { aria: 'Hva beløpet tilsvarer over tid', hoyde: 260, null: true, ydes: 0, fmt: x => `${nb(x, 0)} kr`, hoyreMarg: 160 });
+  }
+  ['#pv-belop', '#pv-aar', '#pv-mnd'].forEach(s => $(s).addEventListener('input', pengeverdi));
+  pengeverdi();
+
+  // ---------- Søk ----------
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-̂̄-̇̉-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøå]+/g, ' ').trim();
+  const INDEKS = D.grupper.filter(g => g.k !== '00').map(g => ({ g, n: norm(g.n) }));
+  const SYN = Object.entries(D.synonymer).map(([o, ks]) => ({ o: norm(o), ord: o, ks }));
+  function sok(q) {
+    const n = norm(q); if (!n) return [];
+    const treff = new Map();
+    const legg = (k, poeng, via) => { const t = treff.get(k); if (!t || t.poeng < poeng) treff.set(k, { k, poeng, via }); };
+    SYN.forEach(s => { if (s.o === n) s.ks.forEach(k => legg(k, 100, s.ord)); else if (s.o.startsWith(n) && n.length >= 2) s.ks.forEach(k => legg(k, 70, s.ord)); });
+    INDEKS.forEach(({ g, n: navn }) => {
+      if (navn === n) legg(g.k, 95);
+      else if (navn.startsWith(n)) legg(g.k, 80 - g.l);
+      else if ((' ' + navn).includes(' ' + n)) legg(g.k, 60 - g.l);
+      else if (n.length >= 3 && navn.includes(n)) legg(g.k, 40 - g.l);
+    });
+    if (/^\d{2}(\.\d)*(_\d)?$/.test(q.trim()) && G.has(q.trim())) legg(q.trim(), 110);
+    return [...treff.values()].sort((a, b) => b.poeng - a.poeng || G.get(a.k).l - G.get(b.k).l).slice(0, 8);
+  }
+  const inp = $('#bf-sok'), liste = $('#bf-forslag');
+  const tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+  let forslag = [], aktiv = -1;
+  function visForslag() {
+    forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+    if (!inp.value.trim()) { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); return; }
+    liste.innerHTML = forslag.length ? forslag.map((t, i) => {
+      const g = G.get(t.k), f = g.f && g.f !== '00' ? G.get(g.f).n : null;
+      return `<li role="option" id="fs-${i}" data-k="${t.k}" aria-selected="${i === aktiv}">${esc(g.n)}<span class="s">${t.via ? `Søkeord «${esc(t.via)}» · ` : ''}${esc(NIVA[g.l])}${f ? ` i ${esc(f)}` : ''}</span></li>`;
+    }).join('') : `<li class="tom" role="option" aria-disabled="true" data-alle>Ingen treff. Prøv et annet ord, eller <button type="button" class="bf-lenke">se alle grupper</button>.</li>`;
+    liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+    inp.setAttribute('aria-activedescendant', aktiv >= 0 ? `fs-${aktiv}` : '');
+  }
+  function merk(i) {
+    aktiv = i;
+    liste.querySelectorAll('li[data-k]').forEach((li, j) => li.setAttribute('aria-selected', j === i));
+    inp.setAttribute('aria-activedescendant', `fs-${i}`);
+    const li = $(`#fs-${i}`); if (li) li.scrollIntoView({ block: 'nearest' });
+  }
+  function velg(i) {
+    const t = forslag[i]; if (!t) return;
+    liste.hidden = true; inp.setAttribute('aria-expanded', 'false');
+    inp.value = G.get(t.k).n;
+    apne(t.k, { via: t.via });
+  }
+  inp.addEventListener('input', visForslag);
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visForslag(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) velg(aktiv); }
+    else if (e.key === 'Escape') { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); }
+  });
+  liste.addEventListener('mousedown', e => {
+    if (e.target.closest('[data-alle] button')) { e.preventDefault(); liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({ behavior: 'smooth' }); return; }
+    const li = e.target.closest('li[data-k]'); if (li) { e.preventDefault(); velg([...liste.querySelectorAll('li[data-k]')].indexOf(li)); } });
+  inp.addEventListener('blur', () => setTimeout(() => { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); }, 150));
+  const EKS = ['strøm', 'diesel', 'brød', 'cola', 'frisør', 'restaurant'];
+  $('#bf-eksempler').innerHTML = EKS.map(o => `<button type="button" class="bf-lenke" data-eks="${o}">${o}</button>`).join(', ');
+  $('#bf-eksempler').addEventListener('click', e => {
+    const b = e.target.closest('[data-eks]'); if (!b) return;
+    inp.value = b.dataset.eks; const t = sok(b.dataset.eks)[0];
+    if (t) { inp.value = G.get(t.k).n; apne(t.k, { via: t.via ? b.dataset.eks : null }); }
+  });
+
+  // ---------- Alle grupper ----------
+  function lagTre(k) {
+    const barn = BARN.get(k) || [];
+    return `<ul>${barn.map(b => {
+      const g = G.get(b), t = sisteVerdi(g.t)[1];
+      const knapp = `<button type="button" class="bf-lenke${g.l === 1 ? ' hg' : ''}" data-k="${b}">${esc(g.n)}</button><span class="v">${t == null ? '' : sgn(t) + ' %'}</span>`;
+      return BARN.has(b) ? `<li><details><summary>${knapp}</summary>${lagTre(b)}</details></li>` : `<li>${knapp}</li>`;
+    }).join('')}</ul>`;
+  }
+  alleKnapp.addEventListener('click', () => {
+    const vis = tre.hidden;
+    if (vis && !tre.innerHTML) tre.innerHTML = `<p class="bf-note" style="margin-bottom:10px">Alle ${D.grupper.length - 1} grupper i KPI. Tallet bak er endringen siste tolv måneder, der det finnes. Klikk på et navn for å se mer.</p>${lagTre('00')}`;
+    tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', vis);
+  });
+  tre.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) { e.preventDefault(); apne(b.dataset.k, { rull: true }); } });
+
+  // ---------- Kortet ----------
+  const kortEl = $('#bf-kort');
+  // Merknader til enkeltgrupper. Må bekreftes av fagseksjonen.
+  const MERKNAD = {
+    '04.5.1': 'Strømprisen svinger mye og har stor betydning for KPI. Hvordan strømstøtten og Norgespris inngår i indeksen, er ikke avklart i denne prototypen.',
+    '04.2.1': 'Selveiere betaler ingen husleie. SSB beregner hva det ville kostet å leie en tilsvarende bolig, og tar det med i KPI i stedet for boligprisene.',
+    '04.2': 'Selveiere betaler ingen husleie. SSB beregner hva det ville kostet å leie en tilsvarende bolig, og tar det med i KPI i stedet for boligprisene.',
+  };
+  function vektetForelder(k) {
+    let g = G.get(k);
+    while (g && !(g.w && g.w[vi] != null)) g = G.get(g.f);
+    return g;
+  }
+  function apne(k, o = {}) {
+    const g = G.get(k); if (!g) return;
+    if (k === '00') { lukk(); document.getElementById('hovedtall').scrollIntoView({ behavior: 'smooth' }); return; }
+    try { history.replaceState(null, '', `#gruppe=${encodeURIComponent(k)}`); } catch (e) { /* ignorer */ }
+    const [ti, tv] = sisteVerdi(g.t);
+    const [ii] = sisteVerdi(g.i);
+    const forsteI = forsteVerdi(g.i), forsteT = forsteVerdi(g.t);
+    const harTolv = tv != null && ti === sistI;
+    const vf = vektetForelder(k), egenVekt = vf && vf.k === k;
+    const totT = TOT.t[sistI];
+    const stiKoder = ['00', ...sti(k).filter(x => x !== '00')].filter((x, j, a) => G.get(x).n !== (j + 1 < a.length ? G.get(a[j + 1]).n : g.n));
+    const stiHtml = stiKoder.map(x => `<button type="button" class="bf-lenke" data-k="${x}">${esc(x === '00' ? 'Hele KPI' : kort(x))}</button>`).join(' › ');
+    const varig = g.v ? ` · ${D.varighet[g.v]}` : '';
+    let hoved, fakta = [];
+    if (ii < 0) {
+      hoved = `<p class="bf-stort">Ingen tall</p><p class="bf-setning">SSB publiserer ikke prisindeks for denne gruppen.</p>`;
+      fakta.push(`<p class="bf-varsel">Gruppen har vekt i KPI, men ingen egen indeks i statistikkbanken. Prisene er likevel med i KPI gjennom gruppen over: <button type="button" class="bf-lenke" data-k="${g.f}">${esc(G.get(g.f).n)}</button>.</p>`);
+    } else if (!harTolv) {
+      hoved = `<p class="bf-stort">${nb(g.i[ii])}</p><p class="bf-setning">indeks i ${mndTekst(GMND[ii])} (2025 = 100)</p>`;
+      fakta.push(`<p class="bf-varsel">Ny gruppe fra ${mndTekst(GMND[forsteI])}. Endringen siste tolv måneder kan først regnes fra ${mndTekst(`${+GMND[forsteI].slice(0, 4) + 1}${GMND[forsteI].slice(4)}`)}.</p>`);
+    } else {
+      const ord = tv > totT ? 'mer enn' : tv < totT ? 'mindre enn' : 'like mye som';
+      hoved = `<p class="bf-stort">${sgn(tv)} %</p><p class="bf-setning">fra ${mndTekst(fjor(SIST))} til ${mndTekst(SIST)}. Det er ${ord} hele KPI, som steg ${nb(totT)} %.</p>`;
+      if (forsteI > 0) fakta.push(`<p>Tall fra ${mndTekst(GMND[forsteI])}.</p>`);
+    }
+    if (egenVekt) {
+      const b = g.b;
+      fakta.push(`<p><b>Vekt ${VEKTAAR[vi]}:</b> ${nb(g.w[vi] / 10, 2)} prosent av husholdningenes forbruk.</p>`);
+      if (b != null) fakta.push(`<p><b>Bidrag til prisveksten:</b> ${nb(b, 2)} prosentpoeng av ${nb(totT)}.</p>`);
+    } else if (vf && vf.k !== '00') {
+      fakta.push(`<p><b>Ingen egen vekt.</b> SSB oppgir vekter bare ned til tredje nivå. Gruppen ligger under <button type="button" class="bf-lenke" data-k="${vf.k}">${esc(vf.n)}</button>, som veier ${nb(vf.w[vi] / 10, 2)} prosent. Derfor kan vi ikke regne ut hvor mye akkurat denne trekker prisveksten.</p>`);
+    }
+    if (MERKNAD[k]) fakta.push(`<p class="bf-varsel">${esc(MERKNAD[k])}</p>`);
+    if (harTolv && Math.abs(tv) >= 10 && !egenVekt) fakta.push(`<p class="bf-varsel">Store endringer på en enkelt vare kan trekke lite i hele KPI hvis varen veier lite.</p>`);
+    const barn = (BARN.get(k) || []).map(b => G.get(b));
+    kortEl.innerHTML = `
+      <div class="bf-kort-topp"><div>
+        <p class="bf-sti">${stiHtml}</p>
+        <h2>${esc(g.n)}</h2>
+        <p class="bf-treffinfo">${esc(NIVA[g.l])}${esc(varig)}${o.via ? ` · Funnet med søkeordet «${esc(o.via)}»` : ''}</p>
+      </div><button type="button" class="bf-knapp bf-lukk" aria-label="Lukk kortet">Lukk</button></div>
+      <div>${hoved}<div class="bf-fakta">${fakta.join('')}</div></div>
+      <div>${ii >= 0 ? `<div class="bf-bytt" role="group" aria-label="Velg mål">
+          <button type="button" class="bf-knapp" data-maal="t" aria-pressed="${harTolv}" ${forsteT < 0 ? 'disabled' : ''}>Endring fra året før</button>
+          <button type="button" class="bf-knapp" data-maal="i" aria-pressed="${!harTolv}">Indeks</button></div>
+        <div class="bf-legend" data-leg="kort"></div>
+        <div class="bf-chart" id="fig-kort" style="min-height:260px"></div>` : ''}
+        <p class="bf-src">Kilde: SSB, tabell 14700. Sist oppdatert: ${oppd}.</p></div>
+      ${barn.length ? `<div class="bf-under"><h3>Undergrupper</h3><div class="bf-chart" id="fig-barn"></div><p class="bf-note">Endring siste tolv måneder, prosent. Klikk for å gå videre ned.</p></div>` : ''}`;
+    kortEl.hidden = false;
+    kortEl.querySelectorAll('[data-k]').forEach(b => b.addEventListener('click', () => apne(b.dataset.k)));
+    kortEl.querySelector('.bf-lukk').addEventListener('click', lukk);
+    if (ii >= 0) {
+      let maal = harTolv ? 't' : 'i';
+      const tegnKort = () => {
+        const el = $('#fig-kort');
+        const j = tegnere.findIndex(t => t.el === el); if (j >= 0) tegnere.splice(j, 1);
+        const ny = el.cloneNode(false); el.replaceWith(ny);
+        const fra = Math.max(0, maal === 't' ? forsteT : forsteI);
+        const kortNavn = g.n.length > 22 ? 'Valgt gruppe' : g.n;
+        legend('kort', [['bf-sw-line', FARGE.gronn, g.n], ['bf-sw-line', FARGE.null, 'Hele KPI']]);
+        linjediagram(ny, [
+          { navn: 'Hele KPI', kortNavn: 'KPI', farge: FARGE.null, mnd: GMND.slice(fra), v: TOT[maal].slice(fra), etikett: true },
+          { navn: kortNavn, kortNavn: 'Valgt', farge: FARGE.gronn, mnd: GMND.slice(fra), v: g[maal].slice(fra), bredde: 2.5 },
+        ], { aria: `${g.n}: ${maal === 't' ? 'endring fra året før' : 'indeks'}`, hoyde: 260, null: maal === 't', hoyreMarg: 110, xdomene: [tilDato(GMND[fra]), tilDato(SIST)] });
+      };
+      kortEl.querySelectorAll('[data-maal]').forEach(b => b.addEventListener('click', () => {
+        maal = b.dataset.maal; kortEl.querySelectorAll('[data-maal]').forEach(x => x.setAttribute('aria-pressed', x === b)); tegnKort();
+      }));
+      tegnKort();
+    }
+    if (barn.length) {
+      const rader = barn.map(b => ({ k: b.k, navn: b.n, v: sisteVerdi(b.t)[0] === sistI ? b.t[sistI] : null })).filter(r => r.v != null).sort((a, b) => b.v - a.v);
+      const uten = barn.filter(b => !rader.find(r => r.k === b.k));
+      rader.forEach(r => { r.farge = FARGE.gronn; });
+      const el = $('#fig-barn');
+      if (rader.length) stolper(el, rader, { fmt: v => `${sgn(v)} %`, radH: 26, klikk: kk => apne(kk), aria: 'Undergrupper' });
+      if (uten.length) el.insertAdjacentHTML('afterend', `<p class="bf-note">Uten tolvmånedersendring: ${uten.map(b => `<button type="button" class="bf-lenke" data-k="${b.k}">${esc(b.n)}</button>`).join(', ')}.</p>`);
+      kortEl.querySelectorAll('.bf-under .bf-note [data-k]').forEach(b => b.addEventListener('click', () => apne(b.dataset.k)));
+    }
+    if (o.rull !== false) kortEl.scrollIntoView({ behavior: o.rull ? 'smooth' : 'auto', block: 'start' });
+  }
+  function lukk() {
+    kortEl.hidden = true; kortEl.innerHTML = '';
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignorer */ }
+  }
+  const fraHash = decodeURIComponent((location.hash.match(/gruppe=([^&]+)/) || [])[1] || '');
+  if (fraHash && G.has(fraHash)) apne(fraHash, { rull: false });
+})();
+</script>
+</body>
+</html>

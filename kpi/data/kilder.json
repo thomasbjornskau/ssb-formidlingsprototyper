@@ -1,0 +1,63 @@
+{
+  "statistikk": "kpi",
+  "api": "SSB PxWebApi v2, CC BY 4.0",
+  "format": "json-stat2",
+  "merknad": "Testet gjennom SSB-tilkoblingen 14.10.2026, som CSV. URL-ene i json-stat2 er ikke kjørt direkte mot API-et.",
+  "datasett": [
+    {
+      "id": "hovedserier",
+      "tabell": "14706",
+      "svarer_paa": [
+        1,
+        4
+      ],
+      "beskrivelse": "KPI og de avledede seriene (KPI-JA, KPI-JE, KPI-JEL, KPI-JAE og tre XADM-serier): indeks, månedsendring og tolvmånedersendring fra 1995.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14706/data?lang=no&outputFormat=json-stat2&selection%5BKPIavledetSerie%5D=*&selection%5BContentsCode%5D=KPIJustIndMnd,Manedsendring,Tolvmanedersendring&selection%5BTid%5D=*",
+      "omfang": "8 serier × 3 mål × 381 måneder ≈ 9 100 celler"
+    },
+    {
+      "id": "grupper",
+      "tabell": "14700",
+      "svarer_paa": [
+        1,
+        2,
+        3
+      ],
+      "beskrivelse": "Alle 336 vare- og tjenestegrupper på alle nivåer: indeks og publisert tolvmånedersendring fra januar 2015. Grunnlaget for søk.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14700/data?lang=no&outputFormat=json-stat2&selection%5BVareTjenesteGrp%5D=codelist(vs_CoiCop2018Kpi01)%3A*&selection%5BContentsCode%5D=KpiIndMnd,Tolvmanedersendring&selection%5BTid%5D=from(2015M01)",
+      "omfang": "336 grupper × 2 mål × 141 måneder ≈ 95 000 celler"
+    },
+    {
+      "id": "vekter",
+      "tabell": "14700",
+      "svarer_paa": [
+        2,
+        3
+      ],
+      "beskrivelse": "Vekter i promille for alle grupper, januar hvert år 2015–2026. Vektene er faste gjennom året.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14700/data?lang=no&outputFormat=json-stat2&selection%5BVareTjenesteGrp%5D=codelist(vs_CoiCop2018Kpi01)%3A*&selection%5BContentsCode%5D=KpiVektMnd&selection%5BTid%5D=2015M01,2016M01,2017M01,2018M01,2019M01,2020M01,2021M01,2022M01,2023M01,2024M01,2025M01,2026M01",
+      "omfang": "336 grupper × 12 år ≈ 4 000 celler"
+    },
+    {
+      "id": "historisk",
+      "tabell": "14710",
+      "svarer_paa": [
+        5
+      ],
+      "beskrivelse": "KPI-indeks hver måned fra mars 1920, for pengeverdi over lang tid.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14710/data?lang=no&outputFormat=json-stat2&selection%5BContentsCode%5D=KpiIndMnd&selection%5BTid%5D=*",
+      "omfang": "1 279 celler"
+    }
+  ],
+  "manglende_verdier": {
+    "..": "Tall mangler. Mange nye grupper fra COICOP 2018 har bare tall fra 2026, og noen grupper har vekt, men ingen indeks.",
+    ".": "Tall kan ikke forekomme. Brukes blant annet før gruppene ble etablert (alle grupper i januar 2000)."
+  },
+  "fallgruver": [
+    "Endringsrater skal hentes som publisert, ikke regnes ut av indeksene. Indeksene er avrundet til én desimal, og 104,0 / 100,6 gir 3,38 prosent, mens publisert tolvmånedersvekst er 3,4.",
+    "Vekter finnes bare ned til tredje nivå (for eksempel 01.1.1). Detaljerte varer har ingen vekt, så bidrag kan ikke beregnes for dem.",
+    "Vektene skifter i januar. Bidrag til tolvmånedersveksten må regnes i to ledd, før og etter desember.",
+    "SSB-tilkoblingen plasserer verdier feil i json-stat2 med flere statistikkvariabler. Bruk CSV der, eller én variabel per spørring.",
+    "De gamle tabellene 03013, 03014, 05327 og 05335 er arkivert fra 2026."
+  ]
+}
