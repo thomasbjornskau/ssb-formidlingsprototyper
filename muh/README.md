@@ -24,6 +24,7 @@ Prototypen viser Norges handel med varer: hvor mye som er olje og gass, hva hand
 - [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som er tolket i grafikken
 - [docs/03-kildekart.md](docs/03-kildekart.md): tabeller, spørringer, struktur og kontroller
 - [docs/04-byggenotat.md](docs/04-byggenotat.md): hva som er bygget, kontroller og kjente svakheter
+- [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md): samlet kvalitetssikring
 - [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
 
 ## Kilder
