@@ -24,7 +24,7 @@ Samlet liste over det i prototypen som er tolkning, eget valg eller ikke bekreft
 | 9 | Eksempelet 30,00 kr til 31,20 kr | Konseptgrafikken | Vårt valg, merket som eksempeltall | Villedende når mat beregnes med multilateral metode? |
 | 10 | De fire punktene i «Slik leser du KPI» | Øverst | Hypotesene H1–H7 | Er de riktige og de viktigste? |
 | 11 | Beskrivelsen av de åtte seriene, for eksempel «Uten priser som i stor grad fastsettes av myndighetene» for KPI-XADM | Hvorfor flere KPI-er? | Navnene i tabell 14706 og «Om statistikken». Formuleringene er våre | Presise nok? |
-| 12 | KPI-JAE omtalt som «underliggende prisvekst», og som den Norges Bank legger vekt på | Toppgrafikken og ingressen til seksjonen | NOU 2026:5 | Bruker SSB selv denne betegnelsen? |
+| 12 | ~~KPI-JAE omtalt som «underliggende prisvekst», og som den Norges Bank legger vekt på~~ Avklart 15.10.2026, se svar under | Toppgrafikken og ingressen til seksjonen | NOU 2026:5 | Bruker SSB selv denne betegnelsen? |
 | 13 | Beregnet husleie forklart som «hva det ville kostet å leie en tilsvarende bolig» | Kortene for `04.2` og `04.2.1` | «Hvordan fanges bokostnader opp i KPI?» (2024) | Presist nok? |
 | 14 | Bolig og strøm økte fra 25,3 til 31,2 prosent av vektene i 2026, nesten bare beregnet husleie, «etter revisjonen av nasjonalregnskapet» | Under vektfiguren | Tabell 14700 og «Om statistikken» | Riktig årsak? |
 | 15 | Kortnavn for hovedgruppene, for eksempel «Bolig og strøm» og «Restaurant og overnatting». Fulle navn i kort, verktøytips og tabeller | Figurene | Vårt valg | Akseptable? |
@@ -42,6 +42,21 @@ Samlet liste over det i prototypen som er tolkning, eget valg eller ikke bekreft
 | 22 | Bør målefeilen i KPI omtales (H10)? Prototypen nevner den ikke | `01-innsikt.md`, del 4 |
 | 23 | Finnes det ofte stilte spørsmål eller henvendelser vi bør bygge på? | |
 | 24 | Hvem er riktig fagkontakt for prototypen? | «Om statistikken» viser bare et telefonnummer |
+
+## Svar fra fagseksjonen
+
+Seksjonsleder, 15.10.2026, etter å ha sett prototypen (ikke listen, lenken virket ikke):
+
+| Gjelder punkt | Svar | Fulgt opp i versjon 0.2 |
+|---|---|---|
+| 12 | SSB skal ikke omtale KPI-JAE som underliggende prisvekst eller kjerneinflasjon | Ja |
+| 11 | Ikke «flere KPI-er», men ulike analytiske eller avledede prisindekser | Ja |
+| 10 | Prisvekst er endringen i KPI over hvilken som helst periode, ikke bare tolv måneder | Ja |
+| 4 | Metoden for bidrag er beskrevet i Nygaard (2017). SSB har en ambisjon om å publisere bidragene i statistikkbanken | Metoden er i samsvar med artikkelen |
+| 5 | Bidragene bør normeres slik at de summerer til publisert endringsrate med én desimal, i stedet for å omtale avrunding | Ja |
+| – | Valget av grupper i figuren over bidrag per måned var rart | Ja: strøm, husleie, mat og alkoholfri drikke, transport og resten |
+
+Punktene 1–3, 6–9 og 13–24 er ikke vurdert ennå.
 
 ## Avklart underveis
 

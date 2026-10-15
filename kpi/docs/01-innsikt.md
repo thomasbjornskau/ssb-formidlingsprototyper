@@ -31,7 +31,7 @@ Steg 1 i formidlingsprototype for `kpi` · versjon 0.1 · 14.10.2026 · Status: 
 ## 2. Nøkkelbudskap (september 2026)
 
 1. **Prisene var 3,4 prosent høyere enn for ett år siden** [K1], [K5].
-2. **Den underliggende prisveksten, målt med KPI-JAE, var 3,0 prosent** [K1], [K5].
+2. **KPI-JAE, KPI justert for avgiftsendringer og uten energivarer, steg 3,0 prosent** [K1], [K5]. SSB omtaler ikke KPI-JAE som underliggende prisvekst (fagseksjonen 15.10.2026).
 3. **Prisveksten er langt lavere enn toppen i 2022**, da tolvmånedersveksten var 7,5 prosent i oktober. Siden juli 2024 har den ligget mellom 2,3 og 3,6 prosent [K5].
 4. **Tjenester stiger mer enn varer:** 3,8 mot 3,0 prosent [K1].
 5. **Bolig er den største posten.** Bolig, lys og brensel veier 31 prosent av KPI i 2026. Av dette er beregnet husleie for selveiere alene 21 prosent [K5]. Vekten for beregnet husleie økte fra 13,9 til 20,6 prosent i 2026 etter revisjonen av nasjonalregnskapet [K3].
@@ -46,7 +46,7 @@ Steg 1 i formidlingsprototype for `kpi` · versjon 0.1 · 14.10.2026 · Status: 
 - **De avledede seriene.**
   - KPI-JA: justert for avgiftsendringer.
   - KPI-JE: uten energivarer.
-  - KPI-JAE: begge deler. NOU 2026:5 omtaler den som den underliggende inflasjonen [K7].
+  - KPI-JAE: begge deler. NOU 2026:5 omtaler den som den underliggende inflasjonen [K7], men SSB bruker ikke den betegnelsen (fagseksjonen 15.10.2026).
   - KPI-XADM: uten priser myndighetene i stor grad bestemmer, som husleie i Vinmonopolet, nettleie, kommunale avgifter og barnehage [K3].
   - Bokstavene er korte og ligner hverandre [T].
 - **Beregnet husleie.** Selveiernes boligkonsum måles som hva det ville kostet å leie den samme boligen, kalt leieekvivalensprinsippet. Kjøpesummen for boligen er ikke med [K4].
@@ -93,7 +93,7 @@ Prototypen skal gi riktig førsteinntrykk og forklare de vanskelige begrepene. D
 | 1 | Hvor mye stiger prisene nå, og er det mye? | a b c d | H1 H5 H6 | 14700 og 14706, tolvmånedersvekst over tid |
 | 2 | Hva driver prisveksten? | a b c d | H7 | 14700, vekter og endring per hovedgruppe |
 | 3 | Hva er med i KPI, og hvor mye veier det? | b c d | H2 H3 | 14700, vekter |
-| 4 | Hvorfor finnes det flere KPI-er? | a b c | H4 H8 | 14706 |
+| 4 | Hva viser de avledede prisindeksene? | a b c | H4 H8 | 14706 |
 | 5 | Hva er en krone verdt over tid? | c d | H5 | 14710, historisk serie fra 1920 |
 
 **Må med uansett:** en kort «Slik leser du KPI»-boks som dekker H1, H3, H5 og H6, og en linje om basisår og ny klassifisering fra 2026.

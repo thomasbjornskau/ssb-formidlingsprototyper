@@ -4,11 +4,14 @@ Kjøres av felles/bygg.py. Stopper med feil hvis en kontroll ikke går opp:
 - hovedgruppenes vekter summerer til 1 000 hvert år
 - totalindeksen i 14700 er lik KPI i 14706, og lik den historiske serien i 14710
 - totalindeksen kan gjenskapes fra hovedgruppene med vektene for året
-- bidragene fra hovedgruppene summerer til publisert tolvmånedersvekst
+- bidragene fra hovedgruppene summerer til publisert tolvmånedersvekst, før normering
 - alle koder i synonymlisten finnes i tabell 14700
 
 Bidrag regnes slik SSB gjør det: i to ledd før og etter desember, fordi vektene
-skifter i januar. Endringsrater tas som publisert, ikke regnet fra indeksene.
+skifter i januar. Deretter normeres de, slik fagseksjonen anbefaler: hvert bidrag
+ganges med publisert tolvmånedersendring delt på summen av bidragene fra
+hovedgruppene, så de summerer til den publiserte raten med én desimal.
+Endringsrater tas som publisert, ikke regnet fra indeksene.
 """
 import itertools
 import json
@@ -19,6 +22,10 @@ import sys
 MAPPE = pathlib.Path(__file__).resolve().parent.parent
 RAW = MAPPE / "data" / "raw"
 UT = MAPPE / "build" / "kpi.json"
+
+# Grupper i figuren over bidrag per måned. Valgt 15.10.2026 etter innspill fra fagseksjonen.
+STABEL = [("Strøm", ["04.5.1"]), ("Husleie", ["04.1", "04.2"]),
+          ("Mat og alkoholfri drikke", ["01"]), ("Transport", ["07"])]
 
 KORTNAVN = {
     "01": "Mat og alkoholfri drikke", "02": "Alkohol og tobakk", "03": "Klær og sko",
@@ -165,6 +172,17 @@ def main():
         avvik = max(avvik, abs(s - pub))
         if abs(s - pub) > 0.2:
             feil(f"bidragene i {m} summerer til {s:.2f}, publisert {pub}")
+    faktor = {m: tolv["00"][mnd.index(m)] / sum(bid[k][j] for k in hoved) for j, m in enumerate(bmnd)}
+    bid = {k: [b * faktor[m] for b, m in zip(v, bmnd)] for k, v in bid.items()}
+    for j, m in enumerate(bmnd):
+        if abs(sum(bid[k][j] for k in hoved) - tolv["00"][mnd.index(m)]) > 1e-9:
+            feil(f"normerte bidrag i {m} summerer ikke til publisert rate")
+
+    stabel = []
+    for navn_, ks in STABEL:
+        v = [sum(bidrag(k, m) * faktor[m] for k in ks) for m in bmnd]
+        stabel.append({"navn": navn_, "koder": ks, "v": [round(x, 3) for x in v]})
+    andre = [round(tolv["00"][mnd.index(m)] - sum(g["v"][j] for g in stabel), 3) for j, m in enumerate(bmnd)]
 
     # 5. Synonymene peker på koder som finnes
     for ord_, ks in synonymer["ord"].items():
@@ -182,7 +200,7 @@ def main():
             "v": treff.group(1) if treff else None, "f": forelder(k, finnes), "l": nivaa(k),
             "i": ind[k], "t": tolv[k],
             "w": [vekt[k][a] for a in vaar] if any(vekt[k][a] is not None for a in vaar) else None,
-            "b": round(bidrag(k, sist), 3) if bidrag(k, sist) is not None else None,
+            "b": round(bidrag(k, sist) * faktor[sist], 3) if bidrag(k, sist) is not None else None,
         })
 
     start_s = smnd.index("1995M01") if "1995M01" in smnd else 0
@@ -195,7 +213,8 @@ def main():
         "sist": sist, "oppdatert": gr["oppdatert"], "hentet": hentet,
         "start": mnd[0], "vekt_aar": vaar, "kortnavn": KORTNAVN, "varighet": VARIGHET,
         "grupper": grupper,
-        "bidrag": {"start": bmnd[0], "serier": {k: [round(b, 3) for b in v] for k, v in bid.items()}},
+        "bidrag": {"start": bmnd[0], "serier": {k: [round(b, 3) for b in v] for k, v in bid.items()},
+                   "stabel": stabel, "andre": andre},
         "serier": {"start": smnd[start_s], "data": serier, "navn": serienavn},
         "historisk": {"start": hmnd[0], "i": hind},
         "synonymer": synonymer["ord"], "usikre_synonymer": synonymer["usikker"],

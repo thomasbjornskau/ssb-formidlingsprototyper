@@ -11,7 +11,7 @@ Notatet viser hvilke tabeller i statistikkbanken som svarer på de fem prioriter
 | 1. Hvor mye stiger prisene nå? | hovedserier, grupper | 14706, 14700 | Toppgrafikk A og tolvmånedersvekst over tid |
 | 2. Hva driver prisveksten? | grupper, vekter | 14700 | Bidrag per hovedgruppe, med SSBs metode |
 | 3. Hva er med i KPI, og hvor mye veier det? | vekter, grupper | 14700 | Handlekurven, og **søk på varer og varegrupper** |
-| 4. Hvorfor finnes det flere KPI-er? | hovedserier | 14706 | KPI, KPI-JA, KPI-JE, KPI-JAE og XADM sammenlignet |
+| 4. Hva viser de avledede prisindeksene? | hovedserier | 14706 | KPI, KPI-JA, KPI-JE, KPI-JAE og XADM sammenlignet |
 | 5. Hva er en krone verdt over tid? | historisk | 14710 | Pengeverdi fra 1920 |
 
 Alle tabellene er nye fra 2026 (basisår 2025 = 100, COICOP 2018). De gamle tabellene 03013, 03014, 05327 og 05335 er arkivert.

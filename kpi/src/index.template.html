@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Konsumprisindeksen</title>
 <link rel="icon" href="data:,">
-<meta name="description" content="Prototype: konsumprisindeksen (KPI) med søk på varer og tjenester, bidrag til prisveksten, vekter, de avledede indeksene og pengeverdi. Tall fra SSB, tabell 14700, 14706 og 14710.">
+<meta name="description" content="Prototype: konsumprisindeksen (KPI) med søk på varer og tjenester, bidrag til tolvmånedersendringen, vekter, de avledede prisindeksene og pengeverdi. Tall fra SSB, tabell 14700, 14706 og 14710.">
 <style>
 /*__FONT__*/
 :root {
@@ -178,7 +178,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
   <section class="bf-les" aria-labelledby="les-h">
     <h2 id="les-h">Slik leser du KPI</h2>
     <ul>
-      <li><b>Prisvekst er endring fra året før.</b> Tallet som omtales, er endringen fra samme måned året før, kalt tolvmånedersveksten. Indeksen selv er bare et nivå der gjennomsnittet for 2025 er satt til 100.</li>
+      <li><b>Prisvekst er endringen i KPI over en periode.</b> Perioden kan være en måned, et år eller hundre år. Tallet som oftest omtales, er endringen fra samme måned året før, kalt tolvmånedersendringen. Indeksen selv er et nivå der gjennomsnittet for 2025 er satt til 100.</li>
       <li><b>Gjennomsnitt for alle husholdninger.</b> KPI veier prisene etter hva husholdningene i Norge bruker penger på til sammen. Din egen prisvekst kan være høyere eller lavere.</li>
       <li><b>Store utslag på en vare betyr lite alene.</b> En vare som har steget mye, men veier lite, trekker hele indeksen lite opp. Det er vekt ganger endring som teller.</li>
       <li><b>Bolig er med, boligkjøp er ikke.</b> Selveiere er med gjennom en beregnet husleie. Kjøp av bolig regnes som investering og er ikke med.</li>
@@ -207,7 +207,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
     </div>
     <div class="bf-tiles">
       <div><div class="bf-tile-lab">Endring fra forrige måned</div><div class="bf-num" data-t="t-mnd"></div></div>
-      <div><div class="bf-tile-lab">Underliggende (KPI-JAE), siste tolv måneder</div><div class="bf-num" data-t="t-jae"></div></div>
+      <div><div class="bf-tile-lab" data-t="t-fjor-lab"></div><div class="bf-num" data-t="t-fjor"></div></div>
       <div><div class="bf-tile-lab" data-t="t-ind-lab"></div><div class="bf-num" data-t="t-ind"></div></div>
       <div><div class="bf-tile-lab" data-t="t-kr-lab"></div><div class="bf-num" data-t="t-kr"></div></div>
     </div>
@@ -215,8 +215,8 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
   </section>
 
   <section class="bf-section" id="bidrag">
-    <h2 class="bf-sh">Hva driver prisveksten?</h2>
-    <p class="bf-ingress">Hvor mye en gruppe trekker prisveksten opp, avhenger både av hvor mye prisene har steget og av hvor mye gruppen veier. Klikk på en gruppe for å se mer.</p>
+    <h2 class="bf-sh">Hva har drevet prisveksten siste tolv måneder?</h2>
+    <p class="bf-ingress">Hvor mye en gruppe trekker tolvmånedersendringen opp, avhenger både av hvor mye prisene har steget og av hvor mye gruppen veier. Klikk på en gruppe for å se mer.</p>
     <div class="bf-grid">
       <article class="bf-card bf-wide">
         <h3 class="bf-h" data-h="bidrag"></h3>
@@ -227,8 +227,8 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
         <p class="bf-src" data-kilde="14700"></p>
       </article>
       <article class="bf-card bf-wide">
-        <h3 class="bf-h">Bidraget fra de største gruppene har skiftet over tid</h3>
-        <p class="bf-note">Bidrag til tolvmånedersveksten i KPI per måned, prosentpoeng. Linjen er publisert tolvmånedersvekst.</p>
+        <h3 class="bf-h">Strøm har svingt mest, husleie har trukket opp hver måned</h3>
+        <p class="bf-note">Bidrag til tolvmånedersendringen i KPI per måned, prosentpoeng. Husleie omfatter betalt og beregnet husleie. Linjen er publisert tolvmånedersendring.</p>
         <div class="bf-legend" data-leg="stabel"></div>
         <div class="bf-chart" id="fig-stabel" style="min-height:300px"></div>
         <details class="bf-tall" data-tall="stabel"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
@@ -243,6 +243,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
     <article class="bf-card">
       <h3 class="bf-h" data-h="vekt"></h3>
       <p class="bf-note">Prosent av forbruket. Den svarte streken viser vekten i 2015. Klikk på en gruppe for å se prisutviklingen.</p>
+      <p class="bf-note" data-t="vekt-merk"></p>
       <div class="bf-legend" data-leg="vekt"></div>
       <div class="bf-chart" id="fig-vekt" style="min-height:420px"></div>
       <details class="bf-tall" data-tall="vekt"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
@@ -251,11 +252,11 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
   </section>
 
   <section class="bf-section" id="flere">
-    <h2 class="bf-sh">Hvorfor finnes det flere KPI-er?</h2>
-    <p class="bf-ingress">SSB lager også indekser der avgiftsendringer eller energipriser er tatt ut. De skiller varige endringer i prisveksten fra kortvarige utslag. Norges Bank legger vekt på KPI-JAE.</p>
+    <h2 class="bf-sh">Hva viser de avledede prisindeksene?</h2>
+    <p class="bf-ingress">Ved siden av KPI lager SSB analytiske prisindekser som er avledet av den. I dem er for eksempel avgiftsendringer, energivarer eller administrerte priser holdt utenfor. De viser hvor mye slike forhold påvirker KPI.</p>
     <div class="bf-grid">
       <article class="bf-card">
-        <h3 class="bf-h">Tolvmånedersvekst i KPI og de avledede indeksene</h3>
+        <h3 class="bf-h">Tolvmånedersendring i KPI og de avledede prisindeksene</h3>
         <p class="bf-note">Prosent. Velg indekser og periode.</p>
         <div class="bf-valg" id="bf-seriervalg"></div>
         <div class="bf-bytt" id="bf-periode"></div>
@@ -274,7 +275,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <section class="bf-section" id="pengeverdi">
     <h2 class="bf-sh">Hva er en krone verdt over tid?</h2>
-    <p class="bf-ingress">KPI går tilbake til 1920. Med indeksen kan et beløp fra et tidligere tidspunkt regnes om til dagens prisnivå.</p>
+    <p class="bf-ingress">Prisvekst kan måles over hvilken som helst periode. KPI går tilbake til 1920, og med indeksen kan et beløp fra et tidligere tidspunkt regnes om til dagens prisnivå.</p>
     <article class="bf-card">
       <form class="bf-penger" id="bf-penger" onsubmit="return false">
         <label>Beløp i kroner <input id="pv-belop" type="number" min="1" step="1" value="100" inputmode="numeric"></label>
@@ -290,7 +291,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <footer class="bf-foot">
     <p>Om tallene: KPI måler prisutviklingen på varer og tjenester som husholdningene i Norge etterspør. Fra januar 2026 er indeksen basert på klassifikasjonen COICOP 2018, med 2025 = 100. SSB har regnet gruppene bakover til 2015, men en del nye grupper har bare tall fra 2026.</p>
-    <p>Bidrag til prisveksten er regnet av oss med SSBs metode, i to ledd før og etter desember fordi vektene skifter i januar. Vekter finnes bare ned til tredje nivå, så bidrag kan ikke regnes for enkeltvarer. Søkeordene som ikke står i SSBs gruppenavn, er vårt valg.</p>
+    <p>Bidrag til tolvmånedersendringen er regnet av oss med SSBs metode, i to ledd før og etter desember fordi vektene skifter i januar. Bidragene er normert slik at de summerer til publisert tolvmånedersendring. Vekter finnes bare ned til tredje nivå, så bidrag kan ikke regnes for enkeltvarer. Søkeordene som ikke står i SSBs gruppenavn, er vårt valg.</p>
     <p>Kilder: SSB, statistikkbanken tabell 14700, 14706 og 14710. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/kpi">ssb.no/kpi</a>.</p>
   </footer>
   <div class="bf-tip" hidden></div>
@@ -491,67 +492,66 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
   }
 
   // ---------- Ingress og toppgrafikk ----------
-  const kpiT = SER.KPI.Tolvmanedersendring, jaeT = SER['KPI-JAE'].Tolvmanedersendring;
-  const sT = kpiT[kpiT.length - 1], sJ = jaeT[jaeT.length - 1], sM = SER.KPI.Manedsendring.at(-1);
+  const kpiT = SER.KPI.Tolvmanedersendring;
+  const sT = kpiT[kpiT.length - 1], sM = SER.KPI.Manedsendring.at(-1), sF = kpiT[kpiT.length - 13];
   const fra15 = SMND.indexOf('2015M01');
   const toppI = fra15 + d3.maxIndex(kpiT.slice(fra15));
-  $('#ingress').textContent = `Prisene på varer og tjenester var ${nb(sT)} prosent høyere i ${mndTekst(SIST)} enn ett år før. Søk etter en vare eller tjeneste for å se hvordan prisen har utviklet seg, og hvor mye den betyr for prisveksten.`;
+  $('#ingress').textContent = `Prisene på varer og tjenester var ${nb(sT)} prosent høyere i ${mndTekst(SIST)} enn ett år før. Søk etter en vare eller tjeneste for å se hvordan prisen har utviklet seg, og hvor mye den betyr for KPI.`;
   const T = n => document.querySelector(`[data-t="${n}"]`);
   T('omr').textContent = `Konsumprisindeksen · ${mndTekst(SIST)}`;
   T('stort').textContent = `${nb(sT)} prosent`;
   T('setning').textContent = `høyere priser enn i ${mndTekst(fjor(SIST))}`;
-  T('under').innerHTML = `<p>Underliggende prisvekst, målt med KPI-JAE, var ${nb(sJ)} prosent. Den holder avgiftsendringer og energipriser utenfor.</p>
-    <p>Siden 2015 var prisveksten høyest i ${mndTekst(SMND[toppI])}, med ${nb(kpiT[toppI])} prosent.</p>`;
+  T('under').innerHTML = `<p>Tallet er tolvmånedersendringen: endringen i KPI fra samme måned året før. Prisvekst kan også måles over andre perioder.</p>
+    <p>Siden 2015 var tolvmånedersendringen høyest i ${mndTekst(SMND[toppI])}, med ${nb(kpiT[toppI])} prosent.</p>`;
   T('t-mnd').innerHTML = `${sgn(sM)} <span class="bf-unit">prosent</span>`;
-  T('t-jae').innerHTML = `${nb(sJ)} <span class="bf-unit">prosent</span>`;
+  T('t-fjor-lab').textContent = `Tolvmånedersendring ett år tidligere, ${mndTekst(fjor(SIST))}`;
+  T('t-fjor').innerHTML = `${nb(sF)} <span class="bf-unit">prosent</span>`;
   T('t-ind-lab').textContent = `Indeks ${mndTekst(SIST)} (2025 = 100)`;
   T('t-ind').textContent = nb(TOT.i[sistI]);
   const kr15 = 100 * TOT.i[sistI] / TOT.i[GMND.indexOf(`2015${SIST.slice(4)}`)];
   T('t-kr-lab').textContent = `Det som kostet 100 kroner i ${mndTekst(`2015${SIST.slice(4)}`)}`;
   T('t-kr').innerHTML = `${nb(kr15, 0)} <span class="bf-unit">kroner nå</span>`;
-  legend('topp', [['bf-sw-line', FARGE.gronn, 'KPI'], ['bf-sw-line', FARGE.bla, 'KPI-JAE (underliggende)']]);
+  document.querySelector('[data-leg="topp"]').innerHTML = '<span class="bf-note">Tolvmånedersendring i KPI, prosent</span>';
   const sm15 = SMND.slice(fra15);
   linjediagram($('#fig-topp'), [
-    { navn: 'KPI-JAE', farge: FARGE.bla, mnd: sm15, v: jaeT.slice(fra15) },
     { navn: 'KPI', farge: FARGE.gronn, mnd: sm15, v: kpiT.slice(fra15), bredde: 2.5 },
-  ], { aria: 'Tolvmånedersvekst i KPI og KPI-JAE fra 2015', hoyreMarg: 84, marker: [{ k: SMND[toppI], v: kpiT[toppI], tekst: `Topp ${nb(kpiT[toppI])}` }] });
-  tabell('topp', ['Måned', 'KPI, prosent', 'KPI-JAE, prosent'], sm15.map((k, i) => [mndTekst(k), nb(kpiT[fra15 + i]), nb(jaeT[fra15 + i])]).reverse());
+  ], { aria: 'Tolvmånedersendring i KPI fra 2015', hoyreMarg: 64, marker: [{ k: SMND[toppI], v: kpiT[toppI], tekst: `Topp ${nb(kpiT[toppI])}` }] });
+  tabell('topp', ['Måned', 'Tolvmånedersendring, prosent'], sm15.map((k, i) => [mndTekst(k), nb(kpiT[fra15 + i])]).reverse());
 
   // ---------- Bidrag ----------
   const HOVED = D.grupper.filter(g => g.l === 1);
   const vi = VEKTAAR.length - 1;
   const bidragRader = HOVED.map(g => ({ k: g.k, navn: kort(g.k), v: g.b, w: g.w[vi], t: g.t[sistI] })).sort((a, b) => b.v - a.v);
   const sumB = d3.sum(bidragRader, r => r.v);
-  document.querySelector('[data-h="bidrag"]').textContent = `Bidrag til prisveksten fra hver hovedgruppe, ${mndTekst(SIST)}`;
+  document.querySelector('[data-h="bidrag"]').textContent = `Bidrag til tolvmånedersendringen fra hver hovedgruppe, ${mndTekst(SIST)}`;
   bidragRader.forEach((r, i) => { r.farge = i < 3 ? FARGE.gronn : FARGE.dempet; });
   stolper($('#fig-bidrag'), bidragRader, {
-    fmt: v => nb(v, 2), tickDes: 1, aria: 'Bidrag til tolvmånedersveksten per hovedgruppe',
+    fmt: v => nb(v, 2), tickDes: 1, aria: 'Bidrag til tolvmånedersendringen per hovedgruppe',
     hoyreTekst: r => `${nb(r.w / 10)} % × ${sgn(r.t)} %`, hoyreHode: 'vekt × endring',
     tip: r => `<div class="bf-tip-h">${esc(G.get(r.k).n)}</div>${tipRad(r.farge, 'Bidrag', `${nb(r.v, 2)} prosentpoeng`)}${tipRad('transparent', 'Vekt', `${nb(r.w / 10)} %`)}${tipRad('transparent', 'Endring siste tolv måneder', `${sgn(r.t)} %`)}`,
     klikk: k => apne(k, { rull: true }),
   });
-  T('bidrag-merk').textContent = `Bidragene summerer til ${nb(sumB, 2)} prosentpoeng. Publisert tolvmånedersvekst er ${nb(sT)} prosent. Forskjellen skyldes at indeksene er avrundet til én desimal.`;
+  T('bidrag-merk').textContent = `Regnet med SSBs metode for bidrag og normert slik at bidragene summerer til publisert tolvmånedersendring, ${nb(sT)} prosent.`;
   tabell('bidrag', ['Hovedgruppe', 'Vekt, prosent', 'Endring, prosent', 'Bidrag, prosentpoeng'], bidragRader.map(r => [G.get(r.k).n, nb(r.w / 10), sgn(r.t), nb(r.v, 2)]));
 
   // Stablede søyler over tid
   const BMND = mndListe(D.bidrag.start, D.bidrag.serier['01'].length);
-  const storste = bidragRader.slice(0, 4).map(r => r.k);
-  const SFARGE = [FARGE.gronn, FARGE.bla, FARGE.oker, FARGE.lilla];
-  const kat = [...storste.map((k, i) => ({ k, navn: kort(k), farge: SFARGE[i] })), { k: 'andre', navn: 'Andre grupper', farge: FARGE.dempet }];
+  const SFARGE = [FARGE.oker, FARGE.gronn, FARGE.bla, FARGE.lilla];
+  const kat = [...D.bidrag.stabel.map((s, i) => ({ k: 's' + i, navn: s.navn, farge: SFARGE[i] })), { k: 'andre', navn: 'Andre grupper', farge: FARGE.dempet }];
   const stabelData = BMND.map((m, i) => {
     const o = { m };
-    storste.forEach(k => { o[k] = D.bidrag.serier[k][i]; });
-    o.andre = d3.sum(HOVED.filter(g => !storste.includes(g.k)), g => D.bidrag.serier[g.k][i]);
+    D.bidrag.stabel.forEach((s, j) => { o['s' + j] = s.v[i]; });
+    o.andre = D.bidrag.andre[i];
     o.tolv = TOT.t[GMND.indexOf(m)];
     return o;
   });
-  legend('stabel', [...kat.map(c => ['bf-sw-sq', c.farge, c.navn]), ['bf-sw-line', FARGE.tekst, 'Tolvmånedersvekst i KPI']]);
+  legend('stabel', [...kat.map(c => ['bf-sw-sq', c.farge, c.navn]), ['bf-sw-line', FARGE.tekst, 'Tolvmånedersendring i KPI']]);
   responsiv($('#fig-stabel'), w => {
     const h = 300, m = { t: 12, r: 12, b: 26, l: 36 }, iw = w - m.l - m.r, ih = h - m.t - m.b;
     const serier = d3.stack().keys(kat.map(c => c.k)).offset(d3.stackOffsetDiverging)(stabelData);
     const x = d3.scaleBand().domain(BMND).range([0, iw]).paddingInner(0.25);
     const y = d3.scaleLinear().domain([Math.min(0, d3.min(serier, s => d3.min(s, d => d[0]))), Math.max(d3.max(serier, s => d3.max(s, d => d[1])), d3.max(stabelData, d => d.tolv))]).nice().range([ih, 0]);
-    const svg = d3.select('#fig-stabel').html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', 'Bidrag til tolvmånedersveksten per måned fra 2017');
+    const svg = d3.select('#fig-stabel').html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', 'Bidrag til tolvmånedersendringen per måned fra 2017');
     const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
     y.ticks(5).forEach(t => {
       g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
@@ -565,10 +565,10 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
     g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent').on('pointermove', evt => {
       const [px] = d3.pointer(evt); const i = Math.max(0, Math.min(BMND.length - 1, Math.floor(px / x.step()))); const d = stabelData[i];
       regel.style('display', null).attr('x', x(d.m) - 1).attr('width', x.bandwidth() + 2);
-      visTip(`<div class="bf-tip-h">${mndTekst(d.m)}</div>${kat.map(c => tipRad(c.farge, c.navn, nb(d[c.k], 2))).join('')}${tipRad(FARGE.tekst, 'Tolvmånedersvekst', `${nb(d.tolv)} %`)}`, evt);
+      visTip(`<div class="bf-tip-h">${mndTekst(d.m)}</div>${kat.map(c => tipRad(c.farge, c.navn, nb(d[c.k], 2))).join('')}${tipRad(FARGE.tekst, 'Tolvmånedersendring', `${nb(d.tolv)} %`)}`, evt);
     }).on('pointerleave', () => { regel.style('display', 'none'); skjulTip(); });
   });
-  tabell('stabel', ['Måned', ...kat.map(c => c.navn), 'Tolvmånedersvekst'], stabelData.map(d => [mndTekst(d.m), ...kat.map(c => nb(d[c.k], 2)), nb(d.tolv)]).reverse());
+  tabell('stabel', ['Måned', ...kat.map(c => c.navn), 'Tolvmånedersendring'], stabelData.map(d => [mndTekst(d.m), ...kat.map(c => nb(d[c.k], 2)), nb(d.tolv)]).reverse());
 
   // ---------- Handlekurven ----------
   const vekRader = HOVED.map(g => ({ k: g.k, navn: kort(g.k), v: g.w[vi] / 10, merke: g.w[0] / 10, farge: FARGE.gronn })).sort((a, b) => b.v - a.v);
@@ -578,12 +578,14 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
     fmt: v => `${nb(v)} %`, aria: 'Vekter per hovedgruppe', klikk: k => apne(k, { rull: true }),
     tip: r => `<div class="bf-tip-h">${esc(G.get(r.k).n)}</div>${tipRad(FARGE.gronn, String(VEKTAAR[vi]), `${nb(r.v)} %`)}${tipRad(FARGE.tekst, String(VEKTAAR[0]), `${nb(r.merke)} %`)}`,
   });
+  { const b = G.get('04'), bh = G.get('04.2'), i25 = VEKTAAR.indexOf(2025);
+    if (i25 >= 0) T('vekt-merk').textContent = `Bolig og strøm økte fra ${nb(b.w[i25] / 10)} til ${nb(b.w[vi] / 10)} prosent i ${VEKTAAR[vi]}. Nesten hele økningen er beregnet husleie for selveiere, som gikk fra ${nb(bh.w[i25] / 10)} til ${nb(bh.w[vi] / 10)} prosent etter revisjonen av nasjonalregnskapet.`; }
   tabell('vekt', ['Hovedgruppe', ...VEKTAAR.map(String)], HOVED.map(g => [g.n, ...g.w.map(w => nb(w / 10))]));
 
-  // ---------- Flere KPI-er ----------
+  // ---------- Avledede prisindekser ----------
   const SERIEINFO = {
     'KPI': { farge: FARGE.gronn, tekst: 'Alle varer og tjenester, med avgifter og energi.' },
-    'KPI-JAE': { farge: FARGE.bla, tekst: 'Avgiftsendringer holdt utenfor, og uten energivarer. Brukes ofte som mål på underliggende prisvekst.' },
+    'KPI-JAE': { farge: FARGE.bla, tekst: 'Avgiftsendringer holdt utenfor, og uten energivarer.' },
     'KPI-JA': { farge: FARGE.oker, tekst: 'Avgiftsendringer holdt utenfor. Ellers som KPI.' },
     'KPI-JE': { farge: FARGE.lilla, tekst: 'Uten energivarer som strøm og drivstoff.' },
     'KPI-JEL': { farge: FARGE.morkbla, tekst: 'Uten elektrisitet.' },
@@ -598,7 +600,7 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
   function tegnSerier() {
     const fra = SMND.indexOf(periode);
     const valgt = Object.keys(SERIEINFO).filter(s => valgte.has(s));
-    linjediagram($('#fig-serier'), valgt.map(s => ({ navn: s, farge: SERIEINFO[s].farge, mnd: SMND.slice(fra), v: SER[s].Tolvmanedersendring.slice(fra), bredde: s === 'KPI' ? 2.5 : 2 })), { aria: 'Tolvmånedersvekst i KPI og avledede indekser', hoyreMarg: 110 });
+    linjediagram($('#fig-serier'), valgt.map(s => ({ navn: s, farge: SERIEINFO[s].farge, mnd: SMND.slice(fra), v: SER[s].Tolvmanedersendring.slice(fra), bredde: s === 'KPI' ? 2.5 : 2 })), { aria: 'Tolvmånedersendring i KPI og avledede prisindekser', hoyreMarg: 110 });
     tabell('serier', ['Måned', ...valgt], SMND.slice(fra).map((k, i) => [mndTekst(k), ...valgt.map(s => nb(SER[s].Tolvmanedersendring[fra + i]))]).reverse());
   }
   $('#bf-seriervalg').addEventListener('click', e => {
@@ -624,8 +626,8 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
   $('#bf-serieliste').innerHTML = Object.keys(SERIEINFO).map(s => `<li><span class="t">${esc(D.serier.navn[s] || s)}</span><span class="x">${esc(SERIEINFO[s].tekst)}</span><span class="n">${nb(SER[s].Tolvmanedersendring.at(-1))} %</span></li>`).join('');
   const sJA = SER['KPI-JA'].Tolvmanedersendring.at(-1);
   T('serie-merk').textContent = sJA > sT
-    ? `KPI-JA er nå ${nb(sJA - sT)} prosentpoeng høyere enn KPI. Det betyr at endringer i avgifter har trukket prisveksten i KPI ned.`
-    : `KPI-JA er nå ${nb(sT - sJA)} prosentpoeng lavere enn KPI. Det betyr at endringer i avgifter har trukket prisveksten i KPI opp.`;
+    ? `KPI-JA er nå ${nb(sJA - sT)} prosentpoeng høyere enn KPI. Det betyr at endringer i avgifter har trukket tolvmånedersendringen i KPI ned.`
+    : `KPI-JA er nå ${nb(sT - sJA)} prosentpoeng lavere enn KPI. Det betyr at endringer i avgifter har trukket tolvmånedersendringen i KPI opp.`;
 
   // ---------- Pengeverdi ----------
   const HI = D.historisk.i;
@@ -639,7 +641,7 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
     if (HMND.indexOf(k) < 0) { k = k < HMND[0] ? HMND[0] : HMND.at(-1); $('#pv-aar').value = k.slice(0, 4); $('#pv-mnd').value = k.slice(5); }
     const i0 = HMND.indexOf(k), iN = HMND.length - 1;
     const verdi = belop * HI[iN] / HI[i0];
-    $('#pv-svar').innerHTML = `${nb(belop, 0)} kroner i ${mndTekst(k)} tilsvarer <b>${nb(verdi, 0)} kroner</b> i ${mndTekst(HMND[iN])}.`;
+    $('#pv-svar').innerHTML = `${nb(belop, 0)} kroner i ${mndTekst(k)} tilsvarer <b>${nb(verdi, 0)} kroner</b> i ${mndTekst(HMND[iN])}. Prisveksten i perioden var ${nb(100 * (HI[iN] / HI[i0] - 1), 0)} prosent.`;
     const el = $('#fig-penger');
     const j = tegnere.findIndex(t => t.el === el); if (j >= 0) tegnere.splice(j, 1);
     const ny = el.cloneNode(false); el.replaceWith(ny);
@@ -732,7 +734,7 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
   const kortEl = $('#bf-kort');
   // Merknader til enkeltgrupper. Må bekreftes av fagseksjonen.
   const MERKNAD = {
-    '04.5.1': 'Strømprisen svinger mye og har stor betydning for KPI. Hvordan strømstøtten og Norgespris inngår i indeksen, er ikke avklart i denne prototypen.',
+    '04.5.1': 'KPI måler prisen husholdningene faktisk betaler. Strømstøtten regnes derfor som en negativ avgift og trekker indeksen ned. Hvordan Norgespris inngår, er ikke avklart i denne prototypen.',
     '04.2.1': 'Selveiere betaler ingen husleie. SSB beregner hva det ville kostet å leie en tilsvarende bolig, og tar det med i KPI i stedet for boligprisene.',
     '04.2': 'Selveiere betaler ingen husleie. SSB beregner hva det ville kostet å leie en tilsvarende bolig, og tar det med i KPI i stedet for boligprisene.',
   };
@@ -769,9 +771,9 @@ const DATA = /*__INKLUDER:build/kpi.json__*/;
     if (egenVekt) {
       const b = g.b;
       fakta.push(`<p><b>Vekt ${VEKTAAR[vi]}:</b> ${nb(g.w[vi] / 10, 2)} prosent av husholdningenes forbruk.</p>`);
-      if (b != null) fakta.push(`<p><b>Bidrag til prisveksten:</b> ${nb(b, 2)} prosentpoeng av ${nb(totT)}.</p>`);
+      if (b != null) fakta.push(`<p><b>Bidrag til tolvmånedersendringen:</b> ${nb(b, 2)} prosentpoeng av ${nb(totT)}.</p>`);
     } else if (vf && vf.k !== '00') {
-      fakta.push(`<p><b>Ingen egen vekt.</b> SSB oppgir vekter bare ned til tredje nivå. Gruppen ligger under <button type="button" class="bf-lenke" data-k="${vf.k}">${esc(vf.n)}</button>, som veier ${nb(vf.w[vi] / 10, 2)} prosent. Derfor kan vi ikke regne ut hvor mye akkurat denne trekker prisveksten.</p>`);
+      fakta.push(`<p><b>Ingen egen vekt.</b> SSB oppgir vekter bare ned til tredje nivå. Gruppen ligger under <button type="button" class="bf-lenke" data-k="${vf.k}">${esc(vf.n)}</button>, som veier ${nb(vf.w[vi] / 10, 2)} prosent. Derfor kan vi ikke regne ut hvor mye akkurat denne trekker KPI.</p>`);
     }
     if (MERKNAD[k]) fakta.push(`<p class="bf-varsel">${esc(MERKNAD[k])}</p>`);
     if (harTolv && Math.abs(tv) >= 10 && !egenVekt) fakta.push(`<p class="bf-varsel">Store endringer på en enkelt vare kan trekke lite i hele KPI hvis varen veier lite.</p>`);

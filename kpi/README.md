@@ -2,7 +2,7 @@
 
 > **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger, søkeord og overskrifter er ikke kvalitetssikret ennå.
 
-**Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/kpi/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/kpi/index.html)
+**Se prototypen:** [index.html](index.html) (på GitHub Pages: `…/ssb-formidlingsprototyper/kpi/`)
 
 Prototypen viser prisveksten i KPI og lar deg søke på alle 336 vare- og tjenestegrupper i indeksen, med tall fra januar 2015 til september 2026. Valgt gruppe ligger i adressen, for eksempel `#gruppe=04.5.1` for strøm.
 
@@ -13,21 +13,20 @@ Prototypen viser prisveksten i KPI og lar deg søke på alle 336 vare- og tjenes
 | 1 | Hvor mye stiger prisene nå? | Toppgrafikken med KPI og KPI-JAE fra 2015 |
 | 2 | Hva driver prisveksten? | Bidrag per hovedgruppe, og bidrag per måned fra 2017 |
 | 3 | Hva er med i KPI, og hvor mye veier det? | Søket øverst, kortet for hver gruppe og vektene |
-| 4 | Hvorfor finnes det flere KPI-er? | De åtte seriene i tabell 14706 sammenlignet |
+| 4 | Hva viser de avledede prisindeksene? | De åtte seriene i tabell 14706 sammenlignet |
 | 5 | Hva er en krone verdt over tid? | Pengeverdi fra 1920 |
 
 Øverst står «Slik leser du KPI», fire punkter om de vanligste misforståelsene.
 
 ## Til faglig kontroll
 
-Bakgrunnen står i:
+Det vi trenger vurdert, står i [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md). Bakgrunnen står i:
 
 - [docs/01-innsikt.md](docs/01-innsikt.md): nøkkelbudskap, begreper og hypoteser om misforståelser
-- [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som er tolket i grafikken
+- [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som ble tolket i grafikken i steg 2, nå samlet i 05
 - [docs/03-kildekart.md](docs/03-kildekart.md): tabeller, spørringer, hierarkiet og bidragsmetoden
 - [docs/04-byggenotat.md](docs/04-byggenotat.md): hva som er bygget, kontroller og kjente svakheter
-- [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md): samlet kvalitetssikring
-- - [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
+- [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
 
 ## Kilder
 
