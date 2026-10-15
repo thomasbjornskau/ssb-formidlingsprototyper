@@ -2,7 +2,7 @@
 
 > **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger, søkeord og overskrifter er ikke kvalitetssikret ennå.
 
-**Se prototypen:** [index.html](index.html) (på GitHub Pages: `…/ssb-formidlingsprototyper/kpi/`)
+**Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/kpi/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/kpi/index.html)
 
 Prototypen viser prisveksten i KPI og lar deg søke på alle 336 vare- og tjenestegrupper i indeksen, med tall fra januar 2015 til september 2026. Valgt gruppe ligger i adressen, for eksempel `#gruppe=04.5.1` for strøm.
 
