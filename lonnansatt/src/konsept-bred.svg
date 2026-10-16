@@ -15,9 +15,9 @@
 <text x="54.0" y="244" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">lønn, stillingsprosent og</text>
 <text x="54.0" y="265" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">yrke for hver jobb.</text>
 <rect x="54.0" y="290" width="220.5" height="73" fill="#f3f5f5"/>
-<text x="64.0" y="308" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Ingen egen undersøkelse</text>
-<text x="64.0" y="327" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">og intet utvalg. Alle</text>
-<text x="64.0" y="346" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">jobber med lønn er med.</text>
+<text x="64.0" y="308" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Fulltelling, ikke utvalg.</text>
+<text x="64.0" y="327" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Alle jobber med lønn i</text>
+<text x="64.0" y="346" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">a-meldingen er med.</text>
 <line x1="299.5" y1="122" x2="310.5" y2="122.0" stroke="#274246" stroke-width="2"/>
 <polygon points="319.5,122.0 310.5,127.0 310.5,117.0" fill="#274246"/>
 <rect x="326.5" y="96" width="256.5" height="371" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>

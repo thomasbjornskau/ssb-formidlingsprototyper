@@ -41,7 +41,7 @@ def kort_innhold():
             "tittel": "Arbeidsgiveren rapporterer",
             "blokker": [
                 ("tekst", "Alle som betaler lønn, sender hver måned en a-melding til Skatteetaten: lønn, stillingsprosent og yrke for hver jobb."),
-                ("merknad", "Ingen egen undersøkelse og intet utvalg. Alle jobber med lønn er med."),
+                ("merknad", "Fulltelling, ikke utvalg. Alle jobber med lønn i a-meldingen er med."),
             ],
         },
         {   # [K2][K6]

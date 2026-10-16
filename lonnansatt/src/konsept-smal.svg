@@ -13,8 +13,8 @@
 <text x="34" y="203" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">en a-melding til Skatteetaten: lønn,</text>
 <text x="34" y="224" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">stillingsprosent og yrke for hver jobb.</text>
 <rect x="34" y="249" width="322" height="54" fill="#f3f5f5"/>
-<text x="44" y="267" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Ingen egen undersøkelse og intet</text>
-<text x="44" y="286" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">utvalg. Alle jobber med lønn er med.</text>
+<text x="44" y="267" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Fulltelling, ikke utvalg. Alle jobber</text>
+<text x="44" y="286" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">med lønn i a-meldingen er med.</text>
 <line x1="48" y1="333" x2="48.0" y2="346.0" stroke="#274246" stroke-width="2"/>
 <polygon points="48.0,355.0 43.0,346.0 53.0,346.0" fill="#274246"/>
 <rect x="16" y="361" width="358" height="262" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
