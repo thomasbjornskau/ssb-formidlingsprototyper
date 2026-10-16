@@ -1,0 +1,79 @@
+{
+ "statistikk": "Lønn",
+ "kortnavn": "lonnansatt",
+ "versjon": "1.0",
+ "dato_valg": "2026-10-15",
+ "merknad": "URL-ene følger PxWebApi v2 i samme form som muh, kpi og regfram (selection[...]). De er ikke kjørt fra arbeidsområdet, som ikke når data.ssb.no. Rådataene i data/raw/ er hentet gjennom SSB-tilkoblingen som CSV og gjenoppbygd som json-stat2. Dimensjonene står i rekkefølgen fra CSV-svaret, ikke nødvendigvis tabellens.",
+ "valg": "Yrkesvelgeren viser nivå og spredning: gjennomsnitt, median, kvartiler, antall jobber og heltidsekvivalenter, for begge kjønn og per kjønn, 2016–2025. Ikke sammensetning eller sektor per yrke, og ikke synonymsøk (valgt av Thomas 15.10.2026).",
+ "manglende_verdier": {
+  ":": "Konfidensielt. Undertrykt fordi gruppen har færre enn 100 arbeidsforhold uten imputert lønn, eller et dominerende foretak. Brukes for yrker og per kjønn. Vises som «tallet er skjult», aldri som null.",
+  ".": "Kan ikke forekomme. Brukes for yrker uten jobber i året. Vises som «ingen jobber registrert».",
+  "..": "Tall mangler. Brukes for endringsrater i første år av serien (11536: 2015 og 2016, 14858: 1970).",
+  "grense desil 10 og persentil 100": "Har ingen øvre grense i 13860 og står med «:». Er ikke undertrykt, men finnes ikke."
+ },
+ "fallgruver": [
+  "Bruk publiserte rater for sektorer og totalen. For enkeltyrker finnes ingen publiserte rater i statistikkbanken; vekst regnet fra kroner traff de 20 ratene i artikkelen «Høyest lønnsvekst i toppen» på første desimal (kontroll K4).",
+  "Tidsseriene starter i 2016. 2015 er per september og etter gammel arbeidstidsmetode, og er ikke sammenlignbar.",
+  "Hovedgruppe 3 heter «3_01-03» i 11418 og omfatter militære yrker (01–03) sammen med høyskoleyrkene. «3» finnes ikke som egen kode.",
+  "Antall jobber er ikke antall personer. Summen av jobber i yrkene er heller ikke lik totalen, fordi undertrykte yrker mangler.",
+  "Vektet snitt av yrkene gjenskaper totalen bare med heltidsekvivalenter som vekt, ikke med antall jobber (62 085 mot 59 444 i 2025, publisert 62 070).",
+  "11418 og 11419 er oppdatert på ulike datoer og avviker med 10 kr for menn i 2023 (kontroll K7). Bruk 11418 for yrker og 11419 for totalen, og si det i kildelinjen.",
+  "Månedslønn er gjennomsnitt per heltidsekvivalent, overtid er per jobb. De kan ikke legges sammen."
+ ],
+ "datasett": [
+  {
+   "id": "yrker",
+   "tabell": "11418",
+   "svarer_paa": [
+    3,
+    4
+   ],
+   "beskrivelse": "Månedslønn per yrke (STYRK-08, alle nivåer): gjennomsnitt, median, kvartiler, antall jobber og heltidsekvivalenter, etter kjønn. Alle sektorer, alle arbeidstider.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11418/data?lang=no&outputFormat=json-stat2&selection%5BMaaleMetode%5D=02,01,051,061,10,11&selection%5BYrke%5D=*&selection%5BSektor%5D=ALLE&selection%5BKjonn%5D=0,1,2&selection%5BAvtaltVanlig%5D=0&selection%5BContentsCode%5D=Manedslonn&selection%5BTid%5D=from(2016)",
+   "omfang": "6 mål × 582 yrkeskoder × 3 kjønn × 2016–2025 = 104 760 celler. 407 firesifrede koder, 406 uten «uoppgitt». Prototypen trenger bare firesifret og hovedgrupper (417 koder)."
+  },
+  {
+   "id": "hovedtall",
+   "tabell": "11419",
+   "svarer_paa": [
+    1,
+    4,
+    5
+   ],
+   "beskrivelse": "Månedslønn og delene av den (avtalt, uregelmessige tillegg, bonus), overtid og avtalt arbeidstid for alle yrker, etter sektor, kjønn og heltid/deltid.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11419/data?lang=no&outputFormat=json-stat2&selection%5BMaaleMetode%5D=02,01,10,11&selection%5BYrke%5D=0-9&selection%5BSektor%5D=ALLE,A%2BB%2BD%2BE,6500,6100&selection%5BKjonn%5D=0,1,2&selection%5BAvtaltVanlig%5D=0,5,6&selection%5BContentsCode%5D=Manedslonn,AvtaltManedslonn,Uregtil,Bonus,Overtid,AvtArbTid&selection%5BTid%5D=from(2016)",
+   "omfang": "4 mål × 4 sektorer × 3 kjønn × 3 arbeidstider × 6 variabler × 2016–2025 = 8 640 celler."
+  },
+  {
+   "id": "desiler",
+   "tabell": "13860",
+   "svarer_paa": [
+    2,
+    4
+   ],
+   "beskrivelse": "Gjennomsnitt og øvre grense per desil og for persentil 91–100, alle næringer, etter kjønn. Toppgrafikk A.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13860/data?lang=no&outputFormat=json-stat2&selection%5BKjonn%5D=0,1,2&selection%5BNACE2007%5D=A-Z&selection%5BDesiler%5D=*&selection%5BContentsCode%5D=Manedslonn,GrvManedslonn&selection%5BTid%5D=from(2016)",
+   "omfang": "3 kjønn × 20 desiler og persentiler × 2 variabler × 2016–2025 = 1 200 celler."
+  },
+  {
+   "id": "arslonn_utbetalt",
+   "tabell": "11536",
+   "svarer_paa": [
+    5
+   ],
+   "beskrivelse": "Utbetalt årslønn og publisert endring, etter sektor.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11536/data?lang=no&outputFormat=json-stat2&selection%5BSektor%5D=ALLE,A%2BB%2BD%2BE,6500,6100&selection%5BContentsCode%5D=Arslonn,ArslonnEndring&selection%5BTid%5D=*",
+   "omfang": "4 sektorer × 2 variabler × 2015–2025 = 88 celler."
+  },
+  {
+   "id": "arslonn_palopt",
+   "tabell": "14858",
+   "svarer_paa": [
+    5
+   ],
+   "beskrivelse": "Påløpt årslønn, nominell endring og reallønnsendring, alle lønnstakere.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14858/data?lang=no&outputFormat=json-stat2&selection%5BContentsCode%5D=Arslonn,ArslonnEndring,ReallonnEndring&selection%5BTid%5D=*",
+   "omfang": "3 variabler × 1970–2025 = 168 celler."
+  }
+ ]
+}

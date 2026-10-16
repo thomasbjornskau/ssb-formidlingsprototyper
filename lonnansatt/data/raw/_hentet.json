@@ -1,0 +1,66 @@
+{
+ "hentet": "2026-10-15",
+ "metode": "SSB-tilkoblingen (ssb_get_data, CSV). Store svar lagret direkte til fil, små svar hentet fra øktloggen; ingen tall er skrevet av for hånd i rådataene",
+ "merknad": "Statistikken publiseres årlig. Tallene gjelder publiseringen 05.02.2026 med senere oppdateringer av 11418 (28.08.2026), 11536 (12.03.2026) og 14858 (20.08.2026). Neste publisering er 04.02.2027.",
+ "datasett": [
+  {
+   "id": "yrker",
+   "tabell": "11418",
+   "updated": "2026-08-28T06:00:00Z",
+   "celler": 104760,
+   "tomme": 13843,
+   "status": {
+    ":": 12655,
+    ".": 1188
+   },
+   "fil": "data/raw/yrker.json",
+   "bytes": 780114
+  },
+  {
+   "id": "hovedtall",
+   "tabell": "11419",
+   "updated": "2026-02-05T07:00:00Z",
+   "celler": 8640,
+   "tomme": 0,
+   "status": {},
+   "fil": "data/raw/hovedtall.json",
+   "bytes": 53299
+  },
+  {
+   "id": "desiler",
+   "tabell": "13860",
+   "updated": "2026-02-05T07:00:00Z",
+   "celler": 1200,
+   "tomme": 60,
+   "status": {
+    ":": 60
+   },
+   "fil": "data/raw/desiler.json",
+   "bytes": 9842
+  },
+  {
+   "id": "arslonn_utbetalt",
+   "tabell": "11536",
+   "updated": "2026-03-12T07:00:00Z",
+   "celler": 88,
+   "tomme": 8,
+   "status": {
+    "..": 8
+   },
+   "fil": "data/raw/arslonn_utbetalt.json",
+   "bytes": 1793
+  },
+  {
+   "id": "arslonn_palopt",
+   "tabell": "14858",
+   "updated": "2026-08-20T06:00:00Z",
+   "celler": 168,
+   "tomme": 2,
+   "status": {
+    "..": 2
+   },
+   "fil": "data/raw/arslonn_palopt.json",
+   "bytes": 3039
+  }
+ ]
+}

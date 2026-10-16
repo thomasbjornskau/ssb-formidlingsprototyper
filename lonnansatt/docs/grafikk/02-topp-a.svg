@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img">
+<title>Minst 6 av 10 har lavere lønn enn gjennomsnittet</title>
+<desc>Gjennomsnittlig månedslønn i hver tidel av heltidsekvivalentene, november 2025. Gjennomsnittet er 62 070 kroner, medianen 55 800. Hele tidel 1 til 6 ligger under gjennomsnittet.</desc>
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40" y="46" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">LØNN · NOVEMBER 2025</text>
+<text x="40" y="122" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="66" font-weight="700" fill="#274246" text-anchor="start">6 av 10</text>
+<text x="40" y="164" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#274246" text-anchor="start">Minst 6 av 10 har lavere månedslønn enn</text>
+<text x="40" y="191" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#274246" text-anchor="start">gjennomsnittet.</text>
+<text x="40" y="225" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Gjennomsnittet var 62 070 kr, medianen 55 800 kr.</text>
+<text x="40" y="246" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">De 10 prosent best betalte hadde 124 470 kr i snitt og drar</text>
+<text x="40" y="267" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">gjennomsnittet opp.</text>
+<text x="40" y="288" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Regnet i heltidsekvivalenter.</text>
+<text x="640" y="48" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start">kroner per måned</text>
+<line x1="692" y1="252.0" x2="1000" y2="252.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="684" y="256.0" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">0</text>
+<line x1="692" y1="182.0" x2="1000" y2="182.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="684" y="186.0" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">50 000</text>
+<line x1="692" y1="112.0" x2="1000" y2="112.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="684" y="116.0" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">100 000</text>
+<rect x="706.8" y="206.5" width="19.2" height="45.5" fill="#00824d"/>
+<text x="716.4" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">1</text>
+<rect x="735.5999999999999" y="193.872" width="19.2" height="58.127999999999986" fill="#00824d"/>
+<text x="745.1999999999999" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2</text>
+<rect x="764.4" y="188.006" width="19.2" height="63.994" fill="#00824d"/>
+<text x="774.0" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">3</text>
+<rect x="793.1999999999999" y="182.322" width="19.2" height="69.678" fill="#00824d"/>
+<text x="802.8" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">4</text>
+<rect x="822.0" y="176.75" width="19.2" height="75.25" fill="#00824d"/>
+<text x="831.6" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">5</text>
+<rect x="850.8" y="170.73000000000002" width="19.2" height="81.26999999999998" fill="#00824d"/>
+<text x="860.4" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">6</text>
+<rect x="879.5999999999999" y="163.786" width="19.2" height="88.214" fill="#b9c5c6"/>
+<text x="889.1999999999999" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">7</text>
+<rect x="908.4" y="154.02800000000002" width="19.2" height="97.97199999999998" fill="#b9c5c6"/>
+<text x="918.0" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">8</text>
+<rect x="937.1999999999999" y="137.466" width="19.2" height="114.53399999999999" fill="#b9c5c6"/>
+<text x="946.8" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">9</text>
+<rect x="966.0" y="77.74199999999999" width="19.2" height="174.258" fill="#b9c5c6"/>
+<text x="975.6" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">10</text>
+<text x="975.6" y="71.74199999999999" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#274246" text-anchor="middle">124 470</text>
+<text x="702" y="288" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="400" fill="#5e787a" text-anchor="start">Tidel (desil), fra lavest til høyest lønn</text>
+<line x1="694" y1="165.102" x2="996" y2="165.102" stroke="#274246" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1002" y="160.102" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="start">Gjennomsnitt 62 070</text>
+<line x1="694" y1="173.88" x2="996" y2="173.88" stroke="#274246" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="1002" y="187.88" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="start">Median 55 800</text>
+<rect x="1002" y="212" width="10" height="10" fill="#00824d"/>
+<text x="1018" y="221" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="400" fill="#5e787a" text-anchor="start">Hele tidelen under</text>
+<text x="1018" y="235" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="400" fill="#5e787a" text-anchor="start">gjennomsnittet</text>
+<text x="1150" y="318" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">Kilde: SSB, tabell 13860 og 11419. Sist oppdatert: 05.02.2026.</text>
+</svg>

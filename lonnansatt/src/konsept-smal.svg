@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1527" viewBox="0 0 390 1527" role="img">
+<title>Slik lages tallene</title>
+<desc>Fire trinn fra arbeidsgiverens a-melding til publisert månedslønn, og hva som ikke er med i månedslønna.</desc>
+<rect x="0" y="0" width="390" height="1527" fill="#ffffff"/>
+<text x="16" y="38" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="24" font-weight="700" fill="#274246" text-anchor="start">Slik lages tallene</text>
+<text x="16" y="64" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Lønnsstatistikken: fra lønnsslippen til</text>
+<text x="16" y="83" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">publisert tall</text>
+<rect x="16" y="120" width="358" height="207" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="146" r="14" fill="#274246"/>
+<text x="48" y="151.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="72" y="152" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Arbeidsgiveren rapporterer</text>
+<text x="34" y="182" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Alle som betaler lønn, sender hver måned</text>
+<text x="34" y="203" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">en a-melding til Skatteetaten: lønn,</text>
+<text x="34" y="224" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">stillingsprosent og yrke for hver jobb.</text>
+<rect x="34" y="249" width="322" height="54" fill="#f3f5f5"/>
+<text x="44" y="267" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Ingen egen undersøkelse og intet</text>
+<text x="44" y="286" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">utvalg. Alle jobber med lønn er med.</text>
+<line x1="48" y1="333" x2="48.0" y2="346.0" stroke="#274246" stroke-width="2"/>
+<polygon points="48.0,355.0 43.0,346.0 53.0,346.0" fill="#274246"/>
+<rect x="16" y="361" width="358" height="262" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="387" r="14" fill="#274246"/>
+<text x="48" y="392.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="72" y="393" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Én uke i november</text>
+<text x="34" y="423" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">SSB tar med jobbene som er aktive i uka</text>
+<text x="34" y="444" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">med den 16. november, og som har fått</text>
+<text x="34" y="465" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">lønn den måneden. Én person kan ha flere</text>
+<text x="34" y="486" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">jobber.</text>
+<rect x="34" y="511" width="322" height="88" fill="#ecfeed"/>
+<text x="44" y="529" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">November 2025</text>
+<text x="44" y="555" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Jobber med lønn</text>
+<text x="346" y="555" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">3 080 913</text>
+<text x="44" y="577" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Regnet om til heltid</text>
+<text x="346" y="577" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">2 418 216</text>
+<line x1="48" y1="629" x2="48.0" y2="642.0" stroke="#274246" stroke-width="2"/>
+<polygon points="48.0,651.0 43.0,642.0 53.0,642.0" fill="#274246"/>
+<rect x="16" y="657" width="358" height="306" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="683" r="14" fill="#274246"/>
+<text x="48" y="688.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="72" y="689" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Lønna regnes om til heltid</text>
+<text x="34" y="719" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Deltidslønn regnes om til hva den ville</text>
+<text x="34" y="740" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">vært i full stilling. Tillegg og bonus</text>
+<text x="34" y="761" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">fordeles som snitt per måned fra januar</text>
+<text x="34" y="782" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">til november.</text>
+<rect x="34" y="807" width="322" height="132" fill="#ecfeed"/>
+<text x="44" y="825" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">Snitt november 2025, kr</text>
+<text x="44" y="851" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">Avtalt månedslønn</text>
+<text x="346" y="851" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">58 450</text>
+<text x="44" y="873" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">+ Uregelmessige tillegg</text>
+<text x="346" y="873" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">2 090</text>
+<text x="44" y="895" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="start">+ Bonus</text>
+<text x="346" y="895" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#274246" text-anchor="end">1 530</text>
+<line x1="44" y1="901" x2="346" y2="901" stroke="#00824d" stroke-width="1"/>
+<text x="44" y="917" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#00824d" text-anchor="start">= Månedslønn</text>
+<text x="346" y="917" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#00824d" text-anchor="end">62 070</text>
+<line x1="48" y1="969" x2="48.0" y2="982.0" stroke="#274246" stroke-width="2"/>
+<polygon points="48.0,991.0 43.0,982.0 53.0,982.0" fill="#274246"/>
+<rect x="16" y="997" width="358" height="266" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<circle cx="48" cy="1023" r="14" fill="#274246"/>
+<text x="48" y="1028.32" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="72" y="1029" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#274246" text-anchor="start">Koblet, sikret og publisert</text>
+<text x="34" y="1059" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Yrkeskoden gjøres om til STYRK-08.</text>
+<text x="34" y="1080" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">Næring, sektor, kjønn, alder og</text>
+<text x="34" y="1101" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">utdanning hentes fra registre. Grupper</text>
+<text x="34" y="1122" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#274246" text-anchor="start">med under 100 jobber vises ikke.</text>
+<rect x="34" y="1147" width="322" height="92" fill="#f3f5f5"/>
+<text x="44" y="1165" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Publiseres i februar. Årslønn er</text>
+<text x="44" y="1184" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">foreløpig til mars: veksten i påløpt</text>
+<text x="44" y="1203" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">årslønn 2025 ble først publisert som</text>
+<text x="44" y="1222" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">5,0 prosent og er nå 4,9.</text>
+<rect x="16" y="1287" width="358" height="178" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="32" y="1315" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="16" font-weight="700" fill="#5e787a" text-anchor="start">Ikke med i månedslønna</text>
+<text x="32" y="1341" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1341" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Overtid (publiseres for seg, per jobb)</text>
+<text x="32" y="1362" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1362" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Naturalytelser og forsikringer</text>
+<text x="32" y="1383" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1383" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Feriepenger og sluttvederlag</text>
+<text x="32" y="1404" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1404" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Styrehonorar og honorarer for utvalg</text>
+<text x="32" y="1425" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1425" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Skatt: alle tall er før skatt</text>
+<text x="32" y="1446" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">–</text>
+<text x="48" y="1446" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Selvstendig næringsdrivende</text>
+<text x="16" y="1489" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start">Kilde: SSB, Om statistikken (oppdatert 30.09.2026), tabell</text>
+<text x="16" y="1505" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start">11419 og 14858. Sist oppdatert: 05.02.2026 og 20.08.2026.</text>
+</svg>

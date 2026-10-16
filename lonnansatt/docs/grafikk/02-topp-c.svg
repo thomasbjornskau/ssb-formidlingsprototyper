@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330" role="img">
+<title>Lønnsveksten i 2025 avhenger av hva som måles</title>
+<desc>Vekst i månedslønn november til november og i utbetalt årslønn 2025, etter sektor. Alle sektorer: 4,5 og 5,2 prosent. Påløpt årslønn: 4,9 prosent.</desc>
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40" y="46" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start">LØNN · 2025</text>
+<text x="40" y="122" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="60" font-weight="700" fill="#274246" text-anchor="start">4,5 eller 5,2?</text>
+<text x="40" y="164" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#274246" text-anchor="start">Hvor mye lønna steg i 2025, avhenger av hva</text>
+<text x="40" y="191" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="21" font-weight="700" fill="#274246" text-anchor="start">som måles.</text>
+<text x="40" y="225" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Månedslønna sammenligner november med november. Årslønna tar</text>
+<text x="40" y="246" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">med hele året og etterbetalinger.</text>
+<text x="40" y="267" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">Påløpt årslønn, der etterbetalinger føres i året de er</text>
+<text x="40" y="288" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start">opptjent, steg 4,9 prosent.</text>
+<rect x="640" y="38" width="12" height="12" fill="#339b71"/>
+<text x="658" y="48" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">Månedslønn, november til november</text>
+<rect x="890" y="38" width="12" height="12" fill="#1d9de2"/>
+<text x="908" y="48" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">Årslønn, utbetalt</text>
+<line x1="876.0" y1="66" x2="876.0" y2="254" stroke="#a9b5b7" stroke-width="1"/>
+<text x="876.0" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">0</text>
+<line x1="942.8571428571429" y1="66" x2="942.8571428571429" y2="254" stroke="#d9dfe0" stroke-width="1"/>
+<text x="942.8571428571429" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">2</text>
+<line x1="1009.7142857142857" y1="66" x2="1009.7142857142857" y2="254" stroke="#d9dfe0" stroke-width="1"/>
+<text x="1009.7142857142857" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">4</text>
+<line x1="1076.5714285714284" y1="66" x2="1076.5714285714284" y2="254" stroke="#d9dfe0" stroke-width="1"/>
+<text x="1076.5714285714284" y="270" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle">6</text>
+<text x="1110" y="286" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">prosent</text>
+<rect x="876.0" y="77.25" width="150.42857142857156" height="14" fill="#339b71"/>
+<text x="1031.4285714285716" y="89.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#274246" text-anchor="start">4,5</text>
+<rect x="876.0" y="94.25" width="173.82857142857142" height="14" fill="#1d9de2"/>
+<text x="1054.8285714285714" y="106.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#274246" text-anchor="start">5,2</text>
+<text x="640" y="97.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#274246" text-anchor="start">Alle sektorer</text>
+<rect x="876.0" y="122.75" width="167.1428571428571" height="14" fill="#339b71"/>
+<text x="1048.142857142857" y="134.75" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">5,0</text>
+<rect x="876.0" y="139.75" width="210.5999999999999" height="14" fill="#1d9de2"/>
+<text x="1091.6" y="151.75" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">6,3</text>
+<text x="640" y="142.75" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start">Statsforvaltningen</text>
+<rect x="876.0" y="168.25" width="157.11428571428564" height="14" fill="#339b71"/>
+<text x="1038.1142857142856" y="180.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">4,7</text>
+<rect x="876.0" y="185.25" width="170.48571428571427" height="14" fill="#1d9de2"/>
+<text x="1051.4857142857143" y="197.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">5,1</text>
+<text x="640" y="188.25" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start">Privat sektor og off. eide foretak</text>
+<rect x="876.0" y="213.75" width="113.65714285714284" height="14" fill="#339b71"/>
+<text x="994.6571428571428" y="225.75" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">3,4</text>
+<rect x="876.0" y="230.75" width="147.0857142857143" height="14" fill="#1d9de2"/>
+<text x="1028.0857142857144" y="242.75" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start">4,4</text>
+<text x="640" y="233.75" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start">Kommuneforvaltningen</text>
+<text x="1150" y="318" font-family="'Open Sans', 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end">Kilde: SSB, tabell 11419, 11536 og 14858. Sist oppdatert: 05.02.2026, 12.03.2026 og 20.08.2026.</text>
+</svg>
