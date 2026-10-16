@@ -11,6 +11,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Regionale befolkningsframskrivinger](regfram/) | `regfram` | Til faglig kontroll | 14.10.2026 |
 | [Konsumprisindeksen](kpi/) | `kpi` | Til faglig kontroll | 14.10.2026 |
 | [Utenrikshandel med varer](muh/) | `muh` | Under arbeid, ikke faglig kontrollert | 14.10.2026 |
+| [Lønn](lonnansatt/) | `lonnansatt` | Til faglig kontroll | 16.10.2026 |
 
 ## Arbeidsprosess
 
@@ -19,9 +20,8 @@ Hver prototype går gjennom de samme stegene, og dokumentasjonen fra hvert steg 
 1. **Innsikt.** Hva statistikken måler, nøkkelbudskap, vanskelige begreper og sannsynlige misforståelser. Gir 3–5 spørsmål prototypen skal svare på.
 2. **Konseptgrafikk og toppgrafikk.** En figur som forklarer hvordan statistikken lages, og en toppgrafikk som viser hovedbudskapet.
 3. **Kildekart.** Hvilke tabeller i statistikkbanken som svarer på hvert spørsmål, med testede spørringer og kontroller.
-4. **Bygging.** Prototypen, bygget etter SSBs uttrykk og en egen diagramstandard.
-5. **Faglig kontroll.** Kontaktpersonene for statistikken går gjennom en samlet kvalitetssikringsliste.
-6. **Publisering** her på GitHub Pages.
+4. **Bygging og publisering.** Prototypen bygges etter SSBs uttrykk og en egen diagramstandard, og publiseres her på GitHub Pages, merket som prototype.
+5. **Faglig kontroll.** Kontaktpersonene for statistikken går gjennom en samlet kvalitetssikringsliste (`docs/05-kvalitetssikring.md`). Statusen over endres når svarene er innarbeidet.
 
 ## Oppbygging
 
@@ -37,10 +37,13 @@ felles/vendor/            d3 og Open Sans, med lisenser
   index.html              prototypen, ferdig bygget
   data/kilder.json        spørringene mot statistikkbanken
   data/raw/               svarene fra statistikkbanken, uendret
+  data/synonymer.json     søkeord, i prototyper med søk
   scripts/hent_data.py    henter data/raw/ på nytt
   scripts/lag_data.py     kontrollerer summene og lager datafilen
+  scripts/lag_grafikk.py  lager konseptgrafikken og toppgrafikken
   src/                    mal og grafikk
   docs/                   dokumentasjon fra stegene 1–5
+  docs/grafikk/           variantene av toppgrafikk som ble vurdert
 ```
 
 ## Bygge og oppdatere
