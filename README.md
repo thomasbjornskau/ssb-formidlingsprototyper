@@ -12,6 +12,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Konsumprisindeksen](kpi/) | `kpi` | Til faglig kontroll | 14.10.2026 |
 | [Utenrikshandel med varer](muh/) | `muh` | Under arbeid, ikke faglig kontrollert | 14.10.2026 |
 | [Lønn](lonnansatt/) | `lonnansatt` | Til faglig kontroll | 16.10.2026 |
+| [Befolkning](folkemengde/) | `folkemengde` | Under arbeid, ikke faglig kontrollert | 21.10.2026 |
 
 ## Arbeidsprosess
 
@@ -38,6 +39,7 @@ felles/vendor/            d3 og Open Sans, med lisenser
   data/kilder.json        spørringene mot statistikkbanken
   data/raw/               svarene fra statistikkbanken, uendret
   data/synonymer.json     søkeord, i prototyper med søk
+  scripts/kontroll_kilder.py  kontrollene fra steg 3, i nyere prototyper
   scripts/hent_data.py    henter data/raw/ på nytt
   scripts/lag_data.py     kontrollerer summene og lager datafilen
   scripts/lag_grafikk.py  lager konseptgrafikken og toppgrafikken
