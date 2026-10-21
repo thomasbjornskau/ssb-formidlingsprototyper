@@ -12,7 +12,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Konsumprisindeksen](kpi/) | `kpi` | Til faglig kontroll | 14.10.2026 |
 | [Utenrikshandel med varer](muh/) | `muh` | Under arbeid, ikke faglig kontrollert | 14.10.2026 |
 | [Lønn](lonnansatt/) | `lonnansatt` | Til faglig kontroll | 16.10.2026 |
-| [Befolkning](folkemengde/) | `folkemengde` | Under arbeid, ikke faglig kontrollert | 21.10.2026 |
+| [Befolkning](folkemengde/) | `folkemengde` | Til faglig kontroll | 21.10.2026 |
 
 ## Arbeidsprosess
 
