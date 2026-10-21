@@ -31,10 +31,10 @@
 <text x="268.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">konsum, investering og eksport.</text>
 <text x="268.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Import trekkes fra.</text>
 <text x="268.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums"></text>
-<text x="282.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Konsum, husholdninger mv.</text>
+<text x="282.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Privat konsum</text>
 <text x="476.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">2 341</text>
 <text x="268.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
-<text x="282.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Konsum, offentlig</text>
+<text x="282.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Offentlig konsum</text>
 <text x="476.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">1 255</text>
 <text x="268.0" y="292.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
 <text x="282.0" y="292.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Investering</text>
@@ -96,10 +96,10 @@
 <text x="952.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Når tallene kommer</text>
 <rect x="952.0" y="260.0" width="208.0" height="28.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
 <text x="960.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Kvartal</text>
-<text x="1152.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">ca. 8 uker etter</text>
+<text x="1152.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">ca. 40 dager etter</text>
 <rect x="952.0" y="294.0" width="208.0" height="28.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
 <text x="960.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Endelig år</text>
-<text x="1152.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">to år etter</text>
+<text x="1152.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">21 mnd. etter</text>
 <rect x="952.0" y="328.0" width="208.0" height="28.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
 <text x="960.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Hovedrevisjon</text>
 <text x="1152.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">ca. hvert 5. år</text>

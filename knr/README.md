@@ -1,6 +1,6 @@
 # Nasjonalregnskap (knr)
 
-> **Prototype under arbeid.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger, egne beregninger og overskrifter er ikke faglig kontrollert. Se [byggenotatet](docs/04-byggenotat.md) for valg som skal kvalitetssikres.
+> **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger, egne beregninger og overskrifter er ikke kvalitetssikret ennå. Se [kvalitetssikringslisten](docs/05-kvalitetssikring.md).
 
 **Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/knr/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/knr/index.html)
 
@@ -21,6 +21,7 @@ Prototypen viser hvor fort norsk økonomi vokser, forskjellen på BNP og Fastlan
 - [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som er tolket i grafikken
 - [docs/03-kildekart.md](docs/03-kildekart.md): tabeller, spørringer, struktur og kontroller
 - [docs/04-byggenotat.md](docs/04-byggenotat.md): hva som er bygget, kontroller og kjente svakheter
+- [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md): samlet kvalitetssikring, erstatter listene i de tidligere dokumentene
 - [docs/grafikk/](docs/grafikk/): variantene av toppgrafikk som ble vurdert
 
 ## Kilder

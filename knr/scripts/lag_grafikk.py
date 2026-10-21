@@ -62,7 +62,7 @@ def v_produksjon(s, x, y, w):
 
 
 def v_anvendelse(s, x, y, w):
-    rader = [("Konsum, husholdninger mv.", B["konsum_hush"], ""), ("Konsum, offentlig", B["konsum_off"], "+"), ("Investering", B["investering"], "+"),
+    rader = [("Privat konsum", B["konsum_hush"], ""), ("Offentlig konsum", B["konsum_off"], "+"), ("Investering", B["investering"], "+"),
              ("Eksport", B["eksport"], "+"), ("Import", B["import"], "−")]
     ry = y + 12
     for navn, v, tegn in rader:
@@ -109,7 +109,7 @@ def v_volum(s, x, y, w):
 
 
 def v_revisjon(s, x, y, w):
-    trinn = [("Kvartal", "ca. 8 uker etter"), ("Endelig år", "to år etter"), ("Hovedrevisjon", "ca. hvert 5. år")]
+    trinn = [("Kvartal", "ca. 40 dager etter"), ("Endelig år", "21 mnd. etter"), ("Hovedrevisjon", "ca. hvert 5. år")]
     s.text(x, y + 12, "Når tallene kommer", size=12, fill=GRA)
     for i, (a, b) in enumerate(trinn):
         yy = y + 24 + i * 34
