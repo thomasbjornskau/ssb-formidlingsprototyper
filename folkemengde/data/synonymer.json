@@ -1,0 +1,567 @@
+{
+ "merknad": "Søkeord som ikke er dagens kommunenavn, med dagens kommunekode(r). Tidligere navn fra Klass 131 (endringer 1990–2026) og delene av tospråklige navn. Et navn kan peke på flere kommuner når en kommune er delt.",
+ "kilde": "https://data.ssb.no/api/klass/v1/classifications/131/changes.json?from=1990-01-01&to=2026-01-02",
+ "synonymer": {
+  "Aarborte": [
+   "1826"
+  ],
+  "Agdenes": [
+   "5059"
+  ],
+  "Andebu": [
+   "3907"
+  ],
+  "Askim": [
+   "3118"
+  ],
+  "Audnedal": [
+   "4225"
+  ],
+  "Balestrand": [
+   "4640"
+  ],
+  "Ballangen": [
+   "1806"
+  ],
+  "Berg": [
+   "5530"
+  ],
+  "Bjarkøy": [
+   "5503"
+  ],
+  "Bjugn": [
+   "5057"
+  ],
+  "Borge (Østfold)": [
+   "3107"
+  ],
+  "Borre": [
+   "3901"
+  ],
+  "Bø (Nordland)": [
+   "1867"
+  ],
+  "Bø (Telemark)": [
+   "4020"
+  ],
+  "Deatnu": [
+   "5628"
+  ],
+  "Dielddanuorri": [
+   "5512"
+  ],
+  "Eid": [
+   "4649"
+  ],
+  "Eide": [
+   "1579"
+  ],
+  "Eidsberg": [
+   "3118"
+  ],
+  "Evenes": [
+   "1853"
+  ],
+  "Evenássi": [
+   "1853"
+  ],
+  "Fauske": [
+   "1841"
+  ],
+  "Fet": [
+   "3205"
+  ],
+  "Finnøy": [
+   "1103"
+  ],
+  "Fjell": [
+   "4626"
+  ],
+  "Flora": [
+   "4602"
+  ],
+  "Forsand": [
+   "1108"
+  ],
+  "Fosnes": [
+   "5007"
+  ],
+  "Frei": [
+   "1505"
+  ],
+  "Fræna": [
+   "1579"
+  ],
+  "Fuolldá": [
+   "1845"
+  ],
+  "Fuossko": [
+   "1841"
+  ],
+  "Fusa": [
+   "4624"
+  ],
+  "Førde": [
+   "4647"
+  ],
+  "Gaular": [
+   "4647"
+  ],
+  "Granvin": [
+   "4621"
+  ],
+  "Gratangen": [
+   "5516"
+  ],
+  "Guovdageaidnu": [
+   "5612"
+  ],
+  "Gáivuotna": [
+   "5540"
+  ],
+  "Gáivuotna - Kåfjord": [
+   "5540"
+  ],
+  "Halsa": [
+   "5055"
+  ],
+  "Hamarøy": [
+   "1875"
+  ],
+  "Hammerfest": [
+   "5603"
+  ],
+  "Hammerfest by": [
+   "5603"
+  ],
+  "Harstad": [
+   "5503"
+  ],
+  "Hattfjelldal": [
+   "1826"
+  ],
+  "Hemne": [
+   "5055"
+  ],
+  "Hisøy": [
+   "4203"
+  ],
+  "Hobøl": [
+   "3118"
+  ],
+  "Hof": [
+   "3903"
+  ],
+  "Hornindal": [
+   "1577"
+  ],
+  "Hurum": [
+   "3203"
+  ],
+  "Hábmer": [
+   "1875"
+  ],
+  "Hámmerfeasta": [
+   "5603"
+  ],
+  "Hárstták": [
+   "5503"
+  ],
+  "Ivgu": [
+   "5536"
+  ],
+  "Jondal": [
+   "4618"
+  ],
+  "Jølster": [
+   "4647"
+  ],
+  "Kaivuono": [
+   "5540"
+  ],
+  "Karasjok": [
+   "5610"
+  ],
+  "Kautokeino": [
+   "5612"
+  ],
+  "Klæbu": [
+   "5001"
+  ],
+  "Kråkerøy": [
+   "3107"
+  ],
+  "Kvalsund": [
+   "5603"
+  ],
+  "Kárásjohka": [
+   "5610"
+  ],
+  "Kárášjohka - Karasjok": [
+   "5610"
+  ],
+  "Kåfjord": [
+   "5540"
+  ],
+  "Lardal": [
+   "3909"
+  ],
+  "Lavangen": [
+   "5518"
+  ],
+  "Leikanger": [
+   "4640"
+  ],
+  "Leksvik": [
+   "5054"
+  ],
+  "Lenvik": [
+   "5530"
+  ],
+  "Levanger": [
+   "5037"
+  ],
+  "Levangke": [
+   "5037"
+  ],
+  "Lindås": [
+   "4631"
+  ],
+  "Loabák": [
+   "5518"
+  ],
+  "Lyngen": [
+   "5536"
+  ],
+  "Mandal": [
+   "4205"
+  ],
+  "Marnardal": [
+   "4205"
+  ],
+  "Meland": [
+   "4631"
+  ],
+  "Meldal": [
+   "5059"
+  ],
+  "Midsund": [
+   "1506"
+  ],
+  "Moland": [
+   "4203"
+  ],
+  "Mosvik": [
+   "5053"
+  ],
+  "Namdalseid": [
+   "5007"
+  ],
+  "Namsos": [
+   "5007"
+  ],
+  "Naustdal": [
+   "4647"
+  ],
+  "Nedre Eiker": [
+   "3301"
+  ],
+  "Nes (Akershus)": [
+   "3228"
+  ],
+  "Nes (Buskerud)": [
+   "3322"
+  ],
+  "Nesseby": [
+   "5636"
+  ],
+  "Nesset": [
+   "1506"
+  ],
+  "Norddal": [
+   "1578"
+  ],
+  "Nordreisa": [
+   "5544"
+  ],
+  "Nåavmesjenjaelmie": [
+   "5007"
+  ],
+  "Nærøy": [
+   "5060"
+  ],
+  "Nøtterøy": [
+   "3911"
+  ],
+  "Odda": [
+   "4618"
+  ],
+  "Omasvuono": [
+   "5538"
+  ],
+  "Omasvuotna": [
+   "5538"
+  ],
+  "Onsøy": [
+   "3107"
+  ],
+  "Oppegård": [
+   "3207"
+  ],
+  "Orkdal": [
+   "5059"
+  ],
+  "Os (Hedmark)": [
+   "3430"
+  ],
+  "Os (Hordaland)": [
+   "4624"
+  ],
+  "Oslo": [
+   "0301"
+  ],
+  "Oslove": [
+   "0301"
+  ],
+  "Porsanger": [
+   "5622"
+  ],
+  "Porsanki": [
+   "5622"
+  ],
+  "Porsángu": [
+   "5622"
+  ],
+  "Raane": [
+   "1833"
+  ],
+  "Raarvihke": [
+   "5043"
+  ],
+  "Radøy": [
+   "4631"
+  ],
+  "Raisi": [
+   "5544"
+  ],
+  "Ramnes": [
+   "3905"
+  ],
+  "Rana": [
+   "1833"
+  ],
+  "Re": [
+   "3905"
+  ],
+  "Rennesøy": [
+   "1103"
+  ],
+  "Rissa": [
+   "5054"
+  ],
+  "Rivtták": [
+   "5516"
+  ],
+  "Roan": [
+   "5058"
+  ],
+  "Rolvsøy": [
+   "3107"
+  ],
+  "Rosse": [
+   "5025"
+  ],
+  "Rygge": [
+   "3103"
+  ],
+  "Ráisa": [
+   "5544"
+  ],
+  "Rømskog": [
+   "3226"
+  ],
+  "Røros": [
+   "5025"
+  ],
+  "Røyken": [
+   "3203"
+  ],
+  "Røyrvik": [
+   "5043"
+  ],
+  "Sande (Møre og Romsdal)": [
+   "1514"
+  ],
+  "Sande (Vestfold)": [
+   "3903"
+  ],
+  "Sandøy": [
+   "1508",
+   "1580"
+  ],
+  "Sauherad": [
+   "4020"
+  ],
+  "Selje": [
+   "4649"
+  ],
+  "Skedsmo": [
+   "3205"
+  ],
+  "Ski": [
+   "3207"
+  ],
+  "Skjeberg": [
+   "3105"
+  ],
+  "Skjerstad": [
+   "1804"
+  ],
+  "Skodje": [
+   "1508",
+   "1580"
+  ],
+  "Skånland": [
+   "5512"
+  ],
+  "Snillfjord": [
+   "5055",
+   "5056",
+   "5059"
+  ],
+  "Snåase": [
+   "5041"
+  ],
+  "Snåsa": [
+   "5041"
+  ],
+  "Songdalen": [
+   "4204"
+  ],
+  "Sortland": [
+   "1870"
+  ],
+  "Spydeberg": [
+   "3118"
+  ],
+  "Steinkjer": [
+   "5006"
+  ],
+  "Stokke": [
+   "3905",
+   "3907"
+  ],
+  "Stordal": [
+   "1578"
+  ],
+  "Storfjord": [
+   "5538"
+  ],
+  "Stïentje": [
+   "5006"
+  ],
+  "Sund": [
+   "4626"
+  ],
+  "Suortá": [
+   "1870"
+  ],
+  "Svelvik": [
+   "3301"
+  ],
+  "Søgne": [
+   "4204"
+  ],
+  "Sørfold": [
+   "1845"
+  ],
+  "Sørum": [
+   "3205"
+  ],
+  "Sørøysund": [
+   "5603"
+  ],
+  "Tana": [
+   "5628"
+  ],
+  "Tjeldsund": [
+   "5512"
+  ],
+  "Tjøme": [
+   "3911"
+  ],
+  "Torsken": [
+   "5530"
+  ],
+  "Tranøy": [
+   "5530"
+  ],
+  "Tromøy": [
+   "4203"
+  ],
+  "Trondheim": [
+   "5001"
+  ],
+  "Tråante": [
+   "5001"
+  ],
+  "Trøgstad": [
+   "3118"
+  ],
+  "Tune": [
+   "3105"
+  ],
+  "Tustna": [
+   "1576"
+  ],
+  "Tysfjord": [
+   "1806",
+   "1875"
+  ],
+  "Tysfjord - Divtasvuodna": [
+   "1806",
+   "1875"
+  ],
+  "Unjárga": [
+   "5636"
+  ],
+  "Vang (Hedmark)": [
+   "3403"
+  ],
+  "Varteig": [
+   "3105",
+   "3120"
+  ],
+  "Verran": [
+   "5006"
+  ],
+  "Vikna": [
+   "5060"
+  ],
+  "Vågsøy": [
+   "4602"
+  ],
+  "Våle": [
+   "3905"
+  ],
+  "Våler (Hedmark)": [
+   "3419"
+  ],
+  "Våler (Viken)": [
+   "3114"
+  ],
+  "Yykeä": [
+   "5536"
+  ],
+  "Ølen": [
+   "1160"
+  ],
+  "Ørskog": [
+   "1508",
+   "1580"
+  ],
+  "Øyestad": [
+   "4203"
+  ]
+ }
+}

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" letter-spacing="1.2" style="font-variant-numeric:tabular-nums">BEFOLKNING · KOMMUNENE 2025</text>
+<text x="40.0" y="118.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="64" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">1 av 3</text>
+<text x="40.0" y="162.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">kommuner fikk færre innbyggere i 2025.</text>
+<text x="40.0" y="209.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">128 av 357 kommuner krympet, mens folketallet i hele landet</text>
+<text x="40.0" y="230.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">økte med 0,59 prosent.</text>
+<text x="40.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, tabell 07459, kommuner 2024. Sist oppdatert: 25.02.2026.</text>
+<text x="594.0" y="34.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Antall kommuner etter endring i folketallet 2025</text>
+<line x1="640.0" y1="260.0" x2="1130.0" y2="260.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="634.0" y="264.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">0</text>
+<line x1="640.0" y1="212.5" x2="1130.0" y2="212.5" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="216.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">20</text>
+<line x1="640.0" y1="165.0" x2="1130.0" y2="165.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="169.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">40</text>
+<line x1="640.0" y1="117.5" x2="1130.0" y2="117.5" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="121.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">60</text>
+<line x1="640.0" y1="70.0" x2="1130.0" y2="70.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="74.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">80</text>
+<text x="594.0" y="54.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">kommuner</text>
+<rect x="640.0" y="257.6" width="27.3" height="2.4" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="667.8" y="257.6" width="27.3" height="2.4" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="695.7" y="260.0" width="27.3" height="0.0" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="723.5" y="255.2" width="27.3" height="4.8" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="751.4" y="248.1" width="27.3" height="11.9" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="779.2" y="255.2" width="27.3" height="4.8" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="807.0" y="248.1" width="27.3" height="11.9" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="834.9" y="222.0" width="27.3" height="38.0" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="862.7" y="181.6" width="27.3" height="78.4" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="890.6" y="110.4" width="27.3" height="149.6" rx="0" fill="#d5a640" stroke="none" stroke-width="1"/>
+<rect x="918.4" y="79.5" width="27.3" height="180.5" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="946.2" y="84.2" width="27.3" height="175.8" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="974.1" y="160.2" width="27.3" height="99.8" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="1001.9" y="203.0" width="27.3" height="57.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="1029.8" y="245.8" width="27.3" height="14.2" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="1057.6" y="250.5" width="27.3" height="9.5" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="1102.2" y="252.9" width="27.3" height="7.1" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<text x="1116.1" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">3+</text>
+<text x="695.7" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">−4</text>
+<text x="807.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">−2</text>
+<text x="918.4" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">0</text>
+<text x="1029.8" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">+2</text>
+<text x="1140.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">prosent</text>
+<line x1="951.3" y1="66.0" x2="951.3" y2="260.0" stroke="#274246" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="957.3" y="76.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Hele landet +0,59 prosent</text>
+<text x="662.3" y="155.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">128 med nedgang</text>
+<text x="990.8" y="136.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">229 med vekst</text>
+<text x="990.8" y="152.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">eller uendret</text>
+</svg>

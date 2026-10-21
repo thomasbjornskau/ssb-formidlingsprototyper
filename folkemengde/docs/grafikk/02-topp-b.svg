@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" letter-spacing="1.2" style="font-variant-numeric:tabular-nums">BEFOLKNING · FOLKEVEKST 2025</text>
+<text x="40.0" y="118.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="64" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">To tredjedeler</text>
+<text x="40.0" y="162.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">av folkeveksten i 2025 kom fra</text>
+<text x="40.0" y="191.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">nettoinnvandring.</text>
+<text x="40.0" y="238.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Nettoinnvandringen var 22 324, eller 67,5 prosent av veksten.</text>
+<text x="40.0" y="259.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Fødselsoverskuddet var 10 361.</text>
+<text x="40.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, tabell 05803. Sist oppdatert: 15.04.2026.</text>
+<text x="594.0" y="34.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Folkeveksten delt i to, 2016–2025</text>
+<line x1="640.0" y1="270.0" x2="1060.0" y2="270.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="634.0" y="274.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">0</text>
+<line x1="640.0" y1="241.4" x2="1060.0" y2="241.4" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="245.4" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">10 000</text>
+<line x1="640.0" y1="212.9" x2="1060.0" y2="212.9" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="216.9" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">20 000</text>
+<line x1="640.0" y1="184.3" x2="1060.0" y2="184.3" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="188.3" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">30 000</text>
+<line x1="640.0" y1="155.7" x2="1060.0" y2="155.7" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="159.7" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">40 000</text>
+<line x1="640.0" y1="127.1" x2="1060.0" y2="127.1" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="131.1" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">50 000</text>
+<line x1="640.0" y1="98.6" x2="1060.0" y2="98.6" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="102.6" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">60 000</text>
+<line x1="640.0" y1="70.0" x2="1060.0" y2="70.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="74.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">70 000</text>
+<text x="594.0" y="54.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">personer</text>
+<rect x="647.1" y="218.1" width="27.7" height="51.9" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="647.1" y="143.6" width="27.7" height="74.5" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="661.0" y="288.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2016</text>
+<rect x="689.1" y="224.7" width="27.7" height="45.3" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="689.1" y="163.7" width="27.7" height="61.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<rect x="731.1" y="229.2" width="27.7" height="40.8" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="731.1" y="177.5" width="27.7" height="51.7" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="745.0" y="288.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2018</text>
+<rect x="773.1" y="230.5" width="27.7" height="39.5" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="773.1" y="158.2" width="27.7" height="72.4" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<rect x="815.1" y="234.7" width="27.7" height="35.3" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="815.1" y="202.3" width="27.7" height="32.4" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="829.0" y="288.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2020</text>
+<rect x="857.1" y="229.8" width="27.7" height="40.2" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="857.1" y="173.7" width="27.7" height="56.1" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<rect x="899.1" y="253.7" width="27.7" height="16.3" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="899.1" y="88.2" width="27.7" height="165.5" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="913.0" y="288.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2022</text>
+<rect x="941.1" y="246.6" width="27.7" height="23.4" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="941.1" y="96.4" width="27.7" height="150.2" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<rect x="983.1" y="242.1" width="27.7" height="27.9" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="983.1" y="144.6" width="27.7" height="97.5" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="997.0" y="288.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2024</text>
+<rect x="1025.1" y="240.4" width="27.7" height="29.6" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="1025.1" y="176.6" width="27.7" height="63.8" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="1039.0" y="288.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2025</text>
+<text x="1068.0" y="259.2" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Fødsels-</text>
+<text x="1068.0" y="275.2" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">overskudd</text>
+<text x="1068.0" y="212.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Netto-</text>
+<text x="1068.0" y="228.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">innvandring</text>
+<text x="594.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Korreksjonsposten, fra 69 til 464 personer per år, er ikke vist.</text>
+</svg>

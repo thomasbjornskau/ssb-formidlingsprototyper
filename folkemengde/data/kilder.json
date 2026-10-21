@@ -1,0 +1,113 @@
+{
+ "statistikk": "Befolkning",
+ "kortnavn": "folkemengde",
+ "versjon": "0.1",
+ "dato_valg": "2026-10-21",
+ "merknad": "URL-ene bruker PxWebApi v2 med valueCodes[...] og codelist[...]. selection[...] ignoreres av API-et (testet 21.10.2026). Rådataene er hentet direkte med scripts/hent_data.py.",
+ "valg": "Alternativ B (valgt av Thomas 21.10.2026): kommuner fra 1951 med sammenslåtte tidsserier, kvartaler fra 2016 med innvandring og innenlandsk flytting hver for seg, aldersfordeling per kommune i femårsgrupper for 1986, 2006 og 2026, landet i full lengde.",
+ "datasett": [
+  {
+   "id": "land_aar",
+   "tabell": "05803",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Toppgrafikk, Hvor mange er vi",
+   "beskrivelse": "Hele landet per år: befolkning 1. januar, levendefødte, døde, innflyttinger (= innvandring), utflyttinger (= utvandring), folketilvekst i antall og prosent.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/05803/data?lang=no&outputFormat=json-stat2&valueCodes%5BContentsCode%5D=Personer,Levendefodte,Dode,Innflyttinger,Utflyttinger,AbsTilvekst,Tilvekst&valueCodes%5BTid%5D=*",
+   "omfang": "7 variabler × 292 år (1735–2026). Befolkning finnes for 2026, endringene til 2025."
+  },
+  {
+   "id": "land_kvartal",
+   "tabell": "01222",
+   "svarer_paa": [
+    2
+   ],
+   "seksjon": "Hva driver veksten (kvartal)",
+   "beskrivelse": "Hele landet per kvartal: befolkning inn og ut, fødte, døde, innvandring, utvandring, folkevekst.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/01222/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BContentsCode%5D=Folketallet1,Folketallet11,Fodte2,Dode3,Innvandring5,Utvandring6,Folketilvekst10&valueCodes%5BTid%5D=*",
+   "omfang": "7 variabler × 115 kvartaler (1997K4–2026K2)."
+  },
+  {
+   "id": "land_alder",
+   "tabell": "10211",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Alderssammensetningen (landet)",
+   "beskrivelse": "Hele landet etter kjønn og ettårig alder (0–104, 105+), 1. januar hvert år.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/10211/data?lang=no&outputFormat=json-stat2&valueCodes%5BKjonn%5D=1,2&valueCodes%5BAlder%5D=*&valueCodes%5BContentsCode%5D=Personer&valueCodes%5BTid%5D=*",
+   "omfang": "2 kjønn × 106 aldre × 181 år (1846–2026)."
+  },
+  {
+   "id": "kommune_aar",
+   "tabell": "06913",
+   "svarer_paa": [
+    1,
+    2,
+    4
+   ],
+   "seksjon": "Min kommune: lang linje og komponenter per år",
+   "beskrivelse": "Kommuner med dagens inndeling, sammenslåtte tidsserier: befolkning 1. januar, levendefødte, døde, innflyttinger og utflyttinger (innenlands og fra/til utlandet samlet).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/06913/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommSummerHist&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=Folkemengde,Levende,Dode,Innflyttinger,Utflyttinger&valueCodes%5BTid%5D=*",
+   "omfang": "5 variabler × 357 kommuner (+ 4 restkoder) × 76 år (1951–2026)."
+  },
+  {
+   "id": "kommune_kvartal",
+   "tabell": "01222",
+   "svarer_paa": [
+    2,
+    4
+   ],
+   "seksjon": "Min kommune: komponenter per kvartal",
+   "beskrivelse": "Kommuner med dagens inndeling, sammenslåtte tidsserier, per kvartal: befolkning ved utgangen, fødte, døde, innvandring, utvandring, innenlandsk inn- og utflytting.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/01222/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommSummer&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=Folketallet11,Fodte2,Dode3,Innvandring5,Utvandring6,Tilflytting7,Fraflytting8&valueCodes%5BTid%5D=from(2016K1)",
+   "omfang": "7 variabler × 357 kommuner (+ 3 restkoder) × 42 kvartaler (2016K1–2026K2)."
+  },
+  {
+   "id": "kommune_alder",
+   "tabell": "07459",
+   "svarer_paa": [
+    3,
+    4
+   ],
+   "seksjon": "Min kommune: alderssammensetningen",
+   "beskrivelse": "Kommuner med dagens inndeling, sammenslåtte tidsserier, etter kjønn og femårige aldersgrupper.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07459/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommSummer&codelist%5BAlder%5D=agg_FemAarigGruppering&outputValues%5BRegion%5D=aggregated&outputValues%5BAlder%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BKjonn%5D=1,2&valueCodes%5BAlder%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=1986,2006,2026",
+   "omfang": "2 kjønn × 21 aldersgrupper × 357 kommuner (+ 3 restkoder) × 3 år (1986, 2006, 2026)."
+  },
+  {
+   "id": "fylker",
+   "tabell": "07459",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Fylkesnavn og kontroll av kommunesummer",
+   "beskrivelse": "Fylker 2024-, sammenslåtte tidsserier: befolkning 1. januar 1986 og 2026. Gir fylkesnavnene og kontrollerer at kommunene summerer til fylkene.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07459/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommFylker&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=1986,2026",
+   "omfang": "18 fylkeskoder (15 fylker og 3 restkoder) × 2 år."
+  }
+ ],
+ "manglende_verdier": {
+  "null (..)": "Tall mangler. Bare i land_aar: innvandring finnes fra 1951, utvandring fra 1821, folketilvekst fra 1816, fødte og døde til 2025. Hele regnskapet (og korreksjonen) kan derfor bare vises fra 1951. Vises som «mangler data», aldri som linje over hullet.",
+  "0 i sammenslåtte tidsserier": "Statistikkbanken skriver 0, ikke «.», for år da kommunen ikke fantes eller var slått sammen med en annen. 17 kommuner starter etter 1951, 10 har et opphold midt i serien (for eksempel Hole 1964–1976, Haram 2020–2023). Skal vises som «kommunen fantes ikke», aldri som 0 personer.",
+  "restkoder": "K_Rest (delte kommuner og uoppgitt), K_21-22 (Svalbard og Jan Mayen), K_23 (kontinentalsokkelen), K_25-26. Tas med når kommunene summeres til landet, ikke i kommunevelgeren."
+ },
+ "fallgruver": [
+  "Bruk valueCodes[...] i URL-ene. selection[...] ignoreres av API-et og gir standardutvalget uten feilmelding (testet 21.10.2026).",
+  "Regionkodene har ulik form i tabellene: K_0301 i 06913, K-0301 i 01222 og 07459. Koble på de fire sifrene.",
+  "Kvartalstall summerer ikke eksakt til årstall: fødte 2025 er 55 381 i kvartalene og 55 401 i årstabellen. Bruk årstall for hele år.",
+  "Kommunesummen er lik landstallet hvert år fra 1971. I 1952–1970 avviker den med inntil 3 294 personer. Landstall hentes fra 05803, ikke fra summen av kommuner.",
+  "Folketilvekst = befolkning(t+1) − befolkning(t). Komponentene summerer ikke eksakt; korreksjonen (2025: 375 for landet, ulik 0 i 206 kommuner) må vises eller nevnes.",
+  "Innflyttinger og utflyttinger i 06913 og 05803 er samlet. For landet er de lik innvandring og utvandring; for en kommune omfatter de også innenlandsk flytting. Splitt finnes bare per kvartal (01222) fra 1997K4.",
+  "Aldersfordelingen per kommune finnes ikke for 1986 i fem kommuner (Heim, Hitra, Orkland, Narvik, Hamarøy), som er delt i 2024.",
+  "Grensejusteringer 1.1.2026 mellom Indre Østfold, Nordre Follo og Vestby gjør at befolkningen ved utgangen av 2025K4 ikke er lik befolkningen 1.1.2026 for disse tre (+29, −27, −2)."
+ ],
+ "klass": {
+  "id": "klass_131_endringer",
+  "url": "https://data.ssb.no/api/klass/v1/classifications/131/changes.json?from=1990-01-01&to=2026-01-02",
+  "hentes_med": "scripts/hent_klass.py",
+  "brukes_til": "data/synonymer.json: tidligere kommunenavn og deler av tospråklige navn i kommunevelgeren"
+ }
+}

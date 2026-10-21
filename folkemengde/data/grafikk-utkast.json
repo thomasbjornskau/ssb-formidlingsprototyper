@@ -1,0 +1,2949 @@
+{
+ "merknad": "Utkast til steg 2. Tall hentet via SSB-tilkoblingen 21.10.2026. Erstattes av data/raw/ i steg 3. Kommunenavn er ikke hentet ennå.",
+ "kilder": {
+  "aar": "SSB, tabell 05803. Sist oppdatert 15.04.2026",
+  "kommuner": "SSB, tabell 07459, Kommuner 2024, sammenslåtte tidsserier. Sist oppdatert 25.02.2026"
+ },
+ "bef_2026": 5627400,
+ "aar": [
+  {
+   "aar": 1995,
+   "bef_start": 4348410,
+   "folkevekst": 21547,
+   "vekst_prosent": 0.5,
+   "fodte": 60292,
+   "dode": 45190,
+   "fodselsoverskudd": 15102,
+   "innvandring": 25678,
+   "utvandring": 19312,
+   "nettoinnvandring": 6366,
+   "korreksjon": 79
+  },
+  {
+   "aar": 1996,
+   "bef_start": 4369957,
+   "folkevekst": 22757,
+   "vekst_prosent": 0.52,
+   "fodte": 60927,
+   "dode": 43860,
+   "fodselsoverskudd": 17067,
+   "innvandring": 26407,
+   "utvandring": 20590,
+   "nettoinnvandring": 5817,
+   "korreksjon": -127
+  },
+  {
+   "aar": 1997,
+   "bef_start": 4392714,
+   "folkevekst": 24885,
+   "vekst_prosent": 0.57,
+   "fodte": 59801,
+   "dode": 44595,
+   "fodselsoverskudd": 15206,
+   "innvandring": 31957,
+   "utvandring": 21257,
+   "nettoinnvandring": 10700,
+   "korreksjon": -1021
+  },
+  {
+   "aar": 1998,
+   "bef_start": 4417599,
+   "folkevekst": 27730,
+   "vekst_prosent": 0.63,
+   "fodte": 58352,
+   "dode": 44112,
+   "fodselsoverskudd": 14240,
+   "innvandring": 36704,
+   "utvandring": 22881,
+   "nettoinnvandring": 13823,
+   "korreksjon": -333
+  },
+  {
+   "aar": 1999,
+   "bef_start": 4445329,
+   "folkevekst": 33168,
+   "vekst_prosent": 0.75,
+   "fodte": 59298,
+   "dode": 45170,
+   "fodselsoverskudd": 14128,
+   "innvandring": 41841,
+   "utvandring": 22842,
+   "nettoinnvandring": 18999,
+   "korreksjon": 41
+  },
+  {
+   "aar": 2000,
+   "bef_start": 4478497,
+   "folkevekst": 24939,
+   "vekst_prosent": 0.56,
+   "fodte": 59234,
+   "dode": 44002,
+   "fodselsoverskudd": 15232,
+   "innvandring": 36542,
+   "utvandring": 26854,
+   "nettoinnvandring": 9688,
+   "korreksjon": 19
+  },
+  {
+   "aar": 2001,
+   "bef_start": 4503436,
+   "folkevekst": 20630,
+   "vekst_prosent": 0.46,
+   "fodte": 56696,
+   "dode": 43981,
+   "fodselsoverskudd": 12715,
+   "innvandring": 34264,
+   "utvandring": 26309,
+   "nettoinnvandring": 7955,
+   "korreksjon": -40
+  },
+  {
+   "aar": 2002,
+   "bef_start": 4524066,
+   "folkevekst": 28186,
+   "vekst_prosent": 0.62,
+   "fodte": 55434,
+   "dode": 44465,
+   "fodselsoverskudd": 10969,
+   "innvandring": 40122,
+   "utvandring": 22948,
+   "nettoinnvandring": 17174,
+   "korreksjon": 43
+  },
+  {
+   "aar": 2003,
+   "bef_start": 4552252,
+   "folkevekst": 25205,
+   "vekst_prosent": 0.55,
+   "fodte": 56458,
+   "dode": 42478,
+   "fodselsoverskudd": 13980,
+   "innvandring": 35957,
+   "utvandring": 24672,
+   "nettoinnvandring": 11285,
+   "korreksjon": -60
+  },
+  {
+   "aar": 2004,
+   "bef_start": 4577457,
+   "folkevekst": 28906,
+   "vekst_prosent": 0.63,
+   "fodte": 56951,
+   "dode": 41200,
+   "fodselsoverskudd": 15751,
+   "innvandring": 36482,
+   "utvandring": 23271,
+   "nettoinnvandring": 13211,
+   "korreksjon": -56
+  },
+  {
+   "aar": 2005,
+   "bef_start": 4606363,
+   "folkevekst": 33856,
+   "vekst_prosent": 0.73,
+   "fodte": 56756,
+   "dode": 41232,
+   "fodselsoverskudd": 15524,
+   "innvandring": 40148,
+   "utvandring": 21709,
+   "nettoinnvandring": 18439,
+   "korreksjon": -107
+  },
+  {
+   "aar": 2006,
+   "bef_start": 4640219,
+   "folkevekst": 40915,
+   "vekst_prosent": 0.88,
+   "fodte": 58545,
+   "dode": 41253,
+   "fodselsoverskudd": 17292,
+   "innvandring": 45776,
+   "utvandring": 22053,
+   "nettoinnvandring": 23723,
+   "korreksjon": -100
+  },
+  {
+   "aar": 2007,
+   "bef_start": 4681134,
+   "folkevekst": 56037,
+   "vekst_prosent": 1.19,
+   "fodte": 58459,
+   "dode": 41954,
+   "fodselsoverskudd": 16505,
+   "innvandring": 61774,
+   "utvandring": 22122,
+   "nettoinnvandring": 39652,
+   "korreksjon": -120
+  },
+  {
+   "aar": 2008,
+   "bef_start": 4737171,
+   "folkevekst": 62081,
+   "vekst_prosent": 1.3,
+   "fodte": 60497,
+   "dode": 41712,
+   "fodselsoverskudd": 18785,
+   "innvandring": 66961,
+   "utvandring": 23615,
+   "nettoinnvandring": 43346,
+   "korreksjon": -50
+  },
+  {
+   "aar": 2009,
+   "bef_start": 4799252,
+   "folkevekst": 58947,
+   "vekst_prosent": 1.22,
+   "fodte": 61807,
+   "dode": 41449,
+   "fodselsoverskudd": 20358,
+   "innvandring": 65186,
+   "utvandring": 26549,
+   "nettoinnvandring": 38637,
+   "korreksjon": -48
+  },
+  {
+   "aar": 2010,
+   "bef_start": 4858199,
+   "folkevekst": 62106,
+   "vekst_prosent": 1.28,
+   "fodte": 61442,
+   "dode": 41499,
+   "fodselsoverskudd": 19943,
+   "innvandring": 73852,
+   "utvandring": 31506,
+   "nettoinnvandring": 42346,
+   "korreksjon": -183
+  },
+  {
+   "aar": 2011,
+   "bef_start": 4920305,
+   "folkevekst": 65565,
+   "vekst_prosent": 1.33,
+   "fodte": 60220,
+   "dode": 41393,
+   "fodselsoverskudd": 18827,
+   "innvandring": 79498,
+   "utvandring": 32466,
+   "nettoinnvandring": 47032,
+   "korreksjon": -294
+  },
+  {
+   "aar": 2012,
+   "bef_start": 4985870,
+   "folkevekst": 65405,
+   "vekst_prosent": 1.31,
+   "fodte": 60255,
+   "dode": 41992,
+   "fodselsoverskudd": 18263,
+   "innvandring": 78570,
+   "utvandring": 31227,
+   "nettoinnvandring": 47343,
+   "korreksjon": -201
+  },
+  {
+   "aar": 2013,
+   "bef_start": 5051275,
+   "folkevekst": 57781,
+   "vekst_prosent": 1.14,
+   "fodte": 58995,
+   "dode": 41282,
+   "fodselsoverskudd": 17713,
+   "innvandring": 75789,
+   "utvandring": 35716,
+   "nettoinnvandring": 40073,
+   "korreksjon": -5
+  },
+  {
+   "aar": 2014,
+   "bef_start": 5109056,
+   "folkevekst": 56746,
+   "vekst_prosent": 1.11,
+   "fodte": 59084,
+   "dode": 40394,
+   "fodselsoverskudd": 18690,
+   "innvandring": 70030,
+   "utvandring": 31875,
+   "nettoinnvandring": 38155,
+   "korreksjon": -99
+  },
+  {
+   "aar": 2015,
+   "bef_start": 5165802,
+   "folkevekst": 48183,
+   "vekst_prosent": 0.93,
+   "fodte": 59058,
+   "dode": 40727,
+   "fodselsoverskudd": 18331,
+   "innvandring": 67276,
+   "utvandring": 37474,
+   "nettoinnvandring": 29802,
+   "korreksjon": 50
+  },
+  {
+   "aar": 2016,
+   "bef_start": 5213985,
+   "folkevekst": 44332,
+   "vekst_prosent": 0.85,
+   "fodte": 58890,
+   "dode": 40726,
+   "fodselsoverskudd": 18164,
+   "innvandring": 66800,
+   "utvandring": 40724,
+   "nettoinnvandring": 26076,
+   "korreksjon": 92
+  },
+  {
+   "aar": 2017,
+   "bef_start": 5258317,
+   "folkevekst": 37302,
+   "vekst_prosent": 0.71,
+   "fodte": 56633,
+   "dode": 40774,
+   "fodselsoverskudd": 15859,
+   "innvandring": 58192,
+   "utvandring": 36843,
+   "nettoinnvandring": 21349,
+   "korreksjon": 94
+  },
+  {
+   "aar": 2018,
+   "bef_start": 5295619,
+   "folkevekst": 32593,
+   "vekst_prosent": 0.62,
+   "fodte": 55120,
+   "dode": 40840,
+   "fodselsoverskudd": 14280,
+   "innvandring": 52485,
+   "utvandring": 34382,
+   "nettoinnvandring": 18103,
+   "korreksjon": 210
+  },
+  {
+   "aar": 2019,
+   "bef_start": 5328212,
+   "folkevekst": 39368,
+   "vekst_prosent": 0.74,
+   "fodte": 54495,
+   "dode": 40684,
+   "fodselsoverskudd": 13811,
+   "innvandring": 52153,
+   "utvandring": 26826,
+   "nettoinnvandring": 25327,
+   "korreksjon": 230
+  },
+  {
+   "aar": 2020,
+   "bef_start": 5367580,
+   "folkevekst": 23789,
+   "vekst_prosent": 0.44,
+   "fodte": 52979,
+   "dode": 40611,
+   "fodselsoverskudd": 12368,
+   "innvandring": 38071,
+   "utvandring": 26744,
+   "nettoinnvandring": 11327,
+   "korreksjon": 94
+  },
+  {
+   "aar": 2021,
+   "bef_start": 5391369,
+   "folkevekst": 33901,
+   "vekst_prosent": 0.63,
+   "fodte": 56060,
+   "dode": 42002,
+   "fodselsoverskudd": 14058,
+   "innvandring": 53947,
+   "utvandring": 34297,
+   "nettoinnvandring": 19650,
+   "korreksjon": 193
+  },
+  {
+   "aar": 2022,
+   "bef_start": 5425270,
+   "folkevekst": 63714,
+   "vekst_prosent": 1.17,
+   "fodte": 51480,
+   "dode": 45774,
+   "fodselsoverskudd": 5706,
+   "innvandring": 90475,
+   "utvandring": 32536,
+   "nettoinnvandring": 57939,
+   "korreksjon": 69
+  },
+  {
+   "aar": 2023,
+   "bef_start": 5488984,
+   "folkevekst": 61219,
+   "vekst_prosent": 1.12,
+   "fodte": 51980,
+   "dode": 43803,
+   "fodselsoverskudd": 8177,
+   "innvandring": 86589,
+   "utvandring": 34011,
+   "nettoinnvandring": 52578,
+   "korreksjon": 464
+  },
+  {
+   "aar": 2024,
+   "bef_start": 5550203,
+   "folkevekst": 44137,
+   "vekst_prosent": 0.8,
+   "fodte": 54013,
+   "dode": 44242,
+   "fodselsoverskudd": 9771,
+   "innvandring": 66077,
+   "utvandring": 31968,
+   "nettoinnvandring": 34109,
+   "korreksjon": 257
+  },
+  {
+   "aar": 2025,
+   "bef_start": 5594340,
+   "folkevekst": 33060,
+   "vekst_prosent": 0.59,
+   "fodte": 55401,
+   "dode": 45040,
+   "fodselsoverskudd": 10361,
+   "innvandring": 55243,
+   "utvandring": 32919,
+   "nettoinnvandring": 22324,
+   "korreksjon": 375
+  }
+ ],
+ "kommuner": [
+  {
+   "kode": "3101",
+   "bef_2025": 32038,
+   "bef_2026": 32082,
+   "endring": 44,
+   "endring_prosent": 0.14
+  },
+  {
+   "kode": "3103",
+   "bef_2025": 52646,
+   "bef_2026": 53207,
+   "endring": 561,
+   "endring_prosent": 1.07
+  },
+  {
+   "kode": "3105",
+   "bef_2025": 60139,
+   "bef_2026": 60614,
+   "endring": 475,
+   "endring_prosent": 0.79
+  },
+  {
+   "kode": "3107",
+   "bef_2025": 85862,
+   "bef_2026": 86243,
+   "endring": 381,
+   "endring_prosent": 0.44
+  },
+  {
+   "kode": "3110",
+   "bef_2025": 4777,
+   "bef_2026": 4714,
+   "endring": -63,
+   "endring_prosent": -1.32
+  },
+  {
+   "kode": "3112",
+   "bef_2025": 7850,
+   "bef_2026": 7892,
+   "endring": 42,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "3114",
+   "bef_2025": 6162,
+   "bef_2026": 6229,
+   "endring": 67,
+   "endring_prosent": 1.09
+  },
+  {
+   "kode": "3116",
+   "bef_2025": 3956,
+   "bef_2026": 3940,
+   "endring": -16,
+   "endring_prosent": -0.4
+  },
+  {
+   "kode": "3118",
+   "bef_2025": 47449,
+   "bef_2026": 47943,
+   "endring": 494,
+   "endring_prosent": 1.04
+  },
+  {
+   "kode": "3120",
+   "bef_2025": 8527,
+   "bef_2026": 8583,
+   "endring": 56,
+   "endring_prosent": 0.66
+  },
+  {
+   "kode": "3122",
+   "bef_2025": 3655,
+   "bef_2026": 3647,
+   "endring": -8,
+   "endring_prosent": -0.22
+  },
+  {
+   "kode": "3124",
+   "bef_2025": 1346,
+   "bef_2026": 1354,
+   "endring": 8,
+   "endring_prosent": 0.59
+  },
+  {
+   "kode": "3201",
+   "bef_2025": 132358,
+   "bef_2026": 133228,
+   "endring": 870,
+   "endring_prosent": 0.66
+  },
+  {
+   "kode": "3203",
+   "bef_2025": 100492,
+   "bef_2026": 101509,
+   "endring": 1017,
+   "endring_prosent": 1.01
+  },
+  {
+   "kode": "3205",
+   "bef_2025": 95762,
+   "bef_2026": 96771,
+   "endring": 1009,
+   "endring_prosent": 1.05
+  },
+  {
+   "kode": "3207",
+   "bef_2025": 64668,
+   "bef_2026": 65381,
+   "endring": 713,
+   "endring_prosent": 1.1
+  },
+  {
+   "kode": "3209",
+   "bef_2025": 45066,
+   "bef_2026": 45982,
+   "endring": 916,
+   "endring_prosent": 2.03
+  },
+  {
+   "kode": "3212",
+   "bef_2025": 20698,
+   "bef_2026": 21005,
+   "endring": 307,
+   "endring_prosent": 1.48
+  },
+  {
+   "kode": "3214",
+   "bef_2025": 16337,
+   "bef_2026": 16429,
+   "endring": 92,
+   "endring_prosent": 0.56
+  },
+  {
+   "kode": "3216",
+   "bef_2025": 19855,
+   "bef_2026": 20167,
+   "endring": 312,
+   "endring_prosent": 1.57
+  },
+  {
+   "kode": "3218",
+   "bef_2025": 22344,
+   "bef_2026": 22725,
+   "endring": 381,
+   "endring_prosent": 1.71
+  },
+  {
+   "kode": "3220",
+   "bef_2025": 11549,
+   "bef_2026": 11697,
+   "endring": 148,
+   "endring_prosent": 1.28
+  },
+  {
+   "kode": "3222",
+   "bef_2025": 50013,
+   "bef_2026": 51511,
+   "endring": 1498,
+   "endring_prosent": 3.0
+  },
+  {
+   "kode": "3224",
+   "bef_2025": 20509,
+   "bef_2026": 20904,
+   "endring": 395,
+   "endring_prosent": 1.93
+  },
+  {
+   "kode": "3226",
+   "bef_2025": 18314,
+   "bef_2026": 18458,
+   "endring": 144,
+   "endring_prosent": 0.79
+  },
+  {
+   "kode": "3228",
+   "bef_2025": 24897,
+   "bef_2026": 24948,
+   "endring": 51,
+   "endring_prosent": 0.2
+  },
+  {
+   "kode": "3230",
+   "bef_2025": 7453,
+   "bef_2026": 7478,
+   "endring": 25,
+   "endring_prosent": 0.34
+  },
+  {
+   "kode": "3232",
+   "bef_2025": 26023,
+   "bef_2026": 26032,
+   "endring": 9,
+   "endring_prosent": 0.03
+  },
+  {
+   "kode": "3234",
+   "bef_2025": 9420,
+   "bef_2026": 9463,
+   "endring": 43,
+   "endring_prosent": 0.46
+  },
+  {
+   "kode": "3236",
+   "bef_2025": 7043,
+   "bef_2026": 7040,
+   "endring": -3,
+   "endring_prosent": -0.04
+  },
+  {
+   "kode": "3238",
+   "bef_2025": 16505,
+   "bef_2026": 16662,
+   "endring": 157,
+   "endring_prosent": 0.95
+  },
+  {
+   "kode": "3240",
+   "bef_2025": 28352,
+   "bef_2026": 28739,
+   "endring": 387,
+   "endring_prosent": 1.36
+  },
+  {
+   "kode": "3242",
+   "bef_2025": 3022,
+   "bef_2026": 3078,
+   "endring": 56,
+   "endring_prosent": 1.85
+  },
+  {
+   "kode": "0301",
+   "bef_2025": 724290,
+   "bef_2026": 728714,
+   "endring": 4424,
+   "endring_prosent": 0.61
+  },
+  {
+   "kode": "3301",
+   "bef_2025": 105452,
+   "bef_2026": 106013,
+   "endring": 561,
+   "endring_prosent": 0.53
+  },
+  {
+   "kode": "3303",
+   "bef_2025": 29011,
+   "bef_2026": 29169,
+   "endring": 158,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "3305",
+   "bef_2025": 31793,
+   "bef_2026": 31942,
+   "endring": 149,
+   "endring_prosent": 0.47
+  },
+  {
+   "kode": "3310",
+   "bef_2025": 7065,
+   "bef_2026": 7205,
+   "endring": 140,
+   "endring_prosent": 1.98
+  },
+  {
+   "kode": "3312",
+   "bef_2025": 28642,
+   "bef_2026": 28797,
+   "endring": 155,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "3314",
+   "bef_2025": 20861,
+   "bef_2026": 20965,
+   "endring": 104,
+   "endring_prosent": 0.5
+  },
+  {
+   "kode": "3316",
+   "bef_2025": 14664,
+   "bef_2026": 14776,
+   "endring": 112,
+   "endring_prosent": 0.76
+  },
+  {
+   "kode": "3318",
+   "bef_2025": 2235,
+   "bef_2026": 2276,
+   "endring": 41,
+   "endring_prosent": 1.83
+  },
+  {
+   "kode": "3320",
+   "bef_2025": 1117,
+   "bef_2026": 1122,
+   "endring": 5,
+   "endring_prosent": 0.45
+  },
+  {
+   "kode": "3322",
+   "bef_2025": 3266,
+   "bef_2026": 3234,
+   "endring": -32,
+   "endring_prosent": -0.98
+  },
+  {
+   "kode": "3324",
+   "bef_2025": 4888,
+   "bef_2026": 4902,
+   "endring": 14,
+   "endring_prosent": 0.29
+  },
+  {
+   "kode": "3326",
+   "bef_2025": 2685,
+   "bef_2026": 2707,
+   "endring": 22,
+   "endring_prosent": 0.82
+  },
+  {
+   "kode": "3328",
+   "bef_2025": 4835,
+   "bef_2026": 5106,
+   "endring": 271,
+   "endring_prosent": 5.6
+  },
+  {
+   "kode": "3330",
+   "bef_2025": 4527,
+   "bef_2026": 4552,
+   "endring": 25,
+   "endring_prosent": 0.55
+  },
+  {
+   "kode": "3332",
+   "bef_2025": 3530,
+   "bef_2026": 3514,
+   "endring": -16,
+   "endring_prosent": -0.45
+  },
+  {
+   "kode": "3334",
+   "bef_2025": 2797,
+   "bef_2026": 2790,
+   "endring": -7,
+   "endring_prosent": -0.25
+  },
+  {
+   "kode": "3336",
+   "bef_2025": 1414,
+   "bef_2026": 1452,
+   "endring": 38,
+   "endring_prosent": 2.69
+  },
+  {
+   "kode": "3338",
+   "bef_2025": 2466,
+   "bef_2026": 2459,
+   "endring": -7,
+   "endring_prosent": -0.28
+  },
+  {
+   "kode": "3401",
+   "bef_2025": 18109,
+   "bef_2026": 18191,
+   "endring": 82,
+   "endring_prosent": 0.45
+  },
+  {
+   "kode": "3403",
+   "bef_2025": 33441,
+   "bef_2026": 33817,
+   "endring": 376,
+   "endring_prosent": 1.12
+  },
+  {
+   "kode": "3405",
+   "bef_2025": 29011,
+   "bef_2026": 29669,
+   "endring": 658,
+   "endring_prosent": 2.27
+  },
+  {
+   "kode": "3407",
+   "bef_2025": 31175,
+   "bef_2026": 31350,
+   "endring": 175,
+   "endring_prosent": 0.56
+  },
+  {
+   "kode": "3411",
+   "bef_2025": 35911,
+   "bef_2026": 36199,
+   "endring": 288,
+   "endring_prosent": 0.8
+  },
+  {
+   "kode": "3412",
+   "bef_2025": 7931,
+   "bef_2026": 7951,
+   "endring": 20,
+   "endring_prosent": 0.25
+  },
+  {
+   "kode": "3413",
+   "bef_2025": 21691,
+   "bef_2026": 21839,
+   "endring": 148,
+   "endring_prosent": 0.68
+  },
+  {
+   "kode": "3414",
+   "bef_2025": 5006,
+   "bef_2026": 4978,
+   "endring": -28,
+   "endring_prosent": -0.56
+  },
+  {
+   "kode": "3415",
+   "bef_2025": 8150,
+   "bef_2026": 8165,
+   "endring": 15,
+   "endring_prosent": 0.18
+  },
+  {
+   "kode": "3416",
+   "bef_2025": 6059,
+   "bef_2026": 6103,
+   "endring": 44,
+   "endring_prosent": 0.73
+  },
+  {
+   "kode": "3417",
+   "bef_2025": 4513,
+   "bef_2026": 4463,
+   "endring": -50,
+   "endring_prosent": -1.11
+  },
+  {
+   "kode": "3418",
+   "bef_2025": 7247,
+   "bef_2026": 7216,
+   "endring": -31,
+   "endring_prosent": -0.43
+  },
+  {
+   "kode": "3419",
+   "bef_2025": 3559,
+   "bef_2026": 3614,
+   "endring": 55,
+   "endring_prosent": 1.55
+  },
+  {
+   "kode": "3420",
+   "bef_2025": 21899,
+   "bef_2026": 21937,
+   "endring": 38,
+   "endring_prosent": 0.17
+  },
+  {
+   "kode": "3421",
+   "bef_2025": 6542,
+   "bef_2026": 6474,
+   "endring": -68,
+   "endring_prosent": -1.04
+  },
+  {
+   "kode": "3422",
+   "bef_2025": 4205,
+   "bef_2026": 4191,
+   "endring": -14,
+   "endring_prosent": -0.33
+  },
+  {
+   "kode": "3423",
+   "bef_2025": 2250,
+   "bef_2026": 2239,
+   "endring": -11,
+   "endring_prosent": -0.49
+  },
+  {
+   "kode": "3424",
+   "bef_2025": 1846,
+   "bef_2026": 1836,
+   "endring": -10,
+   "endring_prosent": -0.54
+  },
+  {
+   "kode": "3425",
+   "bef_2025": 1326,
+   "bef_2026": 1287,
+   "endring": -39,
+   "endring_prosent": -2.94
+  },
+  {
+   "kode": "3426",
+   "bef_2025": 1606,
+   "bef_2026": 1609,
+   "endring": 3,
+   "endring_prosent": 0.19
+  },
+  {
+   "kode": "3427",
+   "bef_2025": 5722,
+   "bef_2026": 5762,
+   "endring": 40,
+   "endring_prosent": 0.7
+  },
+  {
+   "kode": "3428",
+   "bef_2025": 2509,
+   "bef_2026": 2492,
+   "endring": -17,
+   "endring_prosent": -0.68
+  },
+  {
+   "kode": "3429",
+   "bef_2025": 1540,
+   "bef_2026": 1525,
+   "endring": -15,
+   "endring_prosent": -0.97
+  },
+  {
+   "kode": "3430",
+   "bef_2025": 1895,
+   "bef_2026": 1871,
+   "endring": -24,
+   "endring_prosent": -1.27
+  },
+  {
+   "kode": "3431",
+   "bef_2025": 2516,
+   "bef_2026": 2523,
+   "endring": 7,
+   "endring_prosent": 0.28
+  },
+  {
+   "kode": "3432",
+   "bef_2025": 2006,
+   "bef_2026": 1966,
+   "endring": -40,
+   "endring_prosent": -1.99
+  },
+  {
+   "kode": "3433",
+   "bef_2025": 2179,
+   "bef_2026": 2185,
+   "endring": 6,
+   "endring_prosent": 0.28
+  },
+  {
+   "kode": "3434",
+   "bef_2025": 2215,
+   "bef_2026": 2239,
+   "endring": 24,
+   "endring_prosent": 1.08
+  },
+  {
+   "kode": "3435",
+   "bef_2025": 3529,
+   "bef_2026": 3553,
+   "endring": 24,
+   "endring_prosent": 0.68
+  },
+  {
+   "kode": "3436",
+   "bef_2025": 5553,
+   "bef_2026": 5493,
+   "endring": -60,
+   "endring_prosent": -1.08
+  },
+  {
+   "kode": "3437",
+   "bef_2025": 5623,
+   "bef_2026": 5469,
+   "endring": -154,
+   "endring_prosent": -2.74
+  },
+  {
+   "kode": "3438",
+   "bef_2025": 3128,
+   "bef_2026": 3108,
+   "endring": -20,
+   "endring_prosent": -0.64
+  },
+  {
+   "kode": "3439",
+   "bef_2025": 4447,
+   "bef_2026": 4497,
+   "endring": 50,
+   "endring_prosent": 1.12
+  },
+  {
+   "kode": "3440",
+   "bef_2025": 5134,
+   "bef_2026": 5130,
+   "endring": -4,
+   "endring_prosent": -0.08
+  },
+  {
+   "kode": "3441",
+   "bef_2025": 6174,
+   "bef_2026": 6147,
+   "endring": -27,
+   "endring_prosent": -0.44
+  },
+  {
+   "kode": "3442",
+   "bef_2025": 14827,
+   "bef_2026": 14925,
+   "endring": 98,
+   "endring_prosent": 0.66
+  },
+  {
+   "kode": "3443",
+   "bef_2025": 13649,
+   "bef_2026": 13612,
+   "endring": -37,
+   "endring_prosent": -0.27
+  },
+  {
+   "kode": "3446",
+   "bef_2025": 13660,
+   "bef_2026": 13689,
+   "endring": 29,
+   "endring_prosent": 0.21
+  },
+  {
+   "kode": "3447",
+   "bef_2025": 5597,
+   "bef_2026": 5603,
+   "endring": 6,
+   "endring_prosent": 0.11
+  },
+  {
+   "kode": "3448",
+   "bef_2025": 6544,
+   "bef_2026": 6510,
+   "endring": -34,
+   "endring_prosent": -0.52
+  },
+  {
+   "kode": "3449",
+   "bef_2025": 2822,
+   "bef_2026": 2841,
+   "endring": 19,
+   "endring_prosent": 0.67
+  },
+  {
+   "kode": "3450",
+   "bef_2025": 1254,
+   "bef_2026": 1593,
+   "endring": 339,
+   "endring_prosent": 27.03
+  },
+  {
+   "kode": "3451",
+   "bef_2025": 6455,
+   "bef_2026": 6424,
+   "endring": -31,
+   "endring_prosent": -0.48
+  },
+  {
+   "kode": "3452",
+   "bef_2025": 2142,
+   "bef_2026": 2190,
+   "endring": 48,
+   "endring_prosent": 2.24
+  },
+  {
+   "kode": "3453",
+   "bef_2025": 3311,
+   "bef_2026": 3347,
+   "endring": 36,
+   "endring_prosent": 1.09
+  },
+  {
+   "kode": "3454",
+   "bef_2025": 1648,
+   "bef_2026": 1666,
+   "endring": 18,
+   "endring_prosent": 1.09
+  },
+  {
+   "kode": "3901",
+   "bef_2025": 28039,
+   "bef_2026": 28173,
+   "endring": 134,
+   "endring_prosent": 0.48
+  },
+  {
+   "kode": "3903",
+   "bef_2025": 27005,
+   "bef_2026": 27086,
+   "endring": 81,
+   "endring_prosent": 0.3
+  },
+  {
+   "kode": "3905",
+   "bef_2025": 59830,
+   "bef_2026": 60246,
+   "endring": 416,
+   "endring_prosent": 0.7
+  },
+  {
+   "kode": "3907",
+   "bef_2025": 66758,
+   "bef_2026": 67062,
+   "endring": 304,
+   "endring_prosent": 0.46
+  },
+  {
+   "kode": "3909",
+   "bef_2025": 48870,
+   "bef_2026": 49022,
+   "endring": 152,
+   "endring_prosent": 0.31
+  },
+  {
+   "kode": "3911",
+   "bef_2025": 27569,
+   "bef_2026": 27743,
+   "endring": 174,
+   "endring_prosent": 0.63
+  },
+  {
+   "kode": "4001",
+   "bef_2025": 37289,
+   "bef_2026": 37435,
+   "endring": 146,
+   "endring_prosent": 0.39
+  },
+  {
+   "kode": "4003",
+   "bef_2025": 56866,
+   "bef_2026": 56906,
+   "endring": 40,
+   "endring_prosent": 0.07
+  },
+  {
+   "kode": "4005",
+   "bef_2025": 13333,
+   "bef_2026": 13389,
+   "endring": 56,
+   "endring_prosent": 0.42
+  },
+  {
+   "kode": "4010",
+   "bef_2025": 2389,
+   "bef_2026": 2377,
+   "endring": -12,
+   "endring_prosent": -0.5
+  },
+  {
+   "kode": "4012",
+   "bef_2025": 14310,
+   "bef_2026": 14267,
+   "endring": -43,
+   "endring_prosent": -0.3
+  },
+  {
+   "kode": "4014",
+   "bef_2025": 10446,
+   "bef_2026": 10378,
+   "endring": -68,
+   "endring_prosent": -0.65
+  },
+  {
+   "kode": "4016",
+   "bef_2025": 4067,
+   "bef_2026": 4056,
+   "endring": -11,
+   "endring_prosent": -0.27
+  },
+  {
+   "kode": "4018",
+   "bef_2025": 6558,
+   "bef_2026": 6529,
+   "endring": -29,
+   "endring_prosent": -0.44
+  },
+  {
+   "kode": "4020",
+   "bef_2025": 11135,
+   "bef_2026": 11157,
+   "endring": 22,
+   "endring_prosent": 0.2
+  },
+  {
+   "kode": "4022",
+   "bef_2025": 2981,
+   "bef_2026": 2959,
+   "endring": -22,
+   "endring_prosent": -0.74
+  },
+  {
+   "kode": "4024",
+   "bef_2025": 1646,
+   "bef_2026": 1638,
+   "endring": -8,
+   "endring_prosent": -0.49
+  },
+  {
+   "kode": "4026",
+   "bef_2025": 5529,
+   "bef_2026": 5515,
+   "endring": -14,
+   "endring_prosent": -0.25
+  },
+  {
+   "kode": "4028",
+   "bef_2025": 2473,
+   "bef_2026": 2463,
+   "endring": -10,
+   "endring_prosent": -0.4
+  },
+  {
+   "kode": "4030",
+   "bef_2025": 1486,
+   "bef_2026": 1509,
+   "endring": 23,
+   "endring_prosent": 1.55
+  },
+  {
+   "kode": "4032",
+   "bef_2025": 1256,
+   "bef_2026": 1274,
+   "endring": 18,
+   "endring_prosent": 1.43
+  },
+  {
+   "kode": "4034",
+   "bef_2025": 2238,
+   "bef_2026": 2242,
+   "endring": 4,
+   "endring_prosent": 0.18
+  },
+  {
+   "kode": "4036",
+   "bef_2025": 3861,
+   "bef_2026": 3829,
+   "endring": -32,
+   "endring_prosent": -0.83
+  },
+  {
+   "kode": "4201",
+   "bef_2025": 6687,
+   "bef_2026": 6683,
+   "endring": -4,
+   "endring_prosent": -0.06
+  },
+  {
+   "kode": "4202",
+   "bef_2025": 25419,
+   "bef_2026": 25569,
+   "endring": 150,
+   "endring_prosent": 0.59
+  },
+  {
+   "kode": "4203",
+   "bef_2025": 46568,
+   "bef_2026": 46603,
+   "endring": 35,
+   "endring_prosent": 0.08
+  },
+  {
+   "kode": "4204",
+   "bef_2025": 118221,
+   "bef_2026": 119287,
+   "endring": 1066,
+   "endring_prosent": 0.9
+  },
+  {
+   "kode": "4205",
+   "bef_2025": 23768,
+   "bef_2026": 23702,
+   "endring": -66,
+   "endring_prosent": -0.28
+  },
+  {
+   "kode": "4206",
+   "bef_2025": 9880,
+   "bef_2026": 9949,
+   "endring": 69,
+   "endring_prosent": 0.7
+  },
+  {
+   "kode": "4207",
+   "bef_2025": 9329,
+   "bef_2026": 9373,
+   "endring": 44,
+   "endring_prosent": 0.47
+  },
+  {
+   "kode": "4211",
+   "bef_2025": 2492,
+   "bef_2026": 2502,
+   "endring": 10,
+   "endring_prosent": 0.4
+  },
+  {
+   "kode": "4212",
+   "bef_2025": 2285,
+   "bef_2026": 2253,
+   "endring": -32,
+   "endring_prosent": -1.4
+  },
+  {
+   "kode": "4213",
+   "bef_2025": 6464,
+   "bef_2026": 6430,
+   "endring": -34,
+   "endring_prosent": -0.53
+  },
+  {
+   "kode": "4214",
+   "bef_2025": 6260,
+   "bef_2026": 6299,
+   "endring": 39,
+   "endring_prosent": 0.62
+  },
+  {
+   "kode": "4215",
+   "bef_2025": 11734,
+   "bef_2026": 11822,
+   "endring": 88,
+   "endring_prosent": 0.75
+  },
+  {
+   "kode": "4216",
+   "bef_2025": 5413,
+   "bef_2026": 5447,
+   "endring": 34,
+   "endring_prosent": 0.63
+  },
+  {
+   "kode": "4217",
+   "bef_2025": 1778,
+   "bef_2026": 1805,
+   "endring": 27,
+   "endring_prosent": 1.52
+  },
+  {
+   "kode": "4218",
+   "bef_2025": 1399,
+   "bef_2026": 1386,
+   "endring": -13,
+   "endring_prosent": -0.93
+  },
+  {
+   "kode": "4219",
+   "bef_2025": 3828,
+   "bef_2026": 3842,
+   "endring": 14,
+   "endring_prosent": 0.37
+  },
+  {
+   "kode": "4220",
+   "bef_2025": 1162,
+   "bef_2026": 1167,
+   "endring": 5,
+   "endring_prosent": 0.43
+  },
+  {
+   "kode": "4221",
+   "bef_2025": 1205,
+   "bef_2026": 1209,
+   "endring": 4,
+   "endring_prosent": 0.33
+  },
+  {
+   "kode": "4222",
+   "bef_2025": 1039,
+   "bef_2026": 1057,
+   "endring": 18,
+   "endring_prosent": 1.73
+  },
+  {
+   "kode": "4223",
+   "bef_2025": 15622,
+   "bef_2026": 15772,
+   "endring": 150,
+   "endring_prosent": 0.96
+  },
+  {
+   "kode": "4224",
+   "bef_2025": 915,
+   "bef_2026": 904,
+   "endring": -11,
+   "endring_prosent": -1.2
+  },
+  {
+   "kode": "4225",
+   "bef_2025": 10869,
+   "bef_2026": 10922,
+   "endring": 53,
+   "endring_prosent": 0.49
+  },
+  {
+   "kode": "4226",
+   "bef_2025": 1786,
+   "bef_2026": 1794,
+   "endring": 8,
+   "endring_prosent": 0.45
+  },
+  {
+   "kode": "4227",
+   "bef_2025": 6163,
+   "bef_2026": 6242,
+   "endring": 79,
+   "endring_prosent": 1.28
+  },
+  {
+   "kode": "4228",
+   "bef_2025": 1902,
+   "bef_2026": 1911,
+   "endring": 9,
+   "endring_prosent": 0.47
+  },
+  {
+   "kode": "1101",
+   "bef_2025": 15375,
+   "bef_2026": 15546,
+   "endring": 171,
+   "endring_prosent": 1.11
+  },
+  {
+   "kode": "1103",
+   "bef_2025": 150123,
+   "bef_2026": 151669,
+   "endring": 1546,
+   "endring_prosent": 1.03
+  },
+  {
+   "kode": "1106",
+   "bef_2025": 38441,
+   "bef_2026": 38663,
+   "endring": 222,
+   "endring_prosent": 0.58
+  },
+  {
+   "kode": "1108",
+   "bef_2025": 84908,
+   "bef_2026": 85785,
+   "endring": 877,
+   "endring_prosent": 1.03
+  },
+  {
+   "kode": "1111",
+   "bef_2025": 3371,
+   "bef_2026": 3356,
+   "endring": -15,
+   "endring_prosent": -0.44
+  },
+  {
+   "kode": "1112",
+   "bef_2025": 3259,
+   "bef_2026": 3229,
+   "endring": -30,
+   "endring_prosent": -0.92
+  },
+  {
+   "kode": "1114",
+   "bef_2025": 2905,
+   "bef_2026": 2894,
+   "endring": -11,
+   "endring_prosent": -0.38
+  },
+  {
+   "kode": "1119",
+   "bef_2025": 20067,
+   "bef_2026": 20087,
+   "endring": 20,
+   "endring_prosent": 0.1
+  },
+  {
+   "kode": "1120",
+   "bef_2025": 21186,
+   "bef_2026": 21444,
+   "endring": 258,
+   "endring_prosent": 1.22
+  },
+  {
+   "kode": "1121",
+   "bef_2025": 20157,
+   "bef_2026": 20461,
+   "endring": 304,
+   "endring_prosent": 1.51
+  },
+  {
+   "kode": "1122",
+   "bef_2025": 12536,
+   "bef_2026": 12715,
+   "endring": 179,
+   "endring_prosent": 1.43
+  },
+  {
+   "kode": "1124",
+   "bef_2025": 29153,
+   "bef_2026": 29541,
+   "endring": 388,
+   "endring_prosent": 1.33
+  },
+  {
+   "kode": "1127",
+   "bef_2025": 11795,
+   "bef_2026": 11841,
+   "endring": 46,
+   "endring_prosent": 0.39
+  },
+  {
+   "kode": "1130",
+   "bef_2025": 13813,
+   "bef_2026": 13959,
+   "endring": 146,
+   "endring_prosent": 1.06
+  },
+  {
+   "kode": "1133",
+   "bef_2025": 2681,
+   "bef_2026": 2612,
+   "endring": -69,
+   "endring_prosent": -2.57
+  },
+  {
+   "kode": "1134",
+   "bef_2025": 3939,
+   "bef_2026": 3891,
+   "endring": -48,
+   "endring_prosent": -1.22
+  },
+  {
+   "kode": "1135",
+   "bef_2025": 4600,
+   "bef_2026": 4603,
+   "endring": 3,
+   "endring_prosent": 0.07
+  },
+  {
+   "kode": "1144",
+   "bef_2025": 570,
+   "bef_2026": 579,
+   "endring": 9,
+   "endring_prosent": 1.58
+  },
+  {
+   "kode": "1145",
+   "bef_2025": 893,
+   "bef_2026": 907,
+   "endring": 14,
+   "endring_prosent": 1.57
+  },
+  {
+   "kode": "1146",
+   "bef_2025": 11715,
+   "bef_2026": 11750,
+   "endring": 35,
+   "endring_prosent": 0.3
+  },
+  {
+   "kode": "1149",
+   "bef_2025": 43723,
+   "bef_2026": 43990,
+   "endring": 267,
+   "endring_prosent": 0.61
+  },
+  {
+   "kode": "1151",
+   "bef_2025": 217,
+   "bef_2026": 219,
+   "endring": 2,
+   "endring_prosent": 0.92
+  },
+  {
+   "kode": "1160",
+   "bef_2025": 9069,
+   "bef_2026": 9181,
+   "endring": 112,
+   "endring_prosent": 1.23
+  },
+  {
+   "kode": "4601",
+   "bef_2025": 293709,
+   "bef_2026": 294860,
+   "endring": 1151,
+   "endring_prosent": 0.39
+  },
+  {
+   "kode": "4602",
+   "bef_2025": 17419,
+   "bef_2026": 17356,
+   "endring": -63,
+   "endring_prosent": -0.36
+  },
+  {
+   "kode": "4611",
+   "bef_2025": 4093,
+   "bef_2026": 4115,
+   "endring": 22,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "4612",
+   "bef_2025": 5752,
+   "bef_2026": 5766,
+   "endring": 14,
+   "endring_prosent": 0.24
+  },
+  {
+   "kode": "4613",
+   "bef_2025": 12365,
+   "bef_2026": 12531,
+   "endring": 166,
+   "endring_prosent": 1.34
+  },
+  {
+   "kode": "4614",
+   "bef_2025": 19350,
+   "bef_2026": 19276,
+   "endring": -74,
+   "endring_prosent": -0.38
+  },
+  {
+   "kode": "4615",
+   "bef_2025": 3208,
+   "bef_2026": 3237,
+   "endring": 29,
+   "endring_prosent": 0.9
+  },
+  {
+   "kode": "4616",
+   "bef_2025": 2986,
+   "bef_2026": 3053,
+   "endring": 67,
+   "endring_prosent": 2.24
+  },
+  {
+   "kode": "4617",
+   "bef_2025": 13175,
+   "bef_2026": 13236,
+   "endring": 61,
+   "endring_prosent": 0.46
+  },
+  {
+   "kode": "4618",
+   "bef_2025": 10981,
+   "bef_2026": 10929,
+   "endring": -52,
+   "endring_prosent": -0.47
+  },
+  {
+   "kode": "4619",
+   "bef_2025": 967,
+   "bef_2026": 985,
+   "endring": 18,
+   "endring_prosent": 1.86
+  },
+  {
+   "kode": "4620",
+   "bef_2025": 1100,
+   "bef_2026": 1114,
+   "endring": 14,
+   "endring_prosent": 1.27
+  },
+  {
+   "kode": "4621",
+   "bef_2025": 16436,
+   "bef_2026": 16438,
+   "endring": 2,
+   "endring_prosent": 0.01
+  },
+  {
+   "kode": "4622",
+   "bef_2025": 8517,
+   "bef_2026": 8490,
+   "endring": -27,
+   "endring_prosent": -0.32
+  },
+  {
+   "kode": "4623",
+   "bef_2025": 2491,
+   "bef_2026": 2489,
+   "endring": -2,
+   "endring_prosent": -0.08
+  },
+  {
+   "kode": "4624",
+   "bef_2025": 26342,
+   "bef_2026": 26753,
+   "endring": 411,
+   "endring_prosent": 1.56
+  },
+  {
+   "kode": "4625",
+   "bef_2025": 5437,
+   "bef_2026": 5515,
+   "endring": 78,
+   "endring_prosent": 1.43
+  },
+  {
+   "kode": "4626",
+   "bef_2025": 40105,
+   "bef_2026": 40641,
+   "endring": 536,
+   "endring_prosent": 1.34
+  },
+  {
+   "kode": "4627",
+   "bef_2025": 30377,
+   "bef_2026": 30600,
+   "endring": 223,
+   "endring_prosent": 0.73
+  },
+  {
+   "kode": "4628",
+   "bef_2025": 3875,
+   "bef_2026": 3899,
+   "endring": 24,
+   "endring_prosent": 0.62
+  },
+  {
+   "kode": "4629",
+   "bef_2025": 392,
+   "bef_2026": 397,
+   "endring": 5,
+   "endring_prosent": 1.28
+  },
+  {
+   "kode": "4630",
+   "bef_2025": 8172,
+   "bef_2026": 8231,
+   "endring": 59,
+   "endring_prosent": 0.72
+  },
+  {
+   "kode": "4631",
+   "bef_2025": 30169,
+   "bef_2026": 30285,
+   "endring": 116,
+   "endring_prosent": 0.38
+  },
+  {
+   "kode": "4632",
+   "bef_2025": 2915,
+   "bef_2026": 2947,
+   "endring": 32,
+   "endring_prosent": 1.1
+  },
+  {
+   "kode": "4633",
+   "bef_2025": 521,
+   "bef_2026": 529,
+   "endring": 8,
+   "endring_prosent": 1.54
+  },
+  {
+   "kode": "4634",
+   "bef_2025": 1687,
+   "bef_2026": 1672,
+   "endring": -15,
+   "endring_prosent": -0.89
+  },
+  {
+   "kode": "4635",
+   "bef_2025": 2260,
+   "bef_2026": 2301,
+   "endring": 41,
+   "endring_prosent": 1.81
+  },
+  {
+   "kode": "4636",
+   "bef_2025": 740,
+   "bef_2026": 742,
+   "endring": 2,
+   "endring_prosent": 0.27
+  },
+  {
+   "kode": "4637",
+   "bef_2025": 1281,
+   "bef_2026": 1275,
+   "endring": -6,
+   "endring_prosent": -0.47
+  },
+  {
+   "kode": "4638",
+   "bef_2025": 3894,
+   "bef_2026": 3883,
+   "endring": -11,
+   "endring_prosent": -0.28
+  },
+  {
+   "kode": "4639",
+   "bef_2025": 2550,
+   "bef_2026": 2532,
+   "endring": -18,
+   "endring_prosent": -0.71
+  },
+  {
+   "kode": "4640",
+   "bef_2025": 12496,
+   "bef_2026": 12552,
+   "endring": 56,
+   "endring_prosent": 0.45
+  },
+  {
+   "kode": "4641",
+   "bef_2025": 1836,
+   "bef_2026": 1866,
+   "endring": 30,
+   "endring_prosent": 1.63
+  },
+  {
+   "kode": "4642",
+   "bef_2025": 2188,
+   "bef_2026": 2223,
+   "endring": 35,
+   "endring_prosent": 1.6
+  },
+  {
+   "kode": "4643",
+   "bef_2025": 5213,
+   "bef_2026": 5178,
+   "endring": -35,
+   "endring_prosent": -0.67
+  },
+  {
+   "kode": "4644",
+   "bef_2025": 5432,
+   "bef_2026": 5478,
+   "endring": 46,
+   "endring_prosent": 0.85
+  },
+  {
+   "kode": "4645",
+   "bef_2025": 2930,
+   "bef_2026": 2924,
+   "endring": -6,
+   "endring_prosent": -0.2
+  },
+  {
+   "kode": "4646",
+   "bef_2025": 2924,
+   "bef_2026": 2948,
+   "endring": 24,
+   "endring_prosent": 0.82
+  },
+  {
+   "kode": "4647",
+   "bef_2025": 22662,
+   "bef_2026": 22804,
+   "endring": 142,
+   "endring_prosent": 0.63
+  },
+  {
+   "kode": "4648",
+   "bef_2025": 3361,
+   "bef_2026": 3381,
+   "endring": 20,
+   "endring_prosent": 0.6
+  },
+  {
+   "kode": "4649",
+   "bef_2025": 9655,
+   "bef_2026": 9616,
+   "endring": -39,
+   "endring_prosent": -0.4
+  },
+  {
+   "kode": "4650",
+   "bef_2025": 5936,
+   "bef_2026": 5976,
+   "endring": 40,
+   "endring_prosent": 0.67
+  },
+  {
+   "kode": "4651",
+   "bef_2025": 7311,
+   "bef_2026": 7319,
+   "endring": 8,
+   "endring_prosent": 0.11
+  },
+  {
+   "kode": "1505",
+   "bef_2025": 24578,
+   "bef_2026": 24479,
+   "endring": -99,
+   "endring_prosent": -0.4
+  },
+  {
+   "kode": "1506",
+   "bef_2025": 33163,
+   "bef_2026": 33291,
+   "endring": 128,
+   "endring_prosent": 0.39
+  },
+  {
+   "kode": "1508",
+   "bef_2025": 59198,
+   "bef_2026": 59663,
+   "endring": 465,
+   "endring_prosent": 0.79
+  },
+  {
+   "kode": "1511",
+   "bef_2025": 3048,
+   "bef_2026": 3029,
+   "endring": -19,
+   "endring_prosent": -0.62
+  },
+  {
+   "kode": "1514",
+   "bef_2025": 2435,
+   "bef_2026": 2437,
+   "endring": 2,
+   "endring_prosent": 0.08
+  },
+  {
+   "kode": "1515",
+   "bef_2025": 9031,
+   "bef_2026": 9003,
+   "endring": -28,
+   "endring_prosent": -0.31
+  },
+  {
+   "kode": "1516",
+   "bef_2025": 8862,
+   "bef_2026": 8958,
+   "endring": 96,
+   "endring_prosent": 1.08
+  },
+  {
+   "kode": "1517",
+   "bef_2025": 5320,
+   "bef_2026": 5411,
+   "endring": 91,
+   "endring_prosent": 1.71
+  },
+  {
+   "kode": "1520",
+   "bef_2025": 11055,
+   "bef_2026": 11068,
+   "endring": 13,
+   "endring_prosent": 0.12
+  },
+  {
+   "kode": "1525",
+   "bef_2025": 4380,
+   "bef_2026": 4333,
+   "endring": -47,
+   "endring_prosent": -1.07
+  },
+  {
+   "kode": "1528",
+   "bef_2025": 7626,
+   "bef_2026": 7626,
+   "endring": 0,
+   "endring_prosent": 0.0
+  },
+  {
+   "kode": "1531",
+   "bef_2025": 9759,
+   "bef_2026": 9798,
+   "endring": 39,
+   "endring_prosent": 0.4
+  },
+  {
+   "kode": "1532",
+   "bef_2025": 8773,
+   "bef_2026": 8828,
+   "endring": 55,
+   "endring_prosent": 0.63
+  },
+  {
+   "kode": "1535",
+   "bef_2025": 7242,
+   "bef_2026": 7315,
+   "endring": 73,
+   "endring_prosent": 1.01
+  },
+  {
+   "kode": "1539",
+   "bef_2025": 7196,
+   "bef_2026": 7195,
+   "endring": -1,
+   "endring_prosent": -0.01
+  },
+  {
+   "kode": "1547",
+   "bef_2025": 3759,
+   "bef_2026": 3780,
+   "endring": 21,
+   "endring_prosent": 0.56
+  },
+  {
+   "kode": "1554",
+   "bef_2025": 5992,
+   "bef_2026": 6007,
+   "endring": 15,
+   "endring_prosent": 0.25
+  },
+  {
+   "kode": "1557",
+   "bef_2025": 2708,
+   "bef_2026": 2740,
+   "endring": 32,
+   "endring_prosent": 1.18
+  },
+  {
+   "kode": "1560",
+   "bef_2025": 3077,
+   "bef_2026": 3066,
+   "endring": -11,
+   "endring_prosent": -0.36
+  },
+  {
+   "kode": "1563",
+   "bef_2025": 7193,
+   "bef_2026": 7094,
+   "endring": -99,
+   "endring_prosent": -1.38
+  },
+  {
+   "kode": "1566",
+   "bef_2025": 5950,
+   "bef_2026": 5982,
+   "endring": 32,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "1573",
+   "bef_2025": 2168,
+   "bef_2026": 2141,
+   "endring": -27,
+   "endring_prosent": -1.25
+  },
+  {
+   "kode": "1576",
+   "bef_2025": 3394,
+   "bef_2026": 3371,
+   "endring": -23,
+   "endring_prosent": -0.68
+  },
+  {
+   "kode": "1577",
+   "bef_2025": 11131,
+   "bef_2026": 11009,
+   "endring": -122,
+   "endring_prosent": -1.1
+  },
+  {
+   "kode": "1578",
+   "bef_2025": 2506,
+   "bef_2026": 2547,
+   "endring": 41,
+   "endring_prosent": 1.64
+  },
+  {
+   "kode": "1579",
+   "bef_2025": 13460,
+   "bef_2026": 13538,
+   "endring": 78,
+   "endring_prosent": 0.58
+  },
+  {
+   "kode": "1580",
+   "bef_2025": 9409,
+   "bef_2026": 9460,
+   "endring": 51,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "5001",
+   "bef_2025": 216518,
+   "bef_2026": 218460,
+   "endring": 1942,
+   "endring_prosent": 0.9
+  },
+  {
+   "kode": "5006",
+   "bef_2025": 24064,
+   "bef_2026": 24007,
+   "endring": -57,
+   "endring_prosent": -0.24
+  },
+  {
+   "kode": "5007",
+   "bef_2025": 15154,
+   "bef_2026": 15112,
+   "endring": -42,
+   "endring_prosent": -0.28
+  },
+  {
+   "kode": "5014",
+   "bef_2025": 5655,
+   "bef_2026": 5794,
+   "endring": 139,
+   "endring_prosent": 2.46
+  },
+  {
+   "kode": "5020",
+   "bef_2025": 891,
+   "bef_2026": 911,
+   "endring": 20,
+   "endring_prosent": 2.24
+  },
+  {
+   "kode": "5021",
+   "bef_2025": 7408,
+   "bef_2026": 7421,
+   "endring": 13,
+   "endring_prosent": 0.18
+  },
+  {
+   "kode": "5022",
+   "bef_2025": 2513,
+   "bef_2026": 2514,
+   "endring": 1,
+   "endring_prosent": 0.04
+  },
+  {
+   "kode": "5025",
+   "bef_2025": 5681,
+   "bef_2026": 5638,
+   "endring": -43,
+   "endring_prosent": -0.76
+  },
+  {
+   "kode": "5026",
+   "bef_2025": 2048,
+   "bef_2026": 2037,
+   "endring": -11,
+   "endring_prosent": -0.54
+  },
+  {
+   "kode": "5027",
+   "bef_2025": 6141,
+   "bef_2026": 6088,
+   "endring": -53,
+   "endring_prosent": -0.86
+  },
+  {
+   "kode": "5028",
+   "bef_2025": 17812,
+   "bef_2026": 17828,
+   "endring": 16,
+   "endring_prosent": 0.09
+  },
+  {
+   "kode": "5029",
+   "bef_2025": 8521,
+   "bef_2026": 8574,
+   "endring": 53,
+   "endring_prosent": 0.62
+  },
+  {
+   "kode": "5031",
+   "bef_2025": 15023,
+   "bef_2026": 14961,
+   "endring": -62,
+   "endring_prosent": -0.41
+  },
+  {
+   "kode": "5032",
+   "bef_2025": 4233,
+   "bef_2026": 4258,
+   "endring": 25,
+   "endring_prosent": 0.59
+  },
+  {
+   "kode": "5033",
+   "bef_2025": 786,
+   "bef_2026": 773,
+   "endring": -13,
+   "endring_prosent": -1.65
+  },
+  {
+   "kode": "5034",
+   "bef_2025": 2472,
+   "bef_2026": 2460,
+   "endring": -12,
+   "endring_prosent": -0.49
+  },
+  {
+   "kode": "5035",
+   "bef_2025": 24927,
+   "bef_2026": 25108,
+   "endring": 181,
+   "endring_prosent": 0.73
+  },
+  {
+   "kode": "5036",
+   "bef_2025": 2661,
+   "bef_2026": 2667,
+   "endring": 6,
+   "endring_prosent": 0.23
+  },
+  {
+   "kode": "5037",
+   "bef_2025": 20732,
+   "bef_2026": 20807,
+   "endring": 75,
+   "endring_prosent": 0.36
+  },
+  {
+   "kode": "5038",
+   "bef_2025": 15412,
+   "bef_2026": 15435,
+   "endring": 23,
+   "endring_prosent": 0.15
+  },
+  {
+   "kode": "5041",
+   "bef_2025": 2138,
+   "bef_2026": 2141,
+   "endring": 3,
+   "endring_prosent": 0.14
+  },
+  {
+   "kode": "5042",
+   "bef_2025": 1316,
+   "bef_2026": 1302,
+   "endring": -14,
+   "endring_prosent": -1.06
+  },
+  {
+   "kode": "5043",
+   "bef_2025": 443,
+   "bef_2026": 439,
+   "endring": -4,
+   "endring_prosent": -0.9
+  },
+  {
+   "kode": "5044",
+   "bef_2025": 811,
+   "bef_2026": 803,
+   "endring": -8,
+   "endring_prosent": -0.99
+  },
+  {
+   "kode": "5045",
+   "bef_2025": 2314,
+   "bef_2026": 2292,
+   "endring": -22,
+   "endring_prosent": -0.95
+  },
+  {
+   "kode": "5046",
+   "bef_2025": 1235,
+   "bef_2026": 1230,
+   "endring": -5,
+   "endring_prosent": -0.4
+  },
+  {
+   "kode": "5047",
+   "bef_2025": 3946,
+   "bef_2026": 3944,
+   "endring": -2,
+   "endring_prosent": -0.05
+  },
+  {
+   "kode": "5049",
+   "bef_2025": 1121,
+   "bef_2026": 1110,
+   "endring": -11,
+   "endring_prosent": -0.98
+  },
+  {
+   "kode": "5052",
+   "bef_2025": 593,
+   "bef_2026": 596,
+   "endring": 3,
+   "endring_prosent": 0.51
+  },
+  {
+   "kode": "5053",
+   "bef_2025": 7031,
+   "bef_2026": 7066,
+   "endring": 35,
+   "endring_prosent": 0.5
+  },
+  {
+   "kode": "5054",
+   "bef_2025": 10042,
+   "bef_2026": 10006,
+   "endring": -36,
+   "endring_prosent": -0.36
+  },
+  {
+   "kode": "5055",
+   "bef_2025": 6134,
+   "bef_2026": 6075,
+   "endring": -59,
+   "endring_prosent": -0.96
+  },
+  {
+   "kode": "5056",
+   "bef_2025": 5414,
+   "bef_2026": 5568,
+   "endring": 154,
+   "endring_prosent": 2.84
+  },
+  {
+   "kode": "5057",
+   "bef_2025": 10627,
+   "bef_2026": 10706,
+   "endring": 79,
+   "endring_prosent": 0.74
+  },
+  {
+   "kode": "5058",
+   "bef_2025": 4342,
+   "bef_2026": 4340,
+   "endring": -2,
+   "endring_prosent": -0.05
+  },
+  {
+   "kode": "5059",
+   "bef_2025": 18798,
+   "bef_2026": 18840,
+   "endring": 42,
+   "endring_prosent": 0.22
+  },
+  {
+   "kode": "5060",
+   "bef_2025": 9921,
+   "bef_2026": 9920,
+   "endring": -1,
+   "endring_prosent": -0.01
+  },
+  {
+   "kode": "5061",
+   "bef_2025": 1937,
+   "bef_2026": 1935,
+   "endring": -2,
+   "endring_prosent": -0.1
+  },
+  {
+   "kode": "1804",
+   "bef_2025": 53725,
+   "bef_2026": 53638,
+   "endring": -87,
+   "endring_prosent": -0.16
+  },
+  {
+   "kode": "1806",
+   "bef_2025": 21591,
+   "bef_2026": 21647,
+   "endring": 56,
+   "endring_prosent": 0.26
+  },
+  {
+   "kode": "1811",
+   "bef_2025": 1374,
+   "bef_2026": 1361,
+   "endring": -13,
+   "endring_prosent": -0.95
+  },
+  {
+   "kode": "1812",
+   "bef_2025": 1979,
+   "bef_2026": 2006,
+   "endring": 27,
+   "endring_prosent": 1.36
+  },
+  {
+   "kode": "1813",
+   "bef_2025": 7838,
+   "bef_2026": 7841,
+   "endring": 3,
+   "endring_prosent": 0.04
+  },
+  {
+   "kode": "1815",
+   "bef_2025": 1207,
+   "bef_2026": 1202,
+   "endring": -5,
+   "endring_prosent": -0.41
+  },
+  {
+   "kode": "1816",
+   "bef_2025": 470,
+   "bef_2026": 477,
+   "endring": 7,
+   "endring_prosent": 1.49
+  },
+  {
+   "kode": "1818",
+   "bef_2025": 1888,
+   "bef_2026": 1874,
+   "endring": -14,
+   "endring_prosent": -0.74
+  },
+  {
+   "kode": "1820",
+   "bef_2025": 7465,
+   "bef_2026": 7489,
+   "endring": 24,
+   "endring_prosent": 0.32
+  },
+  {
+   "kode": "1822",
+   "bef_2025": 2354,
+   "bef_2026": 2392,
+   "endring": 38,
+   "endring_prosent": 1.61
+  },
+  {
+   "kode": "1824",
+   "bef_2025": 13475,
+   "bef_2026": 13481,
+   "endring": 6,
+   "endring_prosent": 0.04
+  },
+  {
+   "kode": "1825",
+   "bef_2025": 1430,
+   "bef_2026": 1415,
+   "endring": -15,
+   "endring_prosent": -1.05
+  },
+  {
+   "kode": "1826",
+   "bef_2025": 1274,
+   "bef_2026": 1255,
+   "endring": -19,
+   "endring_prosent": -1.49
+  },
+  {
+   "kode": "1827",
+   "bef_2025": 1447,
+   "bef_2026": 1445,
+   "endring": -2,
+   "endring_prosent": -0.14
+  },
+  {
+   "kode": "1828",
+   "bef_2025": 1770,
+   "bef_2026": 1796,
+   "endring": 26,
+   "endring_prosent": 1.47
+  },
+  {
+   "kode": "1832",
+   "bef_2025": 4485,
+   "bef_2026": 4486,
+   "endring": 1,
+   "endring_prosent": 0.02
+  },
+  {
+   "kode": "1833",
+   "bef_2025": 25927,
+   "bef_2026": 25844,
+   "endring": -83,
+   "endring_prosent": -0.32
+  },
+  {
+   "kode": "1834",
+   "bef_2025": 1948,
+   "bef_2026": 1953,
+   "endring": 5,
+   "endring_prosent": 0.26
+  },
+  {
+   "kode": "1835",
+   "bef_2025": 463,
+   "bef_2026": 443,
+   "endring": -20,
+   "endring_prosent": -4.32
+  },
+  {
+   "kode": "1836",
+   "bef_2025": 1160,
+   "bef_2026": 1140,
+   "endring": -20,
+   "endring_prosent": -1.72
+  },
+  {
+   "kode": "1837",
+   "bef_2025": 6104,
+   "bef_2026": 6074,
+   "endring": -30,
+   "endring_prosent": -0.49
+  },
+  {
+   "kode": "1838",
+   "bef_2025": 2003,
+   "bef_2026": 2024,
+   "endring": 21,
+   "endring_prosent": 1.05
+  },
+  {
+   "kode": "1839",
+   "bef_2025": 1059,
+   "bef_2026": 1032,
+   "endring": -27,
+   "endring_prosent": -2.55
+  },
+  {
+   "kode": "1840",
+   "bef_2025": 4822,
+   "bef_2026": 4865,
+   "endring": 43,
+   "endring_prosent": 0.89
+  },
+  {
+   "kode": "1841",
+   "bef_2025": 9805,
+   "bef_2026": 9707,
+   "endring": -98,
+   "endring_prosent": -1.0
+  },
+  {
+   "kode": "1845",
+   "bef_2025": 1851,
+   "bef_2026": 1819,
+   "endring": -32,
+   "endring_prosent": -1.73
+  },
+  {
+   "kode": "1848",
+   "bef_2025": 2662,
+   "bef_2026": 2679,
+   "endring": 17,
+   "endring_prosent": 0.64
+  },
+  {
+   "kode": "1851",
+   "bef_2025": 2067,
+   "bef_2026": 1964,
+   "endring": -103,
+   "endring_prosent": -4.98
+  },
+  {
+   "kode": "1853",
+   "bef_2025": 1362,
+   "bef_2026": 1397,
+   "endring": 35,
+   "endring_prosent": 2.57
+  },
+  {
+   "kode": "1856",
+   "bef_2025": 458,
+   "bef_2026": 471,
+   "endring": 13,
+   "endring_prosent": 2.84
+  },
+  {
+   "kode": "1857",
+   "bef_2025": 677,
+   "bef_2026": 656,
+   "endring": -21,
+   "endring_prosent": -3.1
+  },
+  {
+   "kode": "1859",
+   "bef_2025": 1266,
+   "bef_2026": 1235,
+   "endring": -31,
+   "endring_prosent": -2.45
+  },
+  {
+   "kode": "1860",
+   "bef_2025": 11582,
+   "bef_2026": 11606,
+   "endring": 24,
+   "endring_prosent": 0.21
+  },
+  {
+   "kode": "1865",
+   "bef_2025": 9871,
+   "bef_2026": 9905,
+   "endring": 34,
+   "endring_prosent": 0.34
+  },
+  {
+   "kode": "1866",
+   "bef_2025": 8400,
+   "bef_2026": 8374,
+   "endring": -26,
+   "endring_prosent": -0.31
+  },
+  {
+   "kode": "1867",
+   "bef_2025": 2617,
+   "bef_2026": 2609,
+   "endring": -8,
+   "endring_prosent": -0.31
+  },
+  {
+   "kode": "1868",
+   "bef_2025": 4628,
+   "bef_2026": 4613,
+   "endring": -15,
+   "endring_prosent": -0.32
+  },
+  {
+   "kode": "1870",
+   "bef_2025": 10781,
+   "bef_2026": 10748,
+   "endring": -33,
+   "endring_prosent": -0.31
+  },
+  {
+   "kode": "1871",
+   "bef_2025": 4542,
+   "bef_2026": 4525,
+   "endring": -17,
+   "endring_prosent": -0.37
+  },
+  {
+   "kode": "1874",
+   "bef_2025": 969,
+   "bef_2026": 976,
+   "endring": 7,
+   "endring_prosent": 0.72
+  },
+  {
+   "kode": "1875",
+   "bef_2025": 2786,
+   "bef_2026": 2808,
+   "endring": 22,
+   "endring_prosent": 0.79
+  },
+  {
+   "kode": "5501",
+   "bef_2025": 79421,
+   "bef_2026": 79943,
+   "endring": 522,
+   "endring_prosent": 0.66
+  },
+  {
+   "kode": "5503",
+   "bef_2025": 25167,
+   "bef_2026": 25204,
+   "endring": 37,
+   "endring_prosent": 0.15
+  },
+  {
+   "kode": "5510",
+   "bef_2025": 2852,
+   "bef_2026": 2901,
+   "endring": 49,
+   "endring_prosent": 1.72
+  },
+  {
+   "kode": "5512",
+   "bef_2025": 4209,
+   "bef_2026": 4144,
+   "endring": -65,
+   "endring_prosent": -1.54
+  },
+  {
+   "kode": "5514",
+   "bef_2025": 1301,
+   "bef_2026": 1287,
+   "endring": -14,
+   "endring_prosent": -1.08
+  },
+  {
+   "kode": "5516",
+   "bef_2025": 1062,
+   "bef_2026": 1062,
+   "endring": 0,
+   "endring_prosent": 0.0
+  },
+  {
+   "kode": "5518",
+   "bef_2025": 985,
+   "bef_2026": 1002,
+   "endring": 17,
+   "endring_prosent": 1.73
+  },
+  {
+   "kode": "5520",
+   "bef_2025": 3961,
+   "bef_2026": 4004,
+   "endring": 43,
+   "endring_prosent": 1.09
+  },
+  {
+   "kode": "5522",
+   "bef_2025": 2116,
+   "bef_2026": 2132,
+   "endring": 16,
+   "endring_prosent": 0.76
+  },
+  {
+   "kode": "5524",
+   "bef_2025": 6794,
+   "bef_2026": 6819,
+   "endring": 25,
+   "endring_prosent": 0.37
+  },
+  {
+   "kode": "5526",
+   "bef_2025": 3533,
+   "bef_2026": 3528,
+   "endring": -5,
+   "endring_prosent": -0.14
+  },
+  {
+   "kode": "5528",
+   "bef_2025": 1069,
+   "bef_2026": 1077,
+   "endring": 8,
+   "endring_prosent": 0.75
+  },
+  {
+   "kode": "5530",
+   "bef_2025": 14948,
+   "bef_2026": 14946,
+   "endring": -2,
+   "endring_prosent": -0.01
+  },
+  {
+   "kode": "5532",
+   "bef_2025": 5595,
+   "bef_2026": 5625,
+   "endring": 30,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "5534",
+   "bef_2025": 2223,
+   "bef_2026": 2235,
+   "endring": 12,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "5536",
+   "bef_2025": 2734,
+   "bef_2026": 2732,
+   "endring": -2,
+   "endring_prosent": -0.07
+  },
+  {
+   "kode": "5538",
+   "bef_2025": 1829,
+   "bef_2026": 1848,
+   "endring": 19,
+   "endring_prosent": 1.04
+  },
+  {
+   "kode": "5540",
+   "bef_2025": 1955,
+   "bef_2026": 1939,
+   "endring": -16,
+   "endring_prosent": -0.82
+  },
+  {
+   "kode": "5542",
+   "bef_2025": 2784,
+   "bef_2026": 2802,
+   "endring": 18,
+   "endring_prosent": 0.65
+  },
+  {
+   "kode": "5544",
+   "bef_2025": 4810,
+   "bef_2026": 4863,
+   "endring": 53,
+   "endring_prosent": 1.1
+  },
+  {
+   "kode": "5546",
+   "bef_2025": 1131,
+   "bef_2026": 1125,
+   "endring": -6,
+   "endring_prosent": -0.53
+  },
+  {
+   "kode": "5601",
+   "bef_2025": 21877,
+   "bef_2026": 22074,
+   "endring": 197,
+   "endring_prosent": 0.9
+  },
+  {
+   "kode": "5603",
+   "bef_2025": 11324,
+   "bef_2026": 11391,
+   "endring": 67,
+   "endring_prosent": 0.59
+  },
+  {
+   "kode": "5605",
+   "bef_2025": 9963,
+   "bef_2026": 9947,
+   "endring": -16,
+   "endring_prosent": -0.16
+  },
+  {
+   "kode": "5607",
+   "bef_2025": 5777,
+   "bef_2026": 5808,
+   "endring": 31,
+   "endring_prosent": 0.54
+  },
+  {
+   "kode": "5610",
+   "bef_2025": 2524,
+   "bef_2026": 2524,
+   "endring": 0,
+   "endring_prosent": 0.0
+  },
+  {
+   "kode": "5612",
+   "bef_2025": 2852,
+   "bef_2026": 2886,
+   "endring": 34,
+   "endring_prosent": 1.19
+  },
+  {
+   "kode": "5614",
+   "bef_2025": 864,
+   "bef_2026": 846,
+   "endring": -18,
+   "endring_prosent": -2.08
+  },
+  {
+   "kode": "5616",
+   "bef_2025": 977,
+   "bef_2026": 987,
+   "endring": 10,
+   "endring_prosent": 1.02
+  },
+  {
+   "kode": "5618",
+   "bef_2025": 1098,
+   "bef_2026": 1089,
+   "endring": -9,
+   "endring_prosent": -0.82
+  },
+  {
+   "kode": "5620",
+   "bef_2025": 2956,
+   "bef_2026": 2945,
+   "endring": -11,
+   "endring_prosent": -0.37
+  },
+  {
+   "kode": "5622",
+   "bef_2025": 3896,
+   "bef_2026": 3906,
+   "endring": 10,
+   "endring_prosent": 0.26
+  },
+  {
+   "kode": "5624",
+   "bef_2025": 1238,
+   "bef_2026": 1249,
+   "endring": 11,
+   "endring_prosent": 0.89
+  },
+  {
+   "kode": "5626",
+   "bef_2025": 1051,
+   "bef_2026": 1019,
+   "endring": -32,
+   "endring_prosent": -3.04
+  },
+  {
+   "kode": "5628",
+   "bef_2025": 2798,
+   "bef_2026": 2806,
+   "endring": 8,
+   "endring_prosent": 0.29
+  },
+  {
+   "kode": "5630",
+   "bef_2025": 890,
+   "bef_2026": 864,
+   "endring": -26,
+   "endring_prosent": -2.92
+  },
+  {
+   "kode": "5632",
+   "bef_2025": 2107,
+   "bef_2026": 2104,
+   "endring": -3,
+   "endring_prosent": -0.14
+  },
+  {
+   "kode": "5634",
+   "bef_2025": 1982,
+   "bef_2026": 1969,
+   "endring": -13,
+   "endring_prosent": -0.66
+  },
+  {
+   "kode": "5636",
+   "bef_2025": 868,
+   "bef_2026": 874,
+   "endring": 6,
+   "endring_prosent": 0.69
+  }
+ ],
+ "alder": {
+  "kilde": "SSB, tabell 07459",
+  "grupper": [
+   "0-17",
+   "18-49",
+   "50-66",
+   "67-79",
+   "80-89",
+   "90+"
+  ],
+  "2000": [
+   1052844,
+   2019991,
+   788155,
+   427485,
+   164901,
+   25121
+  ],
+  "2016": [
+   1127402,
+   2278672,
+   1063215,
+   524671,
+   176079,
+   43946
+  ],
+  "2026": [
+   1101380,
+   2358739,
+   1207648,
+   674694,
+   239357,
+   45582
+  ]
+ }
+}
