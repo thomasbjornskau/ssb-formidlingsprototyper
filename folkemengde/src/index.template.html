@@ -561,7 +561,7 @@ function ingress() {
   const el = $('#ingress'), b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
   el.replaceChildren('Statistikken gir folketallet for Norge og alle kommuner, og forklarer hvordan det endrer seg. 1. januar ', String(SISTAAR), ' var ',
     b(`${nf0.format(bef('0', SISTAAR))} personer`), ' bosatt i Norge. I ', String(SISTPER), ' økte folketallet med ', b(nf0.format(k.vekst)),
-    `, og ${Math.round(100 * k.netto / k.vekst / 10) * 10 >= 60 ? 'om lag to tredjedeler' : 'en del'} av veksten kom fra innvandring. `,
+    `, og ${(() => { const a = 100 * k.netto / k.vekst; return a >= 63 && a <= 70 ? 'om lag to tredjedeler' : `${nf0.format(Math.round(a))} prosent`; })()} av veksten kom fra nettoinnvandring. `,
     b(`${NEDGANG.length} av ${kommuner.length}`), ' kommuner fikk likevel færre innbyggere. Velg en kommune for å se tallene der.');
 }
 
@@ -668,7 +668,11 @@ function tegnLang(sel) {
   const forste = pts.find((d) => d.v != null), siste = [...pts].reverse().find((d) => d.v != null);
   const h = hull(sel);
   sett('ing-1', sel === '0'
-    ? `Folketallet har vokst nesten hvert år siden 1735. Fra 1951 kan veksten deles i fødte, døde og flyttinger.`
+    ? (() => {
+      const endr = LA.aar.slice(0, -1).map((a, i) => ({a, v: LA.bef[i + 1] - LA.bef[i]}));
+      const ned = endr.filter((d) => d.v < 0);
+      return `Folketallet har økt i ${endr.length - ned.length} av ${endr.length} år siden ${LA.aar[0]}.${ned.length ? ` Siste år med nedgang var ${ned[ned.length - 1].a}.` : ''} Fra 1951 kan veksten deles i fødte, døde og flyttinger.`;
+    })()
     : `Kommunetallene starter i 1951 og følger dagens kommunegrenser. ${kort(sel)} hadde ${nf0.format(bef(sel, SISTAAR))} bosatte 1. januar ${SISTAAR}.`);
   if (pst) {
     const neg = pts.filter((d) => d.v != null && d.v < 0).length;
