@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nasjonalregnskap</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: veksten i norsk økonomi, forskjellen på BNP og Fastlands-BNP, hva som driver veksten og hvor sikre tallene er. Tall fra SSB, tabell 09189, 09190, 11721, 09170 og 09171.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --bla: #1d9de2; --oker: #c78800; --marine: #0f2080; --rosa: #c775a7;
+  --gronn-f: #339b71; --bla-f: #3face6; --oker-f: #d5a640; --marine-f: #5763a6; --rosa-f: #cd83b0;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+:is(button, input, select, summary, a, [tabindex]):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; color: var(--tekst); font-size: 13px; margin: 0; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 8px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-brytere { display: flex; flex-wrap: wrap; gap: 0; margin: 2px 0 4px; }
+.bf-brytere .bf-knapp { padding: 5px 12px; font-size: 13px; margin-right: -1px; }
+
+/* Alle kommuner */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre h3 { font-size: 15px; margin: 12px 0 4px; }
+.bf-tre h3:first-of-type { margin-top: 0; }
+.bf-tre ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 2px 32px; }
+.bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
+.bf-tre .v { color: var(--sek); font-size: 13px; white-space: nowrap; }
+
+/* Kort for valgt kommune */
+.bf-kort { background: var(--flate); border-left: 4px solid var(--gronn); padding: 16px 20px; display: grid; gap: 4px; }
+.bf-kort h2 { font-size: 20px; margin: 0; }
+.bf-kort p { margin: 0; font-size: 14px; }
+.bf-sti { font-size: 13px; color: var(--sek); }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(38px, 6vw, 56px); font-weight: 700; line-height: 1.1; margin: 6px 0 2px; }
+.bf-stort-under { color: var(--sek); margin: 0 0 10px; }
+.bf-setning { font-size: 20px; font-weight: 600; margin: 0 0 12px; line-height: 1.35; }
+.bf-topp-under { color: var(--tekst); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick, .bf-axt { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-sw-tick { width: 14px; height: 0; border-top: 2.5px solid var(--tekst); }
+.bf-sw-line { width: 18px; height: 0; border-top: 2px solid; }
+.bf-sw-hatch { width: 14px; height: 12px; background: repeating-linear-gradient(45deg, var(--stotte) 0 2px, transparent 2px 5px); border: 1px solid var(--stotte); }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tall .bf-tablewrap { max-height: 16rem; margin-top: 6px; }
+.bf-tall tbody th { position: static; font-weight: 400; font-size: inherit; border-bottom: 1px solid var(--stotte); }
+.bf-slider { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; }
+.bf-slider input { flex: 1 1 12rem; accent-color: var(--tekst); }
+.bf-slider output { font-weight: 700; min-width: 3.2em; }
+
+/* Tabeller */
+.bf-tablewrap { max-height: 32rem; overflow: auto; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-table tr.valgt td { background: var(--lys); font-weight: 600; }
+.bf-sort { all: unset; cursor: pointer; font: inherit; color: inherit; }
+.bf-sort[data-dir]::after { content: ' ▲'; font-size: 0.8em; }
+.bf-sort[data-dir='-1']::after { content: ' ▼'; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media (max-width: 34rem) { .bf-hide-narrow { display: none; } }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-brytere { display: none; } .bf-tablewrap { max-height: none; overflow: visible; } }
+/* Fire tall */
+.bf-fire { display: grid; grid-template-columns: minmax(0, 0.9fr) repeat(2, minmax(0, 1fr)); gap: 8px; align-items: stretch; }
+.bf-fire .h { font-size: 13px; font-weight: 600; text-align: center; align-self: end; }
+.bf-fire .h span { display: block; font-weight: 400; color: var(--sek); }
+.bf-fire .r { font-weight: 600; font-size: 14px; overflow-wrap: anywhere; line-height: 1.3; align-self: center; text-align: right; padding-right: 6px; }
+.bf-fire .c { background: var(--lys); border: 1px solid var(--stotte); text-align: center; padding: 10px 4px; font-size: clamp(24px, 4vw, 34px); font-weight: 700; }
+.bf-fire .c.hoved { border: 2px solid var(--gronn); background: #ecfeed; color: var(--gronn); }
+.bf-fire .c small { display: block; font-size: 12px; font-weight: 400; color: var(--sek); }
+.bf-innrykk1 { padding-left: 14px; } .bf-innrykk2 { padding-left: 28px; } .bf-innrykk3 { padding-left: 42px; } .bf-innrykk4 { padding-left: 56px; }
+.bf-tre li.valgt button { font-weight: 700; }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Nasjonalregnskap</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok" role="search">
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Velg størrelse</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="For eksempel BNP, forbruk eller oljeinvesteringer" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle 51 størrelser</button>
+      <button type="button" class="bf-knapp" id="bf-nullstill" hidden>Vis Fastlands-BNP</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle makrostørrelser" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite"></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du nasjonalregnskapet</h2>
+    <ul>
+      <li><b>Fastlands-BNP er hovedtallet.</b> <span data-t="les-1"></span></li>
+      <li><b>Kroner er ikke volum.</b> <span data-t="les-2"></span></li>
+      <li><b>Samme kvartal, flere veksttall.</b> <span data-t="les-3"></span></li>
+      <li><b>Tallene endres.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">BNP kan regnes fra produksjonssiden (det næringene skaper) og fra anvendelsessiden (det som brukes), og begge gir samme tall. Fastlands-BNP er BNP uten utvinning av olje og gass, rørtransport og utenriks sjøfart. Vekst måles i faste priser. Kilde: SSB, tabell 09189 og 09190, og «Hovedrevisjonen av nasjonalregnskapet» (13.11.2025).</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall" aria-live="polite">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <h3 class="bf-h" data-h="topp"></h3>
+      <div class="bf-legend" data-leg="topp"></div>
+      <div class="bf-chart" id="fig-topp" style="min-height:250px"></div>
+      <p class="bf-note" data-n="topp"></p>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-src="topp"></p>
+  </section>
+
+  <section class="bf-section" id="naa">
+    <h2 class="bf-sh">Hvor fort vokser økonomien nå?</h2>
+    <p class="bf-ingress" data-t="ing-1"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="fire"></h3>
+        <p class="bf-note">Volumendring i prosent. Fra kvartalet før er sesongjustert, fra samme kvartal i fjor er ujustert. Den grønne ruten er tallet SSB løfter fram i overskriften.</p>
+        <div class="bf-fire" id="fig-fire"></div>
+        <details class="bf-tall" data-tall="fire"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="fire"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kv"></h3>
+        <div class="bf-brytere" role="group" aria-label="Sammenlignet med">
+          <button type="button" class="bf-knapp" data-kv="s" aria-pressed="true">Fra kvartalet før</button>
+          <button type="button" class="bf-knapp" data-kv="v" aria-pressed="false">Fra samme kvartal i fjor</button>
+        </div>
+        <p class="bf-note" data-n="kv"></p>
+        <div class="bf-chart" id="fig-kv" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="kv"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="kv"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="olje">
+    <h2 class="bf-sh">BNP, Fastlands-BNP og olje og gass</h2>
+    <p class="bf-ingress" data-t="ing-2"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="oljeandel"></h3>
+        <p class="bf-note">Oljevirksomhet og utenriks sjøfart som andel av BNP i løpende priser, prosent. Andelen er regnet av oss.</p>
+        <div class="bf-chart" id="fig-oljeandel" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="oljeandel"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="oljeandel"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kroner"></h3>
+        <p class="bf-note" data-n="kroner"></p>
+        <div class="bf-legend" data-leg="kroner"></div>
+        <div class="bf-chart" id="fig-kroner" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="kroner"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="kroner"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="driver">
+    <h2 class="bf-sh">Hva driver veksten?</h2>
+    <p class="bf-ingress" data-t="ing-3"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="anv"></h3>
+        <p class="bf-note" data-n="anv"></p>
+        <div class="bf-chart" id="fig-anv" style="min-height:240px"></div>
+        <details class="bf-tall" data-tall="anv"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="anv"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="naer"></h3>
+        <div class="bf-brytere" role="group" aria-label="Periode">
+          <button type="button" class="bf-knapp" data-naer="aar" aria-pressed="true">Siste år</button>
+          <button type="button" class="bf-knapp" data-naer="kv" aria-pressed="false">Siste kvartal</button>
+        </div>
+        <p class="bf-note" data-n="naer"></p>
+        <div class="bf-chart" id="fig-naer" style="min-height:560px"></div>
+        <details class="bf-tall" data-tall="naer"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="naer"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="sikker">
+    <h2 class="bf-sh">Hvor sikre er tallene?</h2>
+    <p class="bf-ingress" data-t="ing-4"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="mnd"></h3>
+        <p class="bf-note" data-n="mnd"></p>
+        <div class="bf-legend" data-leg="mnd"></div>
+        <div class="bf-chart" id="fig-mnd" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="mnd"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="mnd"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="rev"></h3>
+        <p class="bf-note" data-n="rev"></p>
+        <div class="bf-legend" data-leg="rev"></div>
+        <div class="bf-chart" id="fig-rev" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="rev"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="rev"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Nasjonalregnskapet gir oversikt over tilstanden og utviklingen i norsk økonomi. Vekst måles som volumendring i faste 2023-priser. Kvartals- og månedstall er sesongjustert når de sammenlignes med perioden før. Tall etter basisåret 2023 er foreløpige.</p>
+    <p>Egne beregninger: andel av BNP, oljeandelen, verdiendring i løpende priser, snitt av årlig vekst og antall år med nedgang. Endringsrater ellers er SSBs publiserte. I faste priser summerer delene ikke til BNP før 2023 (kjedingsavvik), og prototypen stabler derfor aldri faste priser.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 09189, 09190, 11721, 09170 og 09171, og «Hovedrevisjonen av nasjonalregnskapet» (13.11.2025). Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/knr">ssb.no/knr</a>.</p>
+  </footer>
+
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/knr.json__*/;
+</script>
+<script>
+(() => {
+'use strict';
+// ---------- Data ----------
+// DATA.makro  [kode, navn, nivå]          DATA.A[kode] = [løpende, faste, volum %, pris %] per år 1970–2025
+// DATA.Q[kode] = [løpende, faste, faste sesongjustert, volum fra samme kvartal i fjor, volum fra kvartalet før (sesongjustert)]
+// DATA.Mnd[kode] = [fra måneden før, tremånederssum]  (bare BNP og Fastlands-BNP)
+// DATA.NA[næring] = [bruttoprodukt løpende, volum %] per år;  DATA.NQ[næring] = [løpende, volum fra i fjor, volum fra kvartalet før]
+const AAR = DATA.aar, KV = DATA.kvartaler, MND = DATA.maaneder;
+const SA = AAR.length - 1, SQ = KV.length - 1;
+const SISTAAR = AAR[SA];
+const BASIS = 2023;                       // tall etter basisåret er foreløpige (tabellnote 09189)
+const BNP = 'bnpb.nr23_9', FN = 'bnpb.nr23_9fn', OLJE = 'bnpb.nr23oljsj';
+const O = {}; DATA.makro.forEach(([k, n, niv], i) => { O[k] = {k, n, niv, i}; });
+const KODER = DATA.makro.map((m) => m[0]);
+const foreldre = (k) => {   // stien opp: nærmeste foregående med lavere nivå
+  const ut = []; let niv = O[k].niv;
+  for (let i = O[k].i - 1; i >= 0 && niv > 0; i--) { const m = O[KODER[i]]; if (m.niv < niv) { ut.unshift(m.k); niv = m.niv; } }
+  return ut;
+};
+const barn = (k) => { const ut = []; for (let i = O[k].i + 1; i < KODER.length && O[KODER[i]].niv > O[k].niv; i++) if (O[KODER[i]].niv === O[k].niv + 1) ut.push(KODER[i]); return ut; };
+const navn = (k) => O[k].n;
+const kortNavn = (k) => (k === FN ? 'Fastlands-BNP' : k === BNP ? 'BNP' : navn(k).replace(/ \((bruttoinvestering|eksport|import|bruttoprodukt)\)$/, (m, a) => ` (${a})`));
+const ref = (k) => (k === FN ? BNP : FN);
+const OPPD = DATA.kilde.oppdatert;
+const dato = (s) => s.split('-').reverse().join('.');
+const kilde = (...t) => `Kilde: SSB, tabell ${t.map((x) => x[0]).join(', ').replace(/, ([^,]*)$/, ' og $1')}. Sist oppdatert: ${[...new Set(t.map((x) => dato(OPPD[x[1]])))].join(' og ')}.`;
+const T_AAR = ['09189', 'makro_aar'], T_KV = ['09190', 'makro_kvartal'], T_MND = ['11721', 'maaned'], T_NA = ['09170', 'naering_aar'], T_NQ = ['09171', 'naering_kvartal'];
+const kvNavn = (q) => `${q.slice(5)}. kvartal ${q.slice(0, 4)}`;
+const mndNavn = (m) => ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des'][+m.slice(5) - 1] + '. ' + m.slice(0, 4);
+const snitt = (a) => { const v = a.filter((x) => x != null); return v.length ? v.reduce((x, y) => x + y, 0) / v.length : null; };
+
+// ---------- Format ----------
+const nf0 = new Intl.NumberFormat('nb-NO', {maximumFractionDigits: 0});
+const nf1 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const sgn = (v, f = nf1) => (v == null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const tall = (v, f = nf0) => (v == null ? '–' : (v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const mrd = (v) => tall(v / 1000);   // millioner → milliarder
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const GR = css('--gronn'), GR_L = '#91cd9a', MARINE = css('--marine'), BLA = css('--bla'), OKER = css('--oker');
+
+// ---------- Tilstand: valgt størrelse i adressen (#storrelse=bnpb.nr23_9fn) ----------
+const root = document.querySelector('.bf');
+const $ = (s) => root.querySelector(s);
+const $$ = (s) => [...root.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+const valgt = () => { const k = new URLSearchParams(location.hash.slice(1)).get('storrelse'); return k && O[k] ? k : FN; };
+let funnetMed = null;
+const visning = {kv: 's', naer: 'aar'};
+const velg = (k, o = {}) => {
+  funnetMed = o.ord || null;
+  try { history.replaceState(null, '', k === FN ? location.pathname + location.search : '#storrelse=' + k); } catch (e) { /* ignorer */ }
+  tegnAlt();
+  if (o.rull) $('#bf-kort').scrollIntoView({behavior: 'smooth'});
+};
+
+// ---------- Verktøy ----------
+const tip = $('.bf-tip');
+const skjulTips = () => { tip.hidden = true; };
+const visTips = (ev, tittel, linjer) => {
+  tip.replaceChildren();
+  const h = document.createElement('div'); h.className = 'bf-tip-h'; h.textContent = tittel; tip.append(h);
+  for (const l of linjer) {
+    const r = document.createElement('div'); r.className = 'bf-tip-r';
+    if (l.c) { const i = document.createElement('i'); i.style.background = l.c; r.append(i); }
+    const n = document.createElement('span'); n.textContent = l.n;
+    const v = document.createElement('b'); v.textContent = l.v;
+    r.append(n, v); tip.append(r);
+  }
+  tip.hidden = false;
+  const b = root.getBoundingClientRect();
+  let x = ev.clientX - b.left + 14, y = ev.clientY - b.top + 14;
+  if (x + tip.offsetWidth > b.width) x = ev.clientX - b.left - tip.offsetWidth - 14;
+  if (ev.clientY + 14 + tip.offsetHeight > window.innerHeight) y = ev.clientY - b.top - tip.offsetHeight - 14;
+  tip.style.left = Math.max(0, x) + 'px'; tip.style.top = Math.max(0, y) + 'px';
+};
+const lerret = (box, h, beskrivelse) => {
+  const w = Math.max(260, Math.floor(box.clientWidth));
+  d3.select(box).selectAll('svg').remove();
+  box.style.minHeight = h + 'px';
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', beskrivelse);
+  return {svg, w};
+};
+const bredde = (svg, s, cls) => { const t = svg.append('text').attr('class', cls).text(s); const l = t.node().getComputedTextLength(); t.remove(); return l; };
+const sett = (k, t) => { $(`[data-t="${k}"]`).textContent = t; };
+const settH = (k, t) => { $(`[data-h="${k}"]`).textContent = t; };
+const settN = (k, t) => { $(`[data-n="${k}"]`).textContent = t; };
+const settSrc = (k, t) => { $(`[data-src="${k}"]`).textContent = t; };
+const talltabell = (id, tittel, kolonner, rader) => {
+  const t = document.createElement('table'); t.className = 'bf-table';
+  const cap = document.createElement('caption'); cap.textContent = tittel; t.append(cap);
+  const hr = t.createTHead().insertRow();
+  for (const k of kolonner) { const th = document.createElement('th'); th.scope = 'col'; th.textContent = k; hr.append(th); }
+  const tb = t.createTBody();
+  for (const r of rader) { const tr = tb.insertRow(); r.forEach((c, i) => { const e = document.createElement(i ? 'td' : 'th'); if (!i) e.scope = 'row'; e.textContent = c; tr.append(e); }); }
+  $(`[data-tall="${id}"] .bf-tablewrap`).replaceChildren(t);
+};
+const legende = (key, items) => $(`[data-leg="${key}"]`).replaceChildren(...items.map(({c, n, cls}) => {
+  const s = document.createElement('span'), i = document.createElement('i');
+  i.className = cls || 'bf-sw-sq';
+  if (cls === 'bf-sw-line') i.style.borderColor = c; else if (cls === 'bf-sw-tick') i.style.borderColor = c || css('--tekst'); else if (c) i.style.background = c;
+  s.append(i, n); return s;
+}));
+const yakse = (svg, w, m, ys, yt, fmt, tittel) => {
+  const g = svg.append('g');
+  g.selectAll('line').data(yt).join('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', ys).attr('y2', ys).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
+  g.selectAll('text').data(yt).join('text').attr('class', 'bf-tick').attr('x', m.l - 8).attr('y', ys).attr('dy', '0.32em').attr('text-anchor', 'end').text(fmt);
+  svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(tittel);
+};
+const vmarg = (svg, yt, fmt) => Math.ceil(d3.max(yt, (t) => bredde(svg, fmt(t), 'bf-tick'))) + 12;
+const pfmt = (t) => tall(t, Number.isInteger(t) ? nf0 : nf1);
+
+// Loddrette stolper med strek: pts [{x, v, ref, lys, tips}]
+function soyler(box, pts, o) {
+  const H = o.H || 260, {svg, w} = lerret(box, H, o.aria);
+  const verdier = pts.flatMap((d) => [d.v, d.ref]).filter((x) => x != null);
+  const ys = d3.scaleLinear().domain([Math.min(0, d3.min(verdier) ?? 0), Math.max(0, d3.max(verdier) ?? 1)]).nice(5), yt = ys.ticks(5);
+  const m = {t: o.mt || 26, b: 24, l: vmarg(svg, yt, pfmt), r: 8};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleBand().domain(d3.range(pts.length)).range([m.l, w - m.r]).paddingInner(pts.length > 30 ? 0.2 : 0.33);
+  yakse(svg, w, m, ys, yt, pfmt, o.aksetittel || 'Prosent');
+  const g = svg.append('g');
+  pts.forEach((d, i) => {
+    if (d.v != null) g.append('rect').attr('x', xs(i)).attr('width', xs.bandwidth()).attr('y', ys(Math.max(0, d.v))).attr('height', Math.max(1, Math.abs(ys(d.v) - ys(0)))).attr('fill', d.farge || (d.lys ? GR_L : GR));
+    if (d.ref != null) g.append('line').attr('x1', xs(i) - 1).attr('x2', xs(i) + xs.bandwidth() + 1).attr('y1', ys(d.ref)).attr('y2', ys(d.ref)).attr('stroke', css('--tekst')).attr('stroke-width', 2);
+    const t = o.xlab(i, w); if (t) svg.append('text').attr('class', 'bf-tick').attr('x', xs(i) + xs.bandwidth() / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(t);
+  });
+  for (const a of o.merk || []) {
+    const d = pts[a]; if (!d || d.v == null) continue;
+    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('y', d.v >= 0 ? ys(d.v) - 6 : ys(d.v) + 14).text(nf1.format(d.v).replace('-', '−'));
+    const tw = t.node().getComputedTextLength(); t.attr('x', Math.max(0, Math.min(w - tw, xs(a) + xs.bandwidth() / 2 - tw / 2)));
+  }
+  svg.append('g').selectAll('rect').data(pts).join('rect').attr('x', (d, i) => xs(i) - xs.step() * xs.paddingInner() / 2).attr('width', xs.step()).attr('y', m.t).attr('height', H - m.t - m.b)
+    .attr('fill', 'transparent').on('pointermove', (ev, d) => { const t = d.tips(); visTips(ev, t.tittel, t.linjer); }).on('pointerleave', skjulTips);
+}
+// Linjer: serier [{n, c, v:[..], dash}], x = årstall
+function linjer(box, xv, serier, o) {
+  const H = o.H || 260, {svg, w} = lerret(box, H, o.aria);
+  const alle = serier.flatMap((s) => s.v).filter((x) => x != null);
+  const ys = d3.scaleLinear().domain(o.y0 != null ? [o.y0, d3.max(alle)] : [Math.min(0, d3.min(alle)), Math.max(0, d3.max(alle))]).nice(5), yt = ys.ticks(5);
+  const etW = o.direkte ? Math.ceil(d3.max(serier, (s) => bredde(svg, s.n, 'bf-lab'))) + 14 : 10;
+  const m = {t: 26, b: 24, l: vmarg(svg, yt, o.fmt || pfmt), r: etW};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleLinear().domain([xv[0], xv[xv.length - 1]]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, yt, o.fmt || pfmt, o.aksetittel || 'Prosent');
+  const steg = (xv[xv.length - 1] - xv[0]) > 30 ? (w < 480 ? 20 : 10) : (w < 480 ? 10 : 5);
+  const xt = xv.filter((x) => x % steg === 0);
+  svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'bf-tick').attr('x', xs).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text((t) => t);
+  for (const s of serier) svg.append('path').attr('d', d3.line().defined((d) => d != null).x((d, i) => xs(xv[i])).y((d) => ys(d))(s.v)).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', 2).attr('stroke-dasharray', s.dash || null);
+  if (o.direkte) {
+    const labs = serier.filter((s) => s.v.some((x) => x != null)).map((s) => { const i = s.v.length - 1 - [...s.v].reverse().findIndex((x) => x != null); return {...s, py: ys(s.v[i])}; }).sort((a, b) => a.py - b.py);
+    for (let i = 1; i < labs.length; i++) labs[i].py = Math.max(labs[i].py, labs[i - 1].py + 14);
+    svg.append('g').selectAll('text').data(labs).join('text').attr('class', 'bf-lab').attr('x', w - m.r + 6).attr('y', (d) => d.py).attr('dy', '0.32em').text((d) => d.n);
+  }
+  for (const p of o.punkter || []) {
+    svg.append('circle').attr('cx', xs(p.x)).attr('cy', ys(p.v)).attr('r', 4).attr('fill', p.c);
+    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('y', ys(p.v) - 9).text(p.t);
+    const tw = t.node().getComputedTextLength(); t.attr('x', Math.max(0, Math.min(w - tw, xs(p.x) - tw / 2)));
+  }
+  const lag = svg.append('g').style('display', 'none'), strek = lag.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--sek'));
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const x = Math.round(xs.invert(d3.pointer(ev)[0])), i = xv.indexOf(x); if (i < 0) return;
+      lag.style('display', null); strek.attr('x1', xs(x)).attr('x2', xs(x));
+      visTips(ev, o.tittel ? o.tittel(x) : String(x), serier.map((s) => ({c: s.c, n: s.n, v: s.v[i] == null ? 'ikke beregnet' : o.vfmt ? o.vfmt(s.v[i]) : sgn(s.v[i]) + ' %'})));
+    }).on('pointerleave', () => { lag.style('display', 'none'); skjulTips(); });
+}
+// Liggende stolper fra null: rader [{n, v, sterk, farge, tips}]
+function liggende(box, rader, o) {
+  const rowH = o.rowH || 24, mt = 30, mb = 8, H = mt + rader.length * rowH + mb;
+  const {svg, w} = lerret(box, H, o.aria);
+  const nameW = Math.min(w * 0.5, Math.ceil(d3.max(rader, (d) => bredde(svg, d.n, 'bf-lab bf-strong'))) + 10);
+  const valW = Math.ceil(d3.max(rader, (d) => bredde(svg, o.fmt(d.v), 'bf-lab bf-strong'))) + 10;
+  const vals = rader.map((d) => d.v).filter((x) => x != null);
+  const lo = Math.min(0, d3.min(vals)), hi = Math.max(0, d3.max(vals));
+  const xs = d3.scaleLinear().domain([lo, hi || 1]).nice(4).range([nameW + (lo < 0 ? valW : 4), w - valW]);
+  let xt = xs.ticks(4);
+  while (xt.length > 2 && xs(xt[1]) - xs(xt[0]) < d3.max(xt, (t) => bredde(svg, o.tick(t), 'bf-tick')) + 10) xt = xt.filter((t, i) => t === 0 || i % 2 === xt.indexOf(0) % 2);
+  svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(o.aksetittel);
+  svg.append('g').selectAll('line').data(xt).join('line').attr('x1', xs).attr('x2', xs).attr('y1', mt - 4).attr('y2', H - mb).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
+  svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'bf-tick').attr('x', xs).attr('y', mt - 10).attr('text-anchor', 'middle').text(o.tick);
+  const bh = Math.round(rowH * 2 / 3);
+  const rad = svg.append('g').selectAll('g').data(rader).join('g').attr('transform', (d, i) => `translate(0,${mt + i * rowH})`);
+  rad.filter((d) => d.v != null).append('rect').attr('x', (d) => Math.min(xs(0), xs(d.v))).attr('width', (d) => Math.max(1, Math.abs(xs(d.v) - xs(0)))).attr('y', (rowH - bh) / 2).attr('height', bh)
+    .attr('fill', (d) => d.farge || GR);
+  rad.append('text').attr('class', (d) => 'bf-lab' + (d.sterk ? ' bf-strong' : '')).attr('x', nameW - 10).attr('y', rowH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d.n)
+    .each(function (d) { // korter inn lange navn i smal visning; fullt navn står i verktøytipset og i «Vis tallene»
+      let t = d.n; while (this.getComputedTextLength() > nameW - 12 && t.length > 4) { t = t.slice(0, -1); this.textContent = t.trimEnd() + '…'; }
+    });
+  rad.append('text').attr('class', (d) => 'bf-lab bf-halo' + (d.sterk ? ' bf-strong' : '')).attr('x', (d) => (d.v == null ? xs(0) + 6 : d.v < 0 ? xs(d.v) - 6 : xs(d.v) + 6)).attr('y', rowH / 2).attr('dy', '0.32em')
+    .attr('text-anchor', (d) => (d.v != null && d.v < 0 ? 'end' : 'start')).text((d) => (d.v == null ? 'ikke beregnet' : o.fmt(d.v)));
+  rad.append('rect').attr('x', 0).attr('width', w).attr('height', rowH).attr('fill', 'transparent').on('pointermove', (ev, d) => { const t = d.tips(); visTips(ev, t.tittel, t.linjer); }).on('pointerleave', skjulTips);
+}
+
+// ---------- Ingress og lesehjelp ----------
+function ingress() {
+  const el = $('#ingress'), b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
+  el.replaceChildren('Nasjonalregnskapet gir oversikt over tilstanden og utviklingen i norsk økonomi. I ', String(SISTAAR), ' vokste fastlandsøkonomien med ',
+    b(`${nf1.format(DATA.A[FN][2][SA])} prosent`), `, og i ${kvNavn(KV[SQ])} med `, b(`${nf1.format(DATA.Q[FN][4][SQ])} prosent`),
+    ' fra kvartalet før. Velg en størrelse for å se konsum, investering, eksport eller en annen del av økonomien.');
+}
+function tegnLes(sel) {
+  const A = DATA.A;
+  sett('les-1', `BNP var ${mrd(A[BNP][0][SA])} milliarder kroner i ${SISTAAR}. Uten olje, gass, rørtransport og utenriks sjøfart var det ${mrd(A[FN][0][SA])} milliarder. Fastlands-BNP svinger mindre med oljeprisene.`);
+  const q = SQ, q4 = SQ - 4, P = DATA.Q[BNP][0];
+  sett('les-2', `I ${kvNavn(KV[q])} var BNP ${nf1.format(100 * (P[q] / P[q4] - 1))} prosent høyere i kroner enn et år før, men ${nf1.format(DATA.Q[BNP][3][q])} prosent høyere i volum. Forskjellen er prisendring, ikke mer produksjon.`);
+  const Qs = DATA.Q[sel];
+  sett('les-3', `${kortNavn(sel)} i ${kvNavn(KV[q])}: ${sgn(Qs[4][q])} prosent fra kvartalet før (sesongjustert) og ${sgn(Qs[3][q])} prosent fra samme kvartal i fjor (ujustert). Begge er riktige.`);
+  const r = DATA.hovedrevisjon.rader.find((x) => x[0] === 'BNP Fastlands-Norge');
+  sett('les-4', `Tall etter ${BASIS} er foreløpige og revideres når nye kilder kommer. Hovedrevisjonen i 2025 løftet Fastlands-BNP for ${DATA.hovedrevisjon.aar} med ${nf1.format(100 * (r[2] / r[1] - 1))} prosent.`);
+}
+
+// ---------- Kortet ----------
+function tegnKort(sel) {
+  const el = $('#bf-kort'), A = DATA.A[sel];
+  $('#bf-nullstill').hidden = sel === FN;
+  const sti = foreldre(sel), b = barn(sel);
+  const nivaa = A[0][SA], andel = 100 * nivaa / DATA.A[BNP][0][SA];
+  const deler = [];
+  deler.push(`<p class="bf-sti">${sti.length ? sti.map((k) => `<button type="button" class="bf-lenke" data-k="${esc(k)}">${esc(kortNavn(k))}</button>`).join(' › ') + ' ›' : 'Makrostørrelse i nasjonalregnskapet'}</p>`);
+  deler.push(`<h2>${esc(navn(sel))}</h2>`);
+  deler.push(`<p>${mrd(nivaa)} milliarder kroner i ${SISTAAR}${sel === BNP ? '' : `, ${tall(andel, nf1)} prosent av BNP`}. Volumendring ${SISTAAR}: ${A[2][SA] == null ? 'ikke beregnet' : sgn(A[2][SA]) + ' prosent'}.</p>`);
+  if (funnetMed) { const s = SYN.find((x) => x.ord === funnetMed); if (s) deler.push(`<p class="bf-sti">Funnet med søkeordet «${esc(funnetMed)}».${s.usikker ? ' Koblingen er vår tolkning.' : ''}</p>`); }
+  if (b.length) deler.push(`<p class="bf-sti">Består blant annet av: ${b.map((k) => `<button type="button" class="bf-lenke" data-k="${esc(k)}">${esc(kortNavn(k))}</button>`).join(', ')}</p>`);
+  if (Math.abs(nivaa) < 50000) deler.push(`<p class="bf-varsel">Liten størrelse: under 50 milliarder kroner. Prosentvis endring kan svinge mye${A[2].some((x, i) => i > 0 && x == null) ? ', og den er ikke beregnet for alle år' : ''}.</p>`);
+  el.innerHTML = deler.join('');
+}
+
+// ---------- Toppgrafikk D ----------
+function tegnTopp(sel) {
+  const A = DATA.A[sel], R = DATA.A[ref(sel)], v = A[2], sist = v[SA];
+  sett('omr', `Nasjonalregnskap · ${SISTAAR}`);
+  sett('stort', sist == null ? 'Ikke beregnet' : `${sgn(sist).replace('+', '')} prosent`);
+  sett('setning', sist == null ? `Volumendring for ${kortNavn(sel).toLowerCase()} er ikke beregnet for ${SISTAAR}.` : `volumvekst i ${sel === FN ? 'fastlandsøkonomien' : kortNavn(sel).toLowerCase()} i ${SISTAAR}.`);
+  const ti = snitt(v.slice(-10)), fra = AAR.indexOf(1971);
+  const ned = AAR.filter((a, i) => i >= fra && v[i] != null && v[i] < 0);
+  const p = (t) => { const e = document.createElement('p'); e.textContent = t; return e; };
+  const ord = ['ingen', 'ett', 'to', 'tre', 'fire', 'fem', 'seks', 'sju', 'åtte', 'ni', 'ti'];
+  $('[data-t="under"]').replaceChildren(
+    p(`Snittet de siste ti årene var ${ti == null ? '–' : nf1.format(ti)} prosent. ` + (ned.length === 0 ? `Den har ikke krympet i noe år siden 1971.` : ned.length <= 5 ? `Siden 1971 har den krympet i ${ord[ned.length]} år: ${ned.join(', ').replace(/, ([^,]*)$/, ' og $1')}.` : `Siden 1971 har den krympet i ${ned.length} av ${AAR.length - fra} år.`)),
+    p(`Tall etter ${BASIS} er foreløpige.`));
+  settH('topp', `Volumvekst per år, 1971–${SISTAAR}`);
+  legende('topp', [{c: GR, n: kortNavn(sel)}, {n: kortNavn(ref(sel)), cls: 'bf-sw-tick'}, {c: GR_L, n: 'foreløpig'}]);
+  settN('topp', 'Prosent, faste priser.');
+  const pts = AAR.map((a, i) => ({a, v: v[i], ref: R[2][i], lys: a > BASIS})).slice(fra);
+  soyler($('#fig-topp'), pts.map((d) => ({...d, tips: () => ({tittel: String(d.a) + (d.a > BASIS ? ', foreløpig' : ''), linjer: [{c: GR, n: kortNavn(sel), v: d.v == null ? 'ikke beregnet' : sgn(d.v) + ' %'}, {n: kortNavn(ref(sel)), v: sgn(d.ref) + ' %'}]})})), {
+    H: 250, aria: `Volumvekst per år 1971–${SISTAAR} for ${navn(sel)}, med ${kortNavn(ref(sel))} som strek.`, merk: [pts.length - 1],
+    xlab: (i, w) => { const a = pts[i].a, st = w < 420 ? 20 : 10; return (a % st === 0 && SISTAAR - a >= st / 2) || a === SISTAAR ? a : null; },
+  });
+  talltabell('topp', `Volumvekst per år, ${navn(sel)}`, ['År', `${kortNavn(sel)}, prosent`, `${kortNavn(ref(sel))}, prosent`], pts.slice().reverse().map((d) => [d.a + (d.a > BASIS ? ' (foreløpig)' : ''), sgn(d.v), sgn(d.ref)]));
+  sett('t1-lab', `Nivå ${SISTAAR}, milliarder kroner`); sett('t1', mrd(A[0][SA]));
+  sett('t2-lab', `Andel av BNP ${SISTAAR}`); sett('t2', sel === BNP ? '100 prosent' : `${tall(100 * A[0][SA] / DATA.A[BNP][0][SA], nf1)} prosent`);
+  sett('t3-lab', 'Snitt siste ti år'); sett('t3', ti == null ? '–' : `${sgn(ti)} prosent`);
+  sett('t4-lab', `${kvNavn(KV[SQ])}, fra kvartalet før`); sett('t4', `${sgn(DATA.Q[sel][4][SQ])} prosent`);
+  settSrc('topp', kilde(T_AAR, T_KV) + ' Snittet er regnet av oss som gjennomsnitt av årlige rater.');
+}
+
+// ---------- Hvor fort nå ----------
+function tegnFire(sel) {
+  const rad = [sel, ref(sel)], q = SQ;
+  settH('fire', `${kortNavn(sel)} i ${kvNavn(KV[q])}`);
+  sett('ing-1', `${kvNavn(KV[q])} er siste kvartal. Fastlands-BNP vokste ${sgn(DATA.Q[FN][4][q])} prosent fra kvartalet før, og BNP ${sgn(DATA.Q[BNP][4][q])} prosent.`);
+  const el = $('#fig-fire'); el.replaceChildren();
+  const div = (cls, html) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; el.append(d); };
+  div('h', ''); div('h', 'Fra kvartalet før<span>sesongjustert</span>'); div('h', 'Fra samme kvartal i fjor<span>ujustert</span>');
+  for (const k of rad) {
+    div('r', esc(kortNavn(k)));
+    div('c' + (k === FN ? ' hoved' : ''), `${sgn(DATA.Q[k][4][q])}`);
+    div('c' + (k === FN && false ? ' hoved' : ''), `${sgn(DATA.Q[k][3][q])}`);
+  }
+  talltabell('fire', `Volumendring ${kvNavn(KV[q])}, prosent`, ['', 'Fra kvartalet før', 'Fra samme kvartal i fjor'], rad.map((k) => [kortNavn(k), sgn(DATA.Q[k][4][q]), sgn(DATA.Q[k][3][q])]));
+  settSrc('fire', kilde(T_KV));
+}
+function tegnKv(sel) {
+  $$('[data-kv]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.kv === visning.kv)));
+  const idx = visning.kv === 's' ? 4 : 3, n = 16;
+  const pts = KV.slice(-n).map((q, j) => { const i = KV.length - n + j; return {q, v: DATA.Q[sel][idx][i], ref: DATA.Q[ref(sel)][idx][i], lys: +q.slice(0, 4) > BASIS}; });
+  const neg = pts.filter((d) => d.v != null && d.v < 0).length;
+  settH('kv', `${kortNavn(sel)}: ${neg ? `nedgang i ${neg} av ${pts.length} kvartaler` : `vekst i alle de siste ${pts.length} kvartalene`}`);
+  const skifter = DATA.Q[sel][0].slice(-n - 4).some((x) => x == null || x <= 0);
+  settN('kv', `Volumendring ${visning.kv === 's' ? 'fra kvartalet før, sesongjustert' : 'fra samme kvartal i fjor, ujustert'}, prosent. Streken er ${kortNavn(ref(sel))}. Kvartaler etter ${BASIS} er foreløpige.` +
+    (skifter ? ' Obs: nivået er null eller negativt i noen kvartaler. Da blir endringen i prosent svært stor og kan ikke leses som vekst.' : ''));
+  soyler($('#fig-kv'), pts.map((d) => ({...d, tips: () => ({tittel: kvNavn(d.q), linjer: [{c: GR, n: kortNavn(sel), v: sgn(d.v) + ' %'}, {n: kortNavn(ref(sel)), v: sgn(d.ref) + ' %'}]})})), {
+    aria: `Kvartalsvekst for ${navn(sel)}.`, merk: [pts.length - 1], xlab: (i) => (pts[i].q.endsWith('K1') ? pts[i].q.slice(0, 4) : null),
+  });
+  talltabell('kv', `Volumendring per kvartal, ${navn(sel)}`, ['Kvartal', kortNavn(sel), kortNavn(ref(sel))], pts.slice().reverse().map((d) => [kvNavn(d.q), sgn(d.v), sgn(d.ref)]));
+  settSrc('kv', kilde(T_KV));
+}
+
+// ---------- Olje og gass ----------
+function tegnOlje() {
+  const andel = AAR.map((a, i) => 100 * DATA.A[OLJE][0][i] / DATA.A[BNP][0][i]);
+  const iMax = andel.indexOf(d3.max(andel));
+  settH('oljeandel', `Olje og sjøfart var ${nf1.format(andel[SA])} prosent av BNP i ${SISTAAR}, mot ${nf1.format(andel[iMax])} prosent i ${AAR[iMax]}`);
+  sett('ing-2', `Fastlands-BNP er BNP uten utvinning av olje og gass, rørtransport og utenriks sjøfart. Andelen deres svinger med prisene, og BNP og Fastlands-BNP kan derfor vokse i ulikt tempo: i 2024 ${sgn(DATA.A[BNP][2][AAR.indexOf(2024)])} mot ${sgn(DATA.A[FN][2][AAR.indexOf(2024)])} prosent.`);
+  linjer($('#fig-oljeandel'), AAR, [{n: 'Andel', c: MARINE, v: andel}], {aria: 'Oljevirksomhet og utenriks sjøfart som andel av BNP, 1970–' + SISTAAR, y0: 0, vfmt: (x) => nf1.format(x) + ' %',
+    punkter: [{x: AAR[iMax], v: andel[iMax], c: MARINE, t: nf1.format(andel[iMax])}, {x: SISTAAR, v: andel[SA], c: MARINE, t: nf1.format(andel[SA])}]});
+  talltabell('oljeandel', 'Andel av BNP, prosent', ['År', 'Prosent', 'Olje og sjøfart, mrd. kr', 'BNP, mrd. kr'], AAR.map((a, i) => [a, nf1.format(andel[i]), mrd(DATA.A[OLJE][0][i]), mrd(DATA.A[BNP][0][i])]).reverse());
+  settSrc('oljeandel', kilde(T_AAR));
+}
+function tegnKroner(sel) {
+  const A = DATA.A[sel], fra = AAR.length - 30;
+  const xv = AAR.slice(fra);
+  const verdi = xv.map((a, j) => { const i = fra + j; return A[0][i - 1] > 0 && A[0][i] > 0 ? 100 * (A[0][i] / A[0][i - 1] - 1) : null; });
+  const volum = A[2].slice(fra), pris = A[3].slice(fra);
+  const diff = verdi.map((x, j) => (x == null || volum[j] == null ? null : x - volum[j]));
+  const maks = d3.max(diff.map(Math.abs).filter((x) => x != null));
+  const iMaks = diff.findIndex((x) => x != null && Math.abs(x) === maks);
+  settH('kroner', `${kortNavn(sel)}: størst forskjell mellom kroner og volum i ${xv[iMaks]}`);
+  settN('kroner', `Endring fra året før, prosent. Verdi i løpende kroner er regnet av oss. Volum er SSBs publiserte volumendring. Forskjellen er i hovedsak prisendring.`);
+  const box = $('#fig-kroner');
+  if ((!verdi.some((x) => x != null) && !volum.some((x) => x != null)) || A[0].slice(fra - 1).some((x) => x == null || x <= 0)) {
+    d3.select(box).selectAll('svg').remove(); box.style.minHeight = '0';
+    settH('kroner', `${kortNavn(sel)}: endring i prosent er ikke beregnet`);
+    settN('kroner', 'Nivået er null eller skifter mellom positivt og negativt, og da gir prosentvis endring ikke mening. Se nivået i milliarder kroner under «Vis tallene».');
+    talltabell('kroner', `Nivå, ${navn(sel)}, milliarder kroner`, ['År', 'Løpende priser'], xv.map((a, j) => [a, mrd(A[0][fra + j])]).reverse());
+    settSrc('kroner', kilde(T_AAR)); legende('kroner', []); return;
+  }
+  linjer(box, xv, [{n: 'I kroner', c: css('--sek'), v: verdi, dash: '5 3'}, {n: 'I volum', c: GR, v: volum}], {aria: `Verdi- og volumendring for ${navn(sel)}`, direkte: true});
+  legende('kroner', []);
+  talltabell('kroner', `Endring fra året før, ${navn(sel)}, prosent`, ['År', 'I kroner', 'I volum', 'Prisendring (SSB)'], xv.map((a, j) => [a, sgn(verdi[j]), sgn(volum[j]), sgn(pris[j])]).reverse());
+  settSrc('kroner', kilde(T_AAR));
+}
+
+// ---------- Hva driver veksten ----------
+const ANV = [['koh.nrpriv', 'Konsum, husholdninger mv.'], ['koo.nroff', 'Konsum, offentlig'], ['bif.nr8_', 'Bruttoinvestering'], ['eks.nrtot', 'Eksport'], ['imp.nrtot', 'Import']];
+function tegnAnv(sel) {
+  const A = DATA.A;
+  const rader = ANV.map(([k, n]) => ({k, n, v: (k === 'imp.nrtot' ? -1 : 1) * A[k][0][SA] / 1000}));
+  rader.push({k: BNP, n: 'BNP', v: A[BNP][0][SA] / 1000});
+  const linje = [sel, ...foreldre(sel)];
+  const treff = rader.find((r) => linje.includes(r.k));
+  settH('anv', `BNP ${SISTAAR}: ${mrd(A[BNP][0][SA])} milliarder kroner, brukt til konsum, investering og eksport`);
+  sett('ing-3', `Veksten kan ses fra to sider: hva som brukes (konsum, investering, eksport) og hvem som produserer (næringene). Velg en størrelse for å se veksten i den.`);
+  settN('anv', `Milliarder kroner, løpende priser. Import trekkes fra. ${treff && treff.k !== BNP ? `${kortNavn(sel)} hører til «${treff.n}», som er uthevet.` : ''}`);
+  liggende($('#fig-anv'), rader.map((r) => ({...r, sterk: r.k === BNP || (treff && r.k === treff.k), farge: r.k === BNP ? css('--tekst') : treff && r.k === treff.k ? GR : treff ? css('--dempet') : GR,
+    tips: () => ({tittel: `${r.n}, ${SISTAAR}`, linjer: [{n: 'Milliarder kroner', v: tall(r.v)}, {n: 'Volumendring', v: sgn(A[r.k][2][SA]) + ' %'}]})})), {
+    rowH: 30, aksetittel: 'Milliarder kroner', fmt: (v) => tall(v), tick: (t) => tall(t), aria: `Anvendelsen av BNP i ${SISTAAR}.`});
+  talltabell('anv', `Anvendelse av BNP ${SISTAAR}, milliarder kroner`, ['', 'Milliarder kroner', 'Volumendring, prosent'], rader.map((r) => [r.n, tall(r.v), sgn(A[r.k][2][SA])]));
+  settSrc('anv', kilde(T_AAR));
+}
+function tegnNaer() {
+  $$('[data-naer]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.naer === visning.naer)));
+  const aar = visning.naer === 'aar';
+  const liste = (aar ? DATA.naering : DATA.naeringKv).filter(([c, n, niv]) => niv === 0 && !['nr23_6', 'nr23_6fn', 'nr23mark', 'nrimark'].includes(c));
+  const rader = liste.map(([c, n]) => ({c, n, v: aar ? DATA.NA[c][1][SA] : DATA.NQ[c][2][SQ], niva: aar ? DATA.NA[c][0][SA] : DATA.NQ[c][0][SQ]})).sort((a, b) => (b.v ?? -1e9) - (a.v ?? -1e9));
+  const tot = aar ? DATA.NA.nr23_6fn[1][SA] : DATA.NQ.nr23_6fn[2][SQ];
+  const per = aar ? String(SISTAAR) : kvNavn(KV[SQ]);
+  const neg = rader.filter((r) => r.v != null && r.v < 0);
+  settH('naer', `${rader[0].n} vokste mest i ${per}, ${neg.length} av ${rader.length} næringer gikk ned`);
+  settN('naer', `Volumendring i bruttoprodukt${aar ? ' fra året før' : ' fra kvartalet før, sesongjustert'}, prosent. Bruttoproduktet i Fastlands-Norge samlet: ${sgn(tot)} prosent. Det er målt i basisverdi og avviker derfor litt fra BNP Fastlands-Norge. Små næringer kan svinge mye.`);
+  liggende($('#fig-naer'), rader.map((r) => ({...r, farge: r.v != null && r.v < 0 ? css('--oker-f') : GR,
+    tips: () => ({tittel: `${r.n}, ${per}`, linjer: [{n: 'Volumendring', v: r.v == null ? 'ikke beregnet' : sgn(r.v) + ' %'}, {n: 'Bruttoprodukt, mrd. kr', v: mrd(r.niva)}]})})), {
+    rowH: 22, aksetittel: 'Prosent', fmt: (v) => sgn(v), tick: pfmt, aria: `Volumendring i bruttoprodukt per næring, ${per}.`});
+  talltabell('naer', `Volumendring i bruttoprodukt per næring, ${per}`, ['Næring', 'Prosent', 'Bruttoprodukt, mrd. kr'], rader.map((r) => [r.n, sgn(r.v), mrd(r.niva)]));
+  settSrc('naer', kilde(aar ? T_NA : T_NQ));
+}
+
+// ---------- Hvor sikre ----------
+function tegnMnd(sel) {
+  const k = DATA.Mnd[sel] ? sel : FN, M = DATA.Mnd[k];
+  const n = 24, pts = MND.slice(-n).map((m, j) => { const i = MND.length - n + j; return {m, v: M[0][i], r: M[1][i]}; });
+  const lo = d3.min(pts, (d) => d.v), hi = d3.max(pts, (d) => d.v);
+  settH('mnd', `${kortNavn(k)} per måned: fra ${sgn(lo)} til ${sgn(hi)} prosent på to år`);
+  sett('ing-4', `De første tallene bygger på foreløpige kilder. Månedstall svinger mye, kvartalene er jevnere, og alle tall etter ${BASIS} kan bli revidert.`);
+  settN('mnd', `${DATA.Mnd[sel] ? '' : 'Månedstall finnes bare for BNP og Fastlands-BNP. Viser Fastlands-BNP. '}Stolpene er endring fra måneden før, streken er tremånederssummen mot de tre månedene før. Tremånederssummen i siste måned i et kvartal er lik kvartalsveksten. Sesongjustert, prosent.`);
+  legende('mnd', [{c: GR, n: 'Fra måneden før'}, {n: 'Tremånederssum', cls: 'bf-sw-tick'}]);
+  soyler($('#fig-mnd'), pts.map((d) => ({v: d.v, ref: d.r, lys: false, tips: () => ({tittel: mndNavn(d.m), linjer: [{c: GR, n: 'Fra måneden før', v: sgn(d.v) + ' %'}, {n: 'Tremånederssum', v: sgn(d.r) + ' %'}]})})), {
+    aria: `Månedlig vekst for ${navn(k)}.`, xlab: (i) => (pts[i].m.endsWith('M01') ? pts[i].m.slice(0, 4) : null)});
+  talltabell('mnd', `Månedlig volumendring, ${navn(k)}`, ['Måned', 'Fra måneden før', 'Tremånederssum'], pts.slice().reverse().map((d) => [mndNavn(d.m), sgn(d.v), sgn(d.r)]));
+  settSrc('mnd', kilde(T_MND));
+}
+function tegnRev() {
+  const H = DATA.hovedrevisjon, rader = H.rader.map(([n, gml, ny]) => ({n, gml, ny, p: 100 * (ny / gml - 1)}));
+  settH('rev', `Hovedrevisjonen i 2025 løftet nivået: Fastlands-BNP for ${H.aar} ble ${nf1.format(rader[1].p)} prosent høyere`);
+  settN('rev', `Endring i nivå for ${H.aar} fra før til etter revisjonen, prosent av gammelt nivå. Den største enkeltendringen var boligtjenester fra selveide boliger. Veksten ble endret mindre enn nivået.`);
+  legende('rev', []);
+  liggende($('#fig-rev'), rader.map((r) => ({n: r.n, v: r.p, sterk: r.n === 'BNP Fastlands-Norge', farge: r.p < 0 ? css('--oker-f') : GR,
+    tips: () => ({tittel: `${r.n}, ${H.aar}`, linjer: [{n: 'Før revisjonen, mrd. kr', v: nf0.format(r.gml)}, {n: 'Etter, mrd. kr', v: nf0.format(r.ny)}, {n: 'Endring', v: sgn(r.p) + ' %'}]})})), {
+    rowH: 28, aksetittel: 'Prosent', fmt: (v) => sgn(v), tick: pfmt, aria: `Revisjon av nivået for ${H.aar} i hovedrevisjonen 2025.`});
+  talltabell('rev', `Hovedrevisjonen 2025, nivå for ${H.aar}, milliarder kroner`, ['', 'Før', 'Etter', 'Endring, prosent'], rader.map((r) => [r.n, nf0.format(r.gml), nf0.format(r.ny), sgn(r.p)]));
+  settSrc('rev', `Kilde: ${H.kilde}. Tallene står ikke i statistikkbanken.`);
+}
+
+// ---------- Søk og tre ----------
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøå]+/g, ' ').trim();
+const SYN = DATA.synonymer.map((s) => ({...s, n: norm(s.ord)}));
+const SOKBARE = KODER.map((k) => ({k, n: norm(navn(k)), kn: norm(kortNavn(k))}));
+function sok(q) {
+  const n = norm(q); if (!n) return [];
+  const treff = new Map();
+  const legg = (k, p, ord) => { const t = treff.get(k); if (!t || t.p < p) treff.set(k, {k, p, ord}); };
+  for (const s of SYN) { if (s.n === n) s.koder.forEach((k) => legg(k, 100, s.ord)); else if (n.length >= 3 && s.n.startsWith(n)) s.koder.forEach((k) => legg(k, 70, s.ord)); }
+  for (const {k, n: nv, kn} of SOKBARE) {
+    if (nv === n || kn === n) legg(k, 99); else if (nv.startsWith(n) || kn.startsWith(n)) legg(k, 80);
+    else if ((' ' + nv).includes(' ' + n)) legg(k, 60); else if (n.length >= 3 && nv.includes(n)) legg(k, 40);
+  }
+  return [...treff.values()].sort((a, b) => b.p - a.p || O[a.k].niv - O[b.k].niv || O[a.k].i - O[b.k].i).slice(0, 8);
+}
+const inp = $('#bf-sok'), liste = $('#bf-forslag'), tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+let forslag = [], aktiv = -1;
+const lukk = () => { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); };
+function visForslag() {
+  forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+  if (!inp.value.trim()) { lukk(); return; }
+  liste.innerHTML = forslag.length ? forslag.map((t, i) => `<li role="option" id="fs-${i}" data-k="${esc(t.k)}" aria-selected="${i === aktiv}">${esc(navn(t.k))}<span class="s">${t.ord ? `Søkeord «${esc(t.ord)}» · ` : ''}${mrd(DATA.A[t.k][0][SA])} mrd. kr i ${SISTAAR}</span></li>`).join('')
+    : `<li class="tom" role="option" aria-disabled="true" data-alle>Ingen treff. Størrelsene har statistikkbankens navn. Prøv «konsum» eller «investering», eller <button type="button" class="bf-lenke">se alle størrelser</button>.</li>`;
+  liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+  if (aktiv >= 0) inp.setAttribute('aria-activedescendant', `fs-${aktiv}`);
+}
+function merk(i) { aktiv = i; liste.querySelectorAll('li[data-k]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i))); inp.setAttribute('aria-activedescendant', `fs-${i}`); const el = liste.querySelector(`#fs-${i}`); if (el) el.scrollIntoView({block: 'nearest'}); }
+function velgForslag(i) { const t = forslag[i]; if (!t) return; lukk(); inp.value = navn(t.k); velg(t.k, {ord: t.ord, rull: true}); }
+inp.addEventListener('input', visForslag);
+inp.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visForslag(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) velgForslag(aktiv); }
+  else if (e.key === 'Escape') lukk();
+});
+liste.addEventListener('mousedown', (e) => {
+  if (e.target.closest('[data-alle] button')) { e.preventDefault(); lukk(); if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({behavior: 'smooth'}); return; }
+  const el = e.target.closest('li[data-k]'); if (el) { e.preventDefault(); velgForslag([...liste.querySelectorAll('li[data-k]')].indexOf(el)); }
+});
+inp.addEventListener('blur', () => setTimeout(lukk, 150));
+const EKS = ['Fastlands-BNP', 'BNP', 'forbruk', 'oljeinvesteringer', 'Eksport i alt'];
+$('#bf-eksempler').innerHTML = EKS.map((n) => `<button type="button" class="bf-lenke" data-eks="${esc(n)}">${esc(n)}</button>`).join(', ');
+$('#bf-eksempler').addEventListener('click', (e) => { const b = e.target.closest('[data-eks]'); if (!b) return; const t = sok(b.dataset.eks)[0]; if (t) { inp.value = navn(t.k); velg(t.k, {ord: t.ord, rull: true}); } });
+function tegnTre(sel) {
+  tre.innerHTML = `<p class="bf-note" style="margin-bottom:6px">Alle ${KODER.length} makrostørrelser i statistikkbankens rekkefølge. Innrykk viser at en størrelse er en del av den over. Tallet er nivået i ${SISTAAR} i milliarder kroner.</p><ol>` +
+    KODER.map((k) => `<li class="bf-innrykk${Math.min(4, O[k].niv)}${k === sel ? ' valgt' : ''}"><button type="button" class="bf-lenke" data-k="${esc(k)}">${esc(navn(k))}</button><span class="v">${mrd(DATA.A[k][0][SA])}</span></li>`).join('') + '</ol>';
+  tre.querySelector('ol').style.gridTemplateColumns = '1fr';
+}
+alleKnapp.addEventListener('click', () => { const vis = tre.hidden; if (vis) tegnTre(valgt()); tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', String(vis)); });
+root.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.k && (b.closest('#bf-tre') || b.closest('#bf-kort'))) { if (b.closest('#bf-tre')) { tre.hidden = true; alleKnapp.setAttribute('aria-expanded', 'false'); } inp.value = navn(b.dataset.k); velg(b.dataset.k, {rull: true}); }
+  else if (b.dataset.kv) { visning.kv = b.dataset.kv; tegnKv(valgt()); }
+  else if (b.dataset.naer) { visning.naer = b.dataset.naer; tegnNaer(); }
+});
+$('#bf-nullstill').addEventListener('click', () => { inp.value = ''; velg(FN); });
+root.addEventListener('pointerleave', skjulTips);
+$('[data-hentet]').textContent = dato(DATA.kilde.hentet);
+
+function tegnAlt() {
+  skjulTips();
+  const sel = valgt();
+  document.title = sel === FN ? 'Nasjonalregnskap' : `${kortNavn(sel)}: nasjonalregnskap`;
+  tegnKort(sel); tegnLes(sel); tegnTopp(sel);
+  tegnFire(sel); tegnKv(sel);
+  tegnOlje(); tegnKroner(sel);
+  tegnAnv(sel); tegnNaer();
+  tegnMnd(sel); tegnRev();
+}
+ingress();
+tegnAlt();
+window.addEventListener('hashchange', () => { funnetMed = null; tegnAlt(); });
+let sisteBredde = root.clientWidth, venter = 0;
+new ResizeObserver(() => { if (root.clientWidth === sisteBredde) return; sisteBredde = root.clientWidth; cancelAnimationFrame(venter); venter = requestAnimationFrame(tegnAlt); }).observe(root);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(tegnAlt);
+})();
+</script>
+</body>
+</html>

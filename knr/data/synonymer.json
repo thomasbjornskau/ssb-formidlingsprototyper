@@ -1,0 +1,168 @@
+{
+ "merknad": "Søkeord som ikke er navnet på en makrostørrelse i statistikkbanken. usikker=true betyr at koblingen er vår tolkning og vises med forbehold.",
+ "synonymer": [
+  {
+   "ord": "BNP",
+   "koder": [
+    "bnpb.nr23_9"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "bruttonasjonalprodukt",
+   "koder": [
+    "bnpb.nr23_9"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "Fastlands-BNP",
+   "koder": [
+    "bnpb.nr23_9fn"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "fastlandsøkonomien",
+   "koder": [
+    "bnpb.nr23_9fn"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "BNP Fastlands-Norge",
+   "koder": [
+    "bnpb.nr23_9fn"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "forbruk",
+   "koder": [
+    "koh.nrpriv"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "privat forbruk",
+   "koder": [
+    "koh.nrpriv"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "husholdningenes konsum",
+   "koder": [
+    "koh.nrpriv"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "offentlig forbruk",
+   "koder": [
+    "koo.nroff"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "forsvar",
+   "koder": [
+    "koo.nr6401"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "oljeinvesteringer",
+   "koder": [
+    "bif.nr83oljroer"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "petroleumsinvesteringer",
+   "koder": [
+    "bif.nr83oljroer"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "boliginvesteringer",
+   "koder": [
+    "bif.nr8368"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "boligbygging",
+   "koder": [
+    "bif.nr8368"
+   ],
+   "usikker": true
+  },
+  {
+   "ord": "investeringer",
+   "koder": [
+    "bif.nr83_6"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "olje og gass",
+   "koder": [
+    "bnpb.nr23oljsj"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "oljevirksomhet",
+   "koder": [
+    "bnpb.nr23oljsj"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "oljeeksport",
+   "koder": [
+    "eks.puboljegs"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "gasseksport",
+   "koder": [
+    "eks.puboljegs"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "industri",
+   "koder": [
+    "bnpb.nr23indberg"
+   ],
+   "usikker": false
+  },
+  {
+   "ord": "turisme",
+   "koder": [
+    "koh.nr61L9",
+    "koh.nr61L8"
+   ],
+   "usikker": true
+  },
+  {
+   "ord": "handel med utlandet",
+   "koder": [
+    "eks.nrtot",
+    "imp.nrtot"
+   ],
+   "usikker": true
+  },
+  {
+   "ord": "offentlig pengebruk",
+   "koder": [
+    "makrok.nreoff"
+   ],
+   "usikker": true
+  }
+ ]
+}

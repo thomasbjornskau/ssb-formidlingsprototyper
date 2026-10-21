@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" letter-spacing="1.2" style="font-variant-numeric:tabular-nums">NASJONALREGNSKAP · 2025</text>
+<text x="40.0" y="118.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="64" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">1,7 prosent</text>
+<text x="40.0" y="162.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">vekst i fastlandsøkonomien i fjor.</text>
+<text x="40.0" y="209.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Snittet de siste ti årene var 1,9 prosent. Siden 1971 har</text>
+<text x="40.0" y="230.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">fastlandsøkonomien bare krympet i fire år: 1988, 1989, 2009 og</text>
+<text x="40.0" y="251.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">2020.</text>
+<text x="40.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, tabell 09189. Sist oppdatert: 28.05.2026.</text>
+<text x="594.0" y="34.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Volumvekst per år, 1971–2025</text>
+<line x1="640.0" y1="262.0" x2="1160.0" y2="262.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="266.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">−4</text>
+<line x1="640.0" y1="230.0" x2="1160.0" y2="230.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="234.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">−2</text>
+<line x1="640.0" y1="198.0" x2="1160.0" y2="198.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="634.0" y="202.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">0</text>
+<line x1="640.0" y1="166.0" x2="1160.0" y2="166.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="170.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">2</text>
+<line x1="640.0" y1="134.0" x2="1160.0" y2="134.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="138.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">4</text>
+<line x1="640.0" y1="102.0" x2="1160.0" y2="102.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="106.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">6</text>
+<line x1="640.0" y1="70.0" x2="1160.0" y2="70.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="634.0" y="74.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">8</text>
+<text x="594.0" y="54.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">prosent</text>
+<rect x="641.3" y="95.6" width="6.8" height="102.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="640.8" y1="106.8" x2="648.6" y2="106.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="650.8" y="122.8" width="6.8" height="75.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="650.3" y1="113.2" x2="658.1" y2="113.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="660.2" y="130.8" width="6.8" height="67.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="659.7" y1="126.0" x2="667.5" y2="126.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="669.7" y="135.6" width="6.8" height="62.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="669.2" y1="134.0" x2="677.0" y2="134.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="679.1" y="146.8" width="6.8" height="51.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="678.6" y1="119.6" x2="686.4" y2="119.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="688.6" y="137.2" width="6.8" height="60.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="688.1" y1="105.2" x2="695.9" y2="105.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="698.1" y="137.2" width="6.8" height="60.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="697.6" y1="130.8" x2="705.4" y2="130.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="707.5" y="177.2" width="6.8" height="20.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="707.0" y1="135.6" x2="714.8" y2="135.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="717.0" y="143.6" width="6.8" height="54.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="716.5" y1="127.6" x2="724.3" y2="127.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="726.4" y="164.4" width="6.8" height="33.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="725.9" y1="126.0" x2="733.7" y2="126.0" stroke="#274246" stroke-width="1.6"/>
+<text x="729.8" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">1980</text>
+<rect x="735.9" y="169.2" width="6.8" height="28.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="735.4" y1="170.8" x2="743.2" y2="170.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="745.3" y="191.6" width="6.8" height="6.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="744.8" y1="194.8" x2="752.6" y2="194.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="754.8" y="164.4" width="6.8" height="33.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="754.3" y1="135.6" x2="762.1" y2="135.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="764.2" y="134.0" width="6.8" height="64.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="763.7" y1="100.4" x2="771.5" y2="100.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="773.7" y="103.6" width="6.8" height="94.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="773.2" y1="108.4" x2="781.0" y2="108.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="783.1" y="145.2" width="6.8" height="52.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="782.6" y1="134.0" x2="790.4" y2="134.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="792.6" y="177.2" width="6.8" height="20.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="792.1" y1="170.8" x2="799.9" y2="170.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="802.1" y="198.0" width="6.8" height="20.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="801.6" y1="202.8" x2="809.4" y2="202.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="811.5" y="198.0" width="6.8" height="24.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="811.0" y1="182.0" x2="818.8" y2="182.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="821.0" y="182.0" width="6.8" height="16.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="820.5" y1="166.0" x2="828.3" y2="166.0" stroke="#274246" stroke-width="1.6"/>
+<text x="824.4" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">1990</text>
+<rect x="830.4" y="178.8" width="6.8" height="19.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="829.9" y1="151.6" x2="837.7" y2="151.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="839.9" y="156.4" width="6.8" height="41.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="839.4" y1="140.4" x2="847.2" y2="140.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="849.3" y="153.2" width="6.8" height="44.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="848.8" y1="151.6" x2="856.6" y2="151.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="858.8" y="140.4" width="6.8" height="57.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="858.3" y1="118.0" x2="866.1" y2="118.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="868.2" y="145.2" width="6.8" height="52.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="867.7" y1="130.8" x2="875.5" y2="130.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="877.7" y="134.0" width="6.8" height="64.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="877.2" y1="118.0" x2="885.0" y2="118.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="887.1" y="118.0" width="6.8" height="80.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="886.6" y1="116.4" x2="894.4" y2="116.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="896.6" y="135.6" width="6.8" height="62.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="896.1" y1="154.8" x2="903.9" y2="154.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="906.1" y="158.0" width="6.8" height="40.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="905.6" y1="162.8" x2="913.4" y2="162.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="915.5" y="148.4" width="6.8" height="49.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="915.0" y1="143.6" x2="922.8" y2="143.6" stroke="#274246" stroke-width="1.6"/>
+<text x="918.9" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2000</text>
+<rect x="925.0" y="167.6" width="6.8" height="30.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="924.5" y1="162.8" x2="932.3" y2="162.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="934.4" y="172.4" width="6.8" height="25.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="933.9" y1="174.0" x2="941.7" y2="174.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="943.9" y="175.6" width="6.8" height="22.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="943.4" y1="180.4" x2="951.2" y2="180.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="953.3" y="111.6" width="6.8" height="86.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="952.8" y1="129.2" x2="960.6" y2="129.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="962.8" y="118.0" width="6.8" height="80.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="962.3" y1="150.0" x2="970.1" y2="150.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="972.2" y="110.0" width="6.8" height="88.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="971.7" y1="153.2" x2="979.5" y2="153.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="981.7" y="95.6" width="6.8" height="102.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="981.2" y1="143.6" x2="989.0" y2="143.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="991.1" y="162.8" width="6.8" height="35.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="990.6" y1="185.2" x2="998.4" y2="185.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="1000.6" y="198.0" width="6.8" height="20.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1000.1" y1="223.6" x2="1007.9" y2="223.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="1010.1" y="162.8" width="6.8" height="35.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1009.6" y1="182.0" x2="1017.4" y2="182.0" stroke="#274246" stroke-width="1.6"/>
+<text x="1013.5" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2010</text>
+<rect x="1019.5" y="162.8" width="6.8" height="35.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1019.0" y1="175.6" x2="1026.8" y2="175.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="1029.0" y="137.2" width="6.8" height="60.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1028.5" y1="153.2" x2="1036.3" y2="153.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="1038.4" y="156.4" width="6.8" height="41.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1037.9" y1="177.2" x2="1045.7" y2="177.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="1047.9" y="161.2" width="6.8" height="36.8" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1047.4" y1="164.4" x2="1055.2" y2="164.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="1057.3" y="170.8" width="6.8" height="27.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1056.8" y1="166.0" x2="1064.6" y2="166.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="1066.8" y="182.0" width="6.8" height="16.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1066.3" y1="177.2" x2="1074.1" y2="177.2" stroke="#274246" stroke-width="1.6"/>
+<rect x="1076.2" y="159.6" width="6.8" height="38.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1075.7" y1="154.8" x2="1083.5" y2="154.8" stroke="#274246" stroke-width="1.6"/>
+<rect x="1085.7" y="164.4" width="6.8" height="33.6" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1085.2" y1="180.4" x2="1093.0" y2="180.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="1095.1" y="154.8" width="6.8" height="43.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1094.6" y1="174.0" x2="1102.4" y2="174.0" stroke="#274246" stroke-width="1.6"/>
+<rect x="1104.6" y="198.0" width="6.8" height="43.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1104.1" y1="220.4" x2="1111.9" y2="220.4" stroke="#274246" stroke-width="1.6"/>
+<text x="1108.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2020</text>
+<rect x="1114.1" y="122.8" width="6.8" height="75.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1113.6" y1="132.4" x2="1121.4" y2="132.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="1123.5" y="114.8" width="6.8" height="83.2" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1123.0" y1="132.4" x2="1130.8" y2="132.4" stroke="#274246" stroke-width="1.6"/>
+<rect x="1133.0" y="183.6" width="6.8" height="14.4" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<line x1="1132.5" y1="191.6" x2="1140.3" y2="191.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="1142.4" y="188.4" width="6.8" height="9.6" rx="0" fill="#91cd9a" stroke="none" stroke-width="1"/>
+<line x1="1141.9" y1="175.6" x2="1149.7" y2="175.6" stroke="#274246" stroke-width="1.6"/>
+<rect x="1151.9" y="170.8" width="6.8" height="27.2" rx="0" fill="#91cd9a" stroke="none" stroke-width="1"/>
+<line x1="1151.4" y1="180.4" x2="1159.2" y2="180.4" stroke="#274246" stroke-width="1.6"/>
+<text x="1155.3" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">2025</text>
+<text x="1155.3" y="152.8" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">1,7</text>
+<rect x="860.0" y="50.0" width="12.0" height="12.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="878.0" y="60.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Fastlands-BNP</text>
+<line x1="972.0" y1="56.0" x2="986.0" y2="56.0" stroke="#274246" stroke-width="2"/>
+<text x="992.0" y="60.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">BNP</text>
+<rect x="1032.0" y="50.0" width="12.0" height="12.0" rx="0" fill="#91cd9a" stroke="none" stroke-width="1"/>
+<text x="1050.0" y="60.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">foreløpig</text>
+<text x="594.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Tall etter 2023 er foreløpige.</text>
+</svg>

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+<rect x="0" y="0" width="1200" height="560" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Slik lages tallene</text>
+<text x="40.0" y="72.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Fra verdiskaping i næringene til BNP for Fastlands-Norge, med tall for 2025 i milliarder kroner</text>
+<line x1="40.0" y1="88.0" x2="1160.0" y2="88.0" stroke="#cdd3d4" stroke-width="1"/>
+<circle cx="53.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="53.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">1</text>
+<text x="74.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Verdiskaping</text>
+<text x="40.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Næringene skaper verdier.</text>
+<text x="40.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Bruttoproduktet er produksjon</text>
+<text x="40.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">minus innsats av varer og</text>
+<text x="40.0" y="208.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">tjenester.</text>
+<rect x="40.0" y="236.0" width="58.2" height="106.4" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<text x="106.2" y="293.2" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Fastlands-Norge</text>
+<text x="248.0" y="293.2" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">3 910</text>
+<rect x="40.0" y="342.4" width="58.2" height="30.3" rx="0" fill="#5763a6" stroke="none" stroke-width="1"/>
+<text x="106.2" y="361.6" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Olje og sjøfart</text>
+<text x="248.0" y="361.6" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">1 114</text>
+<rect x="40.0" y="372.7" width="58.2" height="13.3" rx="0" fill="#b9c5c6" stroke="none" stroke-width="1"/>
+<text x="106.2" y="383.4" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Produktavgifter</text>
+<text x="248.0" y="383.4" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">488</text>
+<line x1="40.0" y1="392.0" x2="248.0" y2="392.0" stroke="#274246" stroke-width="1"/>
+<text x="40.0" y="410.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">BNP 2025</text>
+<text x="248.0" y="410.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="end" style="font-variant-numeric:tabular-nums">5 511</text>
+<line x1="251.0" y1="118.0" x2="258.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="257.0,113.0 257.0,123.0 265.0,118.0" fill="#5e787a"/>
+<circle cx="281.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="281.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">2</text>
+<text x="302.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Samme BNP, brukt</text>
+<text x="268.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Det som lages, brukes til</text>
+<text x="268.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">konsum, investering og eksport.</text>
+<text x="268.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Import trekkes fra.</text>
+<text x="268.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums"></text>
+<text x="282.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Konsum, husholdninger mv.</text>
+<text x="476.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">2 341</text>
+<text x="268.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
+<text x="282.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Konsum, offentlig</text>
+<text x="476.0" y="270.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">1 255</text>
+<text x="268.0" y="292.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
+<text x="282.0" y="292.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Investering</text>
+<text x="476.0" y="292.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">1 265</text>
+<text x="268.0" y="314.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
+<text x="282.0" y="314.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Eksport</text>
+<text x="476.0" y="314.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">2 512</text>
+<text x="268.0" y="336.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">−</text>
+<text x="282.0" y="336.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Import</text>
+<text x="476.0" y="336.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">1 861</text>
+<line x1="268.0" y1="345.0" x2="476.0" y2="345.0" stroke="#274246" stroke-width="1"/>
+<text x="282.0" y="364.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">BNP 2025</text>
+<text x="476.0" y="364.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="end" style="font-variant-numeric:tabular-nums">5 511</text>
+<line x1="479.0" y1="118.0" x2="486.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="485.0,113.0 485.0,123.0 493.0,118.0" fill="#5e787a"/>
+<circle cx="509.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="509.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">3</text>
+<text x="530.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Fastlands-Norge</text>
+<text x="496.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Olje, gass og utenriks sjøfart</text>
+<text x="496.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">trekkes ut, fordi de svinger</text>
+<text x="496.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">med priser og felt.</text>
+<text x="496.0" y="250.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">BNP</text>
+<text x="704.0" y="250.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">5 511</text>
+<text x="496.0" y="280.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">− olje, gass, rør og</text>
+<text x="496.0" y="296.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">utenriks sjøfart</text>
+<text x="704.0" y="280.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">1 114</text>
+<text x="496.0" y="326.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">= BNP Fastlands-Norge</text>
+<text x="704.0" y="326.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="end" style="font-variant-numeric:tabular-nums">4 398</text>
+<rect x="496.0" y="342.0" width="208.0" height="18.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="662.0" y="342.0" width="42.0" height="18.0" rx="0" fill="#5763a6" stroke="none" stroke-width="1"/>
+<text x="496.0" y="376.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Olje og sjøfart: 20,2 prosent av BNP</text>
+<line x1="707.0" y1="118.0" x2="714.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="713.0,113.0 713.0,123.0 721.0,118.0" fill="#5e787a"/>
+<circle cx="737.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="737.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">4</text>
+<text x="758.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Kroner blir volum</text>
+<text x="724.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">For å måle vekst holdes prisene</text>
+<text x="724.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">faste. Ellers ville høye</text>
+<text x="724.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">oljepriser se ut som mer</text>
+<text x="724.0" y="208.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">produksjon.</text>
+<text x="724.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">BNP, 2. kvartal 2026 mot året før</text>
+<text x="724.0" y="277.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">I kroner</text>
+<rect x="788.0" y="264.0" width="92.0" height="20.0" rx="0" fill="#b9c5c6" stroke="none" stroke-width="1"/>
+<text x="886.0" y="279.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">+8,7 %</text>
+<text x="724.0" y="311.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">I volum</text>
+<rect x="788.0" y="298.0" width="21.1" height="20.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="815.1" y="313.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">+2,0 %</text>
+<text x="724.0" y="344.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Volum holder prisene fra 2023</text>
+<text x="724.0" y="360.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">fast. Kvartal og måned</text>
+<text x="724.0" y="376.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">sesongjusteres i tillegg.</text>
+<line x1="935.0" y1="118.0" x2="942.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="941.0,113.0 941.0,123.0 949.0,118.0" fill="#5e787a"/>
+<circle cx="965.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="965.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">5</text>
+<text x="986.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Tallene modnes</text>
+<text x="952.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">De første tallene bygger på</text>
+<text x="952.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">foreløpige kilder. De revideres</text>
+<text x="952.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">når nye kilder kommer.</text>
+<text x="952.0" y="248.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Når tallene kommer</text>
+<rect x="952.0" y="260.0" width="208.0" height="28.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<text x="960.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Kvartal</text>
+<text x="1152.0" y="278.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">ca. 8 uker etter</text>
+<rect x="952.0" y="294.0" width="208.0" height="28.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<text x="960.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Endelig år</text>
+<text x="1152.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">to år etter</text>
+<rect x="952.0" y="328.0" width="208.0" height="28.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<text x="960.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Hovedrevisjon</text>
+<text x="1152.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">ca. hvert 5. år</text>
+<rect x="40.0" y="452.0" width="1120.0" height="52.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="6 4"/>
+<text x="56.0" y="476.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Det BNP ikke måler</text>
+<text x="56.0" y="494.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Ikke et mål på velferd, fordeling eller formue. Ulønnet arbeid i hjemmet er ikke med.</text>
+<text x="40.0" y="540.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, tabell 09189 (2025, løpende priser, milliarder kroner) og 09190. Sist oppdatert: 28.05.2026 og 27.08.2026.</text>
+</svg>

@@ -1,0 +1,79 @@
+{
+ "statistikk": "Nasjonalregnskap",
+ "kortnavn": "knr",
+ "versjon": "1.0",
+ "dato_valg": "2026-10-21",
+ "merknad": "URL-ene bruker PxWebApi v2 med valueCodes[...]. Rådataene er hentet direkte med scripts/hent_data.py, som også sjekker at svaret har forventet størrelse.",
+ "valg": "Alternativ B (valgt av Thomas 21.10.2026): alle 51 makrostørrelser per år og kvartal, månedstall for BNP og Fastlands-BNP, og bruttoprodukt etter næring per år og kvartal. Makrostørrelse er det gjennomgående valget.",
+ "manglende_verdier": {
+  "..": "Tall mangler. Endringsrater mangler for første periode (1970, 1978K1) og for serier der nivået er null eller skifter fortegn (lagerendring og statistiske avvik, verdigjenstander, tjenester tilknyttet utvinning, utenriks sjøfart). Vises som «ikke beregnet», aldri som null."
+ },
+ "fallgruver": [
+  "Bruk publiserte endringsrater. Årlig volumvekst kan regnes nøyaktig fra faste priser, men kvartalsvekst regnet fra avrundede sesongjusterte nivåer avviker med 0,1 i 237 av 9 697 tilfeller.",
+  "Delene i faste priser summerer ikke til totalen før basisåret 2023 (kjedingsavvik, 51 milliarder i 2010). Stable aldri faste priser før 2023.",
+  "Fra forrige kvartal er sesongjustert, fra samme kvartal i fjor er ujustert. Bland dem ikke.",
+  "Sesongjusterte kvartaler summerer ikke til årstallet: Fastlands-BNP 2025 er 7,3 milliarder høyere sesongjustert enn ujustert. Bruk årstabellen for år.",
+  "Lagerendring og statistiske avvik har negative nivåer i mange kvartaler. Prosentvis endring er meningsløs der.",
+  "Tall etter basisåret 2023 er foreløpige (tabellnote)."
+ ],
+ "datasett": [
+  {
+   "id": "makro_aar",
+   "tabell": "09189",
+   "svarer_paa": [
+    1,
+    2,
+    3
+   ],
+   "seksjon": "Toppgrafikk, velgeren, olje og gass, anvendelse",
+   "beskrivelse": "Alle 51 makrostørrelser per år 1970–2025: løpende priser, faste 2023-priser, volumendring og prisendring.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09189/data?lang=no&outputFormat=json-stat2&valueCodes%5BMakrost%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "51 størrelser × 4 variabler × 56 år = 11 424 celler."
+  },
+  {
+   "id": "makro_kvartal",
+   "tabell": "09190",
+   "svarer_paa": [
+    1,
+    4
+   ],
+   "seksjon": "Kvartalsvekst og «fire tall»",
+   "beskrivelse": "Alle 51 makrostørrelser per kvartal 1978K1–: løpende priser, faste priser, faste priser sesongjustert, volumendring fra samme periode i fjor (ujustert) og fra forrige kvartal (sesongjustert).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09190/data?lang=no&outputFormat=json-stat2&valueCodes%5BMakrost%5D=*&valueCodes%5BContentsCode%5D=Priser,Faste,FastePriserSesJust,Volum,VolumEndrSesJust&valueCodes%5BTid%5D=*",
+   "omfang": "51 × 5 × 194 kvartaler = 49 470 celler."
+  },
+  {
+   "id": "maaned",
+   "tabell": "11721",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Måned, tremånederssum og kvartal",
+   "beskrivelse": "BNP og BNP Fastlands-Norge per måned 2016M01–: volumendring fra forrige måned og tremånederssum, begge sesongjustert.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11721/data?lang=no&outputFormat=json-stat2&valueCodes%5BMakrost%5D=bnpb.nr23_9,bnpb.nr23_9fn&valueCodes%5BContentsCode%5D=VolumEndrSesJust,VolumEndrRull3md&valueCodes%5BTid%5D=*",
+   "omfang": "2 × 2 × 126 måneder = 504 celler."
+  },
+  {
+   "id": "naering_aar",
+   "tabell": "09170",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Hva driver veksten: næringer per år",
+   "beskrivelse": "Bruttoprodukt i basisverdi for 46 næringer og aggregater (nasjonalregnskapets hovedgruppering) per år 1970–2025: løpende priser og volumendring.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09170/data?lang=no&outputFormat=json-stat2&valueCodes%5BNACE%5D=nr23_6,pub2X01_02,pub2X03,pub2X05,nr2X06_09,pub2X06,pub2X09,nr23ind,pub2X10_12,pub2X13_15,nr2315,nr2316,pub2X18,pub2X19_21,nr2319,pub2X22_23,pub2X24,pub2X25_28,pub2X29_30,pub2X31_32,pub2X33,pub2X35,pub2X36_39,pub2X41_43,pub2X45_47,pub2X49B,pub2X50A,pub2X49A_52,pub2X53,pub2X55_56,pub2X58_63,pub2X64_66,pub2X68A,pub2X68B,pub2X69_75,pub2X77_82,pub2X84,pub2X85,pub2X86_88,pub2X90_97,nr23_6fn,nr24_5,nr24_,nr24sivil,nr2482,nr25_&valueCodes%5BContentsCode%5D=BNPB,BNPB4&valueCodes%5BTid%5D=*",
+   "omfang": "46 × 2 × 56 = 5 152 celler."
+  },
+  {
+   "id": "naering_kvartal",
+   "tabell": "09171",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Hva driver veksten: næringer per kvartal",
+   "beskrivelse": "Bruttoprodukt i basisverdi for 51 næringer og aggregater per kvartal 1978K1–: løpende priser, volumendring fra samme periode i fjor og fra forrige kvartal (sesongjustert).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09171/data?lang=no&outputFormat=json-stat2&valueCodes%5BNACE%5D=*&valueCodes%5BContentsCode%5D=BNPB,BNPB4,BNPB4sesjust&valueCodes%5BTid%5D=*",
+   "omfang": "51 × 3 × 194 = 29 682 celler."
+  }
+ ]
+}
