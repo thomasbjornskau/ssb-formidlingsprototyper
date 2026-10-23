@@ -14,6 +14,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Lønn](lonnansatt/) | `lonnansatt` | Til faglig kontroll | 16.10.2026 |
 | [Befolkning](folkemengde/) | `folkemengde` | Til faglig kontroll | 21.10.2026 |
 | [Nasjonalregnskap](knr/) | `knr` | Til faglig kontroll | 21.10.2026 |
+| [Navn](navn/) | `navn` | Til faglig kontroll | 23.10.2026 |
 
 ## Arbeidsprosess
 
