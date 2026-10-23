@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navn</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: navnestatistikken. Finn ditt navn og se hvor mange som har fått det siden 1880, hvor mange som heter det i dag, og hvorfor topplisten slår sammen skrivemåter. Tall fra SSB, tabell 10467, 10501 og 12891.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf; --gra: #b9c5c6;
+  --gronn: #00824d; --bla: #1d9de2; --oker: #c78800; --marine: #0f2080; --rosa: #c775a7;
+  --gronn-f: #339b71; --bla-f: #3face6; --oker-f: #d5a640; --marine-f: #5763a6; --rosa-f: #cd83b0;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+:is(button, input, select, summary, a, [tabindex]):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; color: var(--tekst); font-size: 13px; margin: 0; }
+.bf-tomt { background: var(--lys); padding: 16px; font-size: 14px; margin: 8px 0; }
+.bf-par { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 8px 24px; }
+.bf-par .bf-ph { font-size: 13px; font-weight: 600; color: var(--sek); margin: 4px 0 0; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 8px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-brytere { display: flex; flex-wrap: wrap; gap: 0; margin: 2px 0 4px; }
+.bf-brytere .bf-knapp { padding: 5px 12px; font-size: 13px; margin-right: -1px; }
+
+/* Alle navn */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre h3 { font-size: 15px; margin: 12px 0 4px; }
+.bf-tre h3:first-of-type { margin-top: 0; }
+.bf-tre ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); gap: 2px 24px; }
+.bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
+.bf-tre .v { color: var(--sek); font-size: 12px; white-space: nowrap; }
+
+/* Kort for valgt navn */
+.bf-kort { background: var(--flate); border-left: 4px solid var(--gronn); padding: 16px 20px; display: grid; gap: 4px; }
+.bf-kort h2 { font-size: 22px; margin: 0; }
+.bf-kort p { margin: 0; font-size: 14px; }
+.bf-sti { font-size: 13px; color: var(--sek); }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(38px, 6vw, 56px); font-weight: 700; line-height: 1.1; margin: 6px 0 4px; color: var(--gronn); }
+.bf-setning { font-size: 20px; font-weight: 600; margin: 0 0 12px; line-height: 1.35; }
+.bf-topp-under { color: var(--tekst); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick, .bf-axt { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-lab-hvit { font-size: 12px; fill: #fff; font-weight: 600; }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-klikk { cursor: pointer; }
+.bf-klikk:focus { outline: none; }
+.bf-klikk:focus-visible rect.bf-fokus { stroke: var(--tekst); stroke-width: 2; }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-sw-line { width: 18px; height: 0; border-top: 2px solid; }
+.bf-sw-dash { width: 14px; height: 12px; border-left: 1.5px dashed var(--null); }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tall .bf-tablewrap { max-height: 16rem; margin-top: 6px; }
+.bf-tall tbody th { position: static; font-weight: 400; font-size: inherit; border-bottom: 1px solid var(--stotte); }
+
+/* Tabeller */
+.bf-tablewrap { max-height: 32rem; overflow: auto; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+.bf a { color: var(--tekst); text-decoration-color: var(--null); text-underline-offset: 3px; }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-brytere { display: none; } .bf-tablewrap { max-height: none; overflow: visible; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Navn</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok" role="search">
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Finn ditt navn</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="Skriv et fornavn" autocomplete="off" spellcheck="false"
+               role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle navn</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle navn" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite"></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du navnestatistikken</h2>
+    <ul>
+      <li><b>Topplisten slår sammen skrivemåter.</b> <span data-t="les-1"></span></li>
+      <li><b>Populært er ikke det samme som vanlig.</b> <span data-t="les-2"></span></li>
+      <li><b>Tidsserien har brudd.</b> Andelen finnes fra 1880, antallet fra 1945, og tellingen er fullstendig fra 1964, da Folkeregisteret ble opprettet. Fra 2021 telles barn etter året de fikk navn, før det etter fødselsåret.</li>
+      <li><b>Sjeldne navn er ikke med.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Tallene bygger på en kopi av Folkeregisteret per 1. januar. Tegn utenfor det norske alfabetet slås sammen, og topplistene på ssb.no slår i tillegg sammen stavemåter av samme navn. Kilde: SSB, «Om statistikken» for Navn (sist oppdatert 30.09.2026), notene til tabell 10467 og 10501, og artiklene «Jentenavn» og «Guttenavn».</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall" aria-labelledby="topp-h">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <div class="bf-brytere" role="group" aria-label="Kjønn">
+        <button type="button" class="bf-knapp" data-topp="j" aria-pressed="false">Jentenavn</button>
+        <button type="button" class="bf-knapp" data-topp="g" aria-pressed="true">Guttenavn</button>
+      </div>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" id="topp-h" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <h3 class="bf-h" data-h="topp"></h3>
+      <div class="bf-legend" data-leg="topp"></div>
+      <div class="bf-chart" id="fig-topp" style="min-height:240px"></div>
+      <p class="bf-note" data-n="topp"></p>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-src="topp"></p>
+  </section>
+
+  <section class="bf-section" id="bolgen">
+    <h2 class="bf-sh">Hvordan har navnet utviklet seg?</h2>
+    <p class="bf-ingress" data-t="ing-1"></p>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="bolge"></h3>
+        <div class="bf-brytere" role="group" aria-label="Vis">
+          <button type="button" class="bf-knapp" data-bolge="andel" aria-pressed="true">Andel av nyfødte, 1880–</button>
+          <button type="button" class="bf-knapp" data-bolge="antall" aria-pressed="false">Antall nyfødte, 1945–</button>
+        </div>
+        <p class="bf-note" data-n="bolge"></p>
+        <div class="bf-legend" data-leg="bolge"></div>
+        <div class="bf-chart" id="fig-bolge" style="min-height:300px"></div>
+        <details class="bf-tall" data-tall="bolge"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="bolge"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="vanlig">
+    <h2 class="bf-sh">Populært eller vanlig?</h2>
+    <p class="bf-ingress" data-t="ing-2"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="par"></h3>
+        <p class="bf-note">Hvert panel har sin egen skala. Navnene står i samme rekkefølge i begge.</p>
+        <div class="bf-par">
+          <div><p class="bf-ph" data-t="par-1"></p><div class="bf-chart" id="fig-par1" style="min-height:150px"></div></div>
+          <div><p class="bf-ph" data-t="par-2"></p><div class="bf-chart" id="fig-par2" style="min-height:150px"></div></div>
+        </div>
+        <details class="bf-tall" data-tall="par"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="par"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="pers"></h3>
+        <p class="bf-note" data-n="pers"></p>
+        <div class="bf-legend" data-leg="pers"></div>
+        <div class="bf-chart" id="fig-pers" style="min-height:240px"></div>
+        <details class="bf-tall" data-tall="pers"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="pers"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="dominans">
+    <h2 class="bf-sh">Er toppnavnene mindre dominerende enn før?</h2>
+    <p class="bf-ingress" data-t="ing-3"></p>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="dom"></h3>
+        <div class="bf-brytere" role="group" aria-label="Kjønn">
+          <button type="button" class="bf-knapp" data-dom="j" aria-pressed="true">Jentenavn</button>
+          <button type="button" class="bf-knapp" data-dom="g" aria-pressed="false">Guttenavn</button>
+        </div>
+        <p class="bf-note">Andel av nyfødte jenter eller gutter samme år, prosent. Regnet av oss fra tabell 10467, der hver skrivemåte teller for seg. SSBs topplister slår sammen skrivemåter og gir derfor litt høyere andeler.</p>
+        <div class="bf-legend" data-leg="dom"></div>
+        <div class="bf-chart" id="fig-dom" style="min-height:300px"></div>
+        <details class="bf-tall" data-tall="dom"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="dom"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="befolkningen">
+    <h2 class="bf-sh">Hvilke navn er vanligst i befolkningen?</h2>
+    <p class="bf-ingress" data-t="ing-4"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="fornavn"></h3>
+        <p class="bf-note">Personer med norsk personnummer som har navnet, 31.12. Hver skrivemåte teller for seg. Felles skala.</p>
+        <div class="bf-par">
+          <div><p class="bf-ph">Jentenavn</p><div class="bf-chart" id="fig-fn-j" style="min-height:300px"></div></div>
+          <div><p class="bf-ph">Guttenavn</p><div class="bf-chart" id="fig-fn-g" style="min-height:300px"></div></div>
+        </div>
+        <details class="bf-tall" data-tall="fornavn"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="fornavn"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="etter"></h3>
+        <p class="bf-note" data-n="etter"></p>
+        <div class="bf-chart" id="fig-etter" style="min-height:380px"></div>
+        <details class="bf-tall" data-tall="etter"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="etter"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Navnestatistikken bygger på Folkeregisteret. Tabell 10467 viser hvor mange nyfødte som fikk et navn, og bare navn som var brukt av minst 200 personer året før er med. Tabell 10501 og 12891 viser hvor mange som heter et navn ved utgangen av året, for navn med flere enn 200 bærere. Alle tabellene har én rad per skrivemåte. Topplistene på ssb.no slår sammen skrivemåter, og toppgrafikken bruker SSBs publiserte totaler.</p>
+    <p>Egne beregninger: antall navngitte jenter og gutter (antall delt på andel), mest brukte navn og topp 10s andel per år, plassering etter eksakt skrivemåte, og endring i etternavn fra <span data-t="e-aar0"></span>. Grupperingen av skrivemåter i toppgrafikken er hentet fra artiklene «Jentenavn» og «Guttenavn», ikke fra en datakilde.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 10467, 10501 og 12891, og <span data-t="artikler"></span>. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Søk på alle navn med flere enn tre bærere i <a href="https://www.ssb.no/navn">navnesøket på ssb.no</a>.</p>
+  </footer>
+
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/navn.json__*/;
+</script>
+<script>
+(() => {
+'use strict';
+// ---------- Data ----------
+// DATA.navn        [kode, navn] for alle 2 152 navn i 10501. Kode 1… = jentenavn, 2… = guttenavn
+// DATA.andel       kode -> andel av nyfødte av samme kjønn, prosent, 1880–2025 (null = færre enn 4 eller ikke i bruk)
+// DATA.antall      kode -> antall nyfødte 1945–2025 (null = færre enn 4 eller ikke i bruk)
+// DATA.personer    kode -> personer som heter navnet 31.12., DATA.personerAar (null = 200 eller færre)
+// DATA.nevner      j/g -> navngitte barn per år, regnet fra antall / andel (egen beregning), null før 1945
+// DATA.dominans    j/g -> per år [kode for mest brukte navn, andel, topp 10s andel]
+// DATA.topp5       j/g -> SSBs topp 5 med skrivemåter fra 10467 og publisert total
+const AAR = DATA.aar, SIST = AAR[AAR.length - 1], AFRA = DATA.antallFra, PA = DATA.personerAar, PSIST = PA[PA.length - 1];
+const NAVN = Object.fromEntries(DATA.navn);
+const KODER = DATA.navn.map((n) => n[0]);
+const kj = (k) => (k[0] === '1' ? 'j' : 'g');
+const KJ = {j: {n: 'jentenavn', N: 'Jentenavn', barn: 'jenter', best: 'jentene'}, g: {n: 'guttenavn', N: 'Guttenavn', barn: 'gutter', best: 'guttene'}};
+const BEGGE = new Set(DATA.navn.filter(([k, n]) => NAVN[(k[0] === '1' ? '2' : '1') + k.slice(1)] === n).map((x) => x[1]));
+const visNavn = (k) => NAVN[k] + (BEGGE.has(NAVN[k]) ? ` (${KJ[kj(k)].n})` : '');
+const andel = (k, a) => (DATA.andel[k] ? DATA.andel[k][a - AAR[0]] : null);
+const antall = (k, a) => (DATA.antall[k] && a >= AFRA ? DATA.antall[k][a - AFRA] : null);
+const pers = (k, a = PSIST) => DATA.personer[k][PA.indexOf(a)];
+const harFodte = (k) => !!DATA.andel[k];
+const OPPD = DATA.kilde.oppdatert;
+const dato = (s) => s.split('-').reverse().join('.');
+const T10467 = ['10467', 'fodte'], T10501 = ['10501', 'personer'], T12891 = ['12891', 'etternavn'];
+const kilde = (...t) => `Kilde: SSB, tabell ${t.map((x) => x[0]).join(', ').replace(/, ([^,]*)$/, ' og $1')}. Sist oppdatert: ${[...new Set(t.map((x) => dato(OPPD[x[1]])))].join(' og ')}.`;
+const ARTIKLER = 'artiklene «Jentenavn» og «Guttenavn» på ssb.no (sist endret 28.01.2026)';
+// Plassering i 2025 etter eksakt skrivemåte, per kjønn
+const RANG = {};
+for (const g of ['j', 'g']) {
+  KODER.filter((k) => kj(k) === g && antall(k, SIST)).sort((a, b) => antall(b, SIST) - antall(a, SIST))
+    .forEach((k, i, l) => { RANG[k] = {r: l.findIndex((x) => antall(x, SIST) === antall(k, SIST)) + 1, av: l.length}; });
+}
+// Navn som inngår i en gruppe i topp 5
+const GRUPPE = {};
+for (const g of ['j', 'g']) for (const r of DATA.topp5[g]) for (const [k] of r.deler) GRUPPE[k] = r;
+const toppKode = (g) => DATA.dominans[g][AAR.length - 1][0];
+const vanligstKode = (g) => KODER.filter((k) => kj(k) === g).reduce((a, b) => ((pers(b) || 0) > (pers(a) || 0) ? b : a));
+const STD = '1ANNA';
+
+// ---------- Format ----------
+const nf0 = new Intl.NumberFormat('nb-NO', {maximumFractionDigits: 0});
+const nf1 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const nf2 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const nf3 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 3, maximumFractionDigits: 3});
+const sgn = (v, f = nf0) => (v == null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const pst = (v) => (v == null ? '–' : v >= 1 ? nf1.format(v) : v >= 0.1 ? nf2.format(v) : nf3.format(v));
+const avrund = (n) => {   // avrunding i overskrifter, så tallet ikke leses som fasit
+  const a = Math.abs(n);
+  if (a >= 1e4) return nf0.format(Math.round(a / 100) * 100);
+  if (a >= 1e3) return nf0.format(Math.round(a / 10) * 10);
+  return nf0.format(a);
+};
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const MANGLER_F = 'færre enn 4 eller ikke i bruk';
+const MANGLER_P = '200 eller færre';
+
+// ---------- Tilstand: valgt navn i adressen (#navn=1ANNA) ----------
+const root = document.querySelector('.bf');
+const $ = (s) => root.querySelector(s);
+const $$ = (s) => [...root.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+const fraAdresse = () => { const k = new URLSearchParams(location.hash.slice(1)).get('navn'); return k && NAVN[k] ? k : null; };
+const valgt = () => fraAdresse() || STD;
+let funnetMed = null;
+const velg = (k, o = {}) => {
+  funnetMed = o.ord || null;
+  try { history.replaceState(null, '', '#navn=' + k); } catch (e) { /* ignorer */ }
+  tegnAlt();
+  if (o.rull) $('#bf-kort').scrollIntoView({behavior: 'smooth'});
+};
+const visning = {topp: 'g', bolge: 'andel', dom: 'j'};
+
+// ---------- Verktøy ----------
+const tip = $('.bf-tip');
+const skjulTips = () => { tip.hidden = true; };
+const visTips = (ev, tittel, linjer) => {
+  tip.replaceChildren();
+  const h = document.createElement('div'); h.className = 'bf-tip-h'; h.textContent = tittel; tip.append(h);
+  for (const l of linjer) {
+    const r = document.createElement('div'); r.className = 'bf-tip-r';
+    if (l.c) { const i = document.createElement('i'); i.style.background = l.c; r.append(i); }
+    const n = document.createElement('span'); n.textContent = l.n;
+    const v = document.createElement('b'); v.textContent = l.v;
+    r.append(n, v); tip.append(r);
+  }
+  tip.hidden = false;
+  const b = root.getBoundingClientRect();
+  let x = (ev.clientX ?? b.left) - b.left + 14, y = (ev.clientY ?? b.top) - b.top + 14;
+  if (x + tip.offsetWidth > b.width) x = x - tip.offsetWidth - 28;
+  if ((ev.clientY ?? 0) + 14 + tip.offsetHeight > window.innerHeight) y = y - tip.offsetHeight - 28;
+  tip.style.left = Math.max(0, x) + 'px';
+  tip.style.top = Math.max(0, y) + 'px';
+};
+const lerret = (box, h, beskrivelse) => {
+  const w = Math.max(240, Math.floor(box.clientWidth));
+  d3.select(box).selectAll('svg, .bf-tomt').remove();
+  box.style.minHeight = h + 'px';
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', beskrivelse);
+  return {svg, w};
+};
+const tomt = (box, tekst) => {
+  d3.select(box).selectAll('svg, .bf-tomt').remove();
+  box.style.minHeight = '0px';
+  const p = document.createElement('p'); p.className = 'bf-tomt'; p.textContent = tekst; box.append(p);
+};
+const bredde = (svg, s, cls) => { const t = svg.append('text').attr('class', cls).text(s); const l = t.node().getComputedTextLength(); t.remove(); return l; };
+const sett = (key, tekst) => { $(`[data-t="${key}"]`).textContent = tekst; };
+const settH = (key, tekst) => { $(`[data-h="${key}"]`).textContent = tekst; };
+const settN = (key, tekst) => { $(`[data-n="${key}"]`).textContent = tekst; };
+const settSrc = (key, tekst) => { $(`[data-src="${key}"]`).textContent = tekst; };
+const talltabell = (id, tittel, kolonner, rader) => {
+  const t = document.createElement('table'); t.className = 'bf-table';
+  const cap = document.createElement('caption'); cap.textContent = tittel; t.append(cap);
+  const hr = t.createTHead().insertRow();
+  for (const k of kolonner) { const th = document.createElement('th'); th.scope = 'col'; th.textContent = k; hr.append(th); }
+  const tb = t.createTBody();
+  for (const r of rader) { const tr = tb.insertRow(); r.forEach((c, i) => { const e = document.createElement(i ? 'td' : 'th'); if (!i) e.scope = 'row'; e.textContent = c; tr.append(e); }); }
+  $(`[data-tall="${id}"] .bf-tablewrap`).replaceChildren(t);
+};
+const legende = (key, items) => $(`[data-leg="${key}"]`).replaceChildren(...items.map(({c, n, cls}) => {
+  const s = document.createElement('span'), i = document.createElement('i');
+  i.className = cls || 'bf-sw-sq';
+  if (cls === 'bf-sw-line') i.style.borderColor = c; else if (c) i.style.background = c;
+  s.append(i, n); return s;
+}));
+const yakse = (svg, w, m, ys, yt, fmt, tittel) => {
+  const g = svg.append('g');
+  g.selectAll('line').data(yt).join('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', (t) => ys(t)).attr('y2', (t) => ys(t)).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
+  g.selectAll('text').data(yt).join('text').attr('class', 'bf-tick').attr('x', m.l - 8).attr('y', (t) => ys(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text(fmt);
+  svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(tittel);
+};
+const venstremarg = (svg, yt, fmt) => Math.ceil(d3.max(yt, (t) => bredde(svg, fmt(t), 'bf-tick'))) + 12;
+const tastatur = (sel, fn) => sel.attr('tabindex', 0).attr('role', 'button').classed('bf-klikk', true)
+  .on('click', (ev, d) => fn(d)).on('keydown', (ev, d) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); fn(d); } });
+
+// Liggende stolper med navn til venstre og tall utenfor stolpeenden
+// rader: [{k?, n, v, uthev, mangler}], o: {aria, max?, klikk?, fmt?}
+function liggende(box, rader, o) {
+  const bh = o.bh || 22, gap = Math.round(bh * 0.5), H = rader.length * (bh + gap) + 8;
+  const {svg, w} = lerret(box, H, o.aria);
+  const fmt = o.fmt || ((v) => nf0.format(v));
+  const l = Math.ceil(d3.max(rader, (r) => bredde(svg, r.n, 'bf-lab bf-strong'))) + 10;
+  const r = Math.ceil(d3.max(rader, (x) => bredde(svg, x.v == null ? x.mangler || '' : fmt(x.v), 'bf-lab bf-strong'))) + 10;
+  const xs = d3.scaleLinear().domain([0, o.max || d3.max(rader, (x) => x.v || 0) || 1]).range([l, Math.max(l + 20, w - r)]);
+  svg.append('line').attr('x1', l).attr('x2', l).attr('y1', 0).attr('y2', H - 4).attr('stroke', css('--null'));
+  const g = svg.selectAll('g.rad').data(rader).join('g').attr('class', 'rad').attr('transform', (d, i) => `translate(0,${i * (bh + gap) + 2})`);
+  g.append('text').attr('class', (d) => 'bf-lab' + (d.uthev ? ' bf-strong' : '')).attr('x', l - 8).attr('y', bh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => d.n);
+  g.append('rect').attr('class', 'bf-fokus').attr('x', l).attr('y', 0).attr('height', bh).attr('width', (d) => (d.v ? Math.max(1, xs(d.v) - l) : 0))
+    .attr('fill', (d) => (d.uthev || o.enSerie ? css('--gronn') : css('--gra')));
+  g.append('text').attr('class', (d) => 'bf-lab' + (d.uthev ? ' bf-strong' : '')).attr('x', (d) => (d.v ? xs(d.v) : l) + 6).attr('y', bh / 2).attr('dy', '0.32em')
+    .text((d) => (d.v == null ? d.mangler : fmt(d.v)));
+  if (o.klikk) tastatur(g.filter((d) => d.k), (d) => o.klikk(d.k)).attr('aria-label', (d) => `Velg ${d.n}`);
+}
+
+// ---------- Ingress ----------
+function ingress() {
+  const tj = DATA.topp5.j[0], tg = DATA.topp5.g[0], el = $('#ingress');
+  const b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
+  const d0 = DATA.dominans.j[1], dS = DATA.dominans.j[AAR.length - 1];
+  el.replaceChildren('Statistikken viser hvilke navn nyfødte får, og hvor mange som heter hva. I ', String(SIST), ' var ', b(tj.navn), ' og ', b(tg.navn),
+    ` mest brukt, men toppnavnene er langt mindre dominerende enn før. I ${AAR[1]} fikk `, b(`${nf0.format(Math.round(d0[1]))} av 100`), ' jenter navnet ', NAVN[d0[0]],
+    `. I ${SIST} fikk toppnavnet `, b(`${nf1.format(dS[1])} av 100`), '. Søk etter ditt eget navn for å se bølgen fra 1880 til i dag.');
+}
+
+// ---------- Kortet for valgt navn ----------
+function tegnKort(sel) {
+  const g = kj(sel), n = antall(sel, SIST), p = pers(sel), deler = [];
+  deler.push(`<p class="bf-sti">${KJ[g].N}${fraAdresse() ? '' : ' · eksempel, søk etter ditt eget navn'}</p>`);
+  deler.push(`<h2>${esc(visNavn(sel))}</h2>`);
+  const linje = [];
+  if (harFodte(sel)) {
+    linje.push(n ? `${nf0.format(n)} ${KJ[g].barn} fikk navnet i ${SIST}${RANG[sel] ? `, nr. ${RANG[sel].r} av ${RANG[sel].av} ${KJ[g].n} med denne skrivemåten` : ''}.` : `Færre enn fire ${KJ[g].barn} fikk navnet i ${SIST}, eller det ble ikke brukt.`);
+    const a = DATA.andel[sel], i = a.reduce((m, v, j) => ((v || 0) > (a[m] || 0) ? j : m), 0);
+    if (a[i]) linje.push(`Mest brukt i ${AAR[i]}, da ${pst(a[i])} prosent av ${KJ[g].best} fikk det.`);
+  } else {
+    linje.push(`Navnet finnes bare i tabellen over personer, ikke i tabellen over nyfødte. Det var brukt av færre enn 200 personer året før, eller har bindestrek.`);
+  }
+  linje.push(p ? `${nf0.format(p)} personer het ${NAVN[sel]} ved utgangen av ${PSIST}.` : `${MANGLER_P[0].toUpperCase() + MANGLER_P.slice(1)} personer het ${NAVN[sel]} ved utgangen av ${PSIST}.`);
+  deler.push(`<p>${esc(linje.join(' '))}</p>`);
+  if (GRUPPE[sel]) {
+    const r = GRUPPE[sel], andre = r.deler.filter(([k]) => k !== sel).map(([k]) => NAVN[k]);
+    deler.push(`<p>I SSBs toppliste regnes ${esc(NAVN[sel])}${andre.length ? ' sammen med ' + esc(andre.join(' og ')) : ''}: ${esc(r.navn)} er nr. ${DATA.topp5[g].indexOf(r) + 1} med ${nf0.format(r.total)}. Her vises skrivemåten ${esc(NAVN[sel])} alene.</p>`);
+  }
+  if (funnetMed && funnetMed !== NAVN[sel]) deler.push(`<p class="bf-sti">Foreslått fordi «${esc(funnetMed)}» regnes som samme navn i SSBs toppliste.</p>`);
+  if (BEGGE.has(NAVN[sel])) {
+    const annen = (g === 'j' ? '2' : '1') + sel.slice(1);
+    deler.push(`<p class="bf-sti">${esc(NAVN[sel])} finnes også som ${KJ[kj(annen)].n}: <button type="button" class="bf-lenke" data-velg="${esc(annen)}">vis ${KJ[kj(annen)].n}et</button>.</p>`);
+  }
+  if (n && n < 20) deler.push(`<p class="bf-varsel">Små tall: Under 20 barn i ${SIST}. Noen få barn gir store hopp i kurven.</p>`);
+  const el = $('#bf-kort'); el.innerHTML = deler.join(''); el.hidden = false;
+}
+
+// ---------- Lesehjelpen ----------
+function tegnLes(sel) {
+  const lucas = DATA.topp5.g.reduce((m, r) => ((r.total - r.deler[0][1]) / r.total > (m.total - m.deler[0][1]) / m.total ? r : m));
+  sett('les-1', `${lucas.navn} er nr. ${DATA.topp5.g.indexOf(lucas) + 1} på guttelisten for ${SIST} med ${nf0.format(lucas.total)}. Det er ${lucas.deler.map(([k, v]) => `${NAVN[k]} ${nf0.format(v)}`).join(' og ')}. I statistikkbanken, og ellers på denne siden, teller hver skrivemåte for seg.`);
+  const g = kj(sel), t = toppKode(g), v = vanligstKode(g);
+  const a = sel === t || sel === v ? (sel === t ? v : t) : null;
+  const vis = a ? [sel, a] : [t, v];
+  sett('les-2', vis.map((k) => `${NAVN[k]}: ${antall(k, SIST) ? nf0.format(antall(k, SIST)) : 'færre enn 4'} nyfødte i ${SIST}, ${pers(k) ? nf0.format(pers(k)) : MANGLER_P} som heter det.`).join(' ') + ' Populært er hva foreldre velger nå. Vanlig er hva befolkningen heter.');
+  const nj = KODER.filter((k) => kj(k) === 'j' && harFodte(k)).length, ng = KODER.filter((k) => kj(k) === 'g' && harFodte(k)).length;
+  sett('les-4', `Tabellen over nyfødte har ${nf0.format(nj)} jentenavn og ${nf0.format(ng)} guttenavn, alle brukt av minst 200 personer. Andre navn finnes i navnesøket på ssb.no, som viser navn med flere enn tre bærere.`);
+}
+
+// ---------- Toppgrafikk: topp 5 med skrivemåter ----------
+function tegnTopp() {
+  const g = visning.topp, rader = DATA.topp5[g];
+  $$('[data-topp]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.topp === g)));
+  const uthev = rader.reduce((m, r) => ((r.total - r.deler[0][1]) / r.total > (m.total - m.deler[0][1]) / m.total ? r : m));
+  const hoved = uthev.deler[0];
+  sett('omr', `${KJ[g].N} · ${SIST}`);
+  sett('stort', nf0.format(uthev.total));
+  sett('setning', `${KJ[g].barn} fikk navnet ${uthev.navn} i ${SIST}. Men bare ${nf0.format(hoved[1])} av dem skrives ${NAVN[hoved[0]]}.`.replace(/^./, (c) => c.toUpperCase()));
+  $('[data-t="under"]').innerHTML = `<p>SSBs toppliste slår sammen skrivemåter av samme navn. I statistikkbanken står hver skrivemåte for seg, og ${esc(NAVN[uthev.deler[1] ? uthev.deler[1][0] : hoved[0]])} er et eget navn der.</p><p>Klikk på et navn for å se hele bølgen fra ${AAR[0]}.</p>`;
+  settH('topp', `Topp 5 ${KJ[g].n} ${SIST}, antall nyfødte`);
+  legende('topp', [{c: css('--gronn-f'), n: 'Vanligste skrivemåte'}, {c: css('--oker-f'), n: 'Andre skrivemåter'}]);
+  const box = $('#fig-topp'), bh = 30, gap = 15, H = rader.length * (bh + gap) + 6;
+  const {svg, w} = lerret(box, H, `Topp 5 ${KJ[g].n} ${SIST} delt på skrivemåter. ${rader.map((r) => `${r.navn} ${r.total}`).join(', ')}.`);
+  const l = Math.ceil(d3.max(rader, (r) => bredde(svg, r.navn, 'bf-lab bf-strong'))) + 12;
+  const r = Math.ceil(bredde(svg, '000', 'bf-lab bf-strong')) + 12;
+  const xs = d3.scaleLinear().domain([0, d3.max(rader, (x) => x.total)]).range([l, w - r]);
+  svg.append('line').attr('x1', l).attr('x2', l).attr('y1', 0).attr('y2', H - 4).attr('stroke', css('--null'));
+  rader.forEach((rad, i) => {
+    const y = i * (bh + gap) + 2, er = rad === uthev;
+    const gr = svg.append('g').datum(rad);
+    gr.append('text').attr('class', 'bf-lab' + (er ? ' bf-strong' : '')).attr('x', l - 8).attr('y', y + bh / 2).attr('dy', '0.32em').attr('text-anchor', 'end').style('font-size', '14px').text(rad.navn);
+    let x0 = 0;
+    const segs = [{n: NAVN[rad.deler[0][0]], v: rad.deler[0][1], c: css('--gronn-f'), hvit: true},
+      ...rad.deler.slice(1).map(([k, v]) => ({n: NAVN[k], v, c: css('--oker-f')})), ...(rad.rest ? [{n: 'ukjent', v: rad.rest, c: css('--oker-f')}] : [])];
+    for (const s of segs) {
+      const xa = xs(x0), xb = xs(x0 + s.v);
+      gr.append('rect').attr('x', xa).attr('y', y).attr('width', Math.max(0.5, xb - xa)).attr('height', bh).attr('fill', s.c);
+      const t = er ? `${s.n} ${nf0.format(s.v)}` : nf0.format(s.v);
+      if (xb - xa > bredde(svg, t, 'bf-lab') + 12) gr.append('text').attr('class', s.hvit ? 'bf-lab-hvit' : 'bf-lab bf-strong').attr('x', xa + 6).attr('y', y + bh / 2).attr('dy', '0.32em').text(t);
+      x0 += s.v;
+    }
+    gr.append('rect').attr('class', 'bf-fokus').attr('x', l).attr('y', y).attr('width', xs(rad.total) - l).attr('height', bh).attr('fill', 'transparent');
+    gr.append('text').attr('class', 'bf-lab' + (er ? ' bf-strong' : '')).attr('x', xs(rad.total) + 6).attr('y', y + bh / 2).attr('dy', '0.32em').style('font-size', '14px').text(nf0.format(rad.total));
+    tastatur(gr, (d) => { inp.value = NAVN[d.deler[0][0]]; velg(d.deler[0][0], {rull: true}); }).attr('aria-label', `Vis ${rad.navn}`)
+      .on('pointermove', (ev) => visTips(ev, `${rad.navn}, ${SIST}`, [...segs.map((s) => ({n: s.n === 'ukjent' ? 'Ikke i statistikkbanken' : s.n, v: nf0.format(s.v), c: s.c})), {n: 'Topplisten', v: nf0.format(rad.total)}]))
+      .on('pointerleave', skjulTips);
+  });
+  const usikre = rader.filter((x) => x.rest);
+  settN('topp', `Totalen er SSBs publiserte tall. Skrivemåtene er fra tabell 10467.${usikre.length ? ` ${usikre.map((x) => `${x.navn}: ${x.rest} barn i totalen står verken i artikkelen eller statistikkbanken, og vises som andre skrivemåter.`).join(' ')}` : ''}`);
+  talltabell('topp', `Topp 5 ${KJ[g].n} ${SIST} med skrivemåter`, ['Navn', 'Skrivemåte', 'Antall'],
+    rader.flatMap((x) => [...x.deler.map(([k, v]) => [x.navn, NAVN[k], nf0.format(v)]), ...(x.rest ? [[x.navn, 'Ikke i statistikkbanken', nf0.format(x.rest)]] : []), [x.navn, 'Topplisten', nf0.format(x.total)]]));
+  const t10 = DATA.topp10[g];
+  sett('t1-lab', `Mest brukte ${KJ[g].n} ${SIST}`); sett('t1', `${rader[0].navn} ${nf0.format(rader[0].total)}`);
+  sett('t2-lab', `${KJ[g].barn[0].toUpperCase() + KJ[g].barn.slice(1)} med et topp 10-navn`); $('[data-t="t2"]').innerHTML = `${nf1.format(t10.andel)} <span class="bf-unit">prosent</span>`;
+  sett('t3-lab', `Navngitte ${KJ[g].barn} ${SIST} (egen beregning)`); $('[data-t="t3"]').innerHTML = `om lag ${avrund(DATA.nevner[g][AAR.length - 1])}`;
+  sett('t4-lab', `${KJ[g].N} i tabellen over nyfødte`); sett('t4', nf0.format(KODER.filter((k) => kj(k) === g && harFodte(k)).length));
+  settSrc('topp', `Kilde: SSB, ${ARTIKLER} og tabell 10467. Sist oppdatert: ${dato(OPPD.fodte)}.`);
+}
+
+// ---------- Navnebølgen ----------
+const BRUDD = [[1945, 'Antall fra 1945'], [1964, 'Full telling fra 1964'], [2021, 'Navngivningsår fra 2021']];
+const bruddLinjer = (svg, xs, m, H, fra) => {
+  const b = BRUDD.filter(([a]) => a > fra);
+  b.forEach(([a], i) => {
+    svg.append('line').attr('x1', xs(a)).attr('x2', xs(a)).attr('y1', m.t - 8).attr('y2', H - m.b).attr('stroke', css('--null')).attr('stroke-dasharray', '4 4');
+    const naboV = i > 0 && xs(a) - xs(b[i - 1][0]) < 44, naboH = i < b.length - 1 && xs(b[i + 1][0]) - xs(a) < 44;
+    const anker = xs(SIST) - xs(a) < 30 || naboH ? 'end' : naboV ? 'start' : 'middle';
+    svg.append('text').attr('class', 'bf-tick').attr('x', xs(a) + (anker === 'end' ? -3 : anker === 'start' ? 3 : 0)).attr('y', m.t - 12).attr('text-anchor', anker).text(a);
+  });
+};
+const xAarsakse = (svg, xs, H, m, fra, steg) => {
+  const t = d3.range(Math.ceil(fra / steg) * steg, SIST, steg).filter((x) => xs(x) - xs(fra) > 36 && xs(SIST) - xs(x) > 36);
+  svg.append('g').selectAll('text').data([fra, ...t, SIST]).join('text').attr('class', 'bf-tick')
+    .attr('x', (x) => xs(x)).attr('y', H - m.b + 16).attr('text-anchor', (x) => (x === SIST ? 'end' : x === fra ? 'start' : 'middle')).text((x) => x);
+};
+function tegnBolge(sel) {
+  const g = kj(sel), mode = visning.bolge;
+  $$('[data-bolge]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.bolge === mode)));
+  const box = $('#fig-bolge');
+  $('[data-h="bolge"] + .bf-brytere').hidden = !harFodte(sel);
+  if (!harFodte(sel)) {
+    settH('bolge', `${visNavn(sel)}: ingen kurve for nyfødte`);
+    sett('ing-1', 'Kurven viser hvor stor andel av de nyfødte som fikk navnet hvert år. Navn som var brukt av færre enn 200 personer, er ikke med.');
+    settN('bolge', ''); legende('bolge', []);
+    tomt(box, `${NAVN[sel]} finnes ikke i tabellen over nyfødte, bare i tabellen over personer som heter navnet. Det gjelder navn som var brukt av færre enn 200 personer året før, og navn med bindestrek. Se tallene for personer lenger ned.`);
+    talltabell('bolge', `Ingen tall for nyfødte, ${NAVN[sel]}`, ['År', 'Andel', 'Antall'], []);
+    settSrc('bolge', kilde(T10467));
+    return;
+  }
+  const fra = mode === 'andel' ? AAR[0] : AFRA;
+  const pts = AAR.filter((a) => a >= fra).map((a) => ({a, v: mode === 'andel' ? andel(sel, a) : antall(sel, a), andel: andel(sel, a), antall: antall(sel, a)}));
+  const med = pts.filter((d) => d.v != null && d.v > 0);
+  const maks = med.reduce((m, d) => (d.v > m.v ? d : m), med[0] || {a: SIST, v: 0});
+  const sist = pts[pts.length - 1];
+  sett('ing-1', `Kurven viser hvor stor andel av de nyfødte ${KJ[g].best} som fikk navnet hvert år. Andelen kan sammenlignes over hele perioden, også når det ble født flere eller færre barn.`);
+  const vis = (v) => (mode === 'andel' ? `${pst(v)} prosent` : nf0.format(v));
+  settH('bolge', maks.v ? (maks.a === SIST ? `${visNavn(sel)}: mer brukt enn noen gang i ${SIST}, ${vis(sist.v)}` : `${visNavn(sel)}: mest brukt i ${maks.a}${sist.v ? `, ${vis(sist.v)} i ${SIST}` : `, færre enn fire i ${SIST}`}`) : `${visNavn(sel)}: ingen år med tall i perioden`);
+  settN('bolge', (mode === 'andel' ? `Andel av nyfødte ${KJ[g].barn}, prosent. Før 1945 finnes bare andelen. ` : `Antall nyfødte ${KJ[g].barn} som fikk navnet. `) + 'Brudd i kurven betyr færre enn fire barn eller at navnet ikke var i bruk. Stiplede linjer viser endringer i grunnlaget.');
+  legende('bolge', [{c: css('--gronn'), n: visNavn(sel), cls: 'bf-sw-line'}, {n: 'Brudd i tidsserien', cls: 'bf-sw-dash'}]);
+  const H = 300, {svg, w} = lerret(box, H, `${mode === 'andel' ? 'Andel' : 'Antall'} nyfødte med navnet ${NAVN[sel]}, ${fra}–${SIST}.`);
+  const ymax = d3.max(pts, (d) => d.v) || 1;
+  const ys = d3.scaleLinear().domain([0, ymax]).nice(5);
+  const fmt = mode === 'andel' ? (t) => (ymax < 0.1 ? nf2.format(t) : Number.isInteger(t) ? nf0.format(t) : nf1.format(t)) : (t) => nf0.format(t);
+  const yt = ys.ticks(5);
+  const m = {t: 40, b: 24, l: venstremarg(svg, yt, fmt), r: 14};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleLinear().domain([fra, SIST]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, yt, fmt, mode === 'andel' ? 'Prosent' : 'Antall nyfødte');
+  xAarsakse(svg, xs, H, m, fra, (SIST - fra) > 100 ? (w < 500 ? 40 : 20) : (w < 500 ? 20 : 10));
+  bruddLinjer(svg, xs, m, H, fra);
+  svg.append('path').attr('d', d3.line().defined((d) => d.v != null).x((d) => xs(d.a)).y((d) => ys(d.v))(pts)).attr('fill', 'none').attr('stroke', css('--gronn')).attr('stroke-width', 2.4).attr('stroke-linejoin', 'round');
+  // Enkeltpunkter uten naboer ville blitt usynlige
+  svg.append('g').selectAll('circle').data(pts.filter((d, i) => d.v != null && (pts[i - 1]?.v == null) && (pts[i + 1]?.v == null))).join('circle')
+    .attr('cx', (d) => xs(d.a)).attr('cy', (d) => ys(d.v)).attr('r', 2.5).attr('fill', css('--gronn'));
+  if (maks.v) {
+    svg.append('circle').attr('cx', xs(maks.a)).attr('cy', ys(maks.v)).attr('r', 4).attr('fill', css('--gronn'));
+    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('y', ys(maks.v) - 10).text(`${mode === 'andel' ? pst(maks.v) : nf0.format(maks.v)} (${maks.a})`);
+    const tw = t.node().getComputedTextLength();
+    t.attr('x', Math.max(m.l, Math.min(w - m.r - tw, xs(maks.a) - tw / 2)));
+  }
+  if (sist.v != null && sist.a !== maks.a) {
+    svg.append('circle').attr('cx', xs(sist.a)).attr('cy', ys(sist.v)).attr('r', 4).attr('fill', css('--gronn'));
+    const naer = maks.v && Math.abs(xs(sist.a) - xs(maks.a)) < 90 && Math.abs(ys(sist.v) - ys(maks.v)) < 40;
+    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('y', ys(sist.v) + (naer ? 20 : -10)).text(mode === 'andel' ? pst(sist.v) : nf0.format(sist.v));
+    t.attr('x', xs(sist.a) - t.node().getComputedTextLength());
+  }
+  const lag = svg.append('g').style('display', 'none'), strek = lag.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--sek')), prikk = lag.append('circle').attr('r', 4).attr('fill', css('--tekst'));
+  const tipsFor = (d) => [{n: 'Andel av nyfødte', v: d.andel == null ? MANGLER_F : d.andel === 0 ? '0,000 prosent (kan være avrundet ned)' : `${pst(d.andel)} prosent`},
+    {n: 'Antall', v: d.a < AFRA ? 'finnes ikke før 1945' : d.antall == null ? MANGLER_F : nf0.format(d.antall)}];
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const a = Math.round(xs.invert(d3.pointer(ev)[0])), d = pts.find((x) => x.a === a); if (!d) return;
+      lag.style('display', null); strek.attr('x1', xs(a)).attr('x2', xs(a));
+      if (d.v != null) prikk.attr('cx', xs(a)).attr('cy', ys(d.v)).style('display', null); else prikk.style('display', 'none');
+      visTips(ev, `${visNavn(sel)}, ${a}`, tipsFor(d));
+    }).on('pointerleave', () => { lag.style('display', 'none'); skjulTips(); });
+  talltabell('bolge', `Nyfødte med navnet ${NAVN[sel]}`, ['År', 'Andel, prosent', 'Antall'],
+    AAR.slice().reverse().map((a) => [a, andel(sel, a) == null ? 'Færre enn 4 / ikke i bruk' : nf3.format(andel(sel, a)), a < AFRA ? 'Finnes ikke' : antall(sel, a) == null ? 'Færre enn 4 / ikke i bruk' : nf0.format(antall(sel, a))]));
+  settSrc('bolge', kilde(T10467));
+}
+
+// ---------- Populært eller vanlig ----------
+function tegnVanlig(sel) {
+  const g = kj(sel), t = toppKode(g), v = vanligstKode(g);
+  const koder = [sel, ...[t, v].filter((k) => k !== sel)].filter((k, i, a) => a.indexOf(k) === i);
+  sett('ing-2', `Tabellen over nyfødte viser hva foreldre velger nå. Tabellen over personer viser hva befolkningen heter. ${NAVN[t]} var mest brukt blant nyfødte ${KJ[g].barn} i ${SIST}, mens ${NAVN[v]} er det vanligste ${KJ[g].n}et i befolkningen.`);
+  const a1 = antall(sel, SIST), p1 = pers(sel);
+  settH('par', sel === t ? `${NAVN[sel]} er mest brukt blant nyfødte, men ${NAVN[v]} er langt vanligere i befolkningen`
+    : sel === v ? `${NAVN[sel]} er vanligst i befolkningen, men ${a1 ? `bare ${nf0.format(a1)}` : 'færre enn fire'} fikk navnet i ${SIST}`
+      : `${NAVN[sel]}: ${a1 ? nf0.format(a1) : 'færre enn 4'} nyfødte i ${SIST}, ${p1 ? nf0.format(p1) : MANGLER_P} som heter det`);
+  sett('par-1', `Nyfødte som fikk navnet, ${SIST}`);
+  sett('par-2', `Personer som heter navnet, 31.12.${PSIST}`);
+  const rad = (k, val, mangler) => ({k, n: NAVN[k], v: val, uthev: k === sel, mangler});
+  liggende($('#fig-par1'), koder.map((k) => rad(k, antall(k, SIST), harFodte(k) ? 'færre enn 4' : 'ikke i tabellen')), {aria: `Nyfødte ${SIST}: ${koder.map((k) => `${NAVN[k]} ${antall(k, SIST) ?? 'mangler'}`).join(', ')}`, klikk: (k) => { inp.value = NAVN[k]; velg(k, {rull: true}); }});
+  liggende($('#fig-par2'), koder.map((k) => rad(k, pers(k), MANGLER_P)), {aria: `Personer ${PSIST}: ${koder.map((k) => `${NAVN[k]} ${pers(k) ?? 'mangler'}`).join(', ')}`, klikk: (k) => { inp.value = NAVN[k]; velg(k, {rull: true}); }});
+  talltabell('par', 'Nyfødte og personer', ['Navn', `Nyfødte ${SIST}`, `Personer ${PSIST}`], koder.map((k) => [NAVN[k], antall(k, SIST) == null ? 'Færre enn 4' : nf0.format(antall(k, SIST)), pers(k) == null ? MANGLER_P : nf0.format(pers(k))]));
+  settSrc('par', kilde(T10467, T10501));
+
+  // Personer over tid
+  const pts = PA.map((a) => ({a, v: pers(sel, a)}));
+  const med = pts.filter((d) => d.v != null);
+  const box = $('#fig-pers');
+  settN('pers', `Personer som het ${NAVN[sel]} ved utgangen av hvert år. I 2021–2024 er navn med bindestrek regnet sammen med navnet før bindestreken, så Anne-Marie telles som Anne de årene.`);
+  if (!med.length) {
+    settH('pers', `${NAVN[sel]}: ${MANGLER_P} bærere hvert år`);
+    legende('pers', []);
+    tomt(box, `Tabellen over personer har bare navn med flere enn 200 bærere. ${NAVN[sel]} har vært under grensen hvert år fra ${PA[0]} til ${PSIST}.`);
+  } else {
+    const f = med[0], s = med[med.length - 1], e = (s.v / f.v - 1) * 100;
+    settH('pers', `${NAVN[sel]}: ${Math.abs(e) < 2 ? 'om lag like mange' : `${nf0.format(Math.abs(Math.round(e)))} prosent ${e > 0 ? 'flere' : 'færre'}`} i ${s.a} enn i ${f.a}`);
+    legende('pers', [{c: css('--gronn'), n: `Personer som heter ${NAVN[sel]}`}, {c: css('--oker-f'), n: 'Bindestreknavn regnet med (2021–2024)'}]);
+    const H = 240, {svg, w} = lerret(box, H, `Personer som heter ${NAVN[sel]}, ${PA[0]}–${PSIST}.`);
+    const ys = d3.scaleLinear().domain([0, d3.max(med, (d) => d.v)]).nice(4), yt = ys.ticks(4);
+    const m = {t: 26, b: 24, l: venstremarg(svg, yt, (t) => nf0.format(t)), r: 8};
+    ys.range([H - m.b, m.t]);
+    const xs = d3.scaleBand().domain(PA).range([m.l, w - m.r]).paddingInner(0.33);
+    yakse(svg, w, m, ys, yt, (t) => nf0.format(t), 'Personer');
+    svg.append('g').selectAll('rect').data(pts.filter((d) => d.v != null)).join('rect').attr('x', (d) => xs(d.a)).attr('width', xs.bandwidth())
+      .attr('y', (d) => ys(d.v)).attr('height', (d) => ys(0) - ys(d.v)).attr('fill', (d) => (d.a >= 2021 && d.a <= 2024 ? css('--oker-f') : css('--gronn')));
+    svg.append('g').selectAll('text').data(PA.filter((a, i) => w > 520 || i % 3 === 0 || a === PSIST)).join('text').attr('class', 'bf-tick')
+      .attr('x', (a) => xs(a) + xs.bandwidth() / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text((a) => a);
+    svg.append('g').selectAll('rect').data(pts).join('rect').attr('x', (d) => xs(d.a) - xs.step() * 0.16).attr('width', xs.step()).attr('y', m.t).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+      .on('pointermove', (ev, d) => visTips(ev, `${NAVN[sel]}, 31.12.${d.a}`, [{n: 'Personer', v: d.v == null ? MANGLER_P : nf0.format(d.v)}])).on('pointerleave', skjulTips);
+  }
+  talltabell('pers', `Personer som heter ${NAVN[sel]}`, ['År', 'Personer'], pts.slice().reverse().map((d) => [d.a, d.v == null ? MANGLER_P : nf0.format(d.v)]));
+  settSrc('pers', kilde(T10501));
+}
+
+// ---------- Toppnavnenes dominans ----------
+function tegnDominans() {
+  const g = visning.dom, D = DATA.dominans[g];
+  $$('[data-dom]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.dom === g)));
+  const pts = AAR.map((a, i) => ({a, k: D[i][0], en: D[i][1], ti: D[i][2]}));
+  const forst = pts[0], maksEn = pts.reduce((m, d) => (d.en > m.en ? d : m)), sist = pts[pts.length - 1];
+  sett('ing-3', `Før fikk mange barn de samme få navnene. I ${maksEn.a} fikk ${nf1.format(maksEn.en)} prosent av ${KJ[g].best} navnet ${NAVN[maksEn.k]}. I ${SIST} gikk det mest brukte navnet, ${NAVN[sist.k]}, til ${nf1.format(sist.en)} prosent. Foreldre velger fra langt flere navn enn før.`);
+  settH('dom', `Topp 10 ${KJ[g].n} samlet: ${nf0.format(Math.round(forst.ti))} prosent av ${KJ[g].best} i ${forst.a}, ${nf0.format(Math.round(sist.ti))} prosent i ${SIST}`);
+  const c10 = css('--gronn'), c1 = css('--bla');
+  legende('dom', [{c: c10, n: 'Topp 10 samlet', cls: 'bf-sw-line'}, {c: c1, n: 'Det mest brukte navnet', cls: 'bf-sw-line'}, {n: 'Brudd i tidsserien', cls: 'bf-sw-dash'}]);
+  const H = 300, {svg, w} = lerret($('#fig-dom'), H, `Andel av ${KJ[g].barn} med et topp 10-navn og med det mest brukte navnet, ${AAR[0]}–${SIST}.`);
+  const ys = d3.scaleLinear().domain([0, d3.max(pts, (d) => d.ti)]).nice(5), yt = ys.ticks(5);
+  const fmt = (t) => nf0.format(t);
+  const lab = (t) => bredde(svg, t, 'bf-lab bf-strong');
+  const m = {t: 40, b: 24, l: venstremarg(svg, yt, fmt), r: Math.ceil(Math.max(lab('Topp 10'), lab('Toppnavnet'))) + 12};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleLinear().domain([AAR[0], SIST]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, yt, fmt, 'Prosent');
+  xAarsakse(svg, xs, H, m, AAR[0], w < 500 ? 40 : 20);
+  bruddLinjer(svg, xs, m, H, AAR[0]);
+  for (const [k, c] of [['ti', c10], ['en', c1]]) {
+    svg.append('path').attr('d', d3.line().x((d) => xs(d.a)).y((d) => ys(d[k]))(pts)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', 2.2).attr('stroke-linejoin', 'round');
+  }
+  const ly = [[ys(sist.ti), 'Topp 10'], [ys(sist.en), 'Toppnavnet']];
+  if (ly[1][0] - ly[0][0] < 14) ly[0][0] = ly[1][0] - 14;
+  ly.forEach(([y, t]) => svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', w - m.r + 6).attr('y', y).attr('dy', '0.32em').text(t));
+  const lag = svg.append('g').style('display', 'none'), strek = lag.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--sek'));
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const a = Math.round(xs.invert(d3.pointer(ev)[0])), d = pts.find((x) => x.a === a); if (!d) return;
+      lag.style('display', null); strek.attr('x1', xs(a)).attr('x2', xs(a));
+      visTips(ev, `${KJ[g].N}, ${a}`, [{n: 'Topp 10 samlet', v: `${nf1.format(d.ti)} prosent`, c: c10}, {n: `Mest brukt: ${NAVN[d.k]}`, v: `${pst(d.en)} prosent`, c: c1}]);
+    }).on('pointerleave', () => { lag.style('display', 'none'); skjulTips(); });
+  talltabell('dom', `Toppnavnenes andel, ${KJ[g].n}`, ['År', 'Mest brukte navn', 'Andel, prosent', 'Topp 10, prosent'],
+    pts.slice().reverse().map((d) => [d.a, NAVN[d.k], pst(d.en), nf1.format(d.ti)]));
+  settSrc('dom', kilde(T10467));
+}
+
+// ---------- Befolkningen ----------
+function tegnBefolkning(sel) {
+  const topp = (g) => KODER.filter((k) => kj(k) === g && pers(k)).sort((a, b) => pers(b) - pers(a)).slice(0, 10);
+  const tj = topp('j'), tg = topp('g'), maks = Math.max(pers(tj[0]), pers(tg[0]));
+  const inne = tj.includes(sel) || tg.includes(sel);
+  const topAar = (k) => { const x = DATA.andel[k]; return AAR[x.reduce((m, v, i) => ((v || 0) > (x[m] || 0) ? i : m), 0)]; };
+  sett('ing-4', `De vanligste navnene i befolkningen er navnene som var mest brukt da de som lever i dag ble født. ${NAVN[tj[0]]} var mest brukt i ${topAar(tj[0])} og ${NAVN[tg[0]]} i ${topAar(tg[0])}. I ${SIST} fikk ${nf0.format(antall(tj[0], SIST) || 0)} jenter navnet ${NAVN[tj[0]]} og ${nf0.format(antall(tg[0], SIST) || 0)} gutter navnet ${NAVN[tg[0]]}.`);
+  settH('fornavn', `De ti vanligste fornavnene, 31.12.${PSIST}${inne ? `. ${NAVN[sel]} er uthevet` : ''}`);
+  const rad = (k) => ({k, n: NAVN[k], v: pers(k), uthev: k === sel});
+  const klikk = (k) => { inp.value = NAVN[k]; velg(k, {rull: true}); };
+  liggende($('#fig-fn-j'), tj.map(rad), {aria: `Vanligste jentenavn ${PSIST}: ${tj.map((k) => `${NAVN[k]} ${pers(k)}`).join(', ')}`, max: maks, klikk, bh: 20, enSerie: !inne});
+  liggende($('#fig-fn-g'), tg.map(rad), {aria: `Vanligste guttenavn ${PSIST}: ${tg.map((k) => `${NAVN[k]} ${pers(k)}`).join(', ')}`, max: maks, klikk, bh: 20, enSerie: !inne});
+  // Valgt navn uthevet mot grått. Er det ikke i listene, er alle grønne (én serie)
+  talltabell('fornavn', `Vanligste fornavn ${PSIST}`, ['Plass', 'Jentenavn', 'Personer', 'Guttenavn', 'Personer'], tj.map((k, i) => [i + 1, NAVN[k], nf0.format(pers(k)), NAVN[tg[i]], nf0.format(pers(tg[i]))]));
+  settSrc('fornavn', kilde(T10501));
+
+  const [a0, a1] = DATA.etternavnAar, E = DATA.etternavn.slice(0, 15);
+  const sen = E.filter((e) => /sen$/.test(e[0])).length;
+  settH('etter', `De 15 vanligste etternavnene, 31.12.${a1}: ${sen} ender på -sen`);
+  settN('etter', `Personer med etternavnet, og endring fra ${a0}. Tabell 12891 har ${nf0.format(DATA.etternavnAntall)} etternavn med minst 200 bærere. Sjeldnere etternavn finnes i navnesøket på ssb.no.`);
+  liggende($('#fig-etter'), E.map(([n, , v]) => ({n, v})), {aria: `Vanligste etternavn ${a1}: ${E.map((e) => `${e[0]} ${e[2]}`).join(', ')}`,
+    fmt: (v) => { const e = E.find((x) => x[2] === v); return `${nf0.format(v)} (${sgn((e[2] / e[1] - 1) * 100, nf0)} %)`; }, bh: 18, enSerie: true});
+  sett('e-aar0', `${a0} til ${a1}`);
+  talltabell('etter', `Vanligste etternavn ${a1}`, ['Etternavn', `Personer ${a0}`, `Personer ${a1}`, 'Endring, prosent'], DATA.etternavn.map(([n, x, y]) => [n, nf0.format(x), nf0.format(y), sgn((y / x - 1) * 100, nf1)]));
+  settSrc('etter', kilde(T12891));
+}
+
+// ---------- Søk ----------
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøå]+/g, ' ').trim();
+const SOKBARE = KODER.map((k) => ({k, n: norm(NAVN[k])}));
+function sok(q) {
+  const n = norm(q); if (!n) return [];
+  const treff = new Map();
+  const legg = (k, p, ord) => { const t = treff.get(k); if (!t || t.p < p) treff.set(k, {k, p, ord}); };
+  for (const {k, n: navn} of SOKBARE) {
+    if (navn === n) {
+      legg(k, 100);
+      if (GRUPPE[k]) for (const [a] of GRUPPE[k].deler) if (a !== k) legg(a, 70, NAVN[k]);
+    } else if (navn.startsWith(n)) legg(k, 80);
+    else if (n.length >= 3 && navn.includes(n)) legg(k, 40);
+  }
+  return [...treff.values()].sort((a, b) => b.p - a.p || (pers(b.k) || 0) - (pers(a.k) || 0) || NAVN[a.k].localeCompare(NAVN[b.k], 'nb')).slice(0, 8);
+}
+const inp = $('#bf-sok'), liste = $('#bf-forslag'), tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+let forslag = [], aktiv = -1;
+function lukk() { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); }
+function visForslag() {
+  forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+  if (!inp.value.trim()) { lukk(); return; }
+  liste.innerHTML = forslag.length ? forslag.map((t, i) => {
+    const info = [KJ[kj(t.k)].N, harFodte(t.k) ? `${antall(t.k, SIST) ? nf0.format(antall(t.k, SIST)) : 'færre enn 4'} nyfødte ${SIST}` : 'ikke i tabellen over nyfødte', pers(t.k) ? `${nf0.format(pers(t.k))} heter det` : null].filter(Boolean);
+    if (t.ord) info.unshift(`Samme navn som ${t.ord} i SSBs toppliste`);
+    return `<li role="option" id="fs-${i}" data-k="${esc(t.k)}" aria-selected="${i === aktiv}">${esc(NAVN[t.k])}<span class="s">${esc(info.join(' · '))}</span></li>`;
+  }).join('') : `<li class="tom" role="option" aria-disabled="true" data-alle>Ingen treff. Navn med 200 bærere eller færre er ikke med her. Prøv <a href="https://www.ssb.no/navn">navnesøket på ssb.no</a>, eller <button type="button" class="bf-lenke">se alle navn</button>.</li>`;
+  liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+  if (aktiv >= 0) inp.setAttribute('aria-activedescendant', `fs-${aktiv}`);
+}
+function merk(i) {
+  aktiv = i;
+  liste.querySelectorAll('li[data-k]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i)));
+  inp.setAttribute('aria-activedescendant', `fs-${i}`);
+  const el = liste.querySelector(`#fs-${i}`); if (el) el.scrollIntoView({block: 'nearest'});
+}
+function velgForslag(i) {
+  const t = forslag[i]; if (!t) return;
+  lukk(); inp.value = NAVN[t.k];
+  velg(t.k, {ord: t.ord, rull: true});
+}
+inp.addEventListener('input', visForslag);
+inp.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visForslag(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) velgForslag(aktiv); }
+  else if (e.key === 'Escape') lukk();
+});
+liste.addEventListener('mousedown', (e) => {
+  if (e.target.closest('a')) return;
+  if (e.target.closest('[data-alle] button')) { e.preventDefault(); lukk(); if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({behavior: 'smooth'}); return; }
+  const el = e.target.closest('li[data-k]'); if (el) { e.preventDefault(); velgForslag([...liste.querySelectorAll('li[data-k]')].indexOf(el)); }
+});
+inp.addEventListener('blur', () => setTimeout(lukk, 150));
+const EKS = ['Anna', 'Lukas', 'Kim', 'Thomas', 'Kateryna', 'Fiolina'];
+$('#bf-eksempler').innerHTML = EKS.map((n) => `<button type="button" class="bf-lenke" data-eks="${esc(n)}">${esc(n)}</button>`).join(', ');
+$('#bf-eksempler').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-eks]'); if (!b) return;
+  inp.value = b.dataset.eks; inp.focus(); visForslag();
+});
+alleKnapp.addEventListener('click', () => {
+  const vis = tre.hidden;
+  if (vis && !tre.innerHTML) {
+    const forbokstav = d3.group(KODER.slice().sort((a, b) => NAVN[a].localeCompare(NAVN[b], 'nb')), (k) => NAVN[k][0].toUpperCase());
+    tre.innerHTML = `<p class="bf-note" style="margin-bottom:6px">Alle ${nf0.format(KODER.length)} navn med flere enn 200 bærere, med antall personer som heter navnet 31.12.${PSIST}. J = jentenavn, G = guttenavn.</p>` +
+      [...forbokstav].map(([b, ks]) => `<h3>${esc(b)}</h3><ol>${ks.map((k) => `<li><button type="button" class="bf-lenke" data-k="${esc(k)}">${esc(NAVN[k])}</button><span class="v">${kj(k).toUpperCase()} · ${pers(k) ? nf0.format(pers(k)) : MANGLER_P}</span></li>`).join('')}</ol>`).join('');
+  }
+  tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', String(vis));
+});
+tre.addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) { tre.hidden = true; alleKnapp.setAttribute('aria-expanded', 'false'); inp.value = NAVN[b.dataset.k]; velg(b.dataset.k, {rull: true}); } });
+
+// ---------- Brytere ----------
+root.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.topp) { visning.topp = b.dataset.topp; tegnTopp(); }
+  else if (b.dataset.bolge) { visning.bolge = b.dataset.bolge; tegnBolge(valgt()); }
+  else if (b.dataset.dom) { visning.dom = b.dataset.dom; tegnDominans(); }
+  else if (b.dataset.velg) { inp.value = NAVN[b.dataset.velg]; velg(b.dataset.velg); }
+});
+root.addEventListener('pointerleave', skjulTips);
+$('[data-hentet]').textContent = dato(DATA.kilde.hentet);
+sett('artikler', ARTIKLER);
+
+function tegnAlt() {
+  skjulTips();
+  const sel = valgt();
+  document.title = fraAdresse() ? `${NAVN[sel]}: navnestatistikk` : 'Navn';
+  if (fraAdresse() && !inp.value) inp.value = NAVN[sel];
+  tegnKort(sel); tegnLes(sel);
+  tegnTopp();
+  tegnBolge(sel);
+  tegnVanlig(sel);
+  tegnDominans();
+  tegnBefolkning(sel);
+}
+ingress();
+tegnAlt();
+window.addEventListener('hashchange', () => { funnetMed = null; tegnAlt(); });
+let sisteBredde = root.clientWidth, venter = 0;
+new ResizeObserver(() => {
+  if (root.clientWidth === sisteBredde) return;
+  sisteBredde = root.clientWidth;
+  cancelAnimationFrame(venter); venter = requestAnimationFrame(tegnAlt);
+}).observe(root);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(tegnAlt);
+})();
+</script>
+</body>
+</html>

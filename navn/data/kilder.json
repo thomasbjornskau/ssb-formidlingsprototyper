@@ -1,0 +1,60 @@
+{
+ "statistikk": "navn",
+ "hentet_fra": "PxWebApi v2, data.ssb.no",
+ "datasett": [
+  {
+   "id": "fodte",
+   "tabell": "10467",
+   "svarer_paa": [
+    "Spørsmål 1: Hvordan har ditt navn utviklet seg?",
+    "Spørsmål 2: Topplisten 2025",
+    "Spørsmål 3: Er toppnavnene mindre dominerende enn før?"
+   ],
+   "beskrivelse": "Fødte etter jente- og guttenavn. Andel av fødte (prosent) 1880–2025, antall 1945–2025. Én kode per skrivemåte.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/10467/data?lang=no&outputFormat=json-stat2&valueCodes[Fornavn]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+   "omfang": "1 974 navn (1 042 jente, 932 gutte) × 2 variabler × 146 år = 576 408 celler"
+  },
+  {
+   "id": "personer",
+   "tabell": "10501",
+   "svarer_paa": [
+    "Spørsmål 4: Populært eller vanlig"
+   ],
+   "beskrivelse": "Personer etter fornavn per 31.12., 2013–2025. Bare navn med flere enn 200 bærere.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/10501/data?lang=no&outputFormat=json-stat2&valueCodes[Fornavn]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+   "omfang": "2 152 navn × 13 år = 27 976 celler"
+  },
+  {
+   "id": "etternavn",
+   "tabell": "12891",
+   "svarer_paa": [
+    "Spørsmål 5: Etternavn"
+   ],
+   "beskrivelse": "Etternavn brukt av 200 personer eller flere, per 31.12., 2018–2025.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12891/data?lang=no&outputFormat=json-stat2&valueCodes[Etternavn]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+   "omfang": "3 706 navn × 8 år = 29 648 celler"
+  }
+ ],
+ "manglende_verdier": {
+  "10467": {
+   "..": "Tallgrunnlag mangler. Gjelder alle antall 1880–1944.",
+   ".": "Tabellnotene gir to betydninger: «færre enn 4 personer» og «kategorien var ikke i bruk». I 2025 har 920 navn «.»."
+  },
+  "10501": {
+   ".": "200 eller færre bærere, eller data mangler."
+  },
+  "12891": {
+   ".": "Færre enn 200 personer."
+  }
+ },
+ "fallgruver": [
+  "Topplisten på ssb.no slår sammen skrivemåter. Statistikkbanken har én kode per skrivemåte. Bruk data/synonymer.json og publiserte totaler.",
+  "Nora: Nora 357 + Norah 6 = 363 i 10467, men publisert total er 366. Summert fra statistikkbanken ville Sofie (364) havnet foran Nora. Bruk publisert total og vis differansen som andre skrivemåter.",
+  "Brudd 2021: tallene viser fødte etter fødselsår før 2021 og etter navngivningsår fra 2021 (note i 10467).",
+  "Antall finnes bare fra 1945. Før det bare andeler.",
+  "Andel 0,000 før navnet ble vanlig kan være avrundet ned fra et lite tall. Tegn ikke null som sikker null før 1945.",
+  "10501: navn med bindestrek er regnet sammen med navnet før bindestreken i 2021–2024.",
+  "10501 og 12891 er bestand per 31.12., selv om metadata merker dem som «Flow».",
+  "Bruk publisert andel (PersonerProsent), ikke andel regnet fra antall."
+ ]
+}

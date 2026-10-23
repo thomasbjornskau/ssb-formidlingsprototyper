@@ -1,0 +1,177 @@
+{
+ "_merknad": "Topp 5 per kjønn i 2025 med skrivemåtene som SSB-artiklene «Jentenavn» og «Guttenavn» (sist endret 28.01.2026) slår sammen. «artikkel» er antallet per skrivemåte i artikkelen, «total» er publisert total. Differansen mellom total og summen av kodene vises som andre skrivemåter. Oppdateres for hånd når nye artikler kommer.",
+ "kilde": "SSB-artiklene «Jentenavn» og «Guttenavn», sist endret 28.01.2026",
+ "topp5": {
+  "j": [
+   {
+    "navn": "Emma",
+    "total": 386,
+    "skrivemaater": [
+     [
+      "1EMMA",
+      386
+     ]
+    ]
+   },
+   {
+    "navn": "Olivia",
+    "total": 376,
+    "skrivemaater": [
+     [
+      "1OLIVIA",
+      368
+     ],
+     [
+      "1OLIWIA",
+      8
+     ]
+    ]
+   },
+   {
+    "navn": "Nora",
+    "total": 366,
+    "skrivemaater": [
+     [
+      "1NORA",
+      357
+     ],
+     [
+      "1NORAH",
+      6
+     ]
+    ],
+    "usikker": "Summen av skrivemåtene er 363. Tre jenter er med i totalen uten å stå i artikkelen eller statistikkbanken."
+   },
+   {
+    "navn": "Sofie",
+    "total": 364,
+    "skrivemaater": [
+     [
+      "1SOFIE",
+      336
+     ],
+     [
+      "1SOPHIE",
+      28
+     ]
+    ]
+   },
+   {
+    "navn": "Leah",
+    "total": 355,
+    "skrivemaater": [
+     [
+      "1LEAH",
+      279
+     ],
+     [
+      "1LEA",
+      76
+     ]
+    ]
+   }
+  ],
+  "g": [
+   {
+    "navn": "Noah",
+    "total": 477,
+    "skrivemaater": [
+     [
+      "2NOAH",
+      460
+     ],
+     [
+      "2NOA",
+      17
+     ]
+    ]
+   },
+   {
+    "navn": "Jakob",
+    "total": 413,
+    "skrivemaater": [
+     [
+      "2JAKOB",
+      297
+     ],
+     [
+      "2JACOB",
+      116
+     ]
+    ]
+   },
+   {
+    "navn": "Lucas",
+    "total": 411,
+    "skrivemaater": [
+     [
+      "2LUCAS",
+      225
+     ],
+     [
+      "2LUKAS",
+      186
+     ]
+    ]
+   },
+   {
+    "navn": "Emil",
+    "total": 405,
+    "skrivemaater": [
+     [
+      "2EMIL",
+      405
+     ]
+    ]
+   },
+   {
+    "navn": "Oskar",
+    "total": 374,
+    "skrivemaater": [
+     [
+      "2OSKAR",
+      236
+     ],
+     [
+      "2OSCAR",
+      138
+     ]
+    ]
+   }
+  ]
+ },
+ "topp10": {
+  "j": {
+   "totaler": [
+    386,
+    376,
+    366,
+    364,
+    355,
+    348,
+    337,
+    335,
+    319,
+    308
+   ],
+   "antall": 3494,
+   "andel": 13.2
+  },
+  "g": {
+   "totaler": [
+    477,
+    413,
+    411,
+    405,
+    374,
+    368,
+    357,
+    348,
+    343,
+    337
+   ],
+   "antall": 3833,
+   "andel": 13.7
+  }
+ }
+}
