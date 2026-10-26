@@ -15,6 +15,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Befolkning](folkemengde/) | `folkemengde` | Til faglig kontroll | 21.10.2026 |
 | [Nasjonalregnskap](knr/) | `knr` | Til faglig kontroll | 21.10.2026 |
 | [Navn](navn/) | `navn` | Til faglig kontroll | 23.10.2026 |
+| [Innvandrere og norskfødte med innvandrerforeldre](innvbef/) | `innvbef` | Under arbeid, ikke faglig kontrollert | 26.10.2026 |
 
 ## Arbeidsprosess
 
