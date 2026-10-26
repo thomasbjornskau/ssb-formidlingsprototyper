@@ -1,0 +1,144 @@
+{
+ "statistikk": "Innvandrere og norskfødte med innvandrerforeldre",
+ "kortnavn": "innvbef",
+ "versjon": "1.0",
+ "dato_valg": "2026-10-26",
+ "merknad": "URL-ene bruker PxWebApi v2 med valueCodes[...] og codelist[...]. Rådataene er hentet direkte med scripts/hent_data.py 26.10.2026 (data.ssb.no var tilgjengelig fra arbeidsområdet).",
+ "valg": "Stort omfang (valgt av Thomas 26.10.2026): alle kommuner × alle landbakgrunner for 2026, slik at landvalget gjelder også kommunedelen. Seksjonen om tre generasjoner bruker 12548s egne seks grupper (eget fødested × antall utenlandsfødte foreldre), ikke de seks standardkategoriene.",
+ "manglende_verdier": {
+  "null (..) i endringer_land": "Ukraina og Syria mangler 2011–2020 (finnes fra 2021). «Uoppgitt» mangler 2011–2021. Vises som «mangler data».",
+  "0 i kommune_tid": "Tabell 09817 med kodelisten Kommuner 2024– gir 0 for år før dagens kommunekode fantes: 83 kommuner har tall fra 2010, 29 fra 2018, 1 fra 2019, 129 fra 2020 og 115 bare fra 2024. Skal vises som «tall for dagens kommune finnes fra …», aldri som 0 personer.",
+  "små tall": "Celler med tre eller færre personer er avrundet (0 eller 3). Summer av mange celler avviker derfor litt fra publiserte totaler."
+ },
+ "fallgruver": [
+  "Regnskapet i 10516 går bare opp fra 2016. I 2011–2015 er folkemengde ved utgangen av året minus inngangen ulik publisert folketilvekst (for innvandrere −6 766 i 2013). Regnskapet vises derfor fra 2016.",
+  "Fra 2016 er tilvekst = utgang − inngang, men komponentene (fødte − døde + inn − ut) summerer ikke helt. Resten vises som «andre endringer» (innvandrere 2025: 94).",
+  "12548 summerer ikke til de seks standardkategoriene i 05182 innenfor født i Norge og født i utlandet. Seksjonen bruker 12548s egne seks grupper (eget fødested × antall utenlandsfødte foreldre), valgt av Thomas 26.10.2026.",
+  "Brudd 2015–2016 i 12548 og 05182 (norskfødte med innvandrerforeldre +14 074). Markeres i tidsserien.",
+  "Landkodene i 13880 (252), 10598 (247), 09817 (250) og 05183 (276) er ikke like. Koble på kode, og vis bare land med personer.",
+  "Regionkodene er 4 sifre i 09817 og K-0301 i 07459. Koble på de fire siste tegnene.",
+  "Kommunesummen (inkludert 9999 Uoppgitt kommune) for norskfødte med innvandrerforeldre 2026 er 238 508 mot 238 507 for landet (avrunding)."
+ ],
+ "datasett": [
+  {
+   "id": "kategorier_tid",
+   "tabell": "05182",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Toppgrafikk, Seks kategorier",
+   "beskrivelse": "Hele landet per 1. januar: personer i de fem kategoriene utenom «født i Norge med to norskfødte foreldre». Kjønn er eliminert (summert).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/05182/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BInnvandrKat%5D=*&valueCodes%5BContentsCode%5D=Person&valueCodes%5BTid%5D=*",
+   "omfang": "5 kategorier × 43 år (1970, 1980, 1986–2026)"
+  },
+  {
+   "id": "folkemengde",
+   "tabell": "05803",
+   "svarer_paa": [
+    2
+   ],
+   "seksjon": "Toppgrafikk, relativ visning",
+   "beskrivelse": "Befolkning 1. januar, hele landet. Nevner for andelene og grunnlag for øvrig befolkning.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/05803/data?lang=no&outputFormat=json-stat2&valueCodes%5BContentsCode%5D=Personer&valueCodes%5BTid%5D=from(1970)",
+   "omfang": "57 år (1970–2026)"
+  },
+  {
+   "id": "tre_generasjoner",
+   "tabell": "12548",
+   "svarer_paa": [
+    1
+   ],
+   "seksjon": "Tre generasjoner (30 grupper)",
+   "beskrivelse": "Hele befolkningen etter eget fødested og antall utenlandsfødte foreldre og besteforeldre.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12548/data?lang=no&outputFormat=json-stat2&valueCodes%5BInnvandrKat3gen%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=*",
+   "omfang": "31 grupper (30 + i alt) × 23 år (2004–2026)"
+  },
+  {
+   "id": "endringer",
+   "tabell": "10516",
+   "svarer_paa": [
+    2
+   ],
+   "seksjon": "Regnskapet",
+   "beskrivelse": "Befolkningsendringer etter innvandringskategori: folkemengde, fødte, døde, inn- og utflyttinger, tilvekst.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/10516/data?lang=no&outputFormat=json-stat2&valueCodes%5BInnvandrKat%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "7 kategorier × 9 variabler × 15 år (2011–2025)"
+  },
+  {
+   "id": "endringer_land",
+   "tabell": "10518",
+   "svarer_paa": [
+    2,
+    3
+   ],
+   "seksjon": "Regnskapet for valgt land",
+   "beskrivelse": "Befolkningsendringer for innvandrere og norskfødte med innvandrerforeldre samlet, etter verdensdel og 24 utvalgte land.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/10518/data?lang=no&outputFormat=json-stat2&valueCodes%5BLandBakgr%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "31 land og grupper × 9 variabler × 15 år"
+  },
+  {
+   "id": "land_tid",
+   "tabell": "13880",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Landbakgrunn (valgt land)",
+   "beskrivelse": "Innvandrere og norskfødte med innvandrerforeldre, begge kjønn, per landbakgrunn.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13880/data?lang=no&outputFormat=json-stat2&valueCodes%5BKjonn%5D=0&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "252 landkoder × 2 variabler × 23 år (2004–2026)"
+  },
+  {
+   "id": "land_botid",
+   "tabell": "10598",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Landbakgrunn: botid",
+   "beskrivelse": "Innvandrere i hele landet etter landbakgrunn og botid i hele år, 1. januar 2026.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/10598/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BLanbakgrunn%5D=*&valueCodes%5BBotid%5D=*&valueCodes%5BContentsCode%5D=Personer&valueCodes%5BTid%5D=2026",
+   "omfang": "247 landkoder × 41 botidsgrupper × 1 år"
+  },
+  {
+   "id": "kommune_land",
+   "tabell": "09817",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Hvor bor de (valgt land)",
+   "beskrivelse": "Innvandrere og norskfødte med innvandrerforeldre per kommune (kommuner 2024–) og landbakgrunn, 1. januar 2026.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B,C&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=2026",
+   "omfang": "357 kommuner × 2 kategorier × 250 landbakgrunner × 1 år (stort omfang, valgt av Thomas 26.10.2026)"
+  },
+  {
+   "id": "kommune_tid",
+   "tabell": "09817",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Hvor bor de (utvikling)",
+   "beskrivelse": "Innvandrere og norskfødte med innvandrerforeldre per kommune, alle land samlet, antall og andel av befolkningen.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B-C,B,C&valueCodes%5BLandbakgrunn%5D=999&valueCodes%5BContentsCode%5D=Personer1,AndelBefolkning&valueCodes%5BTid%5D=*",
+   "omfang": "357 kommuner × 3 kategorier × 2 variabler × 17 år (2010–2026)"
+  },
+  {
+   "id": "kommune_bef",
+   "tabell": "07459",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Hvor bor de (nevner for andeler)",
+   "beskrivelse": "Folkemengde 1. januar per kommune (kommuner 2024–), alder og kjønn eliminert. Nevner for andelen med valgt landbakgrunn.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07459/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommSummer&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=2026",
+   "omfang": "kommuner × 1 år (2026)"
+  }
+ ],
+ "kodelister": [
+  {
+   "id": "verdensdel",
+   "kodeliste": "agg_Landkoder101Vd1",
+   "beskrivelse": "Verdensinndeling nivå 1: hvilke landkoder som hører til hver verdensdel. Brukes til «Se alle land».",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/codelists/agg_Landkoder101Vd1?lang=no"
+  }
+ ]
+}

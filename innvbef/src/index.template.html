@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Innvandrere og norskfødte med innvandrerforeldre</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: innvandrere og norskfødte med innvandrerforeldre i Norge, hvem som regnes med, hvordan antallet endrer seg, landbakgrunn og bosted. Tall fra SSB, tabell 05182, 05803, 12548, 10516, 10518, 13880, 10598, 09817 og 07459.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --bla: #1d9de2; --oker: #c78800; --marine: #0f2080; --rosa: #c775a7;
+  --gronn-f: #339b71; --bla-f: #3face6; --oker-f: #d5a640; --marine-f: #5763a6; --rosa-f: #cd83b0;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+:is(button, input, select, summary, a, [tabindex]):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; color: var(--tekst); font-size: 13px; margin: 0; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 8px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-brytere { display: flex; flex-wrap: wrap; gap: 0; margin: 2px 0 4px; }
+.bf-brytere .bf-knapp { padding: 5px 12px; font-size: 13px; margin-right: -1px; }
+
+/* Alle kommuner */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre h3 { font-size: 15px; margin: 12px 0 4px; }
+.bf-tre h3:first-of-type { margin-top: 0; }
+.bf-tre ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 2px 32px; }
+.bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
+.bf-tre .v { color: var(--sek); font-size: 13px; white-space: nowrap; }
+
+/* Kort for valgt kommune */
+.bf-kort { background: var(--flate); border-left: 4px solid var(--gronn); padding: 16px 20px; display: grid; gap: 4px; }
+.bf-kort h2 { font-size: 20px; margin: 0; }
+.bf-kort p { margin: 0; font-size: 14px; }
+.bf-sti { font-size: 13px; color: var(--sek); }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(38px, 6vw, 56px); font-weight: 700; line-height: 1.1; margin: 6px 0 2px; }
+.bf-stort-under { color: var(--sek); margin: 0 0 10px; }
+.bf-setning { font-size: 20px; font-weight: 600; margin: 0 0 12px; line-height: 1.35; }
+.bf-topp-under { color: var(--tekst); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick, .bf-axt { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-sw-tick { width: 14px; height: 0; border-top: 2.5px solid var(--tekst); }
+.bf-sw-line { width: 18px; height: 0; border-top: 2px solid; }
+.bf-sw-hatch { width: 14px; height: 12px; background: repeating-linear-gradient(45deg, var(--stotte) 0 2px, transparent 2px 5px); border: 1px solid var(--stotte); }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tall .bf-tablewrap { max-height: 16rem; margin-top: 6px; }
+.bf-tall tbody th { position: static; font-weight: 400; font-size: inherit; border-bottom: 1px solid var(--stotte); }
+.bf-slider { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; }
+.bf-slider input { flex: 1 1 12rem; accent-color: var(--tekst); }
+.bf-slider output { font-weight: 700; min-width: 3.2em; }
+
+/* Tabeller */
+.bf-tablewrap { max-height: 32rem; overflow: auto; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-table tr.valgt td { background: var(--lys); font-weight: 600; }
+.bf-sort { all: unset; cursor: pointer; font: inherit; color: inherit; }
+.bf-sort[data-dir]::after { content: ' ▲'; font-size: 0.8em; }
+.bf-sort[data-dir='-1']::after { content: ' ▼'; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media (max-width: 34rem) { .bf-hide-narrow { display: none; } }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-brytere { display: none; } .bf-tablewrap { max-height: none; overflow: visible; } }
+/* Tillegg for innvbef */
+.bf-sw-area { width: 14px; height: 12px; }
+.bf-rutenett { display: grid; grid-template-columns: minmax(9rem, 1.6fr) repeat(5, minmax(0, 1fr)); gap: 3px; font-size: 13px; }
+.bf-rutenett .hd { color: var(--sek); font-size: 12px; text-align: center; align-self: end; padding-bottom: 2px; line-height: 1.3; }
+.bf-rutenett .rad { font-size: 13px; line-height: 1.3; align-self: center; padding-right: 6px; }
+.bf-celle { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: 10px 2px; min-height: 44px; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; border: 2px solid transparent; }
+.bf-celle.innv { border: 3px solid var(--tekst); box-shadow: inset 0 0 0 2px #fff; }
+.bf-celle[aria-pressed="true"] { outline: 3px solid var(--oker); outline-offset: -3px; }
+.bf-celle:focus-visible { outline: 3px solid var(--tekst); outline-offset: 1px; }
+.bf-celle.mork { color: #fff; }
+@media (max-width: 560px) { .bf-rutenett { grid-template-columns: minmax(6.5rem, 1.2fr) repeat(5, minmax(0, 1fr)); font-size: 11.5px; } .bf-celle { font-size: 11px; padding: 8px 1px; } .bf-rutenett .rad { font-size: 11.5px; } }
+.bf-varsel a, .bf-varsel .bf-lenke { color: inherit; }
+.bf-stripe-merk { font-size: 12px; fill: var(--tekst); }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Innvandrere og norskfødte med innvandrerforeldre</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok" role="search">
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Velg landbakgrunn</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="Skriv et land, for eksempel Polen eller polsk" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle land</button>
+      <button type="button" class="bf-knapp" id="bf-land" hidden>Vis alle landbakgrunner</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle land" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite" hidden></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du tallene om innvandrere</h2>
+    <ul>
+      <li><b>Fødested, ikke pass.</b> <span data-t="les-1"></span></li>
+      <li><b>To grupper, ikke én.</b> <span data-t="les-2"></span></li>
+      <li><b>Hvor mange som bor her, ikke hvor mange som kom.</b> <span data-t="les-3"></span></li>
+      <li><b>Registrert bosatt.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Tallene bygger på Folkeregisteret og gjelder personer som er registrert bosatt 1. januar. Kategorien avgjøres av eget fødeland og foreldrenes og besteforeldrenes fødeland. Kilde: SSB, «Om statistikken» for Innvandrere og norskfødte med innvandrerforeldre (versjon 2021), og SSB Notater 2024/3 om uregistrert utvandring.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall" aria-live="polite">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-stort-under" data-t="stort-under"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <h3 class="bf-h" data-h="topp"></h3>
+      <div class="bf-brytere" role="group" aria-label="Vis">
+        <button type="button" class="bf-knapp" data-topp="abs" aria-pressed="true">Antall</button>
+        <button type="button" class="bf-knapp" data-topp="rel" aria-pressed="false">Andel av befolkningen</button>
+      </div>
+      <div class="bf-legend" data-leg="topp"></div>
+      <div class="bf-chart" id="fig-topp" style="min-height:260px"></div>
+      <p class="bf-note" data-n="topp"></p>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-src="topp"></p>
+  </section>
+
+  <section class="bf-section" id="hvem">
+    <h2 class="bf-sh">Hvem regnes som innvandrer?</h2>
+    <p class="bf-ingress" data-t="ing-1"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kat"></h3>
+        <p class="bf-note" data-n="kat"></p>
+        <div class="bf-legend" data-leg="kat"></div>
+        <div class="bf-chart" id="fig-kat" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="kat"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="kat"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="tre"></h3>
+        <div class="bf-brytere" role="group" aria-label="Inndeling">
+          <button type="button" class="bf-knapp" data-tre="seks" aria-pressed="true">Seks grupper</button>
+          <button type="button" class="bf-knapp" data-tre="alle" aria-pressed="false">Alle 30 kombinasjoner</button>
+        </div>
+        <p class="bf-note" data-n="tre"></p>
+        <div class="bf-legend" data-leg="tre"></div>
+        <div class="bf-chart" id="fig-tre" style="min-height:260px"></div>
+        <div id="tre-rutenett" hidden></div>
+        <h4 class="bf-h" style="font-size:14px;margin-top:10px" data-h="tre-tid"></h4>
+        <div class="bf-chart" id="fig-tre-tid" style="min-height:200px"></div>
+        <details class="bf-tall" data-tall="tre"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="tre"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="endring">
+    <h2 class="bf-sh">Hvorfor endrer antallet seg?</h2>
+    <p class="bf-ingress" data-t="ing-2"></p>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="regn"></h3>
+        <div class="bf-brytere" role="group" aria-label="Gruppe" data-regn-brytere>
+          <button type="button" class="bf-knapp" data-regn="innv" aria-pressed="true">Innvandrere</button>
+          <button type="button" class="bf-knapp" data-regn="nmi" aria-pressed="false">Norskfødte med innvandrerforeldre</button>
+        </div>
+        <p class="bf-note" data-n="regn"></p>
+        <p class="bf-varsel" data-varsel="regn" hidden></p>
+        <div class="bf-legend" data-leg="regn"></div>
+        <div class="bf-chart" id="fig-regn" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="regn"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="regn"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="fra">
+    <h2 class="bf-sh">Hvor kommer de fra, og når kom de?</h2>
+    <p class="bf-ingress" data-t="ing-3"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="land"></h3>
+        <p class="bf-note" data-n="land"></p>
+        <div class="bf-legend" data-leg="land"></div>
+        <div class="bf-chart" id="fig-land" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="land"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="land"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="botid"></h3>
+        <p class="bf-note" data-n="botid"></p>
+        <p class="bf-varsel" data-varsel="botid" hidden></p>
+        <div class="bf-chart" id="fig-botid" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="botid"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="botid"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="hvor">
+    <h2 class="bf-sh">Hvor bor de?</h2>
+    <p class="bf-ingress" data-t="ing-4"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="komm"></h3>
+        <div class="bf-brytere" role="group" aria-label="Gruppe">
+          <button type="button" class="bf-knapp" data-kkat="innv" aria-pressed="true">Innvandrere</button>
+          <button type="button" class="bf-knapp" data-kkat="nmi" aria-pressed="false">Norskfødte</button>
+          <button type="button" class="bf-knapp" data-kkat="begge" aria-pressed="false">Begge</button>
+        </div>
+        <div class="bf-brytere" role="group" aria-label="Mål">
+          <button type="button" class="bf-knapp" data-kmaal="andel" aria-pressed="true">Andel av innbyggerne</button>
+          <button type="button" class="bf-knapp" data-kmaal="antall" aria-pressed="false">Antall</button>
+        </div>
+        <p class="bf-note" data-n="komm"></p>
+        <p class="bf-varsel" data-varsel="komm" hidden></p>
+        <div class="bf-chart" id="fig-komm" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="komm"><summary>Vis tallene for alle kommuner</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="komm"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="stripe"></h3>
+        <p class="bf-note" data-n="stripe"></p>
+        <div class="bf-chart" id="fig-stripe" style="min-height:260px"></div>
+        <p class="bf-src" data-src="stripe"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Statistikken teller personer som er registrert bosatt i Norge 1. januar. Innvandrere er født i utlandet av to utenlandsfødte foreldre og har fire utenlandsfødte besteforeldre. Norskfødte med innvandrerforeldre er født i Norge av to foreldre som er innvandrere. Landbakgrunn er eget fødeland for innvandrere og foreldrenes fødeland for norskfødte, morens hvis foreldrene er født i ulike land. Små tall er avrundet, så summer kan avvike litt fra totalene.</p>
+    <p>Egne beregninger: andeler av befolkningen (unntatt kommuneandelen for alle land, som er publisert), øvrig befolkning (folkemengden minus de fem kategoriene i tabell 05182), de seks gruppene i tabell 12548 (summert fra de 30), restposten i befolkningsregnskapet, andel norskfødte per land, median botid og andelen per kommune for et valgt land.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 05182, 05803, 12548, 10516, 10518, 13880, 10598, 09817 og 07459, og kodelisten for verdensinndeling. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/innvbef">ssb.no</a>.</p>
+  </footer>
+
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/innvbef.json__*/;
+</script>
+<script>
+(() => {
+'use strict';
+// ---------- Data ----------
+// DATA.kat        hele landet 1970, 1980, 1986–2026: innv, nmi, E, F, G (05182) og bef (05803)
+// DATA.tre        12548: 30 grupper per år 2004–2026, koder «egen fødested, antall utenlandsfødte foreldre, besteforeldre»
+// DATA.endr       10516 fra 2016: regnskap for innvandrere (innv) og norskfødte med innvandrerforeldre (nmi)
+// DATA.endrLand   10518 fra 2016: regnskap for innvandrere og norskfødte samlet, 24 land
+// DATA.land       [kode, navn, verdensdel], sortert etter antall 2026
+// DATA.landTid    13880: kode -> [innvandrere 2004–2026, norskfødte 2004–2026]
+// DATA.botid      10598: kode -> innvandrere etter botid 0–39 og 40+, 2026
+// DATA.komm       [kode, navn, folkemengde 2026]
+// DATA.kommLand   09817: land (eller 999) -> [[kommuneindeks, innvandrere, norskfødte], ...], bare celler over null
+const K = DATA.kat, TR = DATA.tre, LT = DATA.landTid;
+const SISTAAR = K.aar[K.aar.length - 1];                 // 2026
+const SISTPER = SISTAAR - 1;                             // 2025
+const iK = (a) => K.aar.indexOf(a), iL = (a) => LT.aar.indexOf(a);
+const ALLE = 'alle';
+const O = Object.fromEntries(DATA.land.map(([k, n, v]) => [k, {k, n, v}]));
+const VD = Object.fromEntries(DATA.verdensdel);
+const landKoder = DATA.land.map((l) => l[0]);
+const sum = (a) => a.reduce((x, y) => x + (y || 0), 0);
+const OPPD = DATA.kilde.oppdatert;
+const dato = (s) => s.split('-').reverse().join('.');
+const TAB = {'05182': 'kategorier_tid', '05803': 'folkemengde', '12548': 'tre_generasjoner', '10516': 'endringer', '10518': 'endringer_land', '13880': 'land_tid', '10598': 'land_botid', '09817': 'kommune_land', '07459': 'kommune_bef'};
+const kilde = (...t) => `Kilde: SSB, tabell ${t.join(', ').replace(/, ([^,]*)$/, ' og $1')}. Sist oppdatert: ${[...new Set(t.map((x) => dato(OPPD[TAB[x]])))].join(' og ')}.`;
+const SMAA = 100;   // grense for «små tall» for en landbakgrunn
+const BRUDD = 2016; // brudd i 05182 og 12548, se kildekartet
+
+// Serier for landet eller et land
+const innvAar = (sel, a) => (sel === ALLE ? K.innv[iK(a)] : (iL(a) >= 0 ? LT.v[sel][0][iL(a)] : null));
+const nmiAar = (sel, a) => (sel === ALLE ? K.nmi[iK(a)] : (iL(a) >= 0 ? LT.v[sel][1][iL(a)] : null));
+const befAar = (a) => K.bef[iK(a)];
+const totLand = (k) => LT.v[k][0][LT.v[k][0].length - 1] + LT.v[k][1][LT.v[k][1].length - 1];
+const MED = landKoder.filter((k) => totLand(k) > 0);     // land med personer 1.1.2026
+const rang = (k) => MED.indexOf(k) + 1;
+
+// ---------- Format ----------
+const nf0 = new Intl.NumberFormat('nb-NO', {maximumFractionDigits: 0});
+const nf1 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const nf2 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+const sgn = (v, f = nf0) => (v == null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const tall = (v, f = nf0) => (v == null ? '–' : (v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const pst = (v, f = nf1) => (v == null ? '–' : f.format(v));
+const avrund = (n) => {   // avrunding i overskrifter, så tallet ikke leses som fasit
+  const a = Math.abs(n);
+  if (a >= 1e5) return nf0.format(Math.round(a / 1000) * 1000);
+  if (a >= 1e4) return nf0.format(Math.round(a / 100) * 100);
+  if (a >= 1e3) return nf0.format(Math.round(a / 10) * 10);
+  return nf0.format(a);
+};
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const F = {innv: css('--gronn-f'), nmi: css('--bla-f'), ovrig: '#dfe5e6', innvS: css('--gronn'), nmiS: css('--bla'), inn: css('--gronn-f'), ut: css('--oker-f'), dode: css('--marine-f'), fodte: css('--bla-f'), andre: '#b9c5c6'};
+
+// ---------- Tilstand: valgt land i adressen (#land=131) ----------
+const root = document.querySelector('.bf');
+const $ = (s) => root.querySelector(s);
+const $$ = (s) => [...root.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+const valgt = () => { const k = new URLSearchParams(location.hash.slice(1)).get('land'); return k && O[k] ? k : ALLE; };
+const navn = (k) => (k === ALLE ? 'Alle landbakgrunner' : O[k].n);
+let funnetMed = null;
+const velg = (k, o = {}) => {
+  funnetMed = o.ord || null;
+  try { history.replaceState(null, '', k === ALLE ? location.pathname + location.search : '#land=' + k); } catch (e) { /* ignorer */ }
+  tegnAlt();
+  if (o.rull) ($('#bf-kort').hidden ? $('#hovedtall') : $('#bf-kort')).scrollIntoView({behavior: 'smooth'});
+};
+const visning = {topp: 'abs', tre: 'seks', treValgt: {seks: '12', alle: '124'}, regn: 'innv', kkat: 'innv', kmaal: 'andel'};
+// ---------- Verktøy ----------
+const tip = $('.bf-tip');
+const skjulTips = () => { tip.hidden = true; };
+const visTips = (ev, tittel, linjer) => {
+  tip.replaceChildren();
+  const h = document.createElement('div'); h.className = 'bf-tip-h'; h.textContent = tittel; tip.append(h);
+  for (const l of linjer) {
+    const r = document.createElement('div'); r.className = 'bf-tip-r';
+    if (l.c) { const i = document.createElement('i'); i.style.background = l.c; r.append(i); }
+    const n = document.createElement('span'); n.textContent = l.n;
+    const v = document.createElement('b'); v.textContent = l.v;
+    r.append(n, v); tip.append(r);
+  }
+  tip.hidden = false;
+  const b = root.getBoundingClientRect();
+  let x = ev.clientX - b.left + 14, y = ev.clientY - b.top + 14;
+  if (x + tip.offsetWidth > b.width) x = ev.clientX - b.left - tip.offsetWidth - 14;
+  if (ev.clientY + 14 + tip.offsetHeight > window.innerHeight) y = ev.clientY - b.top - tip.offsetHeight - 14;
+  tip.style.left = Math.max(0, x) + 'px';
+  tip.style.top = Math.max(0, y) + 'px';
+};
+const lerret = (box, h, beskrivelse) => {
+  const w = Math.max(260, Math.floor(box.clientWidth));
+  d3.select(box).selectAll('svg').remove();
+  box.style.minHeight = h + 'px';
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', beskrivelse);
+  return {svg, w};
+};
+const bredde = (svg, s, cls) => { const t = svg.append('text').attr('class', cls).text(s); const l = t.node().getComputedTextLength(); t.remove(); return l; };
+const sett = (key, tekst) => { $(`[data-t="${key}"]`).textContent = tekst; };
+const settH = (key, tekst) => { $(`[data-h="${key}"]`).textContent = tekst; };
+const settN = (key, tekst) => { $(`[data-n="${key}"]`).textContent = tekst; };
+const settSrc = (key, tekst) => { $(`[data-src="${key}"]`).textContent = tekst; };
+const talltabell = (id, tittel, kolonner, rader) => {
+  const t = document.createElement('table'); t.className = 'bf-table';
+  const cap = document.createElement('caption'); cap.textContent = tittel; t.append(cap);
+  const hr = t.createTHead().insertRow();
+  for (const k of kolonner) { const th = document.createElement('th'); th.scope = 'col'; th.textContent = k; hr.append(th); }
+  const tb = t.createTBody();
+  for (const r of rader) { const tr = tb.insertRow(); r.forEach((c, i) => { const e = document.createElement(i ? 'td' : 'th'); if (!i) e.scope = 'row'; e.textContent = c; tr.append(e); }); }
+  $(`[data-tall="${id}"] .bf-tablewrap`).replaceChildren(t);
+};
+const legende = (key, items) => $(`[data-leg="${key}"]`).replaceChildren(...items.map(({c, n, cls}) => {
+  const s = document.createElement('span'), i = document.createElement('i');
+  i.className = cls || 'bf-sw-sq';
+  if (cls === 'bf-sw-line') i.style.borderColor = c; else if (c) i.style.background = c;
+  s.append(i, n); return s;
+}));
+const yakse = (svg, w, m, ys, yt, fmt, tittel) => {
+  const g = svg.append('g');
+  g.selectAll('line').data(yt).join('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', (t) => ys(t)).attr('y2', (t) => ys(t)).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
+  g.selectAll('text').data(yt).join('text').attr('class', 'bf-tick').attr('x', m.l - 8).attr('y', (t) => ys(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text(fmt);
+  svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(tittel);
+};
+const venstremarg = (svg, yt, fmt) => Math.ceil(d3.max(yt, (t) => bredde(svg, fmt(t), 'bf-tick'))) + 12;
+// ---------- Stablede stolper fra null: positive opp, negative ned ----------
+// pts: [{x (etikett), ...verdier}], serier: [{k, n, c}], o: {aria, xlab(i) -> tekst eller null, marker: 'vekst', merk: [{i, tekst}], tips(d)}
+function stablet(box, pts, serier, o) {
+  const H = o.H || 280;
+  const {svg, w} = lerret(box, H, o.aria);
+  const topp = (d) => sum(serier.map((s) => Math.max(0, d[s.k] || 0)));
+  const bunn = (d) => sum(serier.map((s) => Math.min(0, d[s.k] || 0)));
+  const lo = Math.min(0, d3.min(pts, (d) => Math.min(bunn(d), o.marker ? d[o.marker] ?? 0 : 0)));
+  const hi = Math.max(0, d3.max(pts, (d) => Math.max(topp(d), o.marker ? d[o.marker] ?? 0 : 0)));
+  const ys = d3.scaleLinear().domain([lo, hi || 1]).nice(5);
+  const yt = ys.ticks(5);
+  const m = {t: o.merk && o.merk.length ? 40 : 26, b: 24, l: venstremarg(svg, yt, (t) => tall(t)), r: o.hoyre || 8};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleBand().domain(d3.range(pts.length)).range([m.l, w - m.r]).paddingInner(pts.length > 40 ? 0.2 : 0.33);
+  yakse(svg, w, m, ys, yt, (t) => tall(t), o.aksetittel || 'Personer');
+  const g = svg.append('g');
+  pts.forEach((d, i) => {
+    let opp = 0, ned = 0;
+    for (const s of serier) {
+      const v = d[s.k]; if (v == null || v === 0) continue;
+      const y0 = v > 0 ? opp : ned, y1 = y0 + v;
+      if (v > 0) opp = y1; else ned = y1;
+      g.append('rect').attr('x', xs(i)).attr('width', xs.bandwidth()).attr('y', ys(Math.max(y0, y1))).attr('height', Math.abs(ys(y0) - ys(y1))).attr('fill', s.c);
+    }
+    if (d.mangler) {
+      g.append('rect').attr('x', xs(i)).attr('width', xs.bandwidth()).attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'url(#bf-skravur)');
+    }
+  });
+  const def = svg.append('defs').append('pattern').attr('id', 'bf-skravur').attr('width', 6).attr('height', 6).attr('patternUnits', 'userSpaceOnUse').attr('patternTransform', 'rotate(45)');
+  def.append('rect').attr('width', 2).attr('height', 6).attr('fill', css('--stotte'));
+  if (o.marker) {
+    g.selectAll('line.mk').data(pts.map((d, i) => ({d, i})).filter((x) => x.d[o.marker] != null)).join('line')
+      .attr('x1', (x) => xs(x.i) - 1).attr('x2', (x) => xs(x.i) + xs.bandwidth() + 1).attr('y1', (x) => ys(x.d[o.marker])).attr('y2', (x) => ys(x.d[o.marker]))
+      .attr('stroke', css('--tekst')).attr('stroke-width', 2.5);
+  }
+  // x-etiketter
+  const xg = svg.append('g');
+  pts.forEach((d, i) => { const t = o.xlab(i, w); if (t) xg.append('text').attr('class', 'bf-tick').attr('x', xs(i) + xs.bandwidth() / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(t); });
+  // annotasjoner
+  for (const a of o.merk || []) {
+    const x = xs(a.i) + xs.bandwidth() / 2;
+    svg.append('line').attr('x1', x).attr('x2', x).attr('y1', m.t - 10).attr('y2', m.t - 2).attr('stroke', css('--tekst'));
+    const t = svg.append('text').attr('class', 'bf-lab bf-halo').attr('y', m.t - 14).text(a.tekst);
+    const tw = t.node().getComputedTextLength();
+    t.attr('x', Math.max(0, Math.min(w - tw, x - tw / 2)));
+  }
+  // direkte merking til høyre
+  if (o.etiketter) {
+    for (const e of o.etiketter(ys, H, m)) svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', w - m.r + 8).attr('y', e.y).attr('dy', '0.32em').text(e.t);
+  }
+  // treffflater
+  svg.append('g').selectAll('rect').data(pts).join('rect').attr('x', (d, i) => xs(i) - xs.step() * xs.paddingInner() / 2).attr('width', xs.step()).attr('y', m.t).attr('height', H - m.t - m.b)
+    .attr('fill', 'transparent').on('pointermove', (ev, d) => { const t = o.tips(d); visTips(ev, t.tittel, t.linjer); }).on('pointerleave', skjulTips);
+  return {svg, w, xs, ys, m};
+}
+
+// ---------- Felles figurhjelp ----------
+const skravur = (svg, id) => {
+  const p = svg.append('defs').append('pattern').attr('id', id).attr('width', 6).attr('height', 6).attr('patternUnits', 'userSpaceOnUse').attr('patternTransform', 'rotate(45)');
+  p.append('rect').attr('width', 2).attr('height', 6).attr('fill', css('--stotte'));
+};
+const bruddlinje = (svg, x, m, H, w) => {
+  svg.append('line').attr('x1', x).attr('x2', x).attr('y1', m.t - 6).attr('y2', H - m.b).attr('stroke', css('--sek')).attr('stroke-dasharray', '3 3');
+  const t = svg.append('text').attr('class', 'bf-tick bf-halo').attr('y', m.t - 10).text('Brudd 2016');
+  const tw = t.node().getComputedTextLength();
+  t.attr('x', Math.max(m.l, Math.min(w - m.r - tw, x - tw / 2)));
+};
+const xetiketter = (svg, xs, aar, H, m, w) => {
+  const fra = aar[0], til = aar[aar.length - 1];
+  const steg = (til - fra) > 30 ? (w < 460 ? 20 : 10) : (w < 460 ? 10 : 5);
+  const xt = d3.range(Math.ceil(fra / steg) * steg, til + 1, steg).filter((t) => til - t >= steg / 2.5);
+  if (!xt.includes(fra) && xt[0] - fra >= steg / 2.5) xt.unshift(fra);
+  xt.push(til);
+  svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'bf-tick').attr('x', (t) => xs(t)).attr('y', H - m.b + 16)
+    .attr('text-anchor', (t, i) => (i === xt.length - 1 ? 'end' : i === 0 ? 'start' : 'middle')).text((t) => t);
+};
+const knappRad = (el, aktiv, attr) => el && $$(`[${attr}]`).forEach((b) => b.setAttribute('aria-pressed', String(b.getAttribute(attr) === aktiv)));
+const varsel = (key, html) => { const e = $(`[data-varsel="${key}"]`); if (!html) { e.hidden = true; e.innerHTML = ''; } else { e.innerHTML = html; e.hidden = false; } };
+const lenkeLand = (k) => `<button type="button" class="bf-lenke" data-velg="${esc(k)}">${esc(O[k].n)}</button>`;
+const fraNavn = (k) => (k === ALLE ? '' : ` med bakgrunn fra ${O[k].n}`);
+
+// ---------- Ingress ----------
+function ingress() {
+  const i = iK(SISTAAR), andel = (K.innv[i] + K.nmi[i]) / K.bef[i] * 100;
+  const el = $('#ingress'), b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
+  el.replaceChildren('Statistikken viser hvor mange som bor i Norge og er innvandrere eller norskfødte med innvandrerforeldre. 1. januar ', String(SISTAAR), ' var det ',
+    b(`${nf0.format(K.innv[i])} innvandrere`), ' og ', b(`${nf0.format(K.nmi[i])} norskfødte med innvandrerforeldre`), `, til sammen ${nf1.format(andel)} prosent av befolkningen. De har bakgrunn fra `,
+    b(`${MED.length} land`), '. Velg en landbakgrunn for å se tallene for den gruppen.');
+}
+
+// ---------- Kortet for valgt land ----------
+function tegnKort(sel) {
+  const el = $('#bf-kort');
+  $('#bf-land').hidden = sel === ALLE;
+  if (sel === ALLE) { el.hidden = true; return; }
+  const o = O[sel], [inn, nmi] = LT.v[sel], n = inn.length - 1, tot = inn[n] + nmi[n];
+  const deler = [`<p class="bf-sti">${esc(VD[o.v] || '')} · landkode ${esc(sel)}</p>`, `<h2>${esc(o.n)}</h2>`];
+  if (tot > 0) {
+    deler.push(`<p>${nf0.format(tot)} bosatte med denne landbakgrunnen 1. januar ${SISTAAR}: ${nf0.format(inn[n])} innvandrere og ${nf0.format(nmi[n])} norskfødte med innvandrerforeldre. Nr. ${rang(sel)} av ${MED.length} landbakgrunner.</p>`);
+    const f = LT.aar.findIndex((a, j) => inn[j] + nmi[j] > 0);
+    const t0 = inn[0] + nmi[0];
+    deler.push(`<p>${t0 > 0 ? `I ${LT.aar[0]} var det ${nf0.format(t0)}.` : `Tall finnes fra ${LT.aar[f]}.`}</p>`);
+  } else {
+    const siste = LT.aar.filter((a, j) => inn[j] + nmi[j] > 0).pop();
+    deler.push(`<p>Ingen bosatte med denne landbakgrunnen 1. januar ${SISTAAR}.${siste ? ` Siste år med personer var ${siste}. Landkoden kan være erstattet av nye land.` : ''}</p>`);
+  }
+  if (funnetMed) {
+    const s = SYN.find((x) => x.ord === funnetMed);
+    if (s) deler.push(`<p>Funnet med søkeordet «${esc(funnetMed)}».${s.usikker ? ' Koblingen er laget av oss og er omtrentlig: landbakgrunn er fødeland, ikke språk eller folkegruppe.' : ''}</p>`);
+  }
+  if (tot > 0 && tot < SMAA) deler.push(`<p class="bf-varsel">Små tall: under ${SMAA} personer. Små tall er avrundet i statistikkbanken, og noen få personer gir store utslag.</p>`);
+  el.innerHTML = deler.join('');
+  el.hidden = false;
+}
+
+// ---------- Lesehjelpen ----------
+function tegnLes(sel) {
+  const i = iK(SISTAAR), e = DATA.endr.innv, j = e.ib.length - 1;
+  sett('les-1', 'En innvandrer er født i utlandet av to utenlandsfødte foreldre. Statsborgerskap spiller ingen rolle: den som har fått norsk pass, er fortsatt innvandrer. Et barn adoptert fra utlandet av norske foreldre er ikke innvandrer.');
+  sett('les-2', sel === ALLE
+    ? `Innvandrere (${nf0.format(K.innv[i])}) og norskfødte med innvandrerforeldre (${nf0.format(K.nmi[i])}) er to grupper med ulik historie. Den som har én norskfødt forelder, er ikke med i noen av dem.`
+    : `Blant dem med bakgrunn fra ${O[sel].n} er ${nf0.format(innvAar(sel, SISTAAR))} innvandrere og ${nf0.format(nmiAar(sel, SISTAAR))} født i Norge. Andelen født i Norge sier mest om når gruppen kom.`);
+  sett('les-3', `I ${DATA.endr.aar[j]} flyttet ${nf0.format(e.inn[j])} innvandrere til Norge, og ${nf0.format(e.ut[j])} flyttet ut. Med dødsfall og andre endringer økte antallet med ${nf0.format(e.tilv[j])}.`);
+  sett('les-4', 'Bare personer med lovlig opphold som skal bo her minst seks måneder, telles. Asylsøkere er ikke med. Noen står som bosatt selv om de har flyttet ut. SSB har anslått dette til om lag 2,3 prosent av innvandrerne (Notater 2024/3).');
+}
+
+// ---------- Toppgrafikk: utvikling over tid ----------
+function toppSerie(sel) {
+  const aar = sel === ALLE ? K.aar : LT.aar;
+  return aar.map((a) => {
+    const inn = innvAar(sel, a), nmi = nmiAar(sel, a), b = befAar(a);
+    return {a, inn, nmi, b, pi: inn / b * 100, pn: nmi / b * 100, po: (b - inn - nmi) / b * 100};
+  });
+}
+function tegnTopp(sel) {
+  const s = toppSerie(sel), sist = s[s.length - 1], rel = visning.topp === 'rel';
+  knappRad(true, visning.topp, 'data-topp');
+  const tot = (d) => (sel === ALLE ? d.inn : d.inn + d.nmi);
+  sett('omr', sel === ALLE ? `Hele landet · 1. januar ${SISTAAR}` : `${O[sel].n} · 1. januar ${SISTAAR}`);
+  sett('stort', avrund(tot(sist)));
+  sett('stort-under', sel === ALLE ? 'innvandrere bor i Norge' : 'innvandrere og norskfødte med denne landbakgrunnen');
+  // Årlig endring og «laveste/høyeste siden»: bare sammenhengende år
+  const endr = s.slice(1).map((d, j) => ({a: s[j].a, v: d.a - s[j].a === 1 ? tot(d) - tot(s[j]) : null})).filter((d) => d.v != null);
+  const siste = endr[endr.length - 1], tidl = endr.slice(0, -1);
+  const lavere = [...tidl].reverse().find((d) => d.v < siste.v), hoyere = [...tidl].reverse().find((d) => d.v > siste.v);
+  const hva = sel === ALLE ? 'Økningen' : 'Endringen';
+  let setning;
+  if (tot(sist) === 0) setning = `Ingen bosatte med denne landbakgrunnen 1. januar ${SISTAAR}.`;
+  else if (siste.v < 0) setning = `Antallet gikk ned i ${siste.a}.`;
+  else if (!lavere && tidl.length >= 3) setning = `${hva} i ${siste.a} var den laveste i hele perioden fra ${tidl[0].a}.`;
+  else if (lavere && hoyere && hoyere.a > lavere.a && siste.a - lavere.a >= 3) setning = `${hva} i ${siste.a} var den laveste siden ${lavere.a}.`;
+  else if (!hoyere && tidl.length >= 3) setning = `${hva} i ${siste.a} var den største i hele perioden fra ${tidl[0].a}.`;
+  else if (lavere && hoyere && lavere.a > hoyere.a && siste.a - hoyere.a >= 3) setning = `${hva} i ${siste.a} var den største siden ${hoyere.a}.`;
+  else setning = `Antallet ${siste.v > 0 ? 'økte' : 'var uendret'} i ${siste.a}.`;
+  sett('setning', setning);
+  const p = (t) => { const e = document.createElement('p'); e.textContent = t; return e; };
+  const alleTot = K.innv[iK(SISTAAR)] + K.nmi[iK(SISTAAR)];
+  const under = sel === ALLE
+    ? [p(`Antallet innvandrere ${siste.v >= 0 ? 'økte' : 'gikk ned'} med ${nf0.format(Math.abs(siste.v))} i ${siste.a}. I tillegg bor ${nf0.format(sist.nmi)} norskfødte med innvandrerforeldre i Norge. Til sammen er det ${nf1.format(sist.pi + sist.pn)} prosent av befolkningen.`)]
+    : tot(sist) > 0 ? [p(`${nf0.format(sist.inn)} innvandrere og ${nf0.format(sist.nmi)} norskfødte med innvandrerforeldre. Det er ${nf1.format(tot(sist) / alleTot * 100)} prosent av alle innvandrere og norskfødte med innvandrerforeldre. Endring i ${siste.a}: ${sgn(siste.v)}.`)] : [];
+  $('[data-t="under"]').replaceChildren(...under);
+
+  // Nøkkeltall
+  const i = iK(SISTAAR);
+  if (sel === ALLE) {
+    sett('t1-lab', 'Innvandrere, andel av befolkningen'); sett('t1', `${nf1.format(sist.pi)} %`);
+    sett('t2-lab', 'Norskfødte med innvandrerforeldre, andel'); sett('t2', `${nf1.format(sist.pn)} %`);
+    sett('t3-lab', `Endring i antall innvandrere ${siste.a}`); sett('t3', sgn(siste.v));
+    sett('t4-lab', 'Landbakgrunner med personer'); sett('t4', nf0.format(MED.length));
+  } else {
+    sett('t1-lab', 'Innvandrere'); sett('t1', nf0.format(sist.inn));
+    sett('t2-lab', 'Norskfødte med innvandrerforeldre'); sett('t2', nf0.format(sist.nmi));
+    sett('t3-lab', 'Andel født i Norge'); sett('t3', tot(sist) ? `${nf0.format(Math.round(sist.nmi / tot(sist) * 100))} %` : '–');
+    sett('t4-lab', `Endring ${siste.a}`); sett('t4', sgn(siste.v));
+  }
+
+  // Figur
+  const fra = s[0].a, H = 260;
+  settH('topp', rel ? `Andel av befolkningen, ${fra}–${SISTAAR}` : `Bosatte 1. januar, ${fra}–${SISTAAR}`);
+  const leg = [{c: rel ? F.innv : F.innvS, n: 'Innvandrere', cls: rel ? 'bf-sw-area' : 'bf-sw-line'}, {c: rel ? F.nmi : F.nmiS, n: 'Norskfødte med innvandrerforeldre', cls: rel ? 'bf-sw-area' : 'bf-sw-line'}];
+  if (rel && sel === ALLE) leg.push({c: F.ovrig, n: 'Øvrig befolkning', cls: 'bf-sw-area'}, {n: 'Bare tre årstall', cls: 'bf-sw-hatch'});
+  legende('topp', leg);
+  const {svg, w} = lerret($('#fig-topp'), H, `${rel ? 'Andel av befolkningen' : 'Antall'} innvandrere og norskfødte med innvandrerforeldre${fraNavn(sel)}, ${fra}–${SISTAAR}.`);
+  const maks = rel ? (sel === ALLE ? 100 : d3.max(s, (d) => d.pi + d.pn)) : d3.max(s, (d) => Math.max(d.inn, d.nmi));
+  const ys = d3.scaleLinear().domain([0, maks || 1]).nice(5);
+  const fmt = rel ? (t) => tall(t, Number.isInteger(t) ? nf0 : nf1) : (t) => nf0.format(t);
+  const yt = ys.ticks(5);
+  const m = {t: 30, b: 24, l: venstremarg(svg, yt, fmt), r: rel ? 10 : Math.min(150, w * 0.3)};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleLinear().domain([fra, SISTAAR]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, yt, fmt, rel ? 'Prosent' : 'Personer');
+  if (rel) {
+    const lag = [['pi', F.innv], ['pn', F.nmi]].concat(sel === ALLE ? [['po', F.ovrig]] : []);
+    let bunn = s.map(() => 0);
+    for (const [k, c] of lag) {
+      const topp = s.map((d, j) => bunn[j] + d[k]);
+      svg.append('path').attr('d', d3.area().x((d) => xs(d.a)).y0((d, j) => ys(bunn[j])).y1((d, j) => ys(topp[j]))(s)).attr('fill', c);
+      bunn = topp;
+    }
+    if (sel === ALLE) {
+      skravur(svg, 'bf-skr-topp');
+      svg.append('rect').attr('x', xs(s[0].a)).attr('width', xs(1986) - xs(s[0].a)).attr('y', m.t).attr('height', H - m.t - m.b).attr('fill', 'url(#bf-skr-topp)');
+      svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', w - m.r - 6).attr('y', ys(sist.pi / 2)).attr('dy', '0.32em').attr('text-anchor', 'end').text(`${nf1.format(sist.pi)} %`);
+      svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', w - m.r - 6).attr('y', ys(sist.pi + sist.pn / 2) - 8).attr('dy', '0.32em').attr('text-anchor', 'end').text(`${nf1.format(sist.pn)} %`);
+    }
+  } else {
+    for (const [k, c, nv] of [['inn', F.innvS, 'Innvandrere'], ['nmi', F.nmiS, 'Norskfødte']]) {
+      const for86 = s.filter((d) => d.a <= 1986), fra86 = s.filter((d) => d.a >= 1986);
+      if (sel === ALLE && for86.length > 1) {
+        svg.append('path').attr('d', d3.line().x((d) => xs(d.a)).y((d) => ys(d[k]))(for86)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', 2).attr('stroke-dasharray', '2 4');
+        svg.append('g').selectAll('circle').data(for86).join('circle').attr('cx', (d) => xs(d.a)).attr('cy', (d) => ys(d[k])).attr('r', 2.5).attr('fill', c);
+      }
+      svg.append('path').attr('d', d3.line().x((d) => xs(d.a)).y((d) => ys(d[k]))(sel === ALLE ? fra86 : s)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', 2.4);
+      svg.append('circle').attr('cx', xs(sist.a)).attr('cy', ys(sist[k])).attr('r', 4).attr('fill', c);
+    }
+    // direkte merking til høyre, flyttes fra hverandre ved behov
+    let yi = ys(sist.inn), yn = ys(sist.nmi);
+    if (Math.abs(yi - yn) < 30) { if (yi <= yn) yn = yi + 30; else yi = yn + 30; }
+    svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', w - m.r + 8).attr('y', yi).attr('dy', '0.32em').text(`${nf0.format(sist.inn)} innv.`);
+    svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', w - m.r + 8).attr('y', yn).attr('dy', '0.32em').text(`${nf0.format(sist.nmi)} norskf.`);
+  }
+  bruddlinje(svg, xs(BRUDD), m, H, w);
+  xetiketter(svg, xs, s.map((d) => d.a), H, m, w);
+  // treffflate
+  const lagT = svg.append('g').style('display', 'none'), strek = lagT.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--sek'));
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const x = xs.invert(d3.pointer(ev)[0]), d = s.reduce((a, c) => (Math.abs(c.a - x) < Math.abs(a.a - x) ? c : a));
+      lagT.style('display', null); strek.attr('x1', xs(d.a)).attr('x2', xs(d.a));
+      visTips(ev, `${navn(sel)}, 1. januar ${d.a}`, rel
+        ? [{c: F.innv, n: 'Innvandrere', v: `${nf2.format(d.pi)} %`}, {c: F.nmi, n: 'Norskfødte med innvandrerforeldre', v: `${nf2.format(d.pn)} %`}].concat(sel === ALLE ? [{c: F.ovrig, n: 'Øvrig befolkning', v: `${nf2.format(d.po)} %`}] : [])
+        : [{c: F.innvS, n: 'Innvandrere', v: nf0.format(d.inn)}, {c: F.nmiS, n: 'Norskfødte med innvandrerforeldre', v: nf0.format(d.nmi)}]);
+    }).on('pointerleave', () => { lagT.style('display', 'none'); skjulTips(); });
+  settN('topp', (rel ? (sel === ALLE ? 'Lagene summerer til hele befolkningen. ' : 'Andel av hele befolkningen. Aksen går ikke til 100. ') : 'Aksen starter på null. ') +
+    (sel === ALLE ? (rel ? 'Skravert: bare tall for 1970, 1980 og 1986, flatene er trukket rett mellom dem. ' : 'Prikket: bare tall for 1970, 1980 og 1986. ') : `Tall per landbakgrunn finnes fra ${fra}. `) +
+    'I 2016 økte antallet norskfødte med innvandrerforeldre mer enn årene før og etter. Det kan skyldes en endring i registeret.');
+  talltabell('topp', `Innvandrere og norskfødte med innvandrerforeldre${fraNavn(sel)}`, ['1. januar', 'Innvandrere', 'Norskfødte m. innv.foreldre', 'Andel innvandrere, prosent', 'Andel norskfødte, prosent'],
+    s.slice().reverse().map((d) => [d.a, nf0.format(d.inn), nf0.format(d.nmi), nf2.format(d.pi), nf2.format(d.pn)]));
+  settSrc('topp', kilde(...(sel === ALLE ? ['05182'] : ['13880']), '05803') + ' Tallet i overskriften er avrundet. Eksakte tall står under «Vis tallene».');
+}
+
+// ---------- Hvem regnes med: seks kategorier (05182) ----------
+const KATER = [['A', 'Født i Norge med to norskfødte foreldre', false], ['innv', 'Innvandrere', true], ['nmi', 'Norskfødte med innvandrerforeldre', true],
+  ['F', 'Norskfødte med én utenlandsfødt forelder', false], ['E', 'Utenlandsfødte med én norskfødt forelder', false], ['G', 'Utenlandsfødte med to norskfødte foreldre', false]];
+const katVerdi = (k, j) => (k === 'A' ? K.bef[j] - K.innv[j] - K.nmi[j] - K.E[j] - K.F[j] - K.G[j] : K[k][j]);
+function radStolper(box, rader, o) {   // rader: [{n, v, p, c, k, valgt}], etikett over stolpen, verdi til høyre
+  const rh = 44, H = rader.length * rh + 8;
+  const {svg, w} = lerret(box, H, o.aria);
+  const maks = d3.max(rader, (r) => r.p);
+  const ledig = w - 8;
+  const vtekst = (r) => o.verdi(r);
+  const vb = d3.max(rader, (r) => bredde(svg, vtekst(r), 'bf-lab')) + 10;
+  const xs = d3.scaleLinear().domain([0, maks || 1]).range([0, ledig - vb]);
+  rader.forEach((r, i) => {
+    const y = i * rh + 4;
+    const g = svg.append('g');
+    if (r.valgt) g.append('rect').attr('x', 0).attr('y', y - 2).attr('width', w).attr('height', rh - 2).attr('fill', css('--lys'));
+    g.append('text').attr('class', 'bf-lab' + (r.uthev || r.valgt ? ' bf-strong' : '')).attr('x', 4).attr('y', y + 13).text(r.n);
+    g.append('rect').attr('x', 4).attr('y', y + 19).attr('width', Math.max(1.5, xs(r.p))).attr('height', 16).attr('fill', r.c);
+    g.append('text').attr('class', 'bf-lab').attr('x', 4 + Math.max(1.5, xs(r.p)) + 6).attr('y', y + 31).text(vtekst(r));
+    if (o.klikk) {
+      g.attr('role', 'button').attr('tabindex', 0).attr('aria-pressed', String(!!r.valgt)).attr('aria-label', `${r.n}: ${vtekst(r)}`).style('cursor', 'pointer')
+        .on('click', () => o.klikk(r)).on('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); o.klikk(r); } });
+      g.insert('rect', ':first-child').attr('x', 0).attr('y', y - 2).attr('width', w).attr('height', rh - 2).attr('fill', 'transparent');
+    }
+  });
+}
+function tegnKat(sel) {
+  const j = iK(SISTAAR);
+  const rader = KATER.map(([k, n, med]) => ({k, n, v: katVerdi(k, j), p: katVerdi(k, j) / K.bef[j] * 100, c: med ? css('--gronn') : css('--dempet'), uthev: med}));
+  const medP = rader.filter((r) => r.uthev).reduce((a, r) => a + r.p, 0);
+  settH('kat', `To av seks kategorier er med: ${nf1.format(medP)} prosent av befolkningen`);
+  settN('kat', `SSBs standard deler hele befolkningen i seks kategorier etter eget og foreldrenes fødested. Statistikken handler om de to grønne. 1. januar ${SISTAAR}.` + (sel !== ALLE ? ' Landvalget gjelder ikke denne figuren.' : ''));
+  legende('kat', [{c: css('--gronn'), n: 'Med i statistikken'}, {c: css('--dempet'), n: 'Øvrig befolkning'}]);
+  radStolper($('#fig-kat'), rader, {aria: `Befolkningen etter innvandringskategori 1. januar ${SISTAAR}, prosent.`, verdi: (r) => `${nf1.format(r.p)} % (${nf0.format(r.v)})`});
+  talltabell('kat', 'Befolkningen etter innvandringskategori', ['1. januar', ...KATER.map((x) => x[1])], K.aar.slice().reverse().map((a) => { const i = iK(a); return [a, ...KATER.map(([k]) => nf0.format(katVerdi(k, i)))]; }));
+  settSrc('kat', kilde('05182', '05803') + ' Øvrig befolkning er regnet som folkemengden minus de fem andre kategoriene.');
+}
+
+// ---------- Hvem regnes med: tre generasjoner (12548) ----------
+const SEKS = [['00', 'Født i Norge, to norskfødte foreldre'], ['01', 'Født i Norge, én utenlandsfødt forelder'], ['02', 'Født i Norge, to utenlandsfødte foreldre'],
+  ['10', 'Født i utlandet, to norskfødte foreldre'], ['11', 'Født i utlandet, én utenlandsfødt forelder'], ['12', 'Født i utlandet, to utenlandsfødte foreldre']];
+const SEKSNAVN = Object.fromEntries(SEKS);
+const treSerie = (kode) => (kode.length === 2 ? TR.aar.map((a, j) => sum([0, 1, 2, 3, 4].map((b) => TR.v[kode + b][j]))) : TR.v[kode]);
+const treNavn = (kode) => (kode.length === 2 ? SEKSNAVN[kode] : `${SEKSNAVN[kode.slice(0, 2)]}, ${kode[2] === '1' ? 'én utenlandsfødt besteforelder' : kode[2] === '0' ? 'ingen utenlandsfødte besteforeldre' : kode[2] + ' utenlandsfødte besteforeldre'}`);
+const KLASSER = [100, 1000, 10000, 100000];
+const KLASSEFARGE = ['#cff1d0', '#9ed7a5', '#75ba86', '#00824d', '#075745'];   // trinn 1, 2, 3, 5 og 6 i grønn 7: mørk tekst har 4,5:1 på de tre lyse
+const klasse = (v) => KLASSER.filter((g) => v >= g).length;
+function tegnTre(sel) {
+  const mode = visning.tre, n = TR.aar.length - 1, tot = TR.tot[n];
+  knappRad(true, mode, 'data-tre');
+  const valgtKode = visning.treValgt[mode];
+  const j = iK(SISTAAR), A05182 = katVerdi('A', j), g00 = treSerie('00')[n];
+  settH('tre', mode === 'seks' ? 'Seks grupper etter eget og foreldrenes fødested' : 'Alle 30 kombinasjoner av tre generasjoner');
+  if (mode === 'seks') {
+    settN('tre', `Gruppene bygger på fødested alene i tabell 12548 og summerer til hele befolkningen. De er ikke de samme som SSBs kategorier til venstre: «Født i Norge, to norskfødte foreldre» har ${nf0.format(A05182 - g00)} færre her. Klikk en gruppe for å se utviklingen.`);
+    legende('tre', []); $('[data-leg="tre"]').hidden = true;
+    $('#fig-tre').hidden = false; $('#tre-rutenett').hidden = true;
+    const rader = SEKS.map(([k, nv]) => { const v = treSerie(k)[n]; return {k, n: nv, v, p: v / tot * 100, c: css('--gronn-f'), valgt: k === valgtKode}; });
+    radStolper($('#fig-tre'), rader, {aria: `Befolkningen i seks grupper etter fødested 1. januar ${SISTAAR}.`, verdi: (r) => `${nf1.format(r.p)} % (${nf0.format(r.v)})`,
+      klikk: (r) => { visning.treValgt.seks = r.k; tegnTre(valgt()); }});
+  } else {
+    settN('tre', 'Antall personer 1. januar ' + SISTAAR + ' etter eget fødested, antall utenlandsfødte foreldre (rader) og antall utenlandsfødte besteforeldre (kolonner). Tykk ramme: innvandrere og norskfødte med innvandrerforeldre, de to gruppene statistikken handler om. Velg en rute for å se utviklingen.');
+    const grenser = ['under 100', '100–999', '1 000–9 999', '10 000–99 999', '100 000 og flere'];
+    legende('tre', grenser.map((g, i) => ({c: KLASSEFARGE[i], n: g}))); $('[data-leg="tre"]').hidden = false;
+    d3.select('#fig-tre').selectAll('svg').remove(); $('#fig-tre').style.minHeight = '0'; $('#fig-tre').hidden = true;
+    const el = $('#tre-rutenett'); el.hidden = false;
+    const hd = ['', ...[0, 1, 2, 3, 4].map((b) => `${b} utenl.fødte besteforeldre`)];
+    let html = '<div class="bf-rutenett" role="group" aria-label="30 kombinasjoner">' + hd.map((h) => `<div class="hd">${esc(h)}</div>`).join('');
+    for (const [g, gn] of SEKS) {
+      html += `<div class="rad">${esc(gn)}</div>`;
+      for (const b of [0, 1, 2, 3, 4]) {
+        const kode = g + b, v = TR.v[kode][n], kl = klasse(v);
+        html += `<button type="button" class="bf-celle${kode === '124' || kode === '024' ? ' innv' : ''}${kl >= 3 ? ' mork' : ''}" style="background:${KLASSEFARGE[kl]}" data-celle="${kode}" aria-pressed="${kode === valgtKode}" aria-label="${esc(treNavn(kode))}: ${nf0.format(v)}">${nf0.format(v)}</button>`;
+      }
+    }
+    el.innerHTML = html + '</div>';
+  }
+  // Utviklingen for valgt gruppe
+  const serie = treSerie(valgtKode), H = 200;
+  settH('tre-tid', `${treNavn(valgtKode)}: ${nf0.format(serie[0])} i ${TR.aar[0]}, ${nf0.format(serie[n])} i ${SISTAAR}`);
+  const {svg, w} = lerret($('#fig-tre-tid'), H, `Utviklingen ${TR.aar[0]}–${SISTAAR} for gruppen ${treNavn(valgtKode)}.`);
+  const ys = d3.scaleLinear().domain([0, d3.max(serie) || 1]).nice(4), yt = ys.ticks(4);
+  const m = {t: 28, b: 24, l: venstremarg(svg, yt, (t) => nf0.format(t)), r: 12};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleLinear().domain([TR.aar[0], SISTAAR]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, yt, (t) => nf0.format(t), 'Personer');
+  svg.append('path').attr('d', d3.line().x((d, i) => xs(TR.aar[i])).y((d) => ys(d))(serie)).attr('fill', 'none').attr('stroke', css('--gronn')).attr('stroke-width', 2.2);
+  bruddlinje(svg, xs(BRUDD), m, H, w);
+  xetiketter(svg, xs, TR.aar, H, m, w);
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const a = Math.round(xs.invert(d3.pointer(ev)[0])), i = TR.aar.indexOf(a); if (i >= 0) visTips(ev, `1. januar ${a}`, [{n: 'Personer', v: nf0.format(serie[i])}]); })
+    .on('pointerleave', skjulTips);
+  const alleKoder = [...SEKS.map((x) => x[0]), ...TR.koder];
+  talltabell('tre', 'Befolkningen etter tre generasjoner', ['Gruppe', String(TR.aar[0]), String(BRUDD - 1), String(BRUDD), String(SISTAAR)],
+    alleKoder.map((k) => { const sr = treSerie(k); return [(k.length === 2 ? 'Samlet: ' : '') + treNavn(k), ...[TR.aar[0], BRUDD - 1, BRUDD, SISTAAR].map((a) => nf0.format(sr[TR.aar.indexOf(a)]))]; }));
+  settSrc('tre', kilde('12548') + ' De seks gruppene er summert fra de 30. Brudd 2016: flere grupper endrer seg kraftig fra 2015 til 2016.');
+}
+
+// ---------- Hvorfor endrer antallet seg: befolkningsregnskapet ----------
+const REGN_SERIER = [{k: 'inn', n: 'Flyttet til Norge', c: F.inn}, {k: 'fodte', n: 'Fødte', c: F.fodte}, {k: 'andre', n: 'Andre endringer', c: F.andre}, {k: 'ut', n: 'Flyttet fra Norge', c: F.ut}, {k: 'dode', n: 'Døde', c: F.dode}];
+function tegnRegn(sel) {
+  const E = DATA.endr, aar = E.aar, siste = aar[aar.length - 1];
+  const land = sel !== ALLE;
+  const r = land ? DATA.endrLand[sel] : E[visning.regn];
+  $('[data-regn-brytere]').hidden = land;
+  knappRad(true, visning.regn, 'data-regn');
+  const box = $('#fig-regn');
+  if (land && !r) {
+    const har = Object.keys(DATA.endrLand).filter((k) => O[k]).sort((a, b) => O[a].n.localeCompare(O[b].n, 'nb'));
+    settH('regn', `Befolkningsregnskap finnes ikke for ${O[sel].n}`);
+    settN('regn', '');
+    varsel('regn', `Statistikkbanken har regnskapet for ${har.length} enkeltland: ${har.map(lenkeLand).join(', ')}. Velg ett av dem, eller <button type="button" class="bf-lenke" data-velg="${ALLE}">se alle landbakgrunner</button>.`);
+    d3.select(box).selectAll('svg').remove(); box.style.minHeight = '0'; box.hidden = true;
+    $('[data-leg="regn"]').hidden = true; $('[data-tall="regn"]').hidden = true; settSrc('regn', '');
+    return;
+  }
+  box.hidden = false; $('[data-leg="regn"]').hidden = false; $('[data-tall="regn"]').hidden = false;
+  const pts = aar.map((a, i) => {
+    const ok = [r.inn[i], r.ut[i], r.fodte[i], r.dode[i], r.tilv[i]].every((v) => v != null);
+    return ok ? {a, inn: r.inn[i], ut: -r.ut[i], fodte: r.fodte[i], dode: -r.dode[i], tilv: r.tilv[i], andre: r.tilv[i] - (r.fodte[i] - r.dode[i] + r.inn[i] - r.ut[i])} : {a, mangler: true};
+  });
+  const sp = pts[pts.length - 1];
+  const hvem = land ? `Innvandrere og norskfødte med bakgrunn fra ${O[sel].n}` : visning.regn === 'innv' ? 'Innvandrere' : 'Norskfødte med innvandrerforeldre';
+  settH('regn', sp.mangler ? `${hvem}: regnskapet mangler for ${siste}`
+    : land || visning.regn === 'innv' ? `${hvem}: ${nf0.format(sp.inn)} flyttet til Norge og ${nf0.format(-sp.ut)} flyttet ut i ${siste}`
+      : `${hvem}: ${nf0.format(sp.fodte)} født i ${siste}`);
+  const mangler = pts.filter((d) => d.mangler).map((d) => d.a);
+  settN('regn', `Stolpene viser det som øker antallet (over null) og det som minsker det (under null). Streken er endringen gjennom året. «Andre endringer» er det som ikke forklares av flytting, fødsler og dødsfall.${land ? ' For enkeltland gjelder regnskapet innvandrere og norskfødte samlet.' : ''}${mangler.length ? ` Mangler data: ${mangler[0]}${mangler.length > 1 ? '–' + mangler[mangler.length - 1] : ''}.` : ''} Regnskapet vises fra 2016, fordi det ikke går opp for årene før.`);
+  varsel('regn', '');
+  const brukt = REGN_SERIER.filter((s) => pts.some((d) => !d.mangler && Math.abs(d[s.k]) > 0));
+  legende('regn', [...brukt.map((s) => ({c: s.c, n: s.n})), {n: 'Endring gjennom året', cls: 'bf-sw-tick'}]);
+  stablet(box, pts, brukt, {
+    H: 280, marker: 'tilv', aria: `Befolkningsregnskap ${aar[0]}–${siste} for ${hvem.toLowerCase()}.`,
+    xlab: (i, w) => { const a = aar[i]; return w < 420 && (siste - a) % 2 ? null : a; },
+    merk: sp.mangler ? [] : [{i: pts.length - 1, tekst: sgn(sp.tilv)}],
+    tips: (d) => ({tittel: `${hvem}, ${d.a}`, linjer: d.mangler ? [{n: 'Mangler data', v: ''}] : [...brukt.map((s) => ({c: s.c, n: s.n, v: sgn(d[s.k])})), {n: 'Endring', v: sgn(d.tilv)}]}),
+  });
+  talltabell('regn', `Befolkningsregnskap, ${hvem.toLowerCase()}`, ['År', 'Inngang', 'Flyttet til', 'Flyttet fra', 'Fødte', 'Døde', 'Andre', 'Endring'],
+    aar.slice().reverse().map((a) => { const i = aar.indexOf(a), d = pts[i]; return d.mangler ? [a, 'Mangler data', '', '', '', '', '', ''] : [a, nf0.format(r.ib[i]), nf0.format(d.inn), nf0.format(-d.ut), nf0.format(d.fodte), nf0.format(-d.dode), sgn(d.andre), sgn(d.tilv)]; }));
+  settSrc('regn', kilde(land ? '10518' : '10516') + ' «Andre endringer» er egen beregning.');
+}
+
+// ---------- Hvor kommer de fra ----------
+function tegnLand(sel) {
+  const N = 15, topp = MED.slice(0, N);
+  const vis = sel !== ALLE && !topp.includes(sel) && totLand(sel) > 0 ? [...topp, sel] : topp;
+  const i26 = LT.aar.length - 1;
+  const rader = vis.map((k) => ({k, n: O[k].n, inn: LT.v[k][0][i26], nmi: LT.v[k][1][i26]}));
+  const andelN = (r) => r.nmi / (r.inn + r.nmi) * 100;
+  const hoy = topp.map((k) => rader.find((r) => r.k === k)).reduce((a, r) => (andelN(r) > andelN(a) ? r : a));
+  const lav = topp.map((k) => rader.find((r) => r.k === k)).reduce((a, r) => (andelN(r) < andelN(a) ? r : a));
+  const sumTopp = sum(topp.map((k) => totLand(k))), alleTot = K.innv[iK(SISTAAR)] + K.nmi[iK(SISTAAR)];
+  settH('land', `De ${N} største landbakgrunnene: ${nf0.format(Math.round(sumTopp / alleTot * 100))} prosent av alle`);
+  settN('land', `1. januar ${SISTAAR}. Blant de ${N} største er andelen født i Norge høyest for ${hoy.n} (${nf0.format(Math.round(andelN(hoy)))} prosent) og lavest for ${lav.n} (${nf0.format(Math.round(andelN(lav)))} prosent).${vis.length > N ? ` ${O[sel].n} er nr. ${rang(sel)} og vises nederst.` : ''} Velg et land i figuren for å se tallene for det.`);
+  legende('land', [{c: F.innv, n: 'Innvandrere'}, {c: F.nmi, n: 'Norskfødte med innvandrerforeldre'}]);
+  const rh = 24, H = rader.length * rh + (vis.length > N ? 12 : 0) + 28;
+  const {svg, w} = lerret($('#fig-land'), H, `De ${N} største landbakgrunnene 1. januar ${SISTAAR}, innvandrere og norskfødte med innvandrerforeldre.`);
+  const lb = d3.max(rader, (r) => bredde(svg, r.n, 'bf-lab bf-strong')) + 10;
+  const vb = bredde(svg, nf0.format(d3.max(rader, (r) => r.inn + r.nmi)), 'bf-lab') + 10;
+  const xs = d3.scaleLinear().domain([0, d3.max(rader, (r) => r.inn + r.nmi)]).nice(3).range([lb, w - vb]);
+  for (const t of xs.ticks(3)) {
+    svg.append('line').attr('x1', xs(t)).attr('x2', xs(t)).attr('y1', 4).attr('y2', H - 22).attr('stroke', t === 0 ? css('--null') : css('--stotte'));
+    svg.append('text').attr('class', 'bf-tick').attr('x', xs(t)).attr('y', H - 6).attr('text-anchor', 'middle').text(nf0.format(t));
+  }
+  rader.forEach((r, i) => {
+    const y = 6 + i * rh + (i >= N ? 12 : 0), valgtRad = r.k === sel;
+    const g = svg.append('g').attr('role', 'button').attr('tabindex', 0).attr('aria-pressed', String(valgtRad)).attr('aria-label', `${r.n}: ${nf0.format(r.inn)} innvandrere og ${nf0.format(r.nmi)} norskfødte`).style('cursor', 'pointer');
+    g.append('rect').attr('x', 0).attr('y', y - 2).attr('width', w).attr('height', rh).attr('fill', valgtRad ? css('--lys') : 'transparent');
+    g.append('text').attr('class', 'bf-lab' + (valgtRad ? ' bf-strong' : '')).attr('x', lb - 8).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r.n);
+    g.append('rect').attr('x', xs(0)).attr('y', y + 3).attr('width', xs(r.inn) - xs(0)).attr('height', rh - 10).attr('fill', F.innv);
+    g.append('rect').attr('x', xs(r.inn)).attr('y', y + 3).attr('width', xs(r.inn + r.nmi) - xs(r.inn)).attr('height', rh - 10).attr('fill', F.nmi);
+    g.append('text').attr('class', 'bf-lab').attr('x', xs(r.inn + r.nmi) + 5).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').text(nf0.format(r.inn + r.nmi));
+    const ta = () => velg(r.k === sel ? ALLE : r.k, {});
+    g.on('click', ta).on('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ta(); } })
+      .on('pointermove', (ev) => visTips(ev, `${r.n}, 1. januar ${SISTAAR}`, [{c: F.innv, n: 'Innvandrere', v: nf0.format(r.inn)}, {c: F.nmi, n: 'Norskfødte', v: nf0.format(r.nmi)}, {n: 'Født i Norge', v: `${nf0.format(Math.round(andelN(r)))} %`}]))
+      .on('pointerleave', skjulTips);
+  });
+  if (vis.length > N) svg.append('line').attr('x1', 0).attr('x2', w).attr('y1', 6 + N * rh + 4).attr('y2', 6 + N * rh + 4).attr('stroke', css('--stotte')).attr('stroke-dasharray', '3 3');
+  talltabell('land', 'Alle landbakgrunner', ['Landbakgrunn', 'Innvandrere', 'Norskfødte', 'I alt', 'Født i Norge, prosent'],
+    MED.map((k) => { const a = LT.v[k][0][i26], b = LT.v[k][1][i26]; return [O[k].n, nf0.format(a), nf0.format(b), nf0.format(a + b), nf0.format(Math.round(b / (a + b) * 100))]; }));
+  settSrc('land', kilde('13880') + ' Andelen født i Norge er egen beregning.');
+}
+
+function tegnBotid(sel) {
+  const v = sel === ALLE ? d3.range(41).map((i) => sum(Object.values(DATA.botid).map((x) => x[i]))) : DATA.botid[sel];
+  const box = $('#fig-botid'), tot = v ? sum(v) : 0;
+  if (!tot) {
+    settH('botid', `Botid: ingen innvandrere med bakgrunn fra ${O[sel].n}`);
+    settN('botid', '');
+    varsel('botid', `Det bor ingen innvandrere med denne landbakgrunnen i Norge 1. januar ${SISTAAR}${totLand(sel) ? ', bare norskfødte med innvandrerforeldre' : ''}. Botid gjelder bare innvandrere.`);
+    d3.select(box).selectAll('svg').remove(); box.style.minHeight = '0'; box.hidden = true; $('[data-tall="botid"]').hidden = true; settSrc('botid', '');
+    return;
+  }
+  box.hidden = false; $('[data-tall="botid"]').hidden = false;
+  let kum = 0, median = 40;
+  for (let i = 0; i < 41; i++) { kum += v[i]; if (kum >= tot / 2) { median = i; break; } }
+  const u5 = sum(v.slice(0, 5)) / tot * 100, o20 = sum(v.slice(20)) / tot * 100;
+  settH('botid', `${sel === ALLE ? 'Alle innvandrere' : O[sel].n}: ${nf0.format(Math.round(u5))} prosent har bodd i Norge i under fem år`);
+  settN('botid', `Innvandrere etter antall hele år bosatt i Norge, 1. januar ${SISTAAR}. Halvparten har bodd her i ${median} år eller kortere, og ${nf0.format(Math.round(o20))} prosent i 20 år eller mer. Siste stolpe samler 40 år og mer.`);
+  varsel('botid', tot < SMAA ? `Små tall: ${nf0.format(tot)} innvandrere. Små tall er avrundet, og fordelingen er usikker.` : '');
+  const H = 240, {svg, w} = lerret(box, H, `Innvandrere${fraNavn(sel)} etter botid 1. januar ${SISTAAR}.`);
+  const ys = d3.scaleLinear().domain([0, d3.max(v)]).nice(4), yt = ys.ticks(4);
+  const m = {t: 24, b: 24, l: venstremarg(svg, yt, (t) => nf0.format(t)), r: 8};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleBand().domain(d3.range(41)).range([m.l, w - m.r]).paddingInner(0);   // histogram: ingen luft
+  yakse(svg, w, m, ys, yt, (t) => nf0.format(t), 'Personer');
+  svg.append('g').selectAll('rect').data(v).join('rect').attr('x', (d, i) => xs(i) + 0.5).attr('width', Math.max(1, xs.bandwidth() - 1)).attr('y', (d) => ys(d)).attr('height', (d) => ys(0) - ys(d))
+    .attr('fill', (d, i) => (i === 40 ? css('--dempet') : css('--gronn')));
+  for (const t of [0, 10, 20, 30, 40]) svg.append('text').attr('class', 'bf-tick').attr('x', xs(t) + xs.bandwidth() / 2).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(t === 40 ? '40+' : t);
+  svg.append('text').attr('class', 'bf-axt').attr('x', w - m.r).attr('y', H - m.b + 16).attr('text-anchor', 'end').attr('dy', '0').text('');
+  svg.append('g').selectAll('rect').data(v).join('rect').attr('x', (d, i) => xs(i)).attr('width', xs.bandwidth()).attr('y', m.t).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev, d) => { const i = v.indexOf(d); visTips(ev, i === 40 ? 'Bosatt 40 år og mer' : `Bosatt ${i} år`, [{n: 'Innvandrere', v: nf0.format(d)}]); }).on('pointerleave', skjulTips);
+  talltabell('botid', `Innvandrere${fraNavn(sel)} etter botid`, ['Botid', 'Innvandrere'], v.map((d, i) => [i === 40 ? '40 år og mer' : i === 0 ? 'Under ett år' : `${i} år`, nf0.format(d)]));
+  settSrc('botid', kilde('10598') + ' Andeler og median er egne beregninger.');
+}
+
+// ---------- Hvor bor de ----------
+const KOMM = DATA.komm.map(([kode, n, bef]) => ({kode, n: n.replace(/ - /g, ' – '), bef}));
+const kommVerdier = (sel) => {
+  const rader = DATA.kommLand[sel === ALLE ? '999' : sel] || [];
+  const v = KOMM.map((k) => ({...k, b: 0, c: 0}));
+  for (const [i, b, c] of rader) { v[i].b = b; v[i].c = c; }
+  for (const r of v) { r.v = visning.kkat === 'innv' ? r.b : visning.kkat === 'nmi' ? r.c : r.b + r.c; r.p = r.v / r.bef * 100; }
+  return v;
+};
+const KKAT = {innv: 'innvandrere', nmi: 'norskfødte med innvandrerforeldre', begge: 'innvandrere og norskfødte med innvandrerforeldre'};
+function tegnKomm(sel) {
+  knappRad(true, visning.kkat, 'data-kkat'); knappRad(true, visning.kmaal, 'data-kmaal');
+  const v = kommVerdier(sel), andel = visning.kmaal === 'andel';
+  const landTot = sum(v.map((r) => r.v)), befTot = sum(v.map((r) => r.bef)), landP = landTot / befTot * 100;
+  const hvem = KKAT[visning.kkat] + fraNavn(sel);
+  const box = $('#fig-komm');
+  if (!landTot) {
+    settH('komm', `Ingen ${hvem}`); settN('komm', '');
+    varsel('komm', `Ingen ${hvem} er registrert i noen kommune 1. januar ${SISTAAR}. Prøv en annen gruppe over.`);
+    d3.select(box).selectAll('svg').remove(); box.style.minHeight = '0'; box.hidden = true; $('[data-tall="komm"]').hidden = true; settSrc('komm', '');
+    return;
+  }
+  box.hidden = false; $('[data-tall="komm"]').hidden = false;
+  const sortert = v.slice().sort((a, b) => (andel ? b.p - a.p : b.v - a.v) || b.v - a.v);
+  const topp = sortert.slice(0, 15), forste = topp[0], antallK = v.filter((r) => r.v > 0).length;
+  settH('komm', andel ? `Høyest andel ${KKAT[visning.kkat]}${fraNavn(sel)}: ${forste.n}, ${nf1.format(forste.p)} prosent` : `Flest ${hvem}: ${forste.n}, ${nf0.format(forste.v)}`);
+  settN('komm', `De 15 kommunene med ${andel ? 'høyest andel' : 'flest'}, 1. januar ${SISTAAR}. ${sel === ALLE ? '' : `Personer med bakgrunn fra ${O[sel].n} bor i ${antallK} av ${KOMM.length} kommuner. `}` +
+    (andel ? `Antallet står i parentes. Den grå streken er hele landet, ${nf2.format(landP)} prosent.` : `${nf0.format(Math.round(forste.v / landTot * 100))} prosent bor i ${forste.n}.`));
+  varsel('komm', andel && forste.bef < 2000 ? `Små tall: ${forste.n} har ${nf0.format(forste.bef)} innbyggere, og ${nf0.format(forste.v)} personer gir en andel på ${nf1.format(forste.p)} prosent. Andelen kan endre seg mye fra år til år, for eksempel når et mottak åpner eller stenger.` : '');
+  const rh = 24, H = topp.length * rh + 30;
+  const {svg, w} = lerret(box, H, `De 15 kommunene med ${andel ? 'høyest andel' : 'flest'} ${hvem} 1. januar ${SISTAAR}.`);
+  const vt = (r) => (andel ? `${nf1.format(r.p)} (${nf0.format(r.v)})` : nf0.format(r.v));
+  const lb = d3.max(topp, (r) => bredde(svg, r.n, 'bf-lab')) + 10, vb = d3.max(topp, (r) => bredde(svg, vt(r), 'bf-lab')) + 10;
+  const maks = andel ? Math.max(forste.p, landP) : forste.v;
+  const xs = d3.scaleLinear().domain([0, maks]).nice(3).range([lb, w - vb]);
+  for (const t of xs.ticks(3)) {
+    svg.append('line').attr('x1', xs(t)).attr('x2', xs(t)).attr('y1', 4).attr('y2', H - 22).attr('stroke', t === 0 ? css('--null') : css('--stotte'));
+    svg.append('text').attr('class', 'bf-tick').attr('x', xs(t)).attr('y', H - 6).attr('text-anchor', 'middle').text(andel ? tall(t, Number.isInteger(t) ? nf0 : nf1) : nf0.format(t));
+  }
+  svg.append('text').attr('class', 'bf-axt').attr('x', xs(xs.domain()[1]) + 14).attr('y', H - 6).text(andel ? 'prosent' : 'personer');
+  topp.forEach((r, i) => {
+    const y = 6 + i * rh;
+    svg.append('text').attr('class', 'bf-lab').attr('x', lb - 8).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r.n);
+    svg.append('rect').attr('x', xs(0)).attr('y', y + 3).attr('width', xs(andel ? r.p : r.v) - xs(0)).attr('height', rh - 10).attr('fill', css('--gronn'));
+    svg.append('text').attr('class', 'bf-lab').attr('x', xs(andel ? r.p : r.v) + 5).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').text(vt(r));
+    svg.append('rect').attr('x', 0).attr('y', y).attr('width', w).attr('height', rh).attr('fill', 'transparent')
+      .on('pointermove', (ev) => visTips(ev, `${r.n}, 1. januar ${SISTAAR}`, [{n: 'Antall', v: nf0.format(r.v)}, {n: 'Innbyggere', v: nf0.format(r.bef)}, {n: 'Andel', v: `${nf2.format(r.p)} %`}])).on('pointerleave', skjulTips);
+  });
+  if (andel) {
+    const x = xs(landP);
+    svg.append('line').attr('x1', x).attr('x2', x).attr('y1', 2).attr('y2', H - 22).attr('stroke', css('--sek')).attr('stroke-width', 1.5);
+  }
+  talltabell('komm', `Alle kommuner, ${hvem}`, ['Kommune', 'Antall', 'Innbyggere', 'Andel, prosent'], sortert.map((r) => [r.n, nf0.format(r.v), nf0.format(r.bef), nf2.format(r.p)]));
+  settSrc('komm', kilde('09817', '07459') + (sel === ALLE && visning.kkat === 'innv' ? '' : ' Andelen er egen beregning.') + ' Små tall er avrundet.');
+}
+
+function tegnStripe(sel) {
+  const v = kommVerdier(sel), landTot = sum(v.map((r) => r.v));
+  const box = $('#fig-stripe');
+  const hvem = KKAT[visning.kkat] + fraNavn(sel);
+  if (!landTot) { settH('stripe', 'Andelen i alle kommuner'); settN('stripe', 'Ingen å vise.'); d3.select(box).selectAll('svg').remove(); box.style.minHeight = '0'; settSrc('stripe', ''); return; }
+  const ps = v.map((r) => r.p).sort((a, b) => a - b), median = d3.median(ps), landP = landTot / sum(v.map((r) => r.bef)) * 100;
+  const oslo = v.find((r) => r.kode === '0301'), overOslo = v.filter((r) => r.p > oslo.p).length;
+  settH('stripe', `Andelen ${KKAT[visning.kkat]}${fraNavn(sel)} i alle ${KOMM.length} kommuner`);
+  settN('stripe', `Hver prikk er en kommune. Medianen er ${nf1.format(median)} prosent, hele landet ${nf1.format(landP)} prosent.${overOslo ? ` ${overOslo} ${overOslo === 1 ? 'kommune har' : 'kommuner har'} høyere andel enn Oslo (${nf1.format(oslo.p)}).` : ' Oslo har høyest andel.'} Figuren viser alltid andel.`);
+  const H = 256, {svg, w} = lerret(box, H, `Andelen ${hvem} i alle kommuner 1. januar ${SISTAAR}.`);
+  const m = {t: 46, b: 28, l: 8, r: 12};
+  const xs = d3.scaleLinear().domain([0, d3.max(ps)]).nice(4).range([m.l, w - m.r]);
+  // Prikkradius tilpasses: mindre prikker og smalere kolonner når mange kommuner har nesten samme andel
+  const hoyde = H - m.t - m.b;
+  let r = 3, bins, maxn;
+  for (let n = 0; n < 6; n++) {
+    bins = d3.bin().domain(xs.domain()).thresholds(Math.floor((w - m.l - m.r) / (2 * r + 1)))(v.map((k) => k.p));
+    maxn = d3.max(bins, (b) => b.length);
+    if (maxn * (2 * r + 0.5) <= hoyde || r <= 1.2) break;
+    r = Math.max(1.2, r * 0.8);
+  }
+  const step = Math.min(2 * r + 0.5, hoyde / (maxn || 1));
+  for (const t of xs.ticks(4)) {
+    svg.append('text').attr('class', 'bf-tick').attr('x', xs(t)).attr('y', H - m.b + 16).attr('text-anchor', 'middle').text(tall(t, Number.isInteger(t) ? nf0 : nf1));
+  }
+  svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', H - m.b).attr('y2', H - m.b).attr('stroke', css('--null'));
+  svg.append('text').attr('class', 'bf-axt').attr('x', m.l).attr('y', 12).text('Andel, prosent');
+  const plass = new Map();
+  for (const b of bins) { const xm = xs((b.x0 + b.x1) / 2); b.forEach((p, i) => { const k = v.find((x) => x.p === p && !plass.has(x.kode)); if (k) plass.set(k.kode, {x: xm, y: H - m.b - r - 1 - i * step}); }); }
+  const g = svg.append('g');
+  for (const k of v) {
+    const pp = plass.get(k.kode); if (!pp) continue;
+    g.append('circle').attr('cx', pp.x).attr('cy', pp.y).attr('r', r).attr('fill', k.kode === '0301' ? css('--tekst') : css('--gronn-f'))
+      .on('pointermove', (ev) => visTips(ev, k.n, [{n: 'Andel', v: `${nf2.format(k.p)} %`}, {n: 'Antall', v: nf0.format(k.v)}])).on('pointerleave', skjulTips);
+  }
+  for (const [x, t] of [[median, `Median ${nf1.format(median)}`], [landP, `Landet ${nf1.format(landP)}`]]) {
+    svg.append('line').attr('x1', xs(x)).attr('x2', xs(x)).attr('y1', m.t - 4).attr('y2', H - m.b).attr('stroke', css('--sek')).attr('stroke-dasharray', t.startsWith('Median') ? '3 3' : null);
+  }
+  const lab = [[median, `Median ${nf1.format(median)}`], [landP, `Landet ${nf1.format(landP)}`]].sort((a, b) => a[0] - b[0]);
+  const naer = Math.abs(xs(lab[1][0]) - xs(lab[0][0])) < 110;
+  lab.forEach(([x, t], i) => {
+    const e = svg.append('text').attr('class', 'bf-tick bf-halo').attr('y', naer && i === 0 ? m.t - 22 : m.t - 8).text(t);
+    const tw = e.node().getComputedTextLength();
+    e.attr('x', naer ? Math.max(0, Math.min(w - tw, xs(x) + 4)) : i === 0 ? Math.max(0, xs(x) - tw - 4) : Math.min(w - tw, xs(x) + 4));
+  });
+  const os = plass.get('0301');
+  if (os) svg.append('text').attr('class', 'bf-stripe-merk bf-halo bf-strong').attr('x', Math.min(w - 40, os.x + 6)).attr('y', os.y - 6).text('Oslo');
+  settSrc('stripe', kilde('09817', '07459'));
+}
+
+// ---------- Søk ----------
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøå]+/g, ' ').trim();
+const SYN = DATA.synonymer.map(([ord, k, usikker]) => ({ord, k, usikker, n: norm(ord)}));
+const SOKBARE = landKoder.map((k) => ({k, n: norm(O[k].n), deler: norm(O[k].n).split(' ')}));
+function sok(q) {
+  const n = norm(q); if (!n) return [];
+  const treff = new Map();
+  const legg = (k, p, ord) => { const t = treff.get(k); if (!t || t.p < p) treff.set(k, {k, p, ord}); };
+  for (const s of SYN) {
+    if (s.n === n) s.k.forEach((k) => legg(k, 100, s.ord));
+    else if (n.length >= 3 && s.n.startsWith(n)) s.k.forEach((k) => legg(k, 70, s.ord));
+  }
+  for (const {k, n: nv, deler} of SOKBARE) {
+    if (nv === n) legg(k, 99);
+    else if (nv.startsWith(n)) legg(k, 80);
+    else if (deler.some((d) => d.startsWith(n))) legg(k, 60);
+    else if (n.length >= 3 && nv.includes(n)) legg(k, 40);
+  }
+  return [...treff.values()].sort((a, b) => b.p - a.p || totLand(b.k) - totLand(a.k)).slice(0, 8);
+}
+const inp = $('#bf-sok'), liste = $('#bf-forslag'), tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+let forslag = [], aktiv = -1;
+function lukk() { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); }
+function visForslag() {
+  forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+  if (!inp.value.trim()) { lukk(); return; }
+  liste.innerHTML = forslag.length ? forslag.map((t, i) => {
+    const via = t.ord ? `Søkeord «${esc(t.ord)}» · ` : '';
+    const tl = totLand(t.k);
+    return `<li role="option" id="fs-${i}" data-k="${esc(t.k)}" aria-selected="${i === aktiv}">${esc(O[t.k].n)}<span class="s">${via}${esc(VD[O[t.k].v] || '')} · ${tl ? nf0.format(tl) + ' personer' : 'ingen i ' + SISTAAR}</span></li>`;
+  }).join('') : `<li class="tom" role="option" aria-disabled="true" data-alle>Ingen treff. Prøv landets norske navn, eller <button type="button" class="bf-lenke">se alle land</button>.</li>`;
+  liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+  if (aktiv >= 0) inp.setAttribute('aria-activedescendant', `fs-${aktiv}`);
+}
+function merk(i) {
+  aktiv = i;
+  liste.querySelectorAll('li[data-k]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i)));
+  inp.setAttribute('aria-activedescendant', `fs-${i}`);
+  const el = liste.querySelector(`#fs-${i}`); if (el) el.scrollIntoView({block: 'nearest'});
+}
+function velgForslag(i) {
+  const t = forslag[i]; if (!t) return;
+  lukk(); inp.value = O[t.k].n;
+  velg(t.k, {ord: t.ord, rull: true});
+}
+inp.addEventListener('input', visForslag);
+inp.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visForslag(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) velgForslag(aktiv); }
+  else if (e.key === 'Escape') lukk();
+});
+liste.addEventListener('mousedown', (e) => {
+  if (e.target.closest('[data-alle] button')) { e.preventDefault(); lukk(); if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({behavior: 'smooth'}); return; }
+  const el = e.target.closest('li[data-k]'); if (el) { e.preventDefault(); velgForslag([...liste.querySelectorAll('li[data-k]')].indexOf(el)); }
+});
+inp.addEventListener('blur', () => setTimeout(lukk, 150));
+const EKS = ['Polen', 'Somalia', 'Sverige', 'polsk', 'Burma', 'Atlantis'];
+$('#bf-eksempler').innerHTML = EKS.map((n) => `<button type="button" class="bf-lenke" data-eks="${esc(n)}">${esc(n)}</button>`).join(', ');
+$('#bf-eksempler').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-eks]'); if (!b) return;
+  inp.value = b.dataset.eks; inp.focus(); visForslag();
+});
+alleKnapp.addEventListener('click', () => {
+  const vis = tre.hidden;
+  if (vis && !tre.innerHTML) {
+    tre.innerHTML = `<p class="bf-note" style="margin-bottom:6px">${MED.length} landbakgrunner med bosatte 1. januar ${SISTAAR}, etter verdensdel og antall innvandrere og norskfødte med innvandrerforeldre.</p>` +
+      DATA.verdensdel.filter(([v]) => MED.some((k) => O[k].v === v)).map(([v, vn]) => {
+        const ks = MED.filter((k) => O[k].v === v);
+        return `<h3>${esc(vn)}</h3><ol>${ks.map((k) => `<li><button type="button" class="bf-lenke" data-k="${esc(k)}">${esc(O[k].n)}</button><span class="v">${nf0.format(totLand(k))}</span></li>`).join('')}</ol>`;
+      }).join('');
+  }
+  tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', String(vis));
+});
+tre.addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) { tre.hidden = true; alleKnapp.setAttribute('aria-expanded', 'false'); inp.value = O[b.dataset.k].n; velg(b.dataset.k, {rull: true}); } });
+$('#bf-land').addEventListener('click', () => { inp.value = ''; velg(ALLE); });
+
+// ---------- Brytere ----------
+root.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.topp) { visning.topp = b.dataset.topp; tegnTopp(valgt()); }
+  else if (b.dataset.tre) { visning.tre = b.dataset.tre; tegnTre(valgt()); }
+  else if (b.dataset.celle) { visning.treValgt.alle = b.dataset.celle; tegnTre(valgt()); const ny = $(`[data-celle="${b.dataset.celle}"]`); if (ny) ny.focus(); }
+  else if (b.dataset.regn) { visning.regn = b.dataset.regn; tegnRegn(valgt()); }
+  else if (b.dataset.kkat) { visning.kkat = b.dataset.kkat; tegnKomm(valgt()); tegnStripe(valgt()); }
+  else if (b.dataset.kmaal) { visning.kmaal = b.dataset.kmaal; tegnKomm(valgt()); }
+  else if (b.dataset.velg) { const k = b.dataset.velg; inp.value = k === ALLE ? '' : O[k].n; velg(k, {rull: true}); }
+});
+root.addEventListener('pointerleave', skjulTips);
+$('[data-hentet]').textContent = dato(DATA.kilde.hentet);
+
+function tegnAlt() {
+  skjulTips();
+  const sel = valgt();
+  document.title = sel === ALLE ? 'Innvandrere og norskfødte med innvandrerforeldre' : `${O[sel].n}: innvandrere og norskfødte`;
+  if (sel !== ALLE && !inp.value) inp.value = O[sel].n;
+  tegnKort(sel); tegnLes(sel); tegnTopp(sel);
+  sett('ing-1', 'Om en person regnes som innvandrer, avhenger av eget fødested og foreldrenes og besteforeldrenes fødested. Statsborgerskap spiller ingen rolle.');
+  tegnKat(sel); tegnTre(sel);
+  sett('ing-2', 'Antallet endres når folk flytter til og fra Norge, når de dør, og for norskfødte med innvandrerforeldre når barn blir født. Barn av innvandrere blir ikke innvandrere.');
+  tegnRegn(sel);
+  sett('ing-3', `${O[MED[0]].n} er den største landbakgrunnen, men gruppene er svært ulike. Noen kom for flere tiår siden og har mange barn født i Norge. Andre har kommet de siste årene.`);
+  tegnLand(sel); tegnBotid(sel);
+  sett('ing-4', 'Antallet er størst i byene, men andelen av innbyggerne kan være høyest i små kommuner. Der gir noen få personer store utslag.');
+  tegnKomm(sel); tegnStripe(sel);
+}
+ingress();
+tegnAlt();
+window.addEventListener('hashchange', () => { funnetMed = null; tegnAlt(); });
+let sisteBredde = root.clientWidth, venter = 0;
+new ResizeObserver(() => {
+  if (root.clientWidth === sisteBredde) return;
+  sisteBredde = root.clientWidth;
+  cancelAnimationFrame(venter); venter = requestAnimationFrame(tegnAlt);
+}).observe(root);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(tegnAlt);
+})();
+</script>
+</body>
+</html>

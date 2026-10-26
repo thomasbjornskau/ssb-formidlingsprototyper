@@ -1,0 +1,296 @@
+{
+ "merknad": "Utkast til steg 2. Tall hentet via SSB-tilkoblingen 26.10.2026. Erstattes av data/raw/ i steg 3.",
+ "kilder": {
+  "kategorier": "SSB, tabell 05182. Sist oppdatert 05.03.2026",
+  "endringer": "SSB, tabell 10516. Sist oppdatert 17.04.2026",
+  "land": "SSB, tabell 13880 og 05183. Sist oppdatert 05.03.2026"
+ },
+ "bef_2026": 5627400,
+ "kategorier_2026": {
+  "innvandrere": 987120,
+  "norskfodte_innvforeldre": 238507,
+  "utenlandsfodte_en_norskfodt": 41845,
+  "norskfodte_en_utenlandsfodt": 317386,
+  "utenlandsfodte_to_norskfodte": 39163,
+  "norskfodte_to_norskfodte": 4003379
+ },
+ "serie": [
+  {
+   "aar": 1970,
+   "innvandrere": 57041,
+   "norskfodte": 2155
+  },
+  {
+   "aar": 1980,
+   "innvandrere": 88929,
+   "norskfodte": 6273
+  },
+  {
+   "aar": 1986,
+   "innvandrere": 112303,
+   "norskfodte": 11045
+  },
+  {
+   "aar": 1987,
+   "innvandrere": 119005,
+   "norskfodte": 12137
+  },
+  {
+   "aar": 1988,
+   "innvandrere": 132708,
+   "norskfodte": 13589
+  },
+  {
+   "aar": 1989,
+   "innvandrere": 144909,
+   "norskfodte": 15384
+  },
+  {
+   "aar": 1990,
+   "innvandrere": 150973,
+   "norskfodte": 17325
+  },
+  {
+   "aar": 1991,
+   "innvandrere": 155333,
+   "norskfodte": 19335
+  },
+  {
+   "aar": 1992,
+   "innvandrere": 161457,
+   "norskfodte": 21537
+  },
+  {
+   "aar": 1993,
+   "innvandrere": 169175,
+   "norskfodte": 23920
+  },
+  {
+   "aar": 1994,
+   "innvandrere": 179201,
+   "norskfodte": 26399
+  },
+  {
+   "aar": 1995,
+   "innvandrere": 186039,
+   "norskfodte": 29009
+  },
+  {
+   "aar": 1996,
+   "innvandrere": 191945,
+   "norskfodte": 31852
+  },
+  {
+   "aar": 1997,
+   "innvandrere": 197412,
+   "norskfodte": 34780
+  },
+  {
+   "aar": 1998,
+   "innvandrere": 206919,
+   "norskfodte": 37786
+  },
+  {
+   "aar": 1999,
+   "innvandrere": 220347,
+   "norskfodte": 40395
+  },
+  {
+   "aar": 2000,
+   "innvandrere": 238462,
+   "norskfodte": 44025
+  },
+  {
+   "aar": 2001,
+   "innvandrere": 249904,
+   "norskfodte": 47827
+  },
+  {
+   "aar": 2002,
+   "innvandrere": 259221,
+   "norskfodte": 51483
+  },
+  {
+   "aar": 2003,
+   "innvandrere": 277262,
+   "norskfodte": 55531
+  },
+  {
+   "aar": 2004,
+   "innvandrere": 289104,
+   "norskfodte": 59836
+  },
+  {
+   "aar": 2005,
+   "innvandrere": 301045,
+   "norskfodte": 63936
+  },
+  {
+   "aar": 2006,
+   "innvandrere": 318514,
+   "norskfodte": 68185
+  },
+  {
+   "aar": 2007,
+   "innvandrere": 341830,
+   "norskfodte": 73488
+  },
+  {
+   "aar": 2008,
+   "innvandrere": 380644,
+   "norskfodte": 78970
+  },
+  {
+   "aar": 2009,
+   "innvandrere": 422595,
+   "norskfodte": 85604
+  },
+  {
+   "aar": 2010,
+   "innvandrere": 459346,
+   "norskfodte": 92967
+  },
+  {
+   "aar": 2011,
+   "innvandrere": 500500,
+   "norskfodte": 100422
+  },
+  {
+   "aar": 2012,
+   "innvandrere": 546732,
+   "norskfodte": 108438
+  },
+  {
+   "aar": 2013,
+   "innvandrere": 593321,
+   "norskfodte": 117144
+  },
+  {
+   "aar": 2014,
+   "innvandrere": 633110,
+   "norskfodte": 126075
+  },
+  {
+   "aar": 2015,
+   "innvandrere": 669380,
+   "norskfodte": 135583
+  },
+  {
+   "aar": 2016,
+   "innvandrere": 698550,
+   "norskfodte": 149657
+  },
+  {
+   "aar": 2017,
+   "innvandrere": 724987,
+   "norskfodte": 158764
+  },
+  {
+   "aar": 2018,
+   "innvandrere": 746661,
+   "norskfodte": 169964
+  },
+  {
+   "aar": 2019,
+   "innvandrere": 765108,
+   "norskfodte": 179294
+  },
+  {
+   "aar": 2020,
+   "innvandrere": 790497,
+   "norskfodte": 188757
+  },
+  {
+   "aar": 2021,
+   "innvandrere": 800094,
+   "norskfodte": 197848
+  },
+  {
+   "aar": 2022,
+   "innvandrere": 819356,
+   "norskfodte": 205819
+  },
+  {
+   "aar": 2023,
+   "innvandrere": 877227,
+   "norskfodte": 213810
+  },
+  {
+   "aar": 2024,
+   "innvandrere": 931081,
+   "norskfodte": 221459
+  },
+  {
+   "aar": 2025,
+   "innvandrere": 965113,
+   "norskfodte": 230237
+  },
+  {
+   "aar": 2026,
+   "innvandrere": 987120,
+   "norskfodte": 238507
+  }
+ ],
+ "regnskap_innvandrere_2025": {
+  "bosatt_start": 965113,
+  "innflyttinger": 49179,
+  "utflyttinger": 24407,
+  "dode": 2860,
+  "fodte": 1,
+  "folketilvekst": 22007,
+  "bosatt_slutt": 987120
+ },
+ "land_2026": [
+  {
+   "land": "Polen",
+   "innvandrere": 111740,
+   "norskfodte": 18032
+  },
+  {
+   "land": "Ukraina",
+   "innvandrere": 85461,
+   "norskfodte": 2774
+  },
+  {
+   "land": "Litauen",
+   "innvandrere": 43065,
+   "norskfodte": 8402
+  },
+  {
+   "land": "Syria",
+   "innvandrere": 42040,
+   "norskfodte": 8628
+  },
+  {
+   "land": "Somalia",
+   "innvandrere": 27769,
+   "norskfodte": 16975
+  },
+  {
+   "land": "Pakistan",
+   "innvandrere": 24821,
+   "norskfodte": 19292
+  },
+  {
+   "land": "Sverige",
+   "innvandrere": 37732,
+   "norskfodte": 3874
+  },
+  {
+   "land": "Irak",
+   "innvandrere": 23939,
+   "norskfodte": 13052
+  },
+  {
+   "land": "Eritrea",
+   "innvandrere": 25819,
+   "norskfodte": 10488
+  },
+  {
+   "land": "Tyskland",
+   "innvandrere": 28145,
+   "norskfodte": 3906
+  }
+ ],
+ "sum_innv_nmi_2026": 1225627
+}

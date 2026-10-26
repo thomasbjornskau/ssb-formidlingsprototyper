@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" letter-spacing="1.2" style="font-variant-numeric:tabular-nums">LANDBAKGRUNN · 1. JANUAR 2026</text>
+<text x="40.0" y="118.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="64" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Ti land</text>
+<text x="40.0" y="162.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">står for nesten halvparten. Polen er</text>
+<text x="40.0" y="191.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">størst.</text>
+<text x="40.0" y="238.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">45 prosent av innvandrerne og de norskfødte har bakgrunn fra</text>
+<text x="40.0" y="259.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">disse ti landene. Blant dem med pakistansk bakgrunn er 44</text>
+<text x="40.0" y="280.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">prosent født i Norge, blant dem med ukrainsk 3 prosent.</text>
+<text x="40.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, tabell 13880. Sist oppdatert: 05.03.2026.</text>
+<text x="600.0" y="34.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">De ti største landbakgrunnene, personer</text>
+<rect x="600.0" y="46.0" width="12.0" height="12.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<text x="618.0" y="57.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">innvandrere</text>
+<rect x="710.0" y="46.0" width="12.0" height="12.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="728.0" y="57.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">norskfødte med innvandrerforeldre</text>
+<line x1="690.0" y1="66.0" x2="690.0" y2="300.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="690.0" y="314.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">0</text>
+<line x1="829.3" y1="66.0" x2="829.3" y2="300.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="829.3" y="314.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">50 000</text>
+<line x1="968.6" y1="66.0" x2="968.6" y2="300.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="968.6" y="314.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">100 000</text>
+<text x="682.0" y="84.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Polen</text>
+<rect x="690.0" y="73.0" width="311.3" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="1001.3" y="73.0" width="50.2" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="1056.5" y="85.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">129 772</text>
+<text x="682.0" y="107.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Ukraina</text>
+<rect x="690.0" y="96.0" width="238.1" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="928.1" y="96.0" width="7.7" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="940.8" y="108.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">88 235</text>
+<text x="682.0" y="130.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Litauen</text>
+<rect x="690.0" y="119.0" width="120.0" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="810.0" y="119.0" width="23.4" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="838.4" y="131.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">51 467</text>
+<text x="682.0" y="153.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Syria</text>
+<rect x="690.0" y="142.0" width="117.1" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="807.1" y="142.0" width="24.0" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="836.1" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">50 668</text>
+<text x="682.0" y="176.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Somalia</text>
+<rect x="690.0" y="165.0" width="77.4" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="767.4" y="165.0" width="47.3" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="819.6" y="177.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">44 744</text>
+<text x="682.0" y="199.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Pakistan</text>
+<rect x="690.0" y="188.0" width="69.1" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="759.1" y="188.0" width="53.7" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="817.9" y="200.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">44 113</text>
+<text x="682.0" y="222.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Sverige</text>
+<rect x="690.0" y="211.0" width="105.1" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="795.1" y="211.0" width="10.8" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="810.9" y="223.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">41 606</text>
+<text x="682.0" y="245.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Irak</text>
+<rect x="690.0" y="234.0" width="66.7" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="756.7" y="234.0" width="36.4" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="798.0" y="246.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">36 991</text>
+<text x="682.0" y="268.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Eritrea</text>
+<rect x="690.0" y="257.0" width="71.9" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="761.9" y="257.0" width="29.2" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="796.1" y="269.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">36 307</text>
+<text x="682.0" y="291.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Tyskland</text>
+<rect x="690.0" y="280.0" width="78.4" height="15.0" rx="0" fill="#339b71" stroke="none" stroke-width="1"/>
+<rect x="768.4" y="280.0" width="10.9" height="15.0" rx="0" fill="#3face6" stroke="none" stroke-width="1"/>
+<text x="784.3" y="292.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">32 051</text>
+</svg>
