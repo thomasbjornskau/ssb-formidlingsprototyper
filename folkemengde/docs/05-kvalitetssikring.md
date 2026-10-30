@@ -56,6 +56,17 @@ Formuleringer, tolkninger og egne valg.
 | 28 | Er dette de riktige hovedtallene å løfte fram: folketallet, veksten delt i fødselsoverskudd og nettoinnvandring, antall kommuner med nedgang og alderssammensetningen? | `01-innsikt.md`, avsnitt 2 |
 | 29 | Er Magnus Haug riktig fagkontakt, eller bør andre se på deler av prototypen (statsborgerskap, flytting)? | Kontaktperson for 05803, 06913 og 01222, og forfatter av artikkelen 19.8.2026 |
 
+## Lagt til etter kontrollen: infografikken (30.10.2026)
+
+Infografikken «Hvem bor i Norge?» står nå øverst på siden, i bred og stående variant. Tallene er de samme som ellers på siden, med disse nye påstandene:
+
+| # | Påstand eller valg | Hvor | Grunnlag | Hva må sjekkes |
+|---|---|---|---|---|
+| 30 | «Norge vokser. Hvorfor krymper da 128 kommuner?» 128 av 357 kommuner hadde færre innbyggere 1.1.2026 enn 1.1.2025 | Infografikken, ingressen | Regnet av oss fra 06913 | Om spørsmålet er en rimelig inngang, og om tallet stemmer med det dere har publisert |
+| 31 | «I 238 kommuner døde flere enn det ble født i 2025» | Infografikken, kommuneboksen | Regnet av oss fra 06913 | Om tallet stemmer |
+| 32 | «Fødsler, dødsfall og flytting virker ulikt fra kommune til kommune» som svar på hvorfor kommuner krymper | Infografikken, spørsmål 3 | `[T]` | Om formuleringen er god nok |
+| 33 | Folketallet 1735–2026 som én linje uten brudd | Infografikken | 05803 | Om serien bør merkes der kildegrunnlaget skifter |
+
 ## Avklart underveis
 
 | Hva | Løst |

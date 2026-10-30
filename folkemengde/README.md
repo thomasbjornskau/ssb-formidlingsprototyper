@@ -52,3 +52,11 @@ python felles/bygg.py folkemengde
 Rådataene i `data/raw/` er hentet direkte fra PxWebApi v2 med `hent_data.py` 21.10.2026, ikke rekonstruert. URL-ene bruker `valueCodes[...]`. Kontrollene i `lag_data.py` har kjente avvik skrevet inn med verdi (1915 i aldersfordelingen, kommunesummer før 1971, flyttetall som mangler 1951–1957). Endrer SSB tallene, stopper bygget, og avviket må undersøkes før noe publiseres.
 
 `scripts/lag_grafikk.py` lager konseptgrafikken og toppgrafikkutkastene fra steg 2. `scripts/kontroll_kilder.py` kjører kontrollene fra steg 3. `scripts/lag_data.py` lager byggfilen og stopper bygget hvis en kontroll feiler.
+
+`scripts/lag_infografikk.py` lager infografikken øverst på siden (`src/infografikk-bred.svg` og `src/infografikk-smal.svg`) fra byggfilen. Den bruker SSB-ikonene fra repoet [ssb-ikoner](https://github.com/thomasbjornskau/ssb-ikoner), som må ligge ved siden av dette repoet (eller i miljøvariabelen `SSB_IKONER`). SVG-filene committes, så bygget på GitHub trenger ikke ikonrepoet. Kjør den etter `felles/bygg.py` når tallene er oppdatert, og bygg på nytt:
+
+```
+python felles/bygg.py folkemengde
+python folkemengde/scripts/lag_infografikk.py
+python felles/bygg.py folkemengde
+```

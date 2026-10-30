@@ -77,6 +77,10 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 .bf-les li { font-size: 14px; line-height: 1.45; }
 .bf-les li b { display: block; font-size: 15px; }
 .bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-info { margin: 24px 0 8px; }
+.bf-info svg { display: block; width: 100%; height: auto; }
+.bf-info .smal { display: none; max-width: 420px; margin: 0 auto; }
+@media (max-width: 700px) { .bf-info .bred { display: none; } .bf-info .smal { display: block; } }
 .bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
 .bf-konsept svg { display: block; width: 100%; height: auto; }
 .bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
@@ -147,6 +151,10 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
     <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
     <h1 class="bf-title">Befolkning</h1>
     <p class="bf-lede" id="ingress"></p>
+    <figure class="bf-info">
+      <div class="bred">/*__INKLUDER:src/infografikk-bred.svg__*/</div>
+      <div class="smal">/*__INKLUDER:src/infografikk-smal.svg__*/</div>
+    </figure>
     <div class="bf-sok" role="search">
       <div class="bf-sokfelt">
         <label for="bf-sok">Velg kommune</label>
