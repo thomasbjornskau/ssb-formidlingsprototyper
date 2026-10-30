@@ -177,7 +177,7 @@ TRINN = [
 
 IKKE_MED = ("Ikke med i folketallet: opphold under seks måneder og personer uten lovlig opphold.")
 OVERDEKNING = ("Med, men bor ikke her: personer som har flyttet ut uten å melde fra. "
-               "SSB anslår dem til om lag 0,44 prosent av befolkningen.")
+               "SSB har anslått dem til om lag 0,4 prosent, men anslaget er usikkert.")
 KILDE_K = "Kilde: SSB, statistikken Befolkning og tabell 05803. Sist oppdatert: 15.04.2026. Overdekning: SSB Notater 2024/3."
 
 

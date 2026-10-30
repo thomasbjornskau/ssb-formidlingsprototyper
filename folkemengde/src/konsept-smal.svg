@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1591" viewBox="0 0 390 1591">
-<rect x="0" y="0" width="390" height="1591" fill="#ffffff"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1609" viewBox="0 0 390 1609">
+<rect x="0" y="0" width="390" height="1609" fill="#ffffff"/>
 <text x="16.0" y="36.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Slik lages tallene</text>
 <text x="16.0" y="60.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Fra en hendelse i folkeregisteret til et</text>
 <text x="16.0" y="79.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">publisert folketall</text>
@@ -94,14 +94,15 @@
 <text x="58.0" y="1295.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">opprydding kan samle utvandringer fra flere</text>
 <text x="58.0" y="1311.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">kvartaler i ett.</text>
 <rect x="16.0" y="1367.0" width="358.0" height="10.0" rx="0" fill="none" stroke="none" stroke-width="1"/>
-<rect x="16.0" y="1367.0" width="358.0" height="144.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="16.0" y="1367.0" width="358.0" height="162.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="6 4"/>
 <text x="28.0" y="1391.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Det tallene ikke fanger</text>
 <text x="28.0" y="1415.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Ikke med i folketallet: opphold under seks</text>
 <text x="28.0" y="1433.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">måneder og personer uten lovlig opphold.</text>
 <text x="28.0" y="1461.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Med, men bor ikke her: personer som har</text>
-<text x="28.0" y="1479.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">flyttet ut uten å melde fra. SSB anslår dem</text>
-<text x="28.0" y="1497.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">til om lag 0,44 prosent av befolkningen.</text>
-<text x="16.0" y="1537.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, statistikken Befolkning og tabell 05803.</text>
-<text x="16.0" y="1553.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Sist oppdatert: 15.04.2026. Overdekning: SSB Notater</text>
-<text x="16.0" y="1569.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">2024/3.</text>
+<text x="28.0" y="1479.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">flyttet ut uten å melde fra. SSB har anslått</text>
+<text x="28.0" y="1497.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">dem til om lag 0,4 prosent, men anslaget er</text>
+<text x="28.0" y="1515.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">usikkert.</text>
+<text x="16.0" y="1555.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, statistikken Befolkning og tabell 05803.</text>
+<text x="16.0" y="1571.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Sist oppdatert: 15.04.2026. Overdekning: SSB Notater</text>
+<text x="16.0" y="1587.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">2024/3.</text>
 </svg>

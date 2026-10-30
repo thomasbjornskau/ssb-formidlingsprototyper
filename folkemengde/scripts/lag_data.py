@@ -177,6 +177,7 @@ def main():
         land_alder[a] = v
         d = sum(v[0]) + sum(v[1]) - L("Personer", int(a))
         # Sju år avviker fra 05803. 1863–1996: −3 til +2 personer; 1915: −3 000 (kildekartet, H2).
+        # Fag (Magnus Haug 30.10.2026): 05803 er riktig for 1915, unøyaktigheten ligger i aldersgruppene i 10211.
         if d and not (abs(d) <= 3 or (a == "1915" and d == -3000)):
             feil(f"aldersfordelingen for landet {a} avviker med {d} fra befolkningen")
     grupper = koder(kal, "Alder")

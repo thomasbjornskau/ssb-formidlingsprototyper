@@ -75,6 +75,15 @@ Alle tall i avsnitt 2 og 3 er hentet fra statistikkbanken 21.10.2026, med unntak
 | H9 | Store prosentendringer i små kommuner viser en trend | Kommune 3450 økte fra 1 254 til 1 593 personer (+27 prosent) på ett år `[K7]`. Årsaken er ikke kjent, men ett mottak eller én bedrift kan gi slike utslag `[T]` | Vise både antall og prosent, og advare om små tall |
 | H10 | Summen av fire kvartaler er årstallet (lav prioritet) | 55 381 mot 55 401 fødte i 2025 `[K5][K6]` | Bruke årstall for hele år, kvartalstall bare for siste periode |
 
+### Svar fra fag 30.10.2026
+
+Magnus Haug svarte på del A i `05-kvalitetssikring.md`. Læring for neste statistikk:
+
+- **H3 er bekreftet.** Utvandringer blir alltid delvis registrert etter at de skjedde, og de hoper seg opp i enkelte kvartaler, som regel 2. eller 3. Et kvartal med negativ nettoinnvandring er ikke nødvendigvis et kvartal der mange flyttet ut.
+- **Korreksjonsposten er det fag får flest spørsmål om ved årspubliseringen.** Den bør være en egen hypotese: «Fødte, døde og flyttinger forklarer hele endringen i folketallet.» Fag ønsker en forklaring som er «tilstrekkelig ullen uten å være parodisk unnvikende».
+- **Anslag fra notater skal formuleres med usikkerhet.** Overdekningen (0,44 prosent) kan brukes, men som et usikkert anslag.
+- **Små avvik mellom publiserte tabeller er kjente.** 1915 i 10211 er en unøyaktighet i aldersgruppene. Tabellnoten sier at slike kan forekomme.
+
 ## 5. Brukere og hva de trenger
 
 **Kommuneansatte og planleggere** vil se sin egen kommune: folketall, vekst, hva veksten består av, og aldersfordelingen. De trenger sammenlignbare serier og forsiktighet med små tall.

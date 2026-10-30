@@ -167,7 +167,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
   <section class="bf-les" aria-labelledby="les-h">
     <h2 id="les-h">Slik leser du befolkningsstatistikken</h2>
     <ul>
-      <li><b>Bosatt, ikke til stede.</b> Bare den som skal bo i Norge minst seks måneder, telles. Korttidsarbeidere og personer uten lovlig opphold er ikke med. Noen står registrert som bosatt selv om de har flyttet ut. SSB anslår dem til om lag 0,44 prosent.</li>
+      <li><b>Bosatt, ikke til stede.</b> Bare den som skal bo i Norge minst seks måneder, telles. Korttidsarbeidere og personer uten lovlig opphold er ikke med. Noen står registrert som bosatt selv om de har flyttet ut. SSB har anslått at det gjelder om lag 0,4 prosent, men anslaget er usikkert.</li>
       <li><b>Et tidspunkt, ikke et år.</b> <span data-t="les-2"></span></li>
       <li><b>Registrert er ikke det samme som skjedd.</b> <span data-t="les-3"></span></li>
       <li><b>Landet er ikke kommunen.</b> <span data-t="les-4"></span></li>
@@ -243,7 +243,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
       </article>
       <article class="bf-card">
         <h3 class="bf-h" data-h="negkv"></h3>
-        <p class="bf-note">Antall kommuner der flere utvandret enn innvandret i kvartalet, av 357. Når folkeregisteret ryddes, registreres mange utvandringer på én gang, også fra tidligere kvartaler.</p>
+        <p class="bf-note">Antall kommuner der flere utvandret enn innvandret i kvartalet, av 357. Noen utvandringer blir alltid registrert etter at folk har flyttet. I enkelte kvartaler, som regel 2. eller 3., hoper de seg opp.</p>
         <div class="bf-chart" id="fig-negkv" style="min-height:240px"></div>
         <details class="bf-tall" data-tall="negkv"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
         <p class="bf-src" data-src="negkv"></p>
@@ -593,7 +593,7 @@ function tegnLes(sel) {
   const b26 = bef(sel, SISTAAR), b25 = bef(sel, SISTPER), v = b26 - b25;
   sett('les-2', `«Befolkning ${SISTAAR}» betyr bosatte 1. januar ${SISTAAR}, altså resultatet av alt som skjedde i ${SISTPER}. ${sel === '0' ? 'Landet' : kort(sel)} hadde ${nf0.format(b25)} bosatte 1. januar ${SISTPER} og ${nf0.format(b26)} ett år senere, en endring på ${sgn(v)}.`);
   const q = KQ.length - 1, lq = DATA.landKvartal;
-  sett('les-3', `Tallene følger registreringen. I ${KQ[q].replace('K', '. kvartal ').replace(/^(\d{4})\. kvartal (\d)/, '$2. kvartal $1')} ryddet Skatteetaten i folkeregisteret, og mange som flyttet ut tidligere, ble registrert som utvandret da. Nettoinnvandringen for landet ble ${sgn(lq[2][q] - lq[3][q])}.`);
+  sett('les-3', `Tallene følger registreringen. I ${KQ[q].replace('K', '. kvartal ').replace(/^(\d{4})\. kvartal (\d)/, '$2. kvartal $1')} ryddet Skatteetaten i folkeregisteret, og mange som flyttet ut tidligere, ble registrert som utvandret da. Nettoinnvandringen for landet ble ${sgn(lq[2][q] - lq[3][q])}. Slike etterregistreringer skjer hele tiden, men hoper seg opp i enkelte kvartaler, som regel 2. eller 3.`);
   sett('les-4', sel === '0'
     ? `I ${SISTPER} vokste landet, men ${NEDGANG.length} av ${kommuner.length} kommuner fikk færre innbyggere. For en kommune teller også flytting til og fra andre kommuner.`
     : `For en kommune teller også flytting til og fra andre kommuner. ${kort(sel)} ${b26 < b25 ? 'krympet' : 'vokste'} i ${SISTPER}, mens landet vokste med ${nf2.format(vekstPst('0', SISTPER))} prosent.`);
@@ -814,7 +814,7 @@ function tegnRegnskap(sel) {
   const s = aarserie(sel), d = s.komp[s.komp.length - 1], b0 = bef(sel, SISTPER), b1 = bef(sel, SISTAAR);
   const nv = KOMP_NAVN(sel);
   settH('regnskap', `Regnskapet for ${SISTPER}: ${nf0.format(b0)} ${d.vekst >= 0 ? 'ble' : 'ble til'} ${nf0.format(b1)}`);
-  settN('regnskap', `Bosatte 1. januar ${SISTPER} pluss fødte og ${sel === '0' ? 'innvandringer' : 'innflyttinger'}, minus døde og ${sel === '0' ? 'utvandringer' : 'utflyttinger'}, gir bosatte 1. januar ${SISTAAR}. Det som ikke går opp, er korreksjonen: forsinkede meldinger og rettinger i registeret.`);
+  settN('regnskap', `Bosatte 1. januar ${SISTPER} pluss fødte og ${sel === '0' ? 'innvandringer' : 'innflyttinger'}, minus døde og ${sel === '0' ? 'utvandringer' : 'utflyttinger'}, gir bosatte 1. januar ${SISTAAR}. Det som ikke går opp, er korreksjonen: endringer i befolkningen som ikke fanges opp når statistikken lages, blant annet forsinkede meldinger.`);
   const rader = [
     {n: `Bosatt 1.1.${SISTPER}`, v: b0, start: true}, {n: 'Fødte', v: d.fodte}, {n: 'Døde', v: -d.dode},
     {n: sel === '0' ? 'Innvandringer' : 'Innflyttinger', v: d.inn}, {n: sel === '0' ? 'Utvandringer' : 'Utflyttinger', v: -d.ut}, {n: 'Korreksjon', v: d.korr},
@@ -895,7 +895,8 @@ function tegnPyramide(sel) {
   const a65 = andelerAv(p, 65), u20 = andelerAv(p, 0, 19);
   settH('pyr', `${kort(sel)} ${vis}: ${nf0.format(Math.round(a65))} av 100 er 65 år eller eldre, ${nf0.format(Math.round(u20))} av 100 er under 20`);
   settN('pyr', `Prosent av alle bosatte 1. januar ${vis}, etter kjønn og ${p.ettarig ? 'ettårig alder' : 'femårige aldersgrupper'}.` + (ref ? ` Den grå omrisslinjen er ${refTekst.toLowerCase().startsWith('hele') ? refTekst.charAt(0).toLowerCase() + refTekst.slice(1) : refTekst}.` : '') +
-    (land ? ' Bruk glidebryteren for å se et annet år.' : ' Aldersfordelingen per kommune finnes for 1986, 2006 og 2026.'));
+    (land ? ' Bruk glidebryteren for å se et annet år.' : ' Aldersfordelingen per kommune finnes for 1986, 2006 og 2026.') +
+    (land && String(vis) === '1915' ? ' Aldersfordelingen for 1915 summerer til 3 000 færre enn folketallet. Folketallet er riktig, og avviket ligger i en eller flere aldersgrupper.' : ''));
   legende('pyr', [{c: F.menn, n: 'Menn'}, {c: F.kvinner, n: 'Kvinner'}, ...(ref ? [{c: css('--tekst'), n: refTekst, cls: 'bf-sw-line'}] : [])]);
   const n = p.etiketter.length, H = 396, {svg, w} = lerret($('#fig-pyr'), H, `Befolkningspyramide for ${fullt(sel)} ${vis}.`);
   const pc = (x) => 100 * x / tot;

@@ -1,6 +1,6 @@
 # Befolkning (folkemengde)
 
-> **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger, egne beregninger og overskrifter er ikke kvalitetssikret ennå. Se [kvalitetssikringslisten](docs/05-kvalitetssikring.md).
+> **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Fagseksjonen har svart på de viktigste punktene (del A, 30.10.2026), og svarene er innarbeidet. Resten av [kvalitetssikringslisten](docs/05-kvalitetssikring.md) er ikke besvart ennå.
 
 **Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/folkemengde/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/folkemengde/index.html)
 
