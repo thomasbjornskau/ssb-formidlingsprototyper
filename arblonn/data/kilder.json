@@ -1,0 +1,106 @@
+{
+ "statistikk": "Antall arbeidsforhold og lønn",
+ "kortnavn": "arblonn",
+ "versjon": "1.0",
+ "dato_valg": "2026-10-30",
+ "merknad": "Hentet direkte fra PxWebApi v2 med scripts/hent_data.py. data.ssb.no var tilgjengelig fra arbeidsområdet 30.10.2026, så rådataene i data/raw/ er svarene fra API-et, uendret.",
+ "valg": "Stort omfang (valgt av Thomas 30.10.2026). Næring (17 grupper) er det gjennomgående valget. Fylke er sekundært filter for kvartalstall fra 2024. Månedstall fra 2003, 88 næringer for landet og heltid/deltid for alle kvartaler.",
+ "manglende_verdier": {
+  "..": "Tall mangler. Foreløpige månedstall finnes bare fra 2016M01, og siste måned har bare foreløpig tall. Vises ikke som linje; aldri som null.",
+  ":": "Konfidensielt. Undertrykt fordi cellen bygger på for få enheter (lønn: færre enn 100 arbeidsforhold uten imputert lønn). Gjelder i praksis «Uoppgitt næring» i noen fylker. Vises som «tallet er skjult».",
+  "0 i fylkesserien": "Med inndelingen «Fylker 2024-» har sju fylker (31, 32, 33, 39, 40, 55, 56) verdien 0 før 2024K1, og fire til (34, 42, 46, 50) 0 før 2018K1 eller 2020K1. 0 betyr at fylket ikke fantes, ikke null jobber. Prototypen bruker bare fylkestall fra 2024K1.",
+  ".": "Kan ikke forekomme. Kontantlønn i 13126 før 2016M01."
+ },
+ "fallgruver": [
+  "Jobber er ikke lønnstakere. Lønnstakere telles i næringen til hovedjobben, så jobber per lønnstaker i en næring blander egne og andres hovedjobber.",
+  "Den foreløpige sesongjusterte serien sesongjusteres på nytt hver måned og er ikke det som ble publisert den gang. Juli–august 2023 ble publisert som om lag −16 850 jobber; serien viser i dag −2 276. Vis bare de siste foreløpige punktene.",
+  "Endringer regnes innenfor samme versjon (foreløpig mot foreløpig, endelig mot endelig). Foreløpig september minus endelig august gir −42 501 jobber; riktig endring er +24 775.",
+  "Lønnsvekst regnes fra kronebeløpene, ikke fra den avrundede indeksen. Indeksen gir 4,0 prosent for 2. kvartal 2026, mens publisert vekst er 3,9.",
+  "Lønnsindeksen er snittlønna delt på snittet i 2024K1. Den er ikke justert for sammensetning.",
+  "Avtalt månedslønn og månedslønn er per heltidsekvivalent og kvartalsvise. Kontantlønn er per jobb og månedlig. Ikke sammenlign dem direkte.",
+  "Månedslønn i 1. kvartal har med bonus utbetalt i februar og er høy i bonusnæringer (bergverk 2024K1: 96 880 kr mot 91 660 i 2025K2). Sammenlign samme kvartal.",
+  "Fylke er arbeidssted. Bergverk har høy median i Oslo fordi hovedkontorene ligger der. Rogaland har brudd i 2018K2 (sokkeljobber flyttet til fastlandet).",
+  "Jobber i 11652 og 11654 avviker med 1 for 2026K2 (3 166 971 mot 3 166 972), trolig avrunding eller anonymisering. Bruk én tabell per figur.",
+  "Månedstall før 2016 finnes bare for sesongjusterte jobber og lønnstakere og ujusterte jobber. Ujusterte lønnstakere og kontantlønn starter 2016M01. Tallene før 2015 bygger på Arbeidstakerregisteret og er justert av SSB.",
+  "Endelig midtmåned (13126) og kvartalstall (11654) avviker med opptil 12 jobber, og med −305 for 2024M11/2024K4 (uforklart).",
+  "Næringene 84 og 85 har bare én tosifret kode. Det finnes ingen undernæringer å vise.",
+  "Finans i Finnmark 2025K1 er skjult (:) for lønn.",
+  "Ett- og totall i kvartalstabellene er endret til 0 eller 3 for personvern (fotnote i 11652, 11654, 12314, 13871). Summer på tvers av tabeller avviker derfor med noen få jobber; 12314 mot 11654 opptil 11.",
+  "Totalen for sesongjusterte jobber og lønnstakere er summen av de sesongjusterte næringene (indirekte sesongjustering). Kontantlønn sesongjusteres direkte. Uoppgitt næring sesongjusteres ikke.",
+  "Brudd i 1. kvartal 2020: bedre lønnsrapportering hevet snittlønna i bergverk og utvinning med 0,8 prosent (06: 1,6). Ny metode for arbeidstid samme kvartal."
+ ],
+ "datasett": [
+  {
+   "id": "maned",
+   "tabell": "13126",
+   "svarer_paa": [
+    3,
+    4
+   ],
+   "seksjon": "Toppgrafikk, Blir det flere jobber",
+   "beskrivelse": "Lønnstakere, jobber og kontantlønn per måned, ujustert og sesongjustert, foreløpige og endelige tall, 17 næringer og totalen.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13126/data?lang=no&outputFormat=json-stat2&valueCodes%5BNACE2007%5D=*&valueCodes%5BForelopigEndelig%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "18 næringskoder × 2 versjoner × 6 variabler × 281 måneder (2003M05–2026M09) = 60 696 celler. Foreløpige fra 2016M01."
+  },
+  {
+   "id": "kvartal_naering",
+   "tabell": "11654",
+   "svarer_paa": [
+    1,
+    2,
+    4,
+    5
+   ],
+   "seksjon": "Jobber og mennesker, Hvilken lønn, Hvor vokser jobbene, Lønnsvekst",
+   "beskrivelse": "Hele landet: lønnstakere, jobber, heltidsekvivalenter, gjennomsnitt og median for avtalt månedslønn og månedslønn, lønnsindekser, per næring (17) og kvartal.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11654/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=Ialt&valueCodes%5BNACE2007%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "18 × 9 × 42 kvartaler (2016K1–2026K2) = 6 804 celler."
+  },
+  {
+   "id": "kvartal_fylke",
+   "tabell": "11654",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Hvor vokser jobbene (fylkesfilter)",
+   "beskrivelse": "Samme variabler per fylke (inndeling fra 2024) og næring, fra 2024K1.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11654/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&codelist%5BRegion%5D=agg_FylkerFastIkkeFastA&valueCodes%5BNACE2007%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=from(2024K1)",
+   "omfang": "17 regioner (15 fylker, uoppgitt fylke, ikke Fastlands-Norge) × 18 × 9 × 10 kvartaler = 27 540 celler."
+  },
+  {
+   "id": "arbeidstid",
+   "tabell": "13871",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Jobber og mennesker (heltid og deltid)",
+   "beskrivelse": "Heltid, deltid og i alt per næring (17) og kjønn: lønnstakere, jobber, heltidsekvivalenter, lønn, median og alder.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13871/data?lang=no&outputFormat=json-stat2&valueCodes%5BArbeidsTidRen%5D=H,D,H%2BD&valueCodes%5BNACE2007%5D=*&valueCodes%5BKjonn%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "3 × 18 × 3 × 8 × 42 = 54 432 celler."
+  },
+  {
+   "id": "kjonn_alder",
+   "tabell": "11652",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Jobber og mennesker, Hvilken lønn",
+   "beskrivelse": "Hele landet per kjønn og aldersgruppe: lønnstakere, jobber, heltidsekvivalenter, lønn, median, alder og avtalt arbeidstid.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11652/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=Ialt&valueCodes%5BKjonn%5D=*&valueCodes%5BAlder%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "3 × 6 × 9 × 42 = 6 804 celler."
+  },
+  {
+   "id": "naering88",
+   "tabell": "12314",
+   "svarer_paa": [
+    4
+   ],
+   "seksjon": "Hvor vokser jobbene (undernæringer i valgt næring)",
+   "beskrivelse": "Hele landet per tosifret næring (87 næringer, totalen og uoppgitt): samme variabler som 11654.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12314/data?lang=no&outputFormat=json-stat2&valueCodes%5BNACE2007%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "89 × 9 × 42 = 33 642 celler."
+  }
+ ]
+}

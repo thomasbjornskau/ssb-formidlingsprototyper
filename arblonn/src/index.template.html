@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Antall arbeidsforhold og lønn</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: jobber, lønnstakere og lønn i Norge per måned og kvartal, med næring som valg. Forskjellen på jobber og mennesker, tre lønnsbegreper, foreløpige og endelige tall. Tall fra SSB, tabell 13126, 11654, 13871, 11652 og 12314.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --gronn-f: #339b71; --bla: #1d9de2; --bla-f: #3face6; --oker: #c78800; --oker-f: #d5a640; --marine: #0f2080; --marine-f: #5763a6; --rosa: #c775a7;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+.bf > * { min-width: 0; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+.bf a { color: var(--tekst); text-underline-offset: 3px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+:is(button, input, select, summary, a):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+
+/* Valg */
+.bf-velg { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; }
+.bf-velg label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-select { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 9px 12px; min-width: min(100%, 22rem); }
+.bf-select.liten { font-size: 14px; padding: 6px 10px; min-width: 0; border-color: var(--null); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 6px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-valg { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.bf-valg .bf-knapp { padding: 6px 10px; font-size: 13px; }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(36px, 6vw, 52px); font-weight: 700; line-height: 1.1; margin: 4px 0; }
+.bf-setning { font-size: 17px; margin: 0 0 12px; }
+.bf-topp-under { color: var(--sek); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; min-width: 0; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-klikk { cursor: pointer; }
+.bf-klikk:hover text { text-decoration: underline; }
+.bf-klikk:focus-visible { outline: 2px solid var(--tekst); }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-line { width: 18px; height: 0; border-top: 3px solid; }
+.bf-sw-dot { width: 10px; height: 10px; border-radius: 50%; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tablewrap { max-height: 18rem; overflow: auto; margin-top: 6px; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 5px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-table tr.sum td { font-weight: 700; border-top: 1px solid var(--tekst); }
+.bf-tom { color: var(--sek); font-size: 14px; background: var(--bg); padding: 16px; margin: 6px 0; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media print { body { background: #fff; } .bf-velg, .bf-tall, .bf-valg { display: none; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Antall arbeidsforhold og lønn</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-velg">
+      <div>
+        <label for="bf-naering">Vis tallene for</label>
+        <select class="bf-select" id="bf-naering"></select>
+      </div>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du tallene</h2>
+    <ul>
+      <li><b>Jobber er ikke mennesker.</b> <span data-t="les-1"></span></li>
+      <li><b>Tre ulike lønnstall.</b> <span data-t="les-2"></span></li>
+      <li><b>Foreløpig mot foreløpig.</b> <span data-t="les-3"></span></li>
+      <li><b>Bare lønnstakere.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Arbeidsgiverne melder hver jobb, lønn og stillingsprosent i a-meldingen hver måned. SSB teller jobbene som har lønn eller ytelse i uka med den 16., slår sammen jobbene til hver person, regner lønna om til heltid og publiserer først foreløpige og så endelige tall.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <div class="bf-valg" role="group" aria-label="Periode">
+        <button type="button" class="bf-knapp" data-periode="kort" aria-pressed="true">Siste tre år</button>
+        <button type="button" class="bf-knapp" data-periode="lang" aria-pressed="false">Siden 2003</button>
+      </div>
+      <p class="bf-note" data-t="topp-note" style="margin-top:8px"></p>
+      <div class="bf-legend" data-leg="topp"></div>
+      <div class="bf-chart" id="fig-topp" style="min-height:280px"></div>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-kilde="13126"></p>
+  </section>
+
+  <section class="bf-section" id="mennesker">
+    <h2 class="bf-sh">Hvor mange jobber, og hvor mange mennesker har dem?</h2>
+    <p class="bf-ingress">En jobb er et arbeidsforhold med lønn. En person kan ha flere jobber, men telles bare én gang som lønnstaker, med hovedjobben sin. Heltidsekvivalenter regner deltidsjobbene om til hele stillinger. Selvstendig næringsdrivende er ikke med.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="tre"></h3>
+        <p class="bf-note" data-t="tre-note"></p>
+        <div class="bf-chart" id="fig-tre" style="min-height:120px"></div>
+        <details class="bf-tall" data-tall="tre"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="tre-merk"></p>
+        <p class="bf-src" data-kilde="11654"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="deltid"></h3>
+        <p class="bf-note" data-t="deltid-note"></p>
+        <div class="bf-chart" id="fig-deltid" style="min-height:120px"></div>
+        <details class="bf-tall" data-tall="deltid"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="13871"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="alder"></h3>
+        <p class="bf-note" data-t="alder-note"></p>
+        <div class="bf-chart" id="fig-alder" style="min-height:160px"></div>
+        <details class="bf-tall" data-tall="alder"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="11652"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="lonn">
+    <h2 class="bf-sh">Hvilken lønn er det SSB oppgir?</h2>
+    <p class="bf-ingress">Avtalt månedslønn er fast lønn og faste tillegg. Månedslønn tar i tillegg med uregelmessige tillegg og bonus utbetalt i midtmåneden av kvartalet. Begge er regnet om til heltid, før skatt og uten overtid. Kontantlønn er alt som faktisk er utbetalt i måneden, også overtid, regnet per jobb og ikke om til heltid.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="snittmed"></h3>
+        <p class="bf-note" data-t="snittmed-note"></p>
+        <div class="bf-chart" id="fig-snittmed" style="min-height:120px"></div>
+        <details class="bf-tall" data-tall="snittmed"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="snittmed-merk"></p>
+        <p class="bf-src" data-kilde="11654,13126"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kjonn"></h3>
+        <p class="bf-note" data-t="kjonn-note"></p>
+        <div class="bf-legend" data-leg="kjonn"></div>
+        <div class="bf-chart" id="fig-kjonn" style="min-height:120px"></div>
+        <details class="bf-tall" data-tall="kjonn"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="kjonn-merk"></p>
+        <p class="bf-src" data-kilde="13871"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="naa">
+    <h2 class="bf-sh">Blir det flere eller færre jobber nå?</h2>
+    <p class="bf-ingress">Månedstallene sier noe om hvor mye arbeidskraft virksomhetene bruker. Sammenlign måned mot måned bare med sesongjusterte tall, og bare innenfor samme versjon: foreløpig mot foreløpig, endelig mot endelig.</p>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="bidrag"></h3>
+        <p class="bf-note" data-t="bidrag-note"></p>
+        <div class="bf-chart" id="fig-bidrag" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="bidrag"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="13126"></p>
+      </article>
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="sesong"></h3>
+        <p class="bf-note" data-t="sesong-note"></p>
+        <div class="bf-legend" data-leg="sesong"></div>
+        <div class="bf-chart" id="fig-sesong" style="min-height:260px"></div>
+        <details class="bf-tall" data-tall="sesong"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="13126"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="hvor">
+    <h2 class="bf-sh">Hvor vokser jobbene, og hvor er lønna høyest?</h2>
+    <p class="bf-ingress">Næring og fylke gjelder arbeidsstedet, ikke hvor folk bor. Fylkestall med dagens fylkesinndeling finnes fra 2024. Klikk på en næring for å velge den.</p>
+    <div class="bf-valg" role="group" aria-label="Mål">
+      <button type="button" class="bf-knapp" data-maal="vekst" aria-pressed="true">Jobbvekst</button>
+      <button type="button" class="bf-knapp" data-maal="lonn" aria-pressed="false">Avtalt månedslønn</button>
+      <label for="bf-fylke" style="margin-left:12px;font-size:13px">Fylke</label>
+      <select class="bf-select liten" id="bf-fylke"></select>
+    </div>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="naeringer"></h3>
+        <p class="bf-note" data-t="naeringer-note"></p>
+        <div class="bf-chart" id="fig-naeringer" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="naeringer"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="11654"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="fylker"></h3>
+        <p class="bf-note" data-t="fylker-note"></p>
+        <div class="bf-chart" id="fig-fylker" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="fylker"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="11654"></p>
+      </article>
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="sub"></h3>
+        <p class="bf-note" data-t="sub-note"></p>
+        <div class="bf-chart" id="fig-sub" style="min-height:200px"></div>
+        <details class="bf-tall" data-tall="sub"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="12314"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="vekst">
+    <h2 class="bf-sh">Hva betyr lønnsveksten?</h2>
+    <p class="bf-ingress">Lønnsveksten er endringen i gjennomsnittlig avtalt månedslønn fra samme kvartal året før. Den er ikke det den enkelte fikk i tillegg: når det blir flere jobber i høyt- eller lavtlønnede grupper, endres snittet selv om ingen fikk ny lønn. Veksten er før prisstigning.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="lonnsvekst"></h3>
+        <p class="bf-note" data-t="lonnsvekst-note"></p>
+        <div class="bf-chart" id="fig-lonnsvekst" style="min-height:420px"></div>
+        <details class="bf-tall" data-tall="lonnsvekst"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="11654"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="snittvekst"></h3>
+        <p class="bf-note" data-t="snittvekst-note"></p>
+        <div class="bf-legend" data-leg="snittvekst"></div>
+        <div class="bf-chart" id="fig-snittvekst" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="snittvekst"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="snittvekst-merk"></p>
+        <p class="bf-src" data-kilde="11654"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Statistikken teller jobber og lønnstakere med lønn eller ytelse i uka med den 16. i måneden, fra a-meldingen. Den omfatter alle aldre og også lønnstakere som ikke er bosatt i Norge, men ikke selvstendig næringsdrivende. Avtalt månedslønn og månedslønn er regnet om til heltid, før skatt og uten overtid. Næring og fylke er arbeidsstedet. Månedstallene før 2015 bygger på et annet register og er justert av SSB.</p>
+    <p>Egne beregninger: endringer i prosent, næringenes bidrag til månedsendringen, andeler, jobber per lønnstaker, forholdet mellom snitt og median og mellom kvinner og menn er regnet av oss fra tallene i statistikkbanken. Lønnsveksten er regnet fra kronebeløpene, som er avrundet til 10 kroner. Den treffer SSBs publiserte tall for alle næringer i 2. kvartal 2026. Totalen for sesongjusterte jobber er summen av de sesongjusterte næringene, og avviker med noen få jobber på grunn av avrunding. Små tall i kvartalstabellene er endret av SSB for å ivareta personvernet, så summer på tvers av tabeller kan avvike noe.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 13126, 11654, 13871, 11652 og 12314. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/arblonn">ssb.no/arblonn</a>.</p>
+  </footer>
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/arblonn.json__*/;
+</script>
+<script>
+(() => {
+  'use strict';
+  const D = DATA;
+  const FARGE = { gronn: '#00824d', gronnF: '#339b71', bla: '#1d9de2', blaF: '#3face6', oker: '#c78800', okerF: '#d5a640', rosa: '#c775a7', rosaF: '#cd83b0', marine: '#0f2080', marineF: '#5763a6', dempet: '#c3cdcf', tekst: '#274246', sek: '#5e787a', stotte: '#d9dfe0', null: '#a9b5b7' };
+  const TIP = document.querySelector('.bf-tip');
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  // ---------- Format ----------
+  const nf = {};
+  const nb = (n, des = 0) => {
+    if (n == null || Number.isNaN(n)) return '–';
+    nf[des] = nf[des] || new Intl.NumberFormat('nb-NO', { minimumFractionDigits: des, maximumFractionDigits: des });
+    return nf[des].format(n).replace(/-/g, '−').replace(/ | /g, ' ');
+  };
+  const sgn = (n, des = 0) => n == null ? '–' : (n > 0 ? '+' : '') + nb(n, des);
+  const kr = v => v == null ? 'tallet er skjult' : `${nb(v)} kr`;
+  const pst = (a, b) => (a == null || b == null || !b) ? null : 100 * (a / b - 1);
+  const dato = s => s.split('-').reverse().join('.');
+  const MNDNAVN = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+  const mndTekst = (t, aar = true) => MNDNAVN[+t.slice(5) - 1] + (aar ? ' ' + t.slice(0, 4) : '');
+  const kvTekst = t => `${t.slice(5)}. kvartal ${t.slice(0, 4)}`;
+  // Avrunding i overskrifter, mot fasitlesning
+  const rundt = v => Math.abs(v) >= 1000 ? Math.round(v / 100) * 100 : Math.round(v / 10) * 10;
+  const liten = s => s === 'Alle næringer' ? 'alle næringer' : s.charAt(0).toLowerCase() + s.slice(1);
+  document.querySelectorAll('[data-kilde]').forEach(el => {
+    const t = el.dataset.kilde.split(',');
+    const dd = Array.from(new Set(t.map(x => dato(D.oppdatert[x]))));
+    el.textContent = `Kilde: SSB, tabell ${t.slice(0, -1).join(', ')}${t.length > 1 ? ' og ' : ''}${t.at(-1)}. Sist oppdatert: ${dd.slice(0, -1).join(', ')}${dd.length > 1 ? ' og ' : ''}${dd.at(-1)}.`;
+  });
+  document.querySelectorAll('[data-hentet]').forEach(el => { el.textContent = dato(D.hentet); });
+
+  // ---------- Data ----------
+  const NAVN = new Map(D.naeringer.map(n => [n.k, n.n]));
+  const VALGBARE = D.naeringer.filter(n => n.k !== '00').map(n => n.k);
+  const N17 = VALGBARE.filter(k => k !== '00-99');
+  const TM = D.tm, mS = TM.length - 1, mF = mS - 1;           // siste (foreløpig) og nest siste måned
+  const TQ = D.tq, qS = TQ.length - 1, qF = qS - 4;           // siste kvartal og samme kvartal året før
+  const TF = D.tf, fS = TF.length - 1, fF = fS - 4;
+  const FYLKENAVN = new Map(D.fylker.map(f => [f.k, f.n]));
+  const T = n => document.querySelector(`[data-t="${n}"]`);
+  const H = n => document.querySelector(`[data-h="${n}"]`);
+  const sett = (n, html) => { const el = T(n); if (el) el.innerHTML = html; };
+
+  // ---------- Tooltip ----------
+  function visTip(html, evt) {
+    TIP.innerHTML = html; TIP.hidden = false;
+    const r = document.querySelector('.bf').getBoundingClientRect();
+    const tw = TIP.offsetWidth, th = TIP.offsetHeight;
+    let x = evt.clientX - r.left + 14, y = evt.clientY - r.top - th - 10;
+    if (x + tw > r.width - 8) x = evt.clientX - r.left - tw - 14;
+    if (x < 4) x = 4;
+    if (y < 4) y = evt.clientY - r.top + 18;
+    TIP.style.transform = `translate(${x}px, ${y}px)`;
+  }
+  const skjulTip = () => { TIP.hidden = true; };
+  const tipRad = (farge, navn, verdi) => `<div class="bf-tip-r"><i style="background:${farge}"></i>${esc(navn)}<b>${verdi}</b></div>`;
+
+  // ---------- Tabeller og tegnforklaring ----------
+  function tabell(navn, hoder, rader, sumRad) {
+    const el = document.querySelector(`[data-tall="${navn}"] .bf-tablewrap`);
+    if (!el) return;
+    const rad = (r, cls) => `<tr${cls ? ` class="${cls}"` : ''}>${r.map((c, i) => i === 0 ? `<td>${esc(c)}</td>` : `<td>${c}</td>`).join('')}</tr>`;
+    el.innerHTML = `<table class="bf-table"><thead><tr>${hoder.map(h => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rader.map(r => rad(r)).join('')}${sumRad ? rad(sumRad, 'sum') : ''}</tbody></table>`;
+  }
+  const legend = (navn, deler) => { const el = document.querySelector(`[data-leg="${navn}"]`); if (el) el.innerHTML = deler.map(([cls, farge, t]) => `<span><i class="${cls}" style="${cls === 'bf-sw-line' ? 'border-color' : 'background'}:${farge}"></i>${esc(t)}</span>`).join(''); };
+
+  // ---------- Responsiv tegning ----------
+  const tegnere = new Map();
+  function responsiv(el, tegn) {
+    const st = tegnere.get(el) || { b: 0 };
+    st.tegn = tegn; st.b = 0;
+    if (!tegnere.has(el)) {
+      tegnere.set(el, st);
+      new ResizeObserver(() => { const w = el.clientWidth; if (w >= 240 && w !== st.b) { st.b = w; st.tegn(w); } }).observe(el);
+    }
+    const w = el.clientWidth; if (w >= 240) { st.b = w; tegn(w); }
+  }
+  const klikkbar = (sel, navn, fn) => sel.attr('tabindex', 0).attr('role', 'button').attr('aria-label', navn)
+    .on('click', fn).on('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+  const tom = (el, tekst) => { el.innerHTML = `<p class="bf-tom">${esc(tekst)}</p>`; };
+
+  // ---------- Tidslinje (måneder) ----------
+  // serier: [{navn, farge, v, bredde, stiplet}], o.punkter: [{i, v, farge, navn}], o.spenn: {i, fra, til, tekst}
+  function tidslinje(el, tid, serier, o = {}) {
+    responsiv(el, w => {
+      const smal = w < 520;
+      const antMerker = serier.filter(s => !s.utenMerke).length + (o.punkter || []).length;
+      const ekstra = smal ? antMerker * 17 + 12 : 0;
+      const h = (o.hoyde || 280) + ekstra, m = { t: 22, r: smal ? 14 : (o.hoyreMarg ?? 120), b: 26 + ekstra, l: o.venstre || 64 };
+      const iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const x = d3.scaleLinear().domain([0, tid.length - 1]).range([0, iw]);
+      const vals = [...serier.flatMap(s => s.v.filter(v => v != null)), ...(o.punkter || []).map(p => p.v)];
+      let lo = d3.min(vals), hi = d3.max(vals);
+      if (o.null) lo = Math.min(0, lo);
+      const pad = (hi - lo) * 0.06 || 1;
+      const y = d3.scaleLinear().domain([o.null ? lo : lo - pad, hi + pad]).nice(5).range([ih, 0]);
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+      if (o.ytittel) g.append('text').attr('class', 'bf-tick').attr('x', -m.l).attr('y', -10).text(o.ytittel);
+      y.ticks(5).forEach(t => {
+        g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', -8).attr('y', y(t) + 4).attr('text-anchor', 'end').text(o.yfmt ? o.yfmt(t) : nb(t));
+      });
+      // Årstall ved januar
+      const aar = tid.map((t, i) => [t, i]).filter(([t]) => t.endsWith('M01'));
+      const hopp = Math.max(1, Math.ceil(aar.length / (smal ? 4 : 10)));
+      aar.forEach(([t, i], j) => {
+        if ((aar.length - 1 - j) % hopp) return;
+        g.append('line').attr('x1', x(i)).attr('x2', x(i)).attr('y1', ih).attr('y2', ih + 4).attr('stroke', FARGE.null);
+        g.append('text').attr('class', 'bf-tick').attr('x', x(i)).attr('y', ih + 18).attr('text-anchor', 'middle').text(t.slice(0, 4));
+      });
+      (o.brudd || []).forEach(b => {
+        if (b.i < 0 || b.i >= tid.length) return;
+        g.append('line').attr('x1', x(b.i)).attr('x2', x(b.i)).attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.sek).attr('stroke-dasharray', '3 3');
+        g.append('text').attr('class', 'bf-tick bf-halo').attr('x', x(b.i) + 4).attr('y', 10).text(b.tekst);
+      });
+      const linje = d3.line().defined(d => d[1] != null).x(d => x(d[0])).y(d => y(d[1]));
+      serier.forEach(s => {
+        g.append('path').attr('d', linje(s.v.map((v, i) => [i, v]))).attr('fill', 'none').attr('stroke', s.farge)
+          .attr('stroke-width', s.bredde || 2.5).attr('stroke-linejoin', 'round').attr('stroke-dasharray', s.stiplet ? '5 4' : null);
+      });
+      // Endepunkter med direkte merking
+      const ender = serier.filter(s => !s.utenMerke).map(s => { let i = s.v.length - 1; while (i >= 0 && s.v[i] == null) i--; return { navn: s.kort || s.navn, farge: s.farge, i, v: s.v[i] }; });
+      (o.punkter || []).forEach(p => ender.push({ ...p, punkt: true }));
+      const merker = ender.filter(e => e.i >= 0).map(e => ({ ...e, y: y(e.v) })).sort((a, b) => a.y - b.y);
+      for (let k = 1; k < merker.length; k++) if (merker[k].y - merker[k - 1].y < 30) merker[k].y = merker[k - 1].y + 30;
+      merker.forEach((e, k) => {
+        g.append('circle').attr('cx', x(e.i)).attr('cy', y(e.v)).attr('r', e.punkt ? 5 : 3.5).attr('fill', e.farge).attr('stroke', '#fff').attr('stroke-width', 1.5);
+        if (smal) {
+          const ly = ih + 40 + k * 17;
+          g.append('circle').attr('cx', -m.l + 6).attr('cy', ly - 4).attr('r', 4.5).attr('fill', e.farge);
+          g.append('text').attr('class', 'bf-lab').attr('x', -m.l + 16).attr('y', ly).html(`<tspan font-weight="700">${esc(e.navn)}</tspan> ${esc(o.fmt(e.v))}`);
+          return;
+        }
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', x(e.i) + 9).attr('y', e.y).text(e.navn);
+        g.append('text').attr('class', 'bf-lab bf-halo').attr('x', x(e.i) + 9).attr('y', e.y + 14).text(o.fmt(e.v));
+      });
+      if (o.spenn) {
+        const s = o.spenn, xs = x(s.i) - 10;
+        g.append('line').attr('x1', xs).attr('x2', xs).attr('y1', y(s.fra) + 4).attr('y2', y(s.til) - 4).attr('stroke', FARGE.sek);
+        [s.fra, s.til].forEach(v => g.append('line').attr('x1', xs - 3).attr('x2', xs + 3).attr('y1', y(v) + (v === s.fra ? 4 : -4)).attr('y2', y(v) + (v === s.fra ? 4 : -4)).attr('stroke', FARGE.sek));
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', xs - 6).attr('y', (y(s.fra) + y(s.til)) / 2 + 4).attr('text-anchor', 'end').text(s.tekst);
+      }
+      const regel = g.append('line').attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.null).style('display', 'none');
+      g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent')
+        .on('pointermove', evt => {
+          const [px] = d3.pointer(evt);
+          const i = Math.max(0, Math.min(tid.length - 1, Math.round(x.invert(px))));
+          regel.style('display', null).attr('x1', x(i)).attr('x2', x(i));
+          let html = `<div class="bf-tip-h">${mndTekst(tid[i])}</div>`;
+          serier.forEach(s => { html += tipRad(s.farge, s.navn, s.v[i] == null ? 'ikke tall' : o.fmt(s.v[i])); });
+          (o.punkter || []).filter(p => p.i === i).forEach(p => { html += tipRad(p.farge, p.navnLang || p.navn, o.fmt(p.v)); });
+          visTip(html, evt);
+        })
+        .on('pointerleave', () => { regel.style('display', 'none'); skjulTip(); });
+    });
+  }
+
+  // ---------- Liggende stolper ----------
+  // rader: [{k, navn, deler: [{v, farge, navn}], sterk, etikett}]. Negative verdier går til venstre for null.
+  function liggende(el, rader, o = {}) {
+    responsiv(el, w => {
+      const smal = w < 560;
+      const n = rader[0].deler.length;
+      const bh = o.bh || (n > 1 ? 13 : 18), radH = n * (bh + 2) + 10, etikettH = smal ? 16 : 0;
+      const venstre = smal ? 0 : Math.min(o.venstreMaks || 220, w * 0.4);
+      const verdier = rader.flatMap(r => r.deler.map(d => d.v).filter(v => v != null));
+      const lo = Math.min(0, d3.min(verdier)), hi = Math.max(0, d3.max(verdier), o.ref ?? 0);
+      const hoyreM = o.hoyreMarg || 84, venstreM = lo < 0 ? 64 : 0;
+      const iw = w - venstre - hoyreM - venstreM;
+      const x = d3.scaleLinear().domain([lo, hi]).range([0, iw]);
+      const lab = Math.max(String(Math.round(hi)).length, String(Math.round(lo)).length) * 7 + 18;
+      const nT = Math.max(2, Math.min(smal ? 4 : 6, Math.floor(iw / lab)));
+      x.nice(nT);
+      const ticks = x.ticks(nT), steg = ticks.length > 1 ? ticks[1] - ticks[0] : 1, des = steg < 1 ? 1 : 0;
+      const h = rader.length * (radH + etikettH) + 30;
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${venstre + venstreM},4)`);
+      ticks.forEach(t => {
+        g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 0).attr('y2', h - 30).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', x(t)).attr('y', h - 12).attr('text-anchor', 'middle').text(o.tickFmt ? o.tickFmt(t, des) : nb(t, des));
+      });
+      if (o.ref != null) {
+        g.append('line').attr('x1', x(o.ref)).attr('x2', x(o.ref)).attr('y1', 0).attr('y2', h - 30).attr('stroke', FARGE.tekst).attr('stroke-dasharray', '4 3');
+      }
+      rader.forEach((r, j) => {
+        const y0 = j * (radH + etikettH) + etikettH;
+        const rad = g.append('g').attr('class', o.klikk ? 'bf-klikk' : null);
+        if (o.klikk) klikkbar(rad, `${r.navn}: ${r.deler.map(d => o.fmt(d.v)).join(', ')}`, () => o.klikk(r.k));
+        rad.append('rect').attr('x', -venstre - venstreM).attr('y', y0 - etikettH).attr('width', w).attr('height', radH + etikettH).attr('fill', r.sterk ? FARGE.stotte : 'transparent').attr('opacity', r.sterk ? 0.45 : 1);
+        if (smal) rad.append('text').attr('class', 'bf-lab bf-halo' + (r.sterk ? ' bf-strong' : '')).attr('x', -venstreM).attr('y', y0 - 3).text(r.navn);
+        else rad.append('text').attr('class', 'bf-lab' + (r.sterk ? ' bf-strong' : '')).attr('x', -venstreM - 10).attr('y', y0 + radH / 2 + 4).attr('text-anchor', 'end').text(r.navn);
+        r.deler.forEach((d, i) => {
+          const by = y0 + 5 + i * (bh + 2);
+          if (d.v == null) {
+            rad.append('text').attr('class', 'bf-tick').attr('x', x(0) + 5).attr('y', by + bh - 3).text(d.tom || 'tallet er skjult');
+            return;
+          }
+          const x0 = x(Math.min(0, d.v)), x1 = x(Math.max(0, d.v));
+          rad.append('rect').attr('x', x0).attr('y', by).attr('width', Math.max(0.5, x1 - x0)).attr('height', bh).attr('fill', d.farge);
+          const ut = d.v >= 0;
+          rad.append('text').attr('class', 'bf-lab bf-halo' + (r.sterk || n === 1 ? ' bf-strong' : ''))
+            .attr('x', ut ? x1 + 5 : x0 - 5).attr('y', by + bh - 3).attr('text-anchor', ut ? 'start' : 'end').text(o.fmt(d.v));
+        });
+        rad.on('pointermove', evt => o.tip && visTip(o.tip(r), evt)).on('pointerleave', skjulTip);
+      });
+    });
+  }
+
+  // ---------- Tilstand ----------
+  const hash = () => Object.fromEntries(location.hash.slice(1).split('&').filter(Boolean).map(p => p.split('=').map(decodeURIComponent)));
+  let S = VALGBARE.includes(hash().naering) ? hash().naering : '00-99';
+  let FY = D.fylker.some(f => f.k === hash().fylke) ? hash().fylke : 'land';
+  let PERIODE = 'kort', MAAL = 'vekst';
+  const settHash = () => {
+    const deler = [];
+    if (S !== '00-99') deler.push(`naering=${encodeURIComponent(S)}`);
+    if (FY !== 'land') deler.push(`fylke=${FY}`);
+    const ny = deler.length ? '#' + deler.join('&') : ' ';
+    if ((location.hash || ' ') !== ny) history.replaceState(null, '', ny === ' ' ? location.pathname + location.search : ny);
+  };
+  const velg = k => { if (!VALGBARE.includes(k) || k === S) return; S = k; $('#bf-naering').value = k; settHash(); tegnAlt(); };
+
+  // ---------- Valg i hodet ----------
+  const sel = $('#bf-naering');
+  sel.innerHTML = VALGBARE.map(k => `<option value="${esc(k)}">${esc(NAVN.get(k))}</option>`).join('');
+  sel.value = S;
+  sel.addEventListener('change', () => velg(sel.value));
+  $('#bf-eksempler').innerHTML = ['86-88', '41-43', '55-56', '05-09'].map(k => `<button type="button" class="bf-lenke" data-velg="${k}">${esc(NAVN.get(k))}</button>`).join(', ');
+  document.querySelectorAll('[data-velg]').forEach(b => b.addEventListener('click', () => velg(b.dataset.velg)));
+  const fsel = $('#bf-fylke');
+  fsel.innerHTML = `<option value="land">Hele landet</option>` + D.fylker.map(f => `<option value="${f.k}">${esc(f.n)}</option>`).join('');
+  fsel.value = FY;
+  fsel.addEventListener('change', () => { FY = fsel.value; settHash(); tegnHvor(); });
+  document.querySelectorAll('[data-periode]').forEach(b => b.addEventListener('click', () => {
+    PERIODE = b.dataset.periode;
+    document.querySelectorAll('[data-periode]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    tegnTopp();
+  }));
+  document.querySelectorAll('[data-maal]').forEach(b => b.addEventListener('click', () => {
+    MAAL = b.dataset.maal;
+    document.querySelectorAll('[data-maal]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    tegnHvor();
+  }));
+
+  // ---------- Faste tekster ----------
+  {
+    const t = D.kv['00-99'], m = D.mnd['00-99'];
+    const feilEndring = m.jf[mS] - m.je[mF];
+    sett('les-1', `I ${kvTekst(TQ[qS])} var det ${nb(t.j[qS])} jobber, men ${nb(t.l[qS])} lønnstakere. Forskjellen, ${nb(t.j[qS] - t.l[qS])}, er bijobber.`);
+    sett('les-2', `Avtalt månedslønn (${nb(t.a[qS])} kr) og månedslønn (${nb(t.m[qS])} kr) er per heltid. Kontantlønn (${nb(m.kf[mS])} kr) er det som er utbetalt per jobb.`);
+    sett('les-3', `Foreløpige tall mangler forsinkede meldinger og rettinger og ligger lavere. Foreløpig ${mndTekst(TM[mS], false)} minus endelig ${mndTekst(TM[mF], false)} gir ${sgn(feilEndring)} jobber, mens riktig endring er ${sgn(m.jf[mS] - m.jf[mF])}.`);
+    sett('les-4', 'Selvstendig næringsdrivende er ikke med. Lønnstakere som ikke er bosatt i Norge, er med. Derfor viser AKU andre tall.');
+    const vekst = pst(t.a[qS], t.a[qF]);
+    $('#ingress').innerHTML = `I ${kvTekst(TQ[qS])} var det <b>${nb(t.j[qS])} jobber</b> og ${nb(t.l[qS])} lønnstakere i Norge, ${nb(pst(t.j[qS], t.j[qF]), 1)} prosent flere jobber enn året før. Gjennomsnittlig avtalt månedslønn var <b>${nb(t.a[qS])} kroner</b>, ${nb(vekst, 1)} prosent høyere. Fra ${mndTekst(TM[mF], false)} til ${mndTekst(TM[mS])} ${m.jf[mS] >= m.jf[mF] ? 'økte' : 'falt'} antall jobber med ${nb(Math.abs(m.jf[mS] - m.jf[mF]))}, sesongjustert og foreløpig.`;
+  }
+
+  // ---------- Toppgrafikk ----------
+  function tegnTopp() {
+    const m = D.mnd[S], navn = NAVN.get(S);
+    const endring = m.jf[mS] - m.jf[mF];
+    sett('omr', `${navn} · ${mndTekst(TM[mS])}`);
+    sett('stort', `${sgn(rundt(endring))} jobber`);
+    sett('setning', `fra ${mndTekst(TM[mF], false)} til ${mndTekst(TM[mS], false)}${S === '00-99' ? '' : ' i ' + liten(navn)}, sesongjustert.`);
+    const gap = m.je[mF] - m.jf[mF], feil = m.jf[mS] - m.je[mF];
+    sett('under', `<p>Tallet er foreløpig. Det endelige tallet for ${mndTekst(TM[mF], false)} ble ${nb(Math.abs(gap))} jobber ${gap >= 0 ? 'høyere' : 'lavere'} enn det foreløpige. Det endelige tallet tar med forsinkede meldinger og rettinger, og jobber som fikk lønn først måneden etter.</p><p>Sammenlign derfor aldri et foreløpig tall med et endelig. Foreløpig ${mndTekst(TM[mS], false)} minus endelig ${mndTekst(TM[mF], false)} gir ${sgn(feil)} jobber.</p>`);
+    const fra = PERIODE === 'kort' ? TM.length - 37 : 0;
+    const tid = TM.slice(fra);
+    sett('topp-note', `Antall jobber per måned, sesongjustert. Den grønne linja er endelige tall til og med ${mndTekst(TM[mF])}.`);
+    legend('topp', [['bf-sw-line', FARGE.gronn, 'Endelige tall'], ['bf-sw-dot', FARGE.bla, 'Foreløpige tall, siste to måneder']]);
+    const brudd = PERIODE === 'lang' ? [{ i: TM.indexOf('2015M01') - fra, tekst: 'a-ordningen fra 2015' }] : [];
+    tidslinje($('#fig-topp'), tid, [{ navn: 'Endelig', kort: 'Endelig', farge: FARGE.gronn, v: m.je.slice(fra), utenMerke: false }], {
+      fmt: v => nb(v), aria: `Sesongjusterte jobber i ${liten(navn)}, endelige og foreløpige tall`,
+      punkter: [{ i: mF - fra, v: m.jf[mF], farge: FARGE.bla, navn: `Foreløpig ${mndTekst(TM[mF], false).slice(0, 3)}.`, navnLang: 'Foreløpig' },
+                { i: mS - fra, v: m.jf[mS], farge: FARGE.bla, navn: `Foreløpig ${mndTekst(TM[mS], false).slice(0, 3)}.`, navnLang: 'Foreløpig' }],
+      spenn: PERIODE === 'kort' ? { i: mF - fra, fra: m.jf[mF], til: m.je[mF], tekst: nb(gap) } : null,
+      brudd, hoyreMarg: 116, ytittel: 'antall jobber, sesongjustert'
+    });
+    tabell('topp', ['Måned', 'Endelig', 'Foreløpig'], tid.map((t, i) => [mndTekst(t), nb(m.je[fra + i]), nb(m.jf[fra + i])]).reverse());
+    const i12 = mF - 12;
+    sett('t1-lab', `Jobber i ${mndTekst(TM[mS])}, foreløpig`); sett('t1', nb(m.jf[mS]));
+    sett('t2-lab', `Endring siste 12 måneder, endelig (${mndTekst(TM[i12], false).slice(0, 3)}. mot ${mndTekst(TM[mF], false).slice(0, 3)}.)`);
+    sett('t2', `${sgn(m.je[mF] - m.je[i12])} <span class="bf-unit">${sgn(pst(m.je[mF], m.je[i12]), 1)} %</span>`);
+    sett('t3-lab', `Lønnstakere (personer) i ${mndTekst(TM[mS])}, foreløpig`); sett('t3', nb(m.lf[mS]));
+    sett('t4-lab', `Kontantlønn per jobb, ${mndTekst(TM[mS])}, foreløpig`); sett('t4', `${nb(m.kf[mS])} <span class="bf-unit">kr</span>`);
+  }
+
+  // ---------- Jobber og mennesker ----------
+  function tegnMennesker() {
+    const t = D.kv[S], navn = NAVN.get(S);
+    const per = t.j[qS] / t.l[qS];
+    H('tre').textContent = `${nb(t.j[qS])} jobber, ${nb(t.l[qS])} lønnstakere`;
+    sett('tre-note', `${navn}, ${kvTekst(TQ[qS])}. Antall.`);
+    liggende($('#fig-tre'), [
+      { navn: 'Jobber', deler: [{ v: t.j[qS], farge: FARGE.gronn }] },
+      { navn: 'Lønnstakere (personer)', deler: [{ v: t.l[qS], farge: FARGE.gronn }] },
+      { navn: 'Heltidsekvivalenter', deler: [{ v: t.h[qS], farge: FARGE.gronn }] }
+    ], { fmt: v => nb(v), tickFmt: v => v === 0 ? '0' : nb(v / 1e6, 1) + ' mill.', venstreMaks: 170, aria: 'Jobber, lønnstakere og heltidsekvivalenter' });
+    tabell('tre', ['', TQ[qF], TQ[qS], 'Endring, %'], [['Jobber', 'j'], ['Lønnstakere', 'l'], ['Heltidsekvivalenter', 'h']].map(([n, k]) => [n, nb(t[k][qF]), nb(t[k][qS]), sgn(pst(t[k][qS], t[k][qF]), 1)]));
+    sett('tre-merk', `Det er ${nb(per, 2)} jobber per lønnstaker, og jobbene tilsvarer ${nb(100 * t.h[qS] / t.j[qS])} prosent av hele stillinger.${S === '00-99' ? '' : ' Lønnstakere telles i næringen til hovedjobben, så en del av jobbene her er bijobber for folk som har hovedjobben i en annen næring.'}`);
+
+    // Deltid
+    const A = D.arbtid[S], ti = D.ta.length - 1;
+    const andel = kj => { const d = A[kj].D.j[ti], i = A[kj]['H+D'].j[ti]; return d == null || !i ? null : 100 * d / i; };
+    const ak = andel('2'), am = andel('1'), aa = andel('0');
+    H('deltid').textContent = ak == null || am == null ? 'Deltid'
+      : Math.abs(ak - am) < 2 ? `Kvinner og menn har like stor andel deltid: ${nb((ak + am) / 2)} prosent`
+      : `${nb(ak)} prosent av kvinnenes jobber er deltid, ${nb(am)} prosent av mennenes`;
+    sett('deltid-note', `Andel av jobbene som er deltid, prosent. ${navn}, ${kvTekst(D.ta[ti])}.`);
+    liggende($('#fig-deltid'), [
+      { navn: 'Kvinner', deler: [{ v: ak, farge: FARGE.gronn }] },
+      { navn: 'Menn', deler: [{ v: am, farge: FARGE.gronn }] },
+      { navn: 'Alle', deler: [{ v: aa, farge: FARGE.gronn }], sterk: true }
+    ], { fmt: v => nb(v) + ' %', maks: 100, venstreMaks: 120, aria: 'Andel deltidsjobber etter kjønn' });
+    tabell('deltid', ['', 'Jobber i alt', 'Deltid', 'Andel deltid, %'], [['Kvinner', '2'], ['Menn', '1'], ['Alle', '0']].map(([n, k]) => [n, nb(A[k]['H+D'].j[ti]), nb(A[k].D.j[ti]), nb(andel(k), 1)]));
+
+    // Alder (hele landet)
+    const K = D.ka['0'];
+    const rader = D.alder.filter(a => a.k !== '999A').map(a => ({ k: a.k, navn: a.n, v: pst(K[a.k].j[qS], K[a.k].j[qF]) }));
+    const maks = rader.reduce((a, b) => b.v > a.v ? b : a);
+    H('alder').textContent = `Jobbene øker mest for ${maks.navn.toLowerCase()}`;
+    sett('alder-note', `Endring i antall jobber fra ${kvTekst(TQ[qF])}, prosent. Alle næringer, hele landet: tallene finnes ikke per næring.`);
+    liggende($('#fig-alder'), rader.map(r => ({ navn: r.navn, deler: [{ v: r.v, farge: FARGE.gronn }], sterk: r === maks })),
+      { fmt: v => sgn(v, 1) + ' %', venstreMaks: 140, aria: 'Endring i jobber etter alder' });
+    tabell('alder', ['Alder', `Jobber ${TQ[qS]}`, 'Endring', 'Endring, %', 'Snitt avtalt arbeidstid, timer'], D.alder.map(a => [a.n, nb(K[a.k].j[qS]), sgn(K[a.k].j[qS] - K[a.k].j[qF]), sgn(pst(K[a.k].j[qS], K[a.k].j[qF]), 1), nb(K[a.k].t[qS], 1)]));
+  }
+
+  // ---------- Hvilken lønn ----------
+  function tegnLonn() {
+    const t = D.kv[S], navn = NAVN.get(S), m = D.mnd[S];
+    const over = pst(t.a[qS], t.am[qS]);
+    H('snittmed').textContent = over == null ? 'Snitt og median' : `Snittet ligger ${nb(over)} prosent over medianen`;
+    sett('snittmed-note', `${navn}, ${kvTekst(TQ[qS])}. Kroner per måned, regnet om til heltid.`);
+    liggende($('#fig-snittmed'), [
+      { navn: 'Median, avtalt månedslønn', deler: [{ v: t.am[qS], farge: FARGE.gronn }] },
+      { navn: 'Snitt, avtalt månedslønn', deler: [{ v: t.a[qS], farge: FARGE.gronn }], sterk: true },
+      { navn: 'Snitt, månedslønn med bonus og tillegg', deler: [{ v: t.m[qS], farge: FARGE.gronn }] }
+    ], { fmt: v => nb(v) + ' kr', venstreMaks: 230, hoyreMarg: 90, aria: 'Median og gjennomsnitt' });
+    tabell('snittmed', ['', TQ[qF], TQ[qS], 'Endring, %'], [['Median, avtalt månedslønn', 'am'], ['Snitt, avtalt månedslønn', 'a'], ['Median, månedslønn', 'mm'], ['Snitt, månedslønn', 'm']].map(([n, k]) => [n, nb(t[k][qF]), nb(t[k][qS]), sgn(pst(t[k][qS], t[k][qF]), 1)]));
+    sett('snittmed-merk', `Medianen er lønna i midten når alle lønningene er regnet om til heltid og sortert. Kontantlønna i ${mndTekst(TM[mS])} var ${nb(m.kf[mS])} kr per jobb. Den er lavere fordi deltidsjobber ikke er regnet om til heltid, selv om overtid og bonus er med.`);
+
+    // Kvinner og menn
+    const ti = D.ta.length - 1;
+    const v = (kj, k) => D.arbtid[S][kj]['H+D'][k][ti];
+    const ks = pst(v('2', 'a'), v('1', 'a')), km = pst(v('2', 'am'), v('1', 'am'));
+    H('kjonn').textContent = ks != null && km != null ? `Kvinner har ${nb(100 + ks)} prosent av menns snittlønn, ${nb(100 + km)} prosent målt med median` : 'Kvinner og menn';
+    sett('kjonn-note', `Avtalt månedslønn, kroner per heltid. ${navn}, ${kvTekst(D.ta[ti])}.`);
+    legend('kjonn', [['bf-sw-sq', FARGE.okerF, 'Kvinner'], ['bf-sw-sq', FARGE.marineF, 'Menn']]);
+    liggende($('#fig-kjonn'), [
+      { navn: 'Snitt', deler: [{ v: v('2', 'a'), farge: FARGE.okerF }, { v: v('1', 'a'), farge: FARGE.marineF }] },
+      { navn: 'Median', deler: [{ v: v('2', 'am'), farge: FARGE.okerF }, { v: v('1', 'am'), farge: FARGE.marineF }] }
+    ], { fmt: x => nb(x) + ' kr', venstreMaks: 80, hoyreMarg: 90, aria: 'Avtalt månedslønn for kvinner og menn' });
+    tabell('kjonn', ['', 'Kvinner', 'Menn', 'Kvinner i % av menn'], [['Snitt', 'a'], ['Median', 'am']].map(([n, k]) => [n, nb(v('2', k)), nb(v('1', k)), nb(100 * v('2', k) / v('1', k), 1)]));
+    sett('kjonn-merk', 'Tallene sammenligner alle kvinner og alle menn i næringen, uten å ta hensyn til yrke, alder eller arbeidstid. Gjennomsnittet dras opp av de høyeste lønningene, der menn er flest.');
+  }
+
+  // ---------- Blir det flere jobber nå ----------
+  function tegnNaa() {
+    const rader = N17.map(k => ({ k, navn: NAVN.get(k), v: D.mnd[k].jf[mS] - D.mnd[k].jf[mF] })).sort((a, b) => b.v - a.v);
+    const tot = D.mnd['00-99'].jf[mS] - D.mnd['00-99'].jf[mF];
+    const storst = rader[0];
+    H('bidrag').textContent = `${storst.navn} sto for ${nb(storst.v)} av ${nb(tot)} nye jobber fra ${mndTekst(TM[mF], false)} til ${mndTekst(TM[mS], false)}`;
+    if (tot <= 0) H('bidrag').textContent = `Endring i jobber fra ${mndTekst(TM[mF], false)} til ${mndTekst(TM[mS], false)}, per næring`;
+    sett('bidrag-note', `Endring i antall jobber, sesongjustert og foreløpig. Totalen er summen av de sesongjusterte næringene. Summen av endringene avviker med ${nb(Math.abs(rader.reduce((s, r) => s + r.v, 0) + (D.mnd['00'].jf[mS] - D.mnd['00'].jf[mF]) - tot))} fra totalen på grunn av avrunding. Uoppgitt næring er ikke med i figuren. Klikk på en næring for å velge den.`);
+    liggende($('#fig-bidrag'), rader.map(r => ({ k: r.k, navn: r.navn, deler: [{ v: r.v, farge: r.k === S ? FARGE.gronn : FARGE.gronnF }], sterk: r.k === S })),
+      { fmt: v => sgn(v), klikk: velg, venstreMaks: 240, aria: 'Endring i jobber per næring siste måned' });
+    tabell('bidrag', ['Næring', `Foreløpig ${TM[mF]}`, `Foreløpig ${TM[mS]}`, 'Endring'], rader.map(r => [r.navn, nb(D.mnd[r.k].jf[mF]), nb(D.mnd[r.k].jf[mS]), sgn(r.v)]), ['Alle næringer', nb(D.mnd['00-99'].jf[mF]), nb(D.mnd['00-99'].jf[mS]), sgn(tot)]);
+
+    // Sesong
+    const m = D.mnd[S], navn = NAVN.get(S), fra = mF - 48;
+    const tid = TM.slice(fra, mF + 1);
+    const sv = m.ue.slice(fra, mF + 1), jv = m.je.slice(fra, mF + 1);
+    const aar = sv.slice(-12), hoy = d3.maxIndex(aar), lav = d3.minIndex(aar), t12 = tid.slice(-12);
+    H('sesong').textContent = `Ujusterte tall svinger med årstiden: ${nb(rundt(aar[hoy] - aar[lav]))} jobber mellom ${mndTekst(t12[lav], false)} og ${mndTekst(t12[hoy], false)}`;
+    sett('sesong-note', `${navn}, endelige tall, antall jobber per måned. Forskjellen gjelder siste tolv måneder. Ujusterte tall skal sammenlignes med samme måned året før, ikke med forrige måned.`);
+    legend('sesong', [['bf-sw-line', FARGE.dempet, 'Ujustert'], ['bf-sw-line', FARGE.gronn, 'Sesongjustert']]);
+    tidslinje($('#fig-sesong'), tid, [
+      { navn: 'Ujustert', kort: 'Ujustert', farge: FARGE.dempet, v: sv, bredde: 2 },
+      { navn: 'Sesongjustert', kort: 'Sesongjustert', farge: FARGE.gronn, v: jv }
+    ], { fmt: v => nb(v), hoyde: 260, hoyreMarg: 120, aria: 'Ujusterte og sesongjusterte jobber' });
+    tabell('sesong', ['Måned', 'Ujustert', 'Sesongjustert'], tid.map((t, i) => [mndTekst(t), nb(sv[i]), nb(jv[i])]).reverse());
+  }
+
+  // ---------- Hvor ----------
+  function kvartalskilde(k) {
+    // Hele landet: 11654 for hele perioden. Fylke: samme tabell fra 2024K1.
+    if (FY === 'land') return { t: D.kv[k], s: qS, f: qF, tid: TQ };
+    return { t: D.fylke[FY][k], s: fS, f: fF, tid: TF };
+  }
+  function tegnHvor() {
+    const sted = FY === 'land' ? 'hele landet' : FYLKENAVN.get(FY);
+    const vekst = MAAL === 'vekst';
+    const verdi = (t, s, f) => vekst ? pst(t.j[s], t.j[f]) : t.a[s];
+    const fmt = v => vekst ? sgn(v, 1) + ' %' : nb(v) + ' kr';
+    const tickFmt = (v, des) => vekst ? nb(v, des) : nb(v);
+    const { s: s0, tid } = kvartalskilde('00-99');
+    const tot = kvartalskilde('00-99');
+    const totV = verdi(tot.t, tot.s, tot.f);
+    const rader = N17.map(k => { const { t, s, f } = kvartalskilde(k); return { k, navn: NAVN.get(k), v: verdi(t, s, f), t, s, f }; })
+      .sort((a, b) => (b.v ?? -1e9) - (a.v ?? -1e9));
+    const forst = rader[0];
+    H('naeringer').textContent = vekst ? `Flest nye jobber i prosent: ${liten(forst.navn)}` : `Høyest snittlønn: ${liten(forst.navn)}`;
+    sett('naeringer-note', `${vekst ? `Endring i antall jobber fra ${kvTekst(tid[s0 - 4])}, prosent` : 'Gjennomsnittlig avtalt månedslønn, kroner per heltid'}. ${sted.charAt(0).toUpperCase() + sted.slice(1)}, ${kvTekst(tid[s0])}. Stiplet linje: alle næringer, ${fmt(totV)}.`);
+    liggende($('#fig-naeringer'), rader.map(r => ({ k: r.k, navn: r.navn, deler: [{ v: r.v, farge: r.k === S ? FARGE.gronn : FARGE.gronnF }], sterk: r.k === S })),
+      { fmt, tickFmt, klikk: velg, ref: totV, venstreMaks: 230, aria: vekst ? 'Jobbvekst per næring' : 'Avtalt månedslønn per næring' });
+    tabell('naeringer', ['Næring', `Jobber ${tid[s0]}`, 'Endring, %', 'Avtalt månedslønn', 'Median'], rader.map(r => [r.navn, nb(r.t.j[r.s]), sgn(pst(r.t.j[r.s], r.t.j[r.f]), 1), nb(r.t.a[r.s]), nb(r.t.am[r.s])]),
+      ['Alle næringer', nb(tot.t.j[tot.s]), sgn(pst(tot.t.j[tot.s], tot.t.j[tot.f]), 1), nb(tot.t.a[tot.s]), nb(tot.t.am[tot.s])]);
+
+    // Fylker for valgt næring
+    const navn = NAVN.get(S);
+    const fr = D.fylker.map(f => { const t = D.fylke[f.k][S]; return { k: f.k, navn: f.n, v: verdi(t, fS, fF), t }; }).sort((a, b) => (b.v ?? -1e9) - (a.v ?? -1e9));
+    const land = D.kv[S], landV = verdi(land, qS, qF);
+    H('fylker').textContent = `${navn}: ${vekst ? 'jobbvekst' : 'avtalt månedslønn'} i fylkene`;
+    sett('fylker-note', `${vekst ? `Endring i antall jobber fra ${kvTekst(TF[fF])}, prosent` : 'Gjennomsnittlig avtalt månedslønn, kroner per heltid'}, ${kvTekst(TF[fS])}. Fylket der jobben er. Stiplet linje: hele landet, ${fmt(landV)}.`);
+    liggende($('#fig-fylker'), fr.map(r => ({ k: r.k, navn: r.navn, deler: [{ v: r.v, farge: r.k === FY ? FARGE.gronn : FARGE.gronnF }], sterk: r.k === FY })),
+      { fmt, tickFmt, ref: landV, venstreMaks: 150, klikk: k => { FY = FY === k ? 'land' : k; fsel.value = FY; settHash(); tegnHvor(); }, aria: 'Per fylke' });
+    tabell('fylker', ['Fylke', `Jobber ${TF[fS]}`, 'Endring, %', 'Avtalt månedslønn', 'Median'], fr.map(r => [r.navn, nb(r.t.j[fS]), sgn(pst(r.t.j[fS], r.t.j[fF]), 1), r.t.a[fS] == null ? 'skjult' : nb(r.t.a[fS]), r.t.am[fS] == null ? 'skjult' : nb(r.t.am[fS])]));
+
+    // Undernæringer (hele landet)
+    const el = $('#fig-sub');
+    const subs = S === '00-99' ? D.sub.slice() : D.sub.filter(s => s.g === S);
+    const sorter = subs.map(s => ({ ...s, v: vekst ? pst(s.j[qS], s.j[qF]) : s.a[qS] })).sort((a, b) => b.j[qS] - a.j[qS]);
+    const vis = sorter.slice(0, 15);
+    if (subs.length <= 1) {
+      H('sub').textContent = `${navn} har ingen undernæringer`;
+      sett('sub-note', 'I næringsinndelingen er dette én tosifret næring. Tallene finnes ikke mer detaljert i statistikkbanken.');
+      tom(el, 'Ingen undernæringer å vise.');
+      $('[data-tall="sub"]').hidden = true;
+      return;
+    }
+    $('[data-tall="sub"]').hidden = false;
+    H('sub').textContent = S === '00-99' ? `De 15 største av ${D.sub.length} næringer` : `${navn}: ${subs.length} undernæringer${subs.length > 15 ? ', de 15 største' : ''}`;
+    sett('sub-note', `Tosifret næring, sortert etter antall jobber. ${vekst ? `Endring i jobber fra ${kvTekst(TQ[qF])}, prosent` : 'Avtalt månedslønn, kroner per heltid'}, ${kvTekst(TQ[qS])}. Hele landet${FY === 'land' ? '' : ': tallene finnes ikke per fylke'}. Tabell 12314 kan avvike med noen få jobber fra 11654.`);
+    liggende(el, vis.map(s => ({ k: s.k, navn: `${s.n} (${s.k})`, deler: [{ v: s.v, farge: FARGE.gronnF, tom: vekst ? 'ingen tall' : 'tallet er skjult' }] })),
+      { fmt, tickFmt, venstreMaks: 360, aria: 'Undernæringer' });
+    tabell('sub', ['Næring', `Jobber ${TQ[qS]}`, 'Endring, %', 'Avtalt månedslønn', 'Median'], sorter.map(s => [`${s.n} (${s.k})`, nb(s.j[qS]), sgn(pst(s.j[qS], s.j[qF]), 1), s.a[qS] == null ? 'skjult' : nb(s.a[qS]), s.am[qS] == null ? 'skjult' : nb(s.am[qS])]));
+  }
+
+  // ---------- Lønnsvekst ----------
+  function tegnVekst() {
+    const tot = D.kv['00-99'], totV = pst(tot.a[qS], tot.a[qF]);
+    const rader = N17.map(k => ({ k, navn: NAVN.get(k), v: pst(D.kv[k].a[qS], D.kv[k].a[qF]) })).sort((a, b) => b.v - a.v);
+    H('lonnsvekst').textContent = `Lønnsveksten var ${nb(totV, 1)} prosent, fra ${nb(rader.at(-1).v, 1)} til ${nb(rader[0].v, 1)} i næringene`;
+    sett('lonnsvekst-note', `Endring i gjennomsnittlig avtalt månedslønn fra ${kvTekst(TQ[qF])} til ${kvTekst(TQ[qS])}, prosent. Regnet fra kronebeløpene. Stiplet linje: alle næringer.`);
+    liggende($('#fig-lonnsvekst'), rader.map(r => ({ k: r.k, navn: r.navn, deler: [{ v: r.v, farge: r.k === S ? FARGE.gronn : FARGE.gronnF }], sterk: r.k === S })),
+      { fmt: v => nb(v, 1) + ' %', ref: totV, klikk: velg, venstreMaks: 230, aria: 'Lønnsvekst per næring' });
+    tabell('lonnsvekst', ['Næring', TQ[qF], TQ[qS], 'Endring, %'], rader.map(r => [r.navn, nb(D.kv[r.k].a[qF]), nb(D.kv[r.k].a[qS]), nb(r.v, 1)]), ['Alle næringer', nb(tot.a[qF]), nb(tot.a[qS]), nb(totV, 1)]);
+
+    // Snitt og median over tid, vekst fra året før
+    const t = D.kv[S], navn = NAVN.get(S);
+    const tid = TQ.slice(4);
+    const gs = tid.map((_, i) => pst(t.a[i + 4], t.a[i])), gm = tid.map((_, i) => pst(t.am[i + 4], t.am[i]));
+    const diff = gs.at(-1) - gm.at(-1);
+    H('snittvekst').textContent = Math.abs(diff) < 0.15 ? 'Snittet og medianen vokser omtrent likt nå' : `Snittet vokser ${nb(Math.abs(diff), 1)} prosentpoeng ${diff > 0 ? 'raskere' : 'saktere'} enn medianen nå`;
+    sett('snittvekst-note', `${navn}. Endring fra samme kvartal året før, prosent. Avtalt månedslønn.`);
+    legend('snittvekst', [['bf-sw-line', FARGE.gronn, 'Snitt'], ['bf-sw-line', FARGE.bla, 'Median']]);
+    const el = $('#fig-snittvekst');
+    // Kvartalsakse: gjenbruk tidslinje med kvartaler omsatt til «måneder» for årstall
+    const somMnd = tid.map(k => k.slice(0, 4) + 'M' + ({ K1: '01', K2: '04', K3: '07', K4: '10' })[k.slice(4)]);
+    tidslinje(el, somMnd, [{ navn: 'Snitt', farge: FARGE.gronn, v: gs }, { navn: 'Median', farge: FARGE.bla, v: gm }], {
+      fmt: v => nb(v, 1) + ' %', yfmt: v => nb(v, 0), null: true, hoyde: 280, hoyreMarg: 100, ytittel: 'prosent', aria: 'Lønnsvekst i snitt og median',
+      brudd: [{ i: somMnd.indexOf('2020M01'), tekst: 'brudd 2020' }]
+    });
+    tabell('snittvekst', ['Kvartal', 'Snitt', 'Vekst snitt, %', 'Median', 'Vekst median, %'], tid.map((k, i) => [k, nb(t.a[i + 4]), nb(gs[i], 1), nb(t.am[i + 4]), nb(gm[i], 1)]).reverse());
+    sett('snittvekst-merk', 'Når snitt og median vokser ulikt, endrer fordelingen seg: flere eller færre jobber i toppen eller bunnen, ikke bare nye lønnstillegg. '
+      + (S === '05-09' ? 'Brudd i 1. kvartal 2020: bedre rapportering hos arbeidsgiverne hevet snittlønna i bergverk og utvinning med 0,8 prosent, så veksten gjennom 2020 er for høy.'
+                       : 'Brudd i 1. kvartal 2020: bedre lønnsrapportering og ny metode for arbeidstid påvirker veksten gjennom 2020, mest i bergverk og utvinning.'));
+  }
+
+  function tegnAlt() { tegnTopp(); tegnMennesker(); tegnLonn(); tegnNaa(); tegnHvor(); tegnVekst(); }
+  tegnAlt();
+  window.addEventListener('hashchange', () => {
+    const h = hash();
+    const k = VALGBARE.includes(h.naering) ? h.naering : '00-99';
+    const f = D.fylker.some(x => x.k === h.fylke) ? h.fylke : 'land';
+    if (f !== FY) { FY = f; fsel.value = f; }
+    if (k !== S) { S = k; sel.value = k; tegnAlt(); } else tegnHvor();
+  });
+})();
+</script>
+</body>
+</html>
