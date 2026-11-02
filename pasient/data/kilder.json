@@ -1,0 +1,91 @@
+{
+ "statistikk": "Pasienter i spesialisthelsetjenesten",
+ "kortnavn": "pasient",
+ "versjon": "1.0",
+ "dato_valg": "2026-11-02",
+ "merknad": "Hentet direkte fra PxWebApi v2 med scripts/hent_data.py. data.ssb.no var tilgjengelig fra arbeidsområdet 02.11.2026, så rådataene i data/raw/ er svarene fra API-et, uendret.",
+ "valg": "Middels omfang (valgt av Thomas 02.11.2026). Diagnosekapittel er det gjennomgående valget. Alle sju mål per kapittel, kjønn og alder; pasienter per kategoriblokk for hele landet; rater etter innvandringskategori; psykisk helsevern for voksne etter kjønn og alder. Region er utelatt.",
+ "manglende_verdier": {
+  "..": "Ikke funnet i de hentede utsnittene. lag_data.py stopper hvis det dukker opp.",
+  "0 i regionkoder": "Ikke hentet. I 14824 og 14820 betyr 0 for en fylkeskode at fylket ikke fantes det året (tre generasjoner fylker), ikke null pasienter.",
+  "0 i diagnosekoder": "Ekte null etter avrunding, f.eks. P00–P04 i 2024 og 2025. Vises som 0 med merknad, ikke som hull.",
+  "0 for avtalespesialister": "Avtalespesialister har ikke døgnopphold. Ikke hentet, men nevnt fordi aktørsplitten har mange nuller."
+ },
+ "fallgruver": [
+  "Pasienter telles unikt per gruppe. Pasienter summerer ikke over diagnoser (1,9 × totalen i 2025) eller aktører. Kontakter, dagbehandlinger, døgnopphold og oppholdsdøgn summerer eksakt over diagnosekapitlene.",
+  "Pasienter avrundes til base 3, mengdetall til base 6. Summer kan avvike med noen få fra totalen (dagbehandlinger: 6 i 2025).",
+  "Bruk publiserte rater fra 14827 og 14823, ikke rater regnet på nytt, der de finnes. Rater per aldersgruppe finnes ikke publisert og er egen beregning med middelfolkemengde = snitt av 1. januar i året og året etter.",
+  "Aldersjustert rate for «I alt» er lik ujustert hvert år. Justeringen gjør grupper sammenlignbare innenfor et år, men trolig ikke over tid (spørsmål til fag).",
+  "Kategoriblokkene ligger ikke sortert under kapitlet sitt i kodelisten (D00–D48 står etter III, men hører til II). Hierarkiet må leses fra kodespennet.",
+  "Kapittel XX (ytre årsaker) og U-koder ligger i «Annen» (zz1). Det finnes 20 kapitler, ikke 21.",
+  "Brudd i diagnoseseriene som trolig er kodeendringer: O60–O75 fra 10 050 (2015) til 1 944 (2018), P00–P04 til 0 fra 2024, R95–R99 849 i 2020.",
+  "To koder for hele landet i regiontabellene: 0 og F00. F00 er 3 høyere i 2015. Bruk 0.",
+  "Psykisk helsevern for voksne har ikke diagnose i statistikkbanken, og raten har trolig voksne som nevner (spørsmål til fag)."
+ ],
+ "datasett": [
+  {
+   "id": "somatikk_kapittel",
+   "tabell": "14824",
+   "svarer_paa": [
+    "1 Hvor mange får behandling, og hva får de?",
+    "2 Hvem er pasientene?",
+    "3 Hva behandles de for?"
+   ],
+   "beskrivelse": "Somatikk, hele landet: pasienter, pasienter i poliklinikk og døgnbehandling, polikliniske kontakter, dagbehandlinger, døgnopphold og oppholdsdøgn etter diagnosekapittel, kjønn og alder.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14824/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BKjonn%5D=*&valueCodes%5BAlder%5D=*&valueCodes%5BAktor%5D=_T&codelist%5BDiagnose%5D=vs_Diagnose01&valueCodes%5BDiagnose%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "3 kjønn × 8 aldre × 22 diagnoser (i alt, 20 kapitler, Annen) × 7 mål × 11 år (2015–2025) = 40 656 celler"
+  },
+  {
+   "id": "somatikk_blokk",
+   "tabell": "14824",
+   "svarer_paa": [
+    "3 Hva behandles de for?"
+   ],
+   "beskrivelse": "Somatikk, hele landet, begge kjønn, alle aldre: pasienter etter alle 222 diagnosekoder (i alt, kapitler, kategoriblokker).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14824/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BKjonn%5D=0&valueCodes%5BAlder%5D=999A&valueCodes%5BAktor%5D=_T&valueCodes%5BDiagnose%5D=*&valueCodes%5BContentsCode%5D=Pasient&valueCodes%5BTid%5D=*",
+   "omfang": "222 diagnosekoder × 11 år = 2 442 celler"
+  },
+  {
+   "id": "somatikk_rate",
+   "tabell": "14827",
+   "svarer_paa": [
+    "2 Hvem er pasientene?",
+    "4 Bruker innvandrere og barna deres tjenestene annerledes?"
+   ],
+   "beskrivelse": "Somatiske pasienter per 1 000 innbyggere, ujustert og aldersjustert, etter kjønn, innvandringskategori og diagnosekapittel.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14827/data?lang=no&outputFormat=json-stat2&valueCodes%5BKjonn%5D=*&valueCodes%5BInnvandrKat%5D=*&valueCodes%5BDiagnose%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "3 kjønn × 4 kategorier × 22 diagnoser × 2 mål × 11 år = 5 808 celler"
+  },
+  {
+   "id": "psykisk",
+   "tabell": "14820",
+   "svarer_paa": [
+    "5 Psykisk helsevern for voksne: hva skjer med de unge?"
+   ],
+   "beskrivelse": "Psykisk helsevern for voksne, hele landet: pasienter, pasienter i døgnbehandling, oppholdsdøgn og polikliniske kontakter etter kjønn og alder.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14820/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BKjonn%5D=*&valueCodes%5BAlder%5D=*&valueCodes%5BAktor%5D=_T&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "3 kjønn × 5 aldre × 4 mål × 11 år = 660 celler"
+  },
+  {
+   "id": "psykisk_rate",
+   "tabell": "14823",
+   "svarer_paa": [
+    "4 Bruker innvandrere og barna deres tjenestene annerledes?",
+    "5 Psykisk helsevern for voksne: hva skjer med de unge?"
+   ],
+   "beskrivelse": "Pasienter i psykisk helsevern for voksne per 1 000 innbyggere, ujustert og aldersjustert, etter kjønn og innvandringskategori.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14823/data?lang=no&outputFormat=json-stat2&valueCodes%5BKjonn%5D=*&valueCodes%5BInnvandrKat%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+   "omfang": "3 kjønn × 4 kategorier × 2 mål × 11 år = 264 celler"
+  },
+  {
+   "id": "folkemengde",
+   "tabell": "07459",
+   "svarer_paa": [
+    "2 Hvem er pasientene?"
+   ],
+   "beskrivelse": "Folkemengde 1. januar etter ettårig alder, hele landet, begge kjønn. Brukes til middelfolkemengde og rater per aldersgruppe (egen beregning).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07459/data?lang=no&outputFormat=json-stat2&valueCodes%5BAlder%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=from(2015)",
+   "omfang": "106 aldre × 12 år (2015–2026) = 1 272 celler"
+  }
+ ]
+}

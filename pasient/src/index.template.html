@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasienter i spesialisthelsetjenesten</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: pasienter i somatisk spesialisthelsetjeneste og psykisk helsevern for voksne 2015–2025, med diagnosekapittel som valg. Pasienter mot kontakter og opphold, alder, diagnoser og innvandringsbakgrunn. Tall fra SSB, tabell 14824, 14827, 14820, 14823 og 07459.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --gronn-f: #339b71; --bla: #1d9de2; --bla-f: #3face6; --oker: #c78800; --oker-f: #d5a640; --marine: #0f2080; --marine-f: #5763a6; --rosa: #c775a7;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
+.bf > * { min-width: 0; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+.bf a { color: var(--tekst); text-underline-offset: 3px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-topptil .bf-grid { align-items: start; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+:is(button, input, select, summary, a):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+
+/* Valg */
+.bf-velg { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: end; }
+.bf-velg > div { min-width: 0; max-width: 100%; }
+.bf-velg label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-select { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 9px 12px; min-width: min(100%, 22rem); max-width: 100%; }
+.bf-select.liten { font-size: 14px; padding: 6px 10px; min-width: 0; border-color: var(--null); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 6px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-valg { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.bf-valg .bf-knapp { padding: 6px 10px; font-size: 13px; }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(36px, 6vw, 52px); font-weight: 700; line-height: 1.1; margin: 4px 0; }
+.bf-setning { font-size: 17px; margin: 0 0 12px; }
+.bf-topp-under { color: var(--sek); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; min-width: 0; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-klikk { cursor: pointer; }
+.bf-klikk:hover text { text-decoration: underline; }
+.bf-klikk:focus-visible { outline: 2px solid var(--tekst); }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-line { width: 18px; height: 0; border-top: 3px solid; }
+.bf-sw-dot { width: 10px; height: 10px; border-radius: 50%; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tablewrap { max-height: 18rem; overflow: auto; margin-top: 6px; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 5px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-table tr.sum td { font-weight: 700; border-top: 1px solid var(--tekst); }
+.bf-tom { color: var(--sek); font-size: 14px; background: var(--bg); padding: 16px; margin: 6px 0; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media print { body { background: #fff; } .bf-velg, .bf-tall, .bf-valg, .bf-eks { display: none; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Pasienter i spesialisthelsetjenesten</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-velg">
+      <div>
+        <label for="bf-kap">Vis tallene for diagnosekapittel</label>
+        <select class="bf-select" id="bf-kap"></select>
+      </div>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du tallene</h2>
+    <ul>
+      <li><b>En pasient er en person.</b> <span data-t="les-1"></span></li>
+      <li><b>Én gang per gruppe.</b> <span data-t="les-2"></span></li>
+      <li><b>Bruk, ikke sykdom.</b> <span data-t="les-3"></span></li>
+      <li><b>Ikke hele helsetjenesten.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Sykehus, private institusjoner med avtale og avtalespesialister rapporterer hver kontakt til Norsk pasientregister. SSB kobler kontaktene til befolkningsregisteret, teller hver person én gang per gruppe, avrunder og regner rater per 1 000 innbyggere.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <p class="bf-note" data-t="topp-note"></p>
+      <div class="bf-chart" id="fig-topp" style="min-height:280px"></div>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-kilde="14824"></p>
+  </section>
+
+  <section class="bf-section" id="hva">
+    <h2 class="bf-sh">Hva får pasientene?</h2>
+    <p class="bf-ingress">Poliklinisk konsultasjon er undersøkelse eller behandling uten innleggelse. Dagbehandling er behandling som tar del av en dag. Døgnopphold er en innleggelse med minst én overnatting, og oppholdsdøgn er antall netter. Samme person kan ha fått alle tre.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="maal"></h3>
+        <p class="bf-note" data-t="maal-note"></p>
+        <div class="bf-chart" id="fig-maal" style="min-height:240px"></div>
+        <details class="bf-tall" data-tall="maal"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14824"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="ligge"></h3>
+        <p class="bf-note" data-t="ligge-note"></p>
+        <div class="bf-legend" data-leg="ligge"></div>
+        <div class="bf-chart" id="fig-ligge" style="min-height:240px"></div>
+        <details class="bf-tall" data-tall="ligge"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14824"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="hvem">
+    <h2 class="bf-sh">Hvem er pasientene?</h2>
+    <p class="bf-ingress">Bruken av spesialisthelsetjenesten øker kraftig med alderen. Når befolkningen blir eldre, blir det flere pasienter selv om ingen bruker tjenestene mer enn før. Ratene per aldersgruppe og fordelingen av veksten er egne beregninger med SSBs folketall.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="alder"></h3>
+        <p class="bf-note" data-t="alder-note"></p>
+        <div class="bf-legend" data-leg="alder"></div>
+        <div class="bf-chart" id="fig-alder" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="alder"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14824,07459"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="drivere"></h3>
+        <p class="bf-note" data-t="drivere-note"></p>
+        <div class="bf-chart" id="fig-drivere" style="min-height:150px"></div>
+        <details class="bf-tall" data-tall="drivere"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="drivere-merk"></p>
+        <p class="bf-src" data-kilde="14824,07459"></p>
+      </article>
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="kjonn"></h3>
+        <p class="bf-note" data-t="kjonn-note"></p>
+        <div class="bf-chart" id="fig-kjonn" style="min-height:240px"></div>
+        <details class="bf-tall" data-tall="kjonn"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14827"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section bf-topptil" id="diagnoser">
+    <h2 class="bf-sh">Hva behandles de for?</h2>
+    <p class="bf-ingress">Diagnosene følger ICD-10. En pasient telles i hvert kapittel hun har fått en diagnose i, så kapitlene summerer til langt mer enn antall pasienter. Det største kapitlet er ikke en sykdom, men kontroller, oppfølging og annen kontakt med helsetjenesten. Klikk på et kapittel for å velge det.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kapitler"></h3>
+        <p class="bf-note" data-t="kapitler-note"></p>
+        <div class="bf-chart" id="fig-kapitler" style="min-height:520px"></div>
+        <details class="bf-tall" data-tall="kapitler"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14824"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="blokker"></h3>
+        <p class="bf-note" data-t="blokker-note"></p>
+        <div class="bf-chart" id="fig-blokker" style="min-height:200px"></div>
+        <details class="bf-tall" data-tall="blokker"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="blokker-merk"></p>
+        <p class="bf-src" data-kilde="14824"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="innvandring">
+    <h2 class="bf-sh">Bruker innvandrere og barna deres spesialisthelsetjenesten annerledes?</h2>
+    <p class="bf-ingress">Innvandrere og norskfødte med innvandrerforeldre har en helt annen aldersfordeling enn resten av befolkningen. De ujusterte ratene viser bruken slik gruppene faktisk er sammensatt. De aldersjusterte regner alle gruppene om til samme aldersfordeling, og er de som kan sammenlignes. Ingen av dem viser behov: lav bruk betyr ikke nødvendigvis bedre helse.</p>
+    <div class="bf-valg" role="group" aria-label="Rate">
+      <button type="button" class="bf-knapp" data-rate="a" aria-pressed="true">Aldersjustert</button>
+      <button type="button" class="bf-knapp" data-rate="u" aria-pressed="false">Ujustert</button>
+    </div>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="innv-som"></h3>
+        <p class="bf-note" data-t="innv-som-note"></p>
+        <div class="bf-chart" id="fig-innv-som" style="min-height:140px"></div>
+        <details class="bf-tall" data-tall="innv-som"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14827"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="innv-psyk"></h3>
+        <p class="bf-note" data-t="innv-psyk-note"></p>
+        <div class="bf-chart" id="fig-innv-psyk" style="min-height:140px"></div>
+        <details class="bf-tall" data-tall="innv-psyk"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14823"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="psykisk">
+    <h2 class="bf-sh">Psykisk helsevern for voksne: hva skjer med de unge?</h2>
+    <p class="bf-ingress">Psykisk helsevern for voksne gjelder personer fra 18 år. Psykisk helsevern for barn og unge, tverrfaglig rusbehandling, fastlege og kommunale tjenester er ikke med. Statistikken har ikke diagnoser her, så kapittelvalget gjelder ikke denne delen.</p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="psyk-alder"></h3>
+        <p class="bf-note" data-t="psyk-alder-note"></p>
+        <div class="bf-chart" id="fig-psyk-alder" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="psyk-alder"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-kilde="14820"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="psyk-unge"></h3>
+        <p class="bf-note" data-t="psyk-unge-note"></p>
+        <div class="bf-chart" id="fig-psyk-unge" style="min-height:280px"></div>
+        <details class="bf-tall" data-tall="psyk-unge"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="psyk-unge-merk"></p>
+        <p class="bf-src" data-kilde="14820,14823"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Statistikken teller personer med gyldig fødsels- eller D-nummer som har fått behandling i somatisk spesialisthelsetjeneste eller psykisk helsevern for voksne, ved offentlige helseforetak, private institusjoner med avtale og avtalespesialister. Eneste kilde er Norsk pasientregister. Pasienter telles én gang per gruppe. Antall pasienter er avrundet til base 3 og andre tall til base 6 av personvernhensyn, så summer kan avvike med noen få. Tallene kan avvike fra Helsedirektoratets og Folkehelseinstituttets tall fra samme register.</p>
+    <p>Egne beregninger: endringer i prosent, indekser, oppholdsdøgn per døgnopphold, kontakter per pasient, rater per aldersgruppe og fordelingen av veksten er regnet av oss. Ratene per aldersgruppe bruker middelfolkemengden, regnet som snittet av folkemengden 1. januar i året og året etter (tabell 07459). Samme metode gjenskaper SSBs publiserte rater for alle kapitler innenfor avrundingen, unntatt svangerskap og fødsel. Fordelingen av veksten tar først folketallet, så alderssammensetningen og til slutt bruken per aldersgruppe. En annen rekkefølge gir litt andre tall.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 14824, 14827, 14820, 14823 og 07459. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/pasient">ssb.no/pasient</a>.</p>
+  </footer>
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/pasient.json__*/;
+</script>
+<script>
+(() => {
+  'use strict';
+  const D = DATA;
+  const FARGE = { gronn: '#00824d', gronnF: '#339b71', bla: '#1d9de2', blaF: '#3face6', oker: '#c78800', okerF: '#d5a640', rosa: '#c775a7', rosaF: '#cd83b0', marine: '#0f2080', marineF: '#5763a6', dempet: '#c3cdcf', tekst: '#274246', sek: '#5e787a', stotte: '#d9dfe0', null: '#a9b5b7' };
+  const TIP = document.querySelector('.bf-tip');
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  // ---------- Format ----------
+  const nf = {};
+  const nb = (n, des = 0) => {
+    if (n == null || Number.isNaN(n)) return '–';
+    nf[des] = nf[des] || new Intl.NumberFormat('nb-NO', { minimumFractionDigits: des, maximumFractionDigits: des });
+    return nf[des].format(n).replace(/-/g, '−').replace(/ | /g, ' ');
+  };
+  const sgn = (n, des = 0) => n == null ? '–' : (n > 0 ? '+' : '') + nb(n, des);
+  const pst = (a, b) => (a == null || b == null || !b) ? null : 100 * (a / b - 1);
+  const dato = s => s.split('-').reverse().join('.');
+  // Avrunding i overskrifter, mot fasitlesning
+  const rundt = v => v >= 1e6 ? `${nb(v / 1e6, 1)} millioner` : v >= 10000 ? nb(Math.round(v / 1000) * 1000) : v >= 1000 ? nb(Math.round(v / 100) * 100) : nb(v);
+  const sammenlignet = (p, aar) => Math.round(p) === 0 ? `omtrent like mange som i ${aar}` : `${nb(Math.abs(p))} prosent ${p >= 0 ? 'flere' : 'færre'} enn i ${aar}`;
+  const sgnP = v => Math.abs(v) < 1 ? sgn(v, 1) : sgn(v);
+  document.querySelectorAll('[data-kilde]').forEach(el => {
+    const t = el.dataset.kilde.split(',');
+    const dd = Array.from(new Set(t.map(x => dato(D.oppdatert[x]))));
+    el.textContent = `Kilde: SSB, tabell ${t.slice(0, -1).join(', ')}${t.length > 1 ? ' og ' : ''}${t.at(-1)}${t.includes('07459') ? '. Egen beregning' : ''}. Sist oppdatert: ${dd.slice(0, -1).join(', ')}${dd.length > 1 ? ' og ' : ''}${dd.at(-1)}.`;
+  });
+  document.querySelectorAll('[data-hentet]').forEach(el => { el.textContent = dato(D.hentet); });
+
+  // ---------- Data ----------
+  const AAR = D.aar, iS = AAR.length - 1, i0 = 0;
+  const KAP = new Map(D.kap.map(k => [k.k, k]));
+  const VALGBARE = D.kap.map(k => k.k);
+  const KAPITLER = VALGBARE.filter(k => k !== '_T');
+  const ALDER = D.alder.filter(a => a.k !== '999A');
+  const T = n => document.querySelector(`[data-t="${n}"]`);
+  const H = n => document.querySelector(`[data-h="${n}"]`);
+  const sett = (n, html) => { const el = T(n); if (el) el.innerHTML = html; };
+  const kapNavn = k => k === '_T' ? 'alle diagnoser' : `kapitlet «${KAP.get(k).n}»`;
+  const kapMedKode = k => k === '_T' ? 'Alle diagnoser' : `${KAP.get(k).n}${KAP.get(k).kode ? ` (${KAP.get(k).kode})` : ''}`;
+  const ser = (k, m, kj = '0', al = '999A') => D.s[k][kj][al][m];
+  const MAALNAVN = { Pasient: 'Pasienter', PasientPolikl: 'Pasienter i poliklinikk', PasientDognBeh: 'Pasienter i døgnbehandling', KontaktPolikl: 'Polikliniske kontakter', DagBehandl: 'Dagbehandlinger', DognOpphold: 'Døgnopphold', OppholdDogn: 'Oppholdsdøgn' };
+
+  // ---------- Tooltip ----------
+  function visTip(html, evt) {
+    TIP.innerHTML = html; TIP.hidden = false;
+    const r = document.querySelector('.bf').getBoundingClientRect();
+    const tw = TIP.offsetWidth, th = TIP.offsetHeight;
+    let x = evt.clientX - r.left + 14, y = evt.clientY - r.top - th - 10;
+    if (x + tw > r.width - 8) x = evt.clientX - r.left - tw - 14;
+    if (x < 4) x = 4;
+    if (y < 4) y = evt.clientY - r.top + 18;
+    TIP.style.transform = `translate(${x}px, ${y}px)`;
+  }
+  const skjulTip = () => { TIP.hidden = true; };
+  const tipRad = (farge, navn, verdi) => `<div class="bf-tip-r"><i style="background:${farge}"></i>${esc(navn)}<b>${verdi}</b></div>`;
+
+  // ---------- Tabeller og tegnforklaring ----------
+  function tabell(navn, hoder, rader, sumRad) {
+    const el = document.querySelector(`[data-tall="${navn}"] .bf-tablewrap`);
+    if (!el) return;
+    const rad = (r, cls) => `<tr${cls ? ` class="${cls}"` : ''}>${r.map((c, i) => i === 0 ? `<td>${esc(c)}</td>` : `<td>${c}</td>`).join('')}</tr>`;
+    el.innerHTML = `<table class="bf-table"><thead><tr>${hoder.map(h => `<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rader.map(r => rad(r)).join('')}${sumRad ? rad(sumRad, 'sum') : ''}</tbody></table>`;
+  }
+  const legend = (navn, deler) => { const el = document.querySelector(`[data-leg="${navn}"]`); if (el) el.innerHTML = deler.map(([cls, farge, t]) => `<span><i class="${cls}" style="${cls === 'bf-sw-line' ? 'border-color' : 'background'}:${farge}"></i>${esc(t)}</span>`).join(''); };
+
+  // ---------- Responsiv tegning ----------
+  const tegnere = new Map();
+  function responsiv(el, tegn) {
+    const st = tegnere.get(el) || { b: 0 };
+    st.tegn = tegn; st.b = 0;
+    if (!tegnere.has(el)) {
+      tegnere.set(el, st);
+      new ResizeObserver(() => { const w = el.clientWidth; if (w >= 240 && w !== st.b) { st.b = w; st.tegn(w); } }).observe(el);
+    }
+    const w = el.clientWidth; if (w >= 240) { st.b = w; tegn(w); }
+  }
+  const klikkbar = (sel, navn, fn) => sel.attr('tabindex', 0).attr('role', 'button').attr('aria-label', navn)
+    .on('click', fn).on('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } });
+  const tom = (el, tekst) => { el.innerHTML = `<p class="bf-tom">${esc(tekst)}</p>`; };
+
+  // ---------- Tidslinje (år) ----------
+  // serier: [{navn, kort, farge, v}]. o: {fmt, ytittel, ref, null, merk: [{i, tekst}]}
+  function tidslinje(el, tid, serier, o = {}) {
+    responsiv(el, w => {
+      const smal = w < 520;
+      const ekstra = smal ? serier.length * 17 + 12 : 0;
+      const h = (o.hoyde || 260) + ekstra, m = { t: 26, r: smal ? 14 : (o.hoyreMarg ?? 150), b: 26 + ekstra, l: o.venstre || 56 };
+      const iw = w - m.l - m.r, ih = h - m.t - m.b;
+      const x = d3.scaleLinear().domain([0, tid.length - 1]).range([0, iw]);
+      const vals = serier.flatMap(s => s.v.filter(v => v != null)).concat(o.ref != null ? [o.ref] : []);
+      let lo = d3.min(vals), hi = d3.max(vals);
+      if (o.null) lo = Math.min(0, lo);
+      const pad = (hi - lo) * 0.06 || 1;
+      const y = d3.scaleLinear().domain([o.null ? lo : lo - pad, hi + pad]).nice(5).range([ih, 0]);
+      const yT = y.ticks(5), yDes = yT.length > 1 && yT[1] - yT[0] < 1 ? 1 : 0;
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${m.l},${m.t})`);
+      if (o.ytittel) g.append('text').attr('class', 'bf-tick').attr('x', -m.l).attr('y', -12).text(o.ytittel);
+      y.ticks(5).forEach(t => {
+        const ref = o.ref != null ? t === o.ref : t === 0;
+        g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(t)).attr('y2', y(t)).attr('stroke', ref ? FARGE.null : FARGE.stotte).attr('stroke-width', ref ? 1.2 : 1);
+        g.append('text').attr('class', 'bf-tick').attr('x', -8).attr('y', y(t) + 4).attr('text-anchor', 'end').text(o.yfmt ? o.yfmt(t) : nb(t, yDes));
+      });
+      const hopp = smal ? 5 : (iw / tid.length < 44 ? 2 : 1);
+      tid.forEach((t, i) => {
+        if ((tid.length - 1 - i) % hopp) return;
+        g.append('line').attr('x1', x(i)).attr('x2', x(i)).attr('y1', ih).attr('y2', ih + 4).attr('stroke', FARGE.null);
+        g.append('text').attr('class', 'bf-tick').attr('x', x(i)).attr('y', ih + 18).attr('text-anchor', 'middle').text(t);
+      });
+      (o.merk || []).forEach(b => {
+        g.append('line').attr('x1', x(b.i)).attr('x2', x(b.i)).attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.null).attr('stroke-dasharray', '3 3');
+        g.append('text').attr('class', 'bf-tick bf-halo').attr('x', x(b.i) + 4).attr('y', 10).text(b.tekst);
+      });
+      const linje = d3.line().defined(d => d[1] != null).x(d => x(d[0])).y(d => y(d[1]));
+      serier.forEach(s => {
+        g.append('path').attr('d', linje(s.v.map((v, i) => [i, v]))).attr('fill', 'none').attr('stroke', s.farge)
+          .attr('stroke-width', s.bredde || 2.5).attr('stroke-linejoin', 'round');
+      });
+      const merker = serier.map(s => ({ navn: s.kort || s.navn, farge: s.farge, v: s.v[s.v.length - 1], y: y(s.v[s.v.length - 1]) })).sort((a, b) => a.y - b.y);
+      for (let k = 1; k < merker.length; k++) if (merker[k].y - merker[k - 1].y < 30) merker[k].y = merker[k - 1].y + 30;
+      // Merkelappen skal ikke gå ned i årstallene: skyv opp nedenfra ved behov
+      if (merker.length && merker.at(-1).y > ih - 18) {
+        merker.at(-1).y = ih - 18;
+        for (let k = merker.length - 2; k >= 0; k--) if (merker[k + 1].y - merker[k].y < 30) merker[k].y = merker[k + 1].y - 30;
+      }
+      merker.forEach((e, k) => {
+        g.append('circle').attr('cx', x(tid.length - 1)).attr('cy', y(e.v)).attr('r', 3.5).attr('fill', e.farge).attr('stroke', '#fff').attr('stroke-width', 1.5);
+        if (smal) {
+          const ly = ih + 40 + k * 17;
+          g.append('circle').attr('cx', -m.l + 6).attr('cy', ly - 4).attr('r', 4.5).attr('fill', e.farge);
+          g.append('text').attr('class', 'bf-lab').attr('x', -m.l + 16).attr('y', ly).html(`<tspan font-weight="700">${esc(e.navn)}</tspan> ${esc(o.fmt(e.v))}`);
+          return;
+        }
+        g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', x(tid.length - 1) + 9).attr('y', e.y).text(e.navn);
+        g.append('text').attr('class', 'bf-lab bf-halo').attr('x', x(tid.length - 1) + 9).attr('y', e.y + 14).text(o.fmt(e.v));
+      });
+      const regel = g.append('line').attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.null).style('display', 'none');
+      g.append('rect').attr('width', iw).attr('height', ih).attr('fill', 'transparent')
+        .on('pointermove', evt => {
+          const [px] = d3.pointer(evt);
+          const i = Math.max(0, Math.min(tid.length - 1, Math.round(x.invert(px))));
+          regel.style('display', null).attr('x1', x(i)).attr('x2', x(i));
+          let html = `<div class="bf-tip-h">${tid[i]}</div>`;
+          serier.forEach(s => { html += tipRad(s.farge, s.navn, o.fmt(s.v[i])); });
+          visTip(html, evt);
+        })
+        .on('pointerleave', () => { regel.style('display', 'none'); skjulTip(); });
+    });
+  }
+
+  // ---------- Liggende stolper ----------
+  // rader: [{k, navn, deler: [{v, farge, navn}], sterk}]. Negative verdier går til venstre for null.
+  function liggende(el, rader, o = {}) {
+    responsiv(el, w => {
+      const smal = w < 560;
+      const n = rader[0].deler.length;
+      const bh = o.bh || (n > 1 ? 13 : 18), radH = n * (bh + 2) + 10, etikettH = smal ? 16 : 0;
+      const venstre = smal ? 0 : Math.min(o.venstreMaks || 220, w * 0.42);
+      const verdier = rader.flatMap(r => r.deler.map(d => d.v).filter(v => v != null));
+      const lo = Math.min(0, d3.min(verdier)), hi = Math.max(0, d3.max(verdier));
+      const hoyreM = o.hoyreMarg || 84, venstreM = lo < 0 ? 64 : 0;
+      const iw = w - venstre - hoyreM - venstreM;
+      const x = d3.scaleLinear().domain([lo, hi]).range([0, iw]);
+      const lab = Math.max(String(Math.round(hi)).length, String(Math.round(lo)).length) * 7 + 18;
+      const nT = Math.max(2, Math.min(smal ? 4 : 6, Math.floor(iw / lab)));
+      x.nice(nT);
+      const ticks = x.ticks(nT), steg = ticks.length > 1 ? ticks[1] - ticks[0] : 1, des = steg < 1 ? 1 : 0;
+      const h = rader.length * (radH + etikettH) + 30;
+      const svg = d3.select(el).html('').append('svg').attr('width', w).attr('height', h).attr('role', 'img').attr('aria-label', o.aria || '');
+      const g = svg.append('g').attr('transform', `translate(${venstre + venstreM},4)`);
+      ticks.forEach(t => {
+        g.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 0).attr('y2', h - 30).attr('stroke', t === 0 ? FARGE.null : FARGE.stotte);
+        g.append('text').attr('class', 'bf-tick').attr('x', x(t)).attr('y', h - 12).attr('text-anchor', 'middle').text(o.tickFmt ? o.tickFmt(t, des) : nb(t, des));
+      });
+      rader.forEach((r, j) => {
+        const y0 = j * (radH + etikettH) + etikettH;
+        const rad = g.append('g').attr('class', o.klikk ? 'bf-klikk' : null);
+        if (o.klikk) klikkbar(rad, `${r.navn}: ${r.deler.map(d => o.fmt(d.v)).join(', ')}`, () => o.klikk(r.k));
+        rad.append('rect').attr('x', -venstre - venstreM).attr('y', y0 - etikettH).attr('width', w).attr('height', radH + etikettH).attr('fill', r.sterk ? FARGE.stotte : 'transparent').attr('opacity', r.sterk ? 0.45 : 1);
+        if (smal) rad.append('text').attr('class', 'bf-lab bf-halo' + (r.sterk ? ' bf-strong' : '')).attr('x', -venstreM).attr('y', y0 - 3).text(r.navn);
+        else rad.append('text').attr('class', 'bf-lab' + (r.sterk ? ' bf-strong' : '')).attr('x', -venstreM - 10).attr('y', y0 + radH / 2 + 4).attr('text-anchor', 'end').text(r.navn);
+        r.deler.forEach((d, i) => {
+          const by = y0 + 5 + i * (bh + 2);
+          const x0 = x(Math.min(0, d.v)), x1 = x(Math.max(0, d.v));
+          rad.append('rect').attr('x', x0).attr('y', by).attr('width', Math.max(0.5, x1 - x0)).attr('height', bh).attr('fill', d.farge);
+          const ut = d.v >= 0;
+          rad.append('text').attr('class', 'bf-lab bf-halo' + (r.sterk || n === 1 ? ' bf-strong' : ''))
+            .attr('x', ut ? x1 + 5 : x0 - 5).attr('y', by + bh - 3).attr('text-anchor', ut ? 'start' : 'end').text(o.fmt(d.v));
+        });
+        rad.on('pointermove', evt => o.tip && visTip(o.tip(r), evt)).on('pointerleave', skjulTip);
+      });
+    });
+  }
+
+  // ---------- Tilstand ----------
+  const hash = () => Object.fromEntries(location.hash.slice(1).split('&').filter(Boolean).map(p => p.split('=').map(decodeURIComponent)));
+  let S = VALGBARE.includes(hash().kapittel) ? hash().kapittel : '_T';
+  let RATE = 'a';
+  const settHash = () => {
+    const ny = S === '_T' ? ' ' : `#kapittel=${encodeURIComponent(S)}`;
+    if ((location.hash || ' ') !== ny) history.replaceState(null, '', ny === ' ' ? location.pathname + location.search : ny);
+  };
+  const velg = k => { if (!VALGBARE.includes(k) || k === S) return; S = k; $('#bf-kap').value = k; settHash(); tegnAlt(); };
+  window.addEventListener('hashchange', () => { const k = hash().kapittel || '_T'; if (VALGBARE.includes(k) && k !== S) { S = k; $('#bf-kap').value = k; tegnAlt(); } });
+
+  // ---------- Valg i hodet ----------
+  const sel = $('#bf-kap');
+  sel.innerHTML = VALGBARE.map(k => `<option value="${esc(k)}">${esc(kapMedKode(k))}</option>`).join('');
+  sel.value = S;
+  sel.addEventListener('change', () => velg(sel.value));
+  $('#bf-eksempler').innerHTML = ['II', 'VII', 'XIX', 'XXI'].map(k => `<button type="button" class="bf-lenke" data-velg="${k}">${esc(KAP.get(k).n)}</button>`).join(', ');
+  document.querySelectorAll('[data-velg]').forEach(b => b.addEventListener('click', () => velg(b.dataset.velg)));
+  document.querySelectorAll('[data-rate]').forEach(b => b.addEventListener('click', () => {
+    RATE = b.dataset.rate;
+    document.querySelectorAll('[data-rate]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    tegnInnvandring();
+  }));
+
+  // ---------- Faste tekster ----------
+  {
+    const p = ser('_T', 'Pasient'), kt = ser('_T', 'KontaktPolikl'), pp = ser('_T', 'PasientPolikl');
+    const sumKap = KAPITLER.reduce((s, k) => s + ser(k, 'Pasient')[iS], 0);
+    const psyk = D.psyk['0'].Ialt.Pasient;
+    sett('les-1', `Hver person telles én gang, uansett hvor mange ganger hun har vært på sykehuset. I ${AAR[iS]} hadde ${nb(pp[iS])} pasienter til sammen ${nb(kt[iS])} polikliniske kontakter, ${nb(kt[iS] / pp[iS], 1)} per person.`);
+    sett('les-2', `Den som har fått diagnoser i to kapitler, telles i begge. Kapitlene summerer til ${nb(sumKap / 1e6, 1)} millioner, ${nb(sumKap / p[iS], 1)} ganger antall pasienter. Kontakter og opphold telles bare i ett kapittel og summerer til totalen.`);
+    sett('les-3', 'Statistikken viser hvem som har fått behandling, ikke hvor mange som er syke eller trenger behandling. Lav bruk i en gruppe kan skyldes god helse, men også språk, avstand eller ulik henvisningspraksis.');
+    sett('les-4', 'Psykisk helsevern for barn og unge, tverrfaglig rusbehandling, fastlege og kommunale tjenester er ikke med. Ventetider og kostnader står i andre statistikker.');
+    $('#ingress').innerHTML = `I ${AAR[iS]} fikk <b>${nb(p[iS])} personer</b> behandling i somatisk spesialisthelsetjeneste, ${nb(D.rate._T['0']['A-G'].u[iS])} av hver 1 000 innbyggere og ${sammenlignet(pst(p[iS], p[i0]), AAR[i0])}. <b>${nb(psyk[iS])}</b> var i psykisk helsevern for voksne. Veksten er poliklinisk: antall døgnopphold er nesten det samme som i ${AAR[i0]}.`;
+  }
+
+  // ---------- Toppgrafikk ----------
+  function tegnTopp() {
+    const k = S, navn = kapMedKode(k);
+    const p = ser(k, 'Pasient'), kt = ser(k, 'KontaktPolikl'), dop = ser(k, 'DognOpphold'), od = ser(k, 'OppholdDogn');
+    sett('omr', `${k === '_T' ? 'Somatikk' : esc(navn)} · ${AAR[i0]}–${AAR[iS]}`);
+    sett('stort', rundt(p[iS]));
+    sett('setning', `${k === '_T' ? 'fikk somatisk behandling' : 'fikk en diagnose fra ' + esc(kapNavn(k))} i ${AAR[iS]}, ${sammenlignet(pst(p[iS], p[i0]), AAR[i0])}.`);
+    const vk = pst(kt[iS], kt[i0]), vd = pst(dop[iS], dop[i0]), vo = pst(od[iS], od[i0]);
+    const under = [];
+    const endret = (navn, v) => Math.round(v) === 0 ? `${navn} er omtrent som i ${AAR[i0]}` : `${navn} har ${v > 0 ? 'økt' : 'falt'} med ${nb(Math.abs(v))} prosent`;
+    under.push(`${endret('Polikliniske kontakter', vk)}, mens ${endret('døgnoppholdene', vd).replace(/^D/, 'd')}.`);
+    under.push(`${endret('Oppholdsdøgnene på sykehus', vo)}.`);
+    if (k === 'XV') under.push('Fallet i døgnopphold fra 2016 til 2018 skjer samtidig som blokken O60–O75 (fødselskomplikasjoner) nesten forsvinner. Det ser ut som en endring i kodingen. Spørsmål til fag.');
+    if (k !== '_T') under.push('Pasienter telles unikt i kapitlet. Kontakter, opphold og døgn er de som har diagnose i dette kapitlet.');
+    sett('under', under.map(t => `<p>${t}</p>`).join(''));
+    sett('topp-note', k === '_T' ? 'Alle diagnoser, somatikk.' : `${esc(navn)}.`);
+    const ind = v => v.map(x => v[0] ? 100 * x / v[0] : null);
+    const serier = [
+      { navn: 'Polikliniske kontakter', farge: FARGE.gronn, v: ind(kt) },
+      { navn: 'Pasienter', farge: FARGE.bla, v: ind(p) },
+      { navn: 'Døgnopphold', farge: FARGE.oker, v: ind(dop) },
+      { navn: 'Oppholdsdøgn', farge: FARGE.rosa, v: ind(od) }
+    ];
+    tidslinje($('#fig-topp'), AAR, serier, { fmt: v => nb(v), ref: 100, ytittel: `indeks, ${AAR[i0]} = 100`, merk: [{ i: AAR.indexOf('2020'), tekst: 'Korona' }], aria: `Pasienter, kontakter, døgnopphold og oppholdsdøgn som indeks, ${navn}` });
+    tabell('topp', ['År', 'Pasienter', 'Polikliniske kontakter', 'Døgnopphold', 'Oppholdsdøgn'], AAR.map((a, i) => [a, nb(p[i]), nb(kt[i]), nb(dop[i]), nb(od[i])]).reverse());
+    sett('t1-lab', `Pasienter ${AAR[iS]}`); sett('t1', nb(p[iS]));
+    sett('t2-lab', `Polikliniske kontakter per pasient i poliklinikk, ${AAR[iS]}`); sett('t2', nb(kt[iS] / ser(k, 'PasientPolikl')[iS], 1));
+    sett('t3-lab', `Døgnopphold ${AAR[iS]}`); sett('t3', nb(dop[iS]));
+    sett('t4-lab', `Oppholdsdøgn per døgnopphold, ${AAR[iS]}`); sett('t4', dop[iS] ? nb(od[iS] / dop[iS], 1) : '–');
+  }
+
+  // ---------- Hva får pasientene ----------
+  function tegnHva() {
+    const k = S;
+    const rader = ['Pasient', 'PasientPolikl', 'PasientDognBeh', 'KontaktPolikl', 'DagBehandl', 'DognOpphold', 'OppholdDogn']
+      .map(m => ({ m, navn: MAALNAVN[m], v: pst(ser(k, m)[iS], ser(k, m)[i0]) }));
+    const sterkest = rader.reduce((a, b) => b.v > a.v ? b : a);
+    H('maal').textContent = `${sterkest.navn} har økt mest: ${sgn(sterkest.v)} prosent siden ${AAR[i0]}`;
+    if (sterkest.v <= 0) H('maal').textContent = `Alle målene har gått ned siden ${AAR[i0]}`;
+    sett('maal-note', `Endring fra ${AAR[i0]} til ${AAR[iS]}, prosent. ${esc(kapMedKode(k))}.`);
+    liggende($('#fig-maal'), rader.map(r => ({ k: r.m, navn: r.navn, deler: [{ v: r.v, farge: FARGE.gronn }], sterk: r.m === 'Pasient' })),
+      { fmt: v => sgnP(v) + ' %', venstreMaks: 200, aria: 'Endring i pasienter, kontakter og opphold' });
+    tabell('maal', ['', AAR[i0], AAR[iS], 'Endring, %'], rader.map(r => [r.navn, nb(ser(k, r.m)[i0]), nb(ser(k, r.m)[iS]), sgn(r.v, 1)]));
+
+    const dop = ser(k, 'DognOpphold'), od = ser(k, 'OppholdDogn');
+    const kpp = AAR.map((_, i) => ser(k, 'KontaktPolikl')[i] / ser(k, 'PasientPolikl')[i]);
+    const ligg = AAR.map((_, i) => dop[i] ? od[i] / dop[i] : null);
+    H('ligge').textContent = ligg[iS] == null ? 'Liggetid' : `Et døgnopphold varer i snitt ${nb(ligg[iS], 1)} døgn, mot ${nb(ligg[i0], 1)} i ${AAR[i0]}`;
+    sett('ligge-note', `Oppholdsdøgn per døgnopphold og polikliniske kontakter per pasient i poliklinikk. Egen beregning. ${esc(kapMedKode(k))}.`);
+    legend('ligge', [['bf-sw-line', FARGE.rosa, 'Oppholdsdøgn per døgnopphold'], ['bf-sw-line', FARGE.gronn, 'Kontakter per pasient i poliklinikk']]);
+    if (ligg[iS] == null) tom($('#fig-ligge'), 'Ingen døgnopphold i dette kapitlet.');
+    else tidslinje($('#fig-ligge'), AAR, [
+      { navn: 'Døgn per opphold', farge: FARGE.rosa, v: ligg },
+      { navn: 'Kontakter per pasient', farge: FARGE.gronn, v: kpp }
+    ], { fmt: v => nb(v, 1), null: true, ytittel: 'antall', aria: 'Oppholdsdøgn per opphold og kontakter per pasient' });
+    tabell('ligge', ['År', 'Døgn per opphold', 'Kontakter per pasient'], AAR.map((a, i) => [a, nb(ligg[i], 2), nb(kpp[i], 2)]).reverse());
+  }
+
+  // ---------- Hvem er pasientene ----------
+  function rateAlder(k, al, i) { return 1000 * ser(k, 'Pasient', '0', al)[i] / D.mf[al][i]; }
+  function tegnHvem() {
+    const k = S;
+    const r0 = ALDER.map(a => rateAlder(k, a.k, i0)), r1 = ALDER.map(a => rateAlder(k, a.k, iS));
+    const maks = ALDER[r1.indexOf(Math.max(...r1))];
+    H('alder').textContent = `Flest pasienter per innbygger i aldersgruppen ${maks.n}`;
+    sett('alder-note', `Pasienter per 1 000 innbyggere i aldersgruppen. ${esc(kapMedKode(k))}. Egen beregning.`);
+    legend('alder', [['bf-sw-sq', FARGE.dempet, AAR[i0]], ['bf-sw-sq', FARGE.gronn, AAR[iS]]]);
+    liggende($('#fig-alder'), ALDER.map((a, j) => ({ k: a.k, navn: a.n, deler: [{ v: r0[j], farge: FARGE.dempet }, { v: r1[j], farge: FARGE.gronn }] })),
+      { fmt: v => nb(v, v < 10 ? 1 : 0), venstreMaks: 120, aria: 'Pasienter per 1 000 innbyggere etter alder' });
+    tabell('alder', ['Alder', `Pasienter ${AAR[iS]}`, `Per 1 000, ${AAR[i0]}`, `Per 1 000, ${AAR[iS]}`], ALDER.map((a, j) => [a.n, nb(ser(k, 'Pasient', '0', a.k)[iS]), nb(r0[j], 1), nb(r1[j], 1)]));
+
+    // Fordeling av veksten: folketall, alderssammensetning, bruk per aldersgruppe
+    const p0 = ALDER.map(a => ser(k, 'Pasient', '0', a.k)[i0]), p1 = ALDER.map(a => ser(k, 'Pasient', '0', a.k)[iS]);
+    const m0 = ALDER.map(a => D.mf[a.k][i0]), m1 = ALDER.map(a => D.mf[a.k][iS]);
+    const sum = a => a.reduce((s, x) => s + x, 0);
+    const t0 = sum(p0), t1 = sum(p1), b0 = sum(m0), b1 = sum(m1);
+    const str = t0 * b1 / b0 - t0;
+    const aldr = sum(p0.map((p, j) => p / m0[j] * m1[j])) - t0 - str;
+    const bruk = t1 - t0 - str - aldr;
+    const tot = t1 - t0;
+    H('drivere').textContent = `${sgn(Math.round(tot / 100) * 100)} pasienter fra ${AAR[i0]} til ${AAR[iS]}`;
+    sett('drivere-note', `Endringen i antall pasienter fordelt på tre årsaker. ${esc(kapMedKode(k))}. Egen beregning.`);
+    liggende($('#fig-drivere'), [
+      { navn: 'Flere innbyggere', deler: [{ v: str, farge: FARGE.gronn }] },
+      { navn: 'Eldre befolkning', deler: [{ v: aldr, farge: FARGE.gronn }] },
+      { navn: 'Endret bruk per person', deler: [{ v: bruk, farge: FARGE.gronn }] }
+    ], { fmt: v => sgn(Math.round(v / 100) * 100), venstreMaks: 170, hoyreMarg: 90, aria: 'Fordeling av endringen i antall pasienter' });
+    tabell('drivere', ['Årsak', 'Pasienter', 'Andel av endringen, %'], [['Flere innbyggere', str], ['Eldre befolkning', aldr], ['Endret bruk per person', bruk]].map(([n, v]) => [n, sgn(Math.round(v)), tot ? nb(100 * v / tot) : '–']), ['Endring i alt', sgn(tot), '100']);
+    sett('drivere-merk', `Med ${AAR[i0]}-ratene for hver aldersgruppe ville befolkningsveksten alene gitt ${sgn(Math.round(str / 100) * 100)} pasienter og aldringen ${sgn(Math.round(aldr / 100) * 100)}. Resten, ${sgn(Math.round(bruk / 100) * 100)}, er at folk i samme alder ${bruk >= 0 ? 'bruker tjenestene mer' : 'bruker tjenestene mindre'} enn før. Beregningen tar årsakene i denne rekkefølgen. En annen rekkefølge gir litt andre tall.`);
+
+    // Kvinner og menn, publiserte rater
+    const kv = D.rate[k]['2']['A-G'].u, mn = D.rate[k]['1']['A-G'].u;
+    H('kjonn').textContent = kv[iS] === mn[iS] ? `Kvinner og menn er like ofte pasienter` : `${kv[iS] > mn[iS] ? 'Kvinner' : 'Menn'} er oftere pasienter: ${nb(Math.max(kv[iS], mn[iS]))} mot ${nb(Math.min(kv[iS], mn[iS]))} per 1 000`;
+    sett('kjonn-note', `Pasienter per 1 000 innbyggere, ujustert. ${esc(kapMedKode(k))}.${k === 'XV' ? ' For svangerskap og fødsel er ratene for menn nær null.' : ''}`);
+    tidslinje($('#fig-kjonn'), AAR, [
+      { navn: 'Kvinner', farge: FARGE.oker, v: kv }, { navn: 'Menn', farge: FARGE.marine, v: mn }
+    ], { fmt: v => nb(v), null: true, ytittel: 'per 1 000 innbyggere', hoyde: 220, aria: 'Pasienter per 1 000 kvinner og menn', merk: [{ i: AAR.indexOf('2020'), tekst: 'Korona' }] });
+    tabell('kjonn', ['År', 'Kvinner', 'Menn', 'Begge kjønn'], AAR.map((a, i) => [a, nb(kv[i]), nb(mn[i]), nb(D.rate[k]['0']['A-G'].u[i])]).reverse());
+  }
+
+  // ---------- Hva behandles de for ----------
+  function tegnDiagnoser() {
+    const rader = KAPITLER.map(k => ({ k, navn: KAP.get(k).n, v: ser(k, 'Pasient')[iS] })).sort((a, b) => b.v - a.v);
+    const sumKap = rader.reduce((s, r) => s + r.v, 0), tot = ser('_T', 'Pasient')[iS];
+    H('kapitler').textContent = `${rader[0].navn} er det største kapitlet`;
+    sett('kapitler-note', `Pasienter i ${AAR[iS]}, tusen. Kapitlene summerer til ${nb(sumKap)}, mens det var ${nb(tot)} pasienter i alt.`);
+    liggende($('#fig-kapitler'), rader.map(r => ({ k: r.k, navn: r.navn, deler: [{ v: r.v / 1000, farge: r.k === S ? FARGE.gronn : FARGE.gronnF }], sterk: r.k === S })),
+      { fmt: v => nb(v), klikk: velg, venstreMaks: 250, bh: 14, aria: 'Pasienter per diagnosekapittel',
+        tip: r => `<div class="bf-tip-h">${esc(kapMedKode(r.k))}</div>${tipRad(FARGE.gronn, `Pasienter ${AAR[iS]}`, nb(ser(r.k, 'Pasient')[iS]))}${tipRad(FARGE.gronn, `Endring fra ${AAR[i0]}`, sgn(pst(ser(r.k, 'Pasient')[iS], ser(r.k, 'Pasient')[i0])) + ' %')}` });
+    tabell('kapitler', ['Kapittel', `Pasienter ${AAR[i0]}`, `Pasienter ${AAR[iS]}`, 'Endring, %', 'Per 1 000 innbyggere'], rader.map(r => [kapMedKode(r.k), nb(ser(r.k, 'Pasient')[i0]), nb(r.v), sgn(pst(r.v, ser(r.k, 'Pasient')[i0]), 1), nb(D.rate[r.k]['0']['A-G'].u[iS])]), ['Alle diagnoser (unik telling)', nb(ser('_T', 'Pasient')[i0]), nb(tot), sgn(pst(tot, ser('_T', 'Pasient')[i0]), 1), nb(D.rate._T['0']['A-G'].u[iS])]);
+
+    // Blokker i valgt kapittel
+    const el = $('#fig-blokker');
+    if (S === 'zz1') {
+      H('blokker').textContent = 'Kategoriblokker';
+      sett('blokker-note', '');
+      tom(el, '«Annen» har ingen kategoriblokker. Den samler ytre årsaker til skader (kapittel XX) og koder for spesielle formål.');
+      tabell('blokker', [''], []); sett('blokker-merk', '');
+      return;
+    }
+    const alle = S === '_T';
+    let bl = D.blokker.filter(b => alle || b.kap === S).map(b => ({ ...b, v1: b.v[iS], v0: b.v[i0] })).sort((a, b) => b.v1 - a.v1);
+    if (alle) {
+      bl = bl.slice(0, 15);
+      H('blokker').textContent = `De 15 største av ${D.blokker.length} kategoriblokker`;
+      sett('blokker-note', `Pasienter i ${AAR[iS]}. Velg et kapittel for å se alle blokkene i det.`);
+    }
+    const kp = ser(S, 'Pasient')[iS], sumB = bl.reduce((s, b) => s + b.v1, 0);
+    if (!alle) H('blokker').textContent = `${bl.length} kategoriblokker i ${kapNavn(S)}`;
+    if (!alle) sett('blokker-note', `Pasienter i ${AAR[iS]} per kategoriblokk. Størst er ${esc(bl[0].n.charAt(0).toLowerCase() + bl[0].n.slice(1))} (${bl[0].k.replace('-', '–')}). Blokkene summerer til ${nb(sumB)}, mens kapitlet har ${nb(kp)} pasienter.`);
+    const kodetekst = k => { const [a, b] = k.split('-'); return a === b ? a : `${a}–${b}`; };
+    liggende(el, bl.map(b => ({ k: b.k, navn: `${b.n.length > 30 ? b.n.slice(0, 29) + '…' : b.n} (${kodetekst(b.k)})`, deler: [{ v: b.v1, farge: FARGE.gronn }] })),
+      { fmt: v => nb(v), venstreMaks: 270, bh: 12, aria: 'Pasienter per kategoriblokk',
+        tip: r => { const b = bl.find(x => x.k === r.k); return `<div class="bf-tip-h">${esc(b.n)} (${esc(kodetekst(b.k))})${alle ? '<br>' + esc(kapMedKode(b.kap)) : ''}</div>${tipRad(FARGE.gronn, `Pasienter ${AAR[iS]}`, nb(b.v1))}${tipRad(FARGE.dempet, `Pasienter ${AAR[i0]}`, nb(b.v0))}`; } });
+    tabell('blokker', ['Blokk', 'Koder', ...(alle ? ['Kapittel'] : []), `Pasienter ${AAR[i0]}`, `Pasienter ${AAR[iS]}`, 'Endring, %'], bl.map(b => [b.n, kodetekst(b.k), ...(alle ? [esc(KAP.get(b.kap).n)] : []), nb(b.v0), nb(b.v1), b.v0 ? sgn(pst(b.v1, b.v0), 1) : '–']));
+    const BRUDD = { 'O60-O75': 'O60–O75 falt fra rundt 10 000 til under 2 000 pasienter fra 2016 til 2018. Det ser ut som en endring i kodingen, ikke i antall fødsler med komplikasjoner.', 'P00-P04': 'P00–P04 har 0 pasienter fra 2024. Det kan være en kodeendring eller avrunding av svært små tall.', 'R95-R99': 'R95–R99 har en topp på 849 pasienter i 2020, mot under 200 de andre årene.' };
+    const merk = bl.filter(b => BRUDD[b.k]).map(b => BRUDD[b.k]);
+    sett('blokker-merk', merk.length ? `Brudd i serien: ${merk.join(' ')} Spørsmål til fag.` : '');
+  }
+
+  // ---------- Innvandring ----------
+  const KAT = [['A_E-G', 'Befolkningen ellers'], ['B', 'Innvandrere'], ['C', 'Norskfødte med innvandrerforeldre']];
+  const smaa = s => s.charAt(0).toLowerCase() + s.slice(1);
+  function rangering(v) {
+    const hi = Math.max(...v), lo = Math.min(...v);
+    const top = KAT.filter((_, j) => v[j] === hi).map(x => smaa(x[1])), bunn = KAT.filter((_, j) => v[j] === lo).map(x => smaa(x[1]));
+    if (hi === lo) return 'gruppene har like høy rate';
+    const del1 = top.length > 1 ? `${top.join(' og ')} har like høy rate` : `${top[0]} har høyest rate`;
+    return `${del1}, ${bunn.join(' og ')} lavest`;
+  }
+  function tegnInnvandring() {
+    const k = S, r = D.rate[k]['0'], ord = RATE === 'a' ? 'aldersjustert' : 'ujustert';
+    const v = KAT.map(([c]) => r[c][RATE][iS]);
+    H('innv-som').textContent = 'Somatikk: ' + rangering(v);
+    sett('innv-som-note', `Pasienter per 1 000 innbyggere, ${ord}, ${AAR[iS]}. ${esc(kapMedKode(k))}.`);
+    liggende($('#fig-innv-som'), KAT.map(([c, n], j) => ({ k: c, navn: n, deler: [{ v: v[j], farge: FARGE.gronn }] })),
+      { fmt: x => nb(x), venstreMaks: 230, aria: `Somatiske pasienter per 1 000, ${ord}, etter innvandringskategori` });
+    tabell('innv-som', ['', 'Ujustert', 'Aldersjustert'], KAT.map(([c, n]) => [n, nb(r[c].u[iS]), nb(r[c].a[iS])]), ['Hele befolkningen', nb(r['A-G'].u[iS]), nb(r['A-G'].a[iS])]);
+
+    const pr = D.prate['0'], pv = KAT.map(([c]) => pr[c][RATE][iS]);
+    H('innv-psyk').textContent = 'Psykisk helsevern: ' + rangering(pv);
+    sett('innv-psyk-note', `Pasienter i psykisk helsevern for voksne per 1 000 innbyggere, ${ord}, ${AAR[iS]}. Gjelder alle diagnoser.`);
+    liggende($('#fig-innv-psyk'), KAT.map(([c, n], j) => ({ k: c, navn: n, deler: [{ v: pv[j], farge: FARGE.gronn }] })),
+      { fmt: x => nb(x), venstreMaks: 230, aria: `Pasienter i psykisk helsevern per 1 000, ${ord}` });
+    tabell('innv-psyk', ['', 'Ujustert', 'Aldersjustert'], KAT.map(([c, n]) => [n, nb(pr[c].u[iS]), nb(pr[c].a[iS])]), ['Hele befolkningen', nb(pr['A-G'].u[iS]), nb(pr['A-G'].a[iS])]);
+  }
+
+  // ---------- Psykisk helsevern ----------
+  function tegnPsykisk() {
+    const P = D.psyk, A = D.palder.filter(a => a.k !== 'Ialt');
+    const farger = [FARGE.gronn, FARGE.bla, FARGE.oker, FARGE.rosa];
+    const v = A.map(a => P['0'][a.k].Pasient);
+    const endr = A.map((a, j) => pst(v[j][iS], v[j][i0]));
+    const mest = A[endr.indexOf(Math.max(...endr))];
+    H('psyk-alder').textContent = `Størst økning blant ${mest.n}: ${sgn(Math.max(...endr))} prosent siden ${AAR[i0]}`;
+    sett('psyk-alder-note', 'Pasienter i psykisk helsevern for voksne, antall, etter alder.');
+    tidslinje($('#fig-psyk-alder'), AAR, A.map((a, j) => ({ navn: a.n, farge: farger[j], v: v[j] })),
+      { fmt: x => nb(x), null: true, yfmt: x => x === 0 ? '0' : nb(x / 1000) + ' 000', ytittel: 'pasienter', aria: 'Pasienter i psykisk helsevern etter alder', merk: [{ i: AAR.indexOf('2020'), tekst: 'Korona' }] });
+    tabell('psyk-alder', ['År', ...A.map(a => a.n), 'I alt'], AAR.map((y, i) => [y, ...v.map(s => nb(s[i])), nb(P['0'].Ialt.Pasient[i])]).reverse());
+
+    const kv = P['2']['18-29'].Pasient, mn = P['1']['18-29'].Pasient;
+    const ek = pst(kv[iS], kv[i0]), em = pst(mn[iS], mn[i0]);
+    H('psyk-unge').textContent = ek > em ? `Unge kvinner øker mest: ${sgn(ek)} prosent siden ${AAR[i0]}, mot ${sgn(em)} for unge menn` : `Unge menn øker mest: ${sgn(em)} prosent siden ${AAR[i0]}, mot ${sgn(ek)} for unge kvinner`;
+    sett('psyk-unge-note', 'Pasienter 18–29 år i psykisk helsevern for voksne, antall.');
+    tidslinje($('#fig-psyk-unge'), AAR, [{ navn: 'Kvinner 18–29', farge: FARGE.oker, v: kv }, { navn: 'Menn 18–29', farge: FARGE.marine, v: mn }],
+      { fmt: x => nb(x), null: true, ytittel: 'pasienter', aria: 'Pasienter 18–29 år etter kjønn', merk: [{ i: AAR.indexOf('2020'), tekst: 'Korona' }] });
+    tabell('psyk-unge', ['År', 'Kvinner 18–29', 'Menn 18–29'], AAR.map((y, i) => [y, nb(kv[i]), nb(mn[i])]).reverse());
+    const tot = P['0'].Ialt.Pasient, rt = D.prate['0']['A-G'].u;
+    sett('psyk-unge-merk', `Antall pasienter i alt økte med ${nb(pst(tot[iS], tot[i0]))} prosent, men raten for hele befolkningen gikk fra ${nb(rt[i0])} til ${nb(rt[iS])} per 1 000. Flere pasienter betyr ikke nødvendigvis større andel av befolkningen, og en fallende rate skjuler at de unge øker.`);
+  }
+
+  function tegnAlt() { tegnTopp(); tegnHva(); tegnHvem(); tegnDiagnoser(); tegnInnvandring(); tegnPsykisk(); }
+  tegnAlt();
+})();
+</script>
+</body>
+</html>

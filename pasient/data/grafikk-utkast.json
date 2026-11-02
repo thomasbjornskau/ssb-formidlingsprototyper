@@ -1,0 +1,289 @@
+{
+ "merknad": "Utkast til steg 2, hentet fra statistikkbanken via SSB-tilkoblingen 02.11.2026. Erstattes av data/raw/ i steg 3.",
+ "kilder": {
+  "14824": "Somatikk, hele landet, begge kjønn, alle aktører",
+  "14827": "Rater etter innvandringskategori",
+  "14820": "Psykisk helsevern for voksne",
+  "07459": "Folkemengde 1. januar etter alder (data/raw/07459-folkemengde-alder.csv)"
+ },
+ "aar": [
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "somatikk": {
+  "pasienter": [
+   2336748,
+   2387136,
+   2432190,
+   2463540,
+   2490198,
+   2431167,
+   2522490,
+   2569494,
+   2617218,
+   2656857,
+   2716218
+  ],
+  "pasienter_poliklinikk": [
+   2202381,
+   2255604,
+   2302758,
+   2333604,
+   2360319,
+   2306985,
+   2397954,
+   2440911,
+   2490390,
+   2530260,
+   2592768
+  ],
+  "pasienter_dogn": [
+   567420,
+   575037,
+   574866,
+   573069,
+   573162,
+   535185,
+   564777,
+   570468,
+   572817,
+   575964,
+   580716
+  ],
+  "kontakter_poliklinikk": [
+   7732794,
+   7948494,
+   8208576,
+   8380722,
+   8581782,
+   8249862,
+   8813418,
+   8910960,
+   9166590,
+   9397062,
+   9790080
+  ],
+  "dagbehandlinger": [
+   597360,
+   618522,
+   644616,
+   654774,
+   700698,
+   666150,
+   717558,
+   746226,
+   749814,
+   748410,
+   758226
+  ],
+  "dognopphold": [
+   897840,
+   908982,
+   905310,
+   901878,
+   903210,
+   827544,
+   879438,
+   897066,
+   896424,
+   895752,
+   901848
+  ],
+  "oppholdsdogn": [
+   3940758,
+   3940044,
+   3884700,
+   3846528,
+   3856728,
+   3375162,
+   3639258,
+   3722502,
+   3705768,
+   3649680,
+   3569154
+  ],
+  "pasienter_per_1000": {
+   "2015": 450,
+   "2025": 484
+  },
+  "kontakter_uten_personnummer": {
+   "2015": "over 66 000",
+   "2025": 13500
+  }
+ },
+ "diagnosekapittel_2025": {
+  "I": [
+   "A00–B99",
+   "Infeksjonssykdommer",
+   54048
+  ],
+  "II": [
+   "C00–D48",
+   "Svulster",
+   286419
+  ],
+  "III": [
+   "D50–D89",
+   "Blod og immunsystem",
+   31599
+  ],
+  "IV": [
+   "E00–E90",
+   "Endokrine sykdommer og stoffskifte",
+   232530
+  ],
+  "V": [
+   "F00–F99",
+   "Psykiske lidelser",
+   51360
+  ],
+  "VI": [
+   "G00–G99",
+   "Nervesystemet",
+   215046
+  ],
+  "VII": [
+   "H00–H59",
+   "Øyet",
+   413034
+  ],
+  "VIII": [
+   "H60–H95",
+   "Øret",
+   276087
+  ],
+  "IX": [
+   "I00–I99",
+   "Hjerte og kar",
+   276759
+  ],
+  "X": [
+   "J00–J99",
+   "Åndedrett",
+   246036
+  ],
+  "XI": [
+   "K00–K93",
+   "Fordøyelse",
+   286254
+  ],
+  "XII": [
+   "L00–L99",
+   "Hud",
+   251469
+  ],
+  "XIII": [
+   "M00–M99",
+   "Muskel og skjelett",
+   411573
+  ],
+  "XIV": [
+   "N00–N99",
+   "Urin- og kjønnsorganer",
+   342618
+  ],
+  "XV": [
+   "O00–O99",
+   "Svangerskap og fødsel",
+   61041
+  ],
+  "XVI": [
+   "P00–P96",
+   "Tilstander rundt fødselen",
+   11145
+  ],
+  "XVII": [
+   "Q00–Q99",
+   "Medfødte misdannelser",
+   53853
+  ],
+  "XVIII": [
+   "R00–R99",
+   "Symptomer og funn",
+   446073
+  ],
+  "XIX": [
+   "S00–T98",
+   "Skader og forgiftninger",
+   363627
+  ],
+  "XXI": [
+   "Z00–Z99",
+   "Kontroller, oppfølging og annen kontakt",
+   793185
+  ],
+  "zz1": [
+   "",
+   "Annen",
+   53601
+  ]
+ },
+ "alder": {
+  "grupper": [
+   "0–17",
+   "18–29",
+   "30–49",
+   "50–66",
+   "67–79",
+   "80–89",
+   "90+"
+  ],
+  "grenser": [
+   [
+    0,
+    17
+   ],
+   [
+    18,
+    29
+   ],
+   [
+    30,
+    49
+   ],
+   [
+    50,
+    66
+   ],
+   [
+    67,
+    79
+   ],
+   [
+    80,
+    89
+   ],
+   [
+    90,
+    200
+   ]
+  ],
+  "pasienter_2015": [
+   385620,
+   288678,
+   568263,
+   546096,
+   368562,
+   143760,
+   35772
+  ],
+  "pasienter_2025": [
+   405360,
+   300246,
+   628158,
+   646206,
+   491931,
+   204531,
+   39786
+  ]
+ }
+}
