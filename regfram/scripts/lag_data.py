@@ -5,6 +5,7 @@ Kjøres av felles/bygg.py. Stopper med feil hvis en kontroll ikke går opp:
 - aldersgruppene summerer til folkemengden
 - endringen per år = fødte - døde + nettoinnvandring + innenlands nettoinnflytting
 - kommunene summert per sentralitetsklasse = klassetallene i statistikkbanken
+- kartet har de samme kommunenumrene som tallene
 """
 import itertools
 import json
@@ -83,6 +84,11 @@ def main():
     if set(kom) != set(sentral):
         feil(f"kommunene i tabellen og i sentralitetskoblingen er ulike: {sorted(set(kom) ^ set(sentral))[:5]}")
 
+    kart = json.loads((RAW / "kommuner.topojson").read_text(encoding="utf8"))
+    kartkoder = [g["properties"]["kommunenummer"] for g in kart["objects"]["Kommuner"]["geometries"]]
+    if len(kartkoder) != len(set(kartkoder)) or set(kartkoder) != set(kom):
+        feil(f"kartet og tallene har ulike kommuner: {sorted(set(kartkoder) ^ set(kom))[:5]}")
+
     # Kontroller
     for i, a in enumerate(AAR):
         for m in range(3):
@@ -114,7 +120,7 @@ def main():
     }
     UT.parent.mkdir(exist_ok=True)
     UT.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf8")
-    print(f"regfram: kontroller ok, {len(kom)} kommuner, {len(fyl)} fylker")
+    print(f"regfram: kontroller ok, {len(kom)} kommuner, {len(fyl)} fylker, {len(kartkoder)} kommuner i kartet")
 
 
 if __name__ == "__main__":

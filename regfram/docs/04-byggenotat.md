@@ -1,8 +1,22 @@
 # Byggenotat, steg 4 (regfram)
 
-Versjon 0.2 av prototypen, 14.10.2026. Bygget fra `src/index.template.html` og `data/raw/` med `felles/bygg.py`.
+Versjon 0.3 av prototypen, 03.11.2026 (0.2: 14.10.2026). Bygget fra `src/index.template.html` og `data/raw/` med `felles/bygg.py`.
 
-## Hva er endret fra versjon 0.1
+## Endret i versjon 0.3, etter møte i fagseksjonen 02.11.2026
+
+| Innspill fra fag | Løsning |
+|---|---|
+| Figurer etter valgt nivå | Kartet zoomer til fylket. Prikkfiguren farger kommunene i fylket grønne og resten grå. Sentralitet vises innenfor fylket. Eldrefiguren viser kommunene i fylket i stedet for fylkene. Oslo, som er både fylke og kommune, har egne overskrifter |
+| Kart | Koropletkart over endring 2026–2050 per kommune, seks klasser i blå–oker uten midtpunkt (oker = nedgang, blå = vekst). Kommunegrenser 2024 fra Kartverket, forenklet til 126 kB. Klikk velger kommunen. Overskriften gjelder kommuner med minst 2 000 innbyggere |
+| «Slik lages tallene» | Ikke endret. Foreslått som eget arbeid sammen med fag |
+| Fargene i prikkfiguren | Én rad per sentralitetsklasse, så klassen leses av plasseringen. Én farge. Ved valgt fylke er de andre kommunene grå, ikke blekede |
+| Sentralitet innenfor fylke | Vises når et fylke eller en kommune er valgt. Antall kommuner står i parentes, og klasser med færre enn tre kommuner er grå |
+| Eldre: én figur | Én rute med 100 personer: mørk grønn er 70 år og eldre i 2026, lys grønn er økningen fram mot 2050 |
+| Mengden tekst | Ingressen er kortet til to setninger, og flere figurnotater er kortet. Kildelinjen står fortsatt synlig under hver figur |
+
+Andre rettelser: tittelen gjorde siden for bred på mobil (390 px), årstallene i viftediagrammet overlappet på mobil, og aksemerkene i stolpefigurene kunne gå i evig løkke når null stod midt mellom to merker.
+
+## Hva ble endret i versjon 0.2
 
 | Forslag fra sammenligningen | Løsning |
 |---|---|
@@ -16,7 +30,7 @@ Versjon 0.2 av prototypen, 14.10.2026. Bygget fra `src/index.template.html` og `
 
 ## Kontroller i byggeskriptet
 
-`scripts/lag_data.py` stopper bygget hvis ett av disse ikke stemmer: kommunene summerer til fylkene og fylkene til landet, alle år og alternativer; aldersgruppene summerer til folkemengden; endring per år = fødte − døde + nettoinnvandring + innenlands flytting; kommunene summerer til klassetallene for sentralitet.
+`scripts/lag_data.py` stopper bygget hvis ett av disse ikke stemmer: kommunene summerer til fylkene og fylkene til landet, alle år og alternativer; aldersgruppene summerer til folkemengden; endring per år = fødte − døde + nettoinnvandring + innenlands flytting; kommunene summerer til klassetallene for sentralitet; kartet har de samme 357 kommunenumrene som tallene (lagt til i 0.3, negativ test med ett endret kommunenummer stoppet bygget).
 
 ## Nye valg til kvalitetssikring (samlet i `05-kvalitetssikring.md`)
 
@@ -29,5 +43,6 @@ Versjon 0.2 av prototypen, 14.10.2026. Bygget fra `src/index.template.html` og `
 
 ## Kjente svakheter
 
-- Prikkfiguren kan ikke brukes med tastatur. Tabellen under dekker det samme.
-- Filen er 790 kB fordi data, d3 og skrift er bakt inn. Det er valgt for at siden skal virke uten eksterne kall.
+- Prikkfiguren og kartet kan ikke brukes med tastatur. Tabellen under prikkfiguren og kommunetabellen dekker det samme.
+- Kartet er tegnet plant med lengdegradene krympet med cos(65°). Det gir rimelige proporsjoner for Norge, men er ikke en offisiell kartprojeksjon.
+- Filen er 924 kB fordi data, d3 og skrift er bakt inn. Det er valgt for at siden skal virke uten eksterne kall.

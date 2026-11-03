@@ -61,6 +61,13 @@
       "kilde": "SSB Klass, sentralitet (klassifikasjon 128, versjon 1427), korrespondanse 1417 mot kommuner 2024",
       "url": "https://dataportal.ssb.no/classifications/128/versions/1427/correspondences/1417",
       "merknad": "Hentet manuelt 14.10.2026. lag_data.py kontrollerer koblingen mot datasettet sentralitet."
+    },
+    {
+      "id": "kommuner_kart",
+      "fil": "data/raw/kommuner.topojson",
+      "kilde": "Kommunegrenser 2024 fra Kartverket (CC BY 4.0), klippet etter kystlinjen, via github.com/robhop/fylker-og-kommuner (Kommuner-S.topojson)",
+      "url": "https://github.com/robhop/fylker-og-kommuner",
+      "merknad": "Hentet 03.11.2026 og forenklet med mapshaper 0.6.102: -simplify 35% keep-shapes -filter-fields kommunenummer, quantization=10000. lag_data.py kontrollerer at kartet har de samme 357 kommunenumrene som tallene."
     }
   ],
   "fallgruver": [

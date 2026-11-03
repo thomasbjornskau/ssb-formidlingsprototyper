@@ -2,16 +2,16 @@
 
 > **Prototype til faglig kontroll.** Ikke en offisiell SSB-publisering. Tallene er fra statistikkbanken, men tolkninger og overskrifter er ikke kvalitetssikret ennå.
 
-**Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/regfram/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/regfram/index.html)
+**Se prototypen:** [index.html](index.html) (på GitHub Pages: `…/ssb-formidlingsprototyper/regfram/`)
 
-Prototypen viser framskrevet folkemengde for landet, alle fylker og alle 357 kommuner fram mot 2050, basert på SSBs publisering 12. juni 2026. Alle sider kan vises for én kommune eller ett fylke, og valget ligger i adressen, for eksempel `#omrade=1804` for Bodø.
+Prototypen viser framskrevet folkemengde for landet, alle fylker og alle 357 kommuner fram mot 2050, basert på SSBs publisering 12. juni 2026. Versjon 0.3 (03.11.2026) har kart, og figurene tilpasser seg valgt nivå: hele landet, et fylke eller en kommune. Alle sider kan vises for én kommune eller ett fylke, og valget ligger i adressen, for eksempel `#omrade=1804` for Bodø.
 
 ## Hva prototypen svarer på
 
 | | Spørsmål | Seksjon |
 |---|---|---|
 | 1 | Hvor mange blir vi, og hvor sikkert er det? | Toppgrafikken med avrundet tall og spennet mellom lav og høy nasjonal vekst |
-| 2 | Hvor vokser og hvor krymper det? | Alle kommuner etter sentralitet, vekst per sentralitetsklasse og per fylke |
+| 2 | Hvor vokser og hvor krymper det? | Kart, fylkene, alle kommuner i én rad per sentralitetsklasse, og vekst per sentralitetsklasse for landet eller fylket |
 | 3 | Hvorfor endrer folketallet seg? | Fødte minus døde, nettoinnvandring og flytting, samlet og år for år |
 | 4 | Hvor raskt eldes befolkningen? | Andel 70 år og eldre, endring etter alder, fylkene sammenlignet |
 | 5 | Hva skjer i min kommune? | Hele siden for valgt kommune, og kommunetabellen |
@@ -36,6 +36,7 @@ Det vi trenger vurdert, står i [docs/05-kvalitetssikring.md](docs/05-kvalitetss
 | [14747](https://www.ssb.no/statbank/table/14747) | Framskrevne fødte, døde, nettoinnvandring og innenlands nettoinnflytting |
 | [14740](https://www.ssb.no/statbank/table/14740) | Den nasjonale framskrivingen, brukt til å forklare avviket for hele landet |
 | [Klass, korrespondanse 1417](https://dataportal.ssb.no/classifications/128/versions/1427/correspondences/1417) | Sentralitetsklasse for hver kommune |
+| [Kommunegrenser 2024](https://github.com/robhop/fylker-og-kommuner) | Kartverkets kommunegrenser (CC BY 4.0), forenklet til kartet. Hentet 03.11.2026 |
 
 Spørringene står i [data/kilder.json](data/kilder.json). Fagkontakter for statistikken: Stefan Leknes og Sturla A. Løkken, SSB.
 

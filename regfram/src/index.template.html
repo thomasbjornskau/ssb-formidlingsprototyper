@@ -21,7 +21,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 @media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
 .bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
 .bf-proto b { color: var(--tekst); }
-.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-title { font-size: clamp(22px, 6vw, 30px); hyphens: auto; overflow-wrap: break-word; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
 .bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
 .bf b { font-weight: 600; }
 .bf-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: 18px; }
@@ -97,7 +97,15 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 /* Personrute */
 .bf-ruter { display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: flex-start; }
 .bf-rute { display: grid; gap: 6px; justify-items: center; }
-.bf-rute svg { width: 168px; height: 168px; }
+.bf-rute svg { width: 220px; height: 220px; }
+[hidden] { display: none !important; }
+.bf > *, .bf-section > *, .bf-topp > * { min-width: 0; }
+.bf-tablewrap { max-width: 100%; }
+.bf-kart svg { overflow: hidden; }
+.bf-kart svg path.k { cursor: pointer; }
+.bf-kart-leg { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 13px; }
+.bf-kart-leg span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-kart-leg i { width: 14px; height: 12px; display: inline-block; border: 1px solid #d9dfe0; }
 .bf-rute-tekst { font-weight: 600; font-size: 14px; }
 
 /* Tabeller */
@@ -178,27 +186,35 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
     <h2 class="bf-sh">Hvor vokser og hvor krymper det?</h2>
     <p class="bf-ingress">Veksten samles i sentrale strøk. Sentralitet måles med SSBs sentralitetsindeks, fra klasse 1 (mest sentral) til 6 (minst sentral).</p>
     <div class="bf-grid bf-grid2">
+      <article class="bf-card" id="kartet">
+        <h3 class="bf-h" data-h="kart"></h3>
+        <p class="bf-note">Endring i folkemengde 2026–2050, prosent, hovedalternativet. Klikk på en kommune for å velge den.</p>
+        <div class="bf-kart-leg" data-leg="kart"></div>
+        <div class="bf-chart bf-kart" id="fig-kart" style="min-height:420px"></div>
+        <p class="bf-note" data-n="kart"></p>
+        <p class="bf-src">Kilde: SSB, tabell 14746. Kommunegrenser 2024: Kartverket (CC BY 4.0). Sist oppdatert: 12.06.2026.</p>
+      </article>
+      <article class="bf-card" id="fylkene">
+        <h3 class="bf-h" data-h="fylker"></h3>
+        <p class="bf-note">Endring i folkemengde 2026–2050, prosent, hovedalternativet. Klikk på et fylke for å velge det.</p>
+        <div class="bf-chart" id="fig-fylker" style="min-height:460px"></div>
+        <details class="bf-tall" data-tall="fylker"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src">Kilde: SSB, tabell 14746. Sist oppdatert: 12.06.2026.</p>
+      </article>
       <article class="bf-card bf-wide" id="kommunene-figur">
         <h3 class="bf-h" data-h="sverm"></h3>
-        <p class="bf-note">Endring i folkemengde fra 2026 til 2050, prosent, hovedalternativet. Hver prikk er en kommune, og størrelsen viser folketallet i 2026. Små kommuner havner ofte ytterst fordi små endringer i antall gir store prosentutslag. Klikk på en prikk for å velge kommunen.</p>
-        <div class="bf-legend" data-leg="sentral"></div>
+        <p class="bf-note">Endring 2026–2050, prosent, per sentralitetsklasse. Hver prikk er en kommune, og størrelsen viser folketallet. Små kommuner får ofte store prosentutslag.</p>
+        <div class="bf-legend" data-leg="sverm"></div>
         <div class="bf-chart" id="fig-sverm" style="min-height:300px"></div>
         <details class="bf-tall" data-tall="sverm"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
         <p class="bf-src">Kilde: SSB, tabell 14746, og SSBs klassifikasjon av sentralitet (Klass). Sist oppdatert: 12.06.2026.</p>
       </article>
       <article class="bf-card" id="sentralitet">
         <h3 class="bf-h" data-h="sentral"></h3>
-        <p class="bf-note">Endring i folkemengde fra 2026 til 2050 per sentralitetsklasse, prosent, hovedalternativet.</p>
+        <p class="bf-note" data-n="sentral"></p>
         <div class="bf-chart" id="fig-sentral" style="min-height:240px"></div>
         <details class="bf-tall" data-tall="sentral"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
-        <p class="bf-src">Kilde: SSB, tabell 14746. Sist oppdatert: 12.06.2026.</p>
-      </article>
-      <article class="bf-card" id="fylkene">
-        <h3 class="bf-h" data-h="fylker"></h3>
-        <p class="bf-note">Endring i folkemengde fra 2026 til 2050, prosent, hovedalternativet. Klikk på et fylke for å velge det.</p>
-        <div class="bf-chart" id="fig-fylker" style="min-height:460px"></div>
-        <details class="bf-tall" data-tall="fylker"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
-        <p class="bf-src">Kilde: SSB, tabell 14746. Sist oppdatert: 12.06.2026.</p>
+        <p class="bf-src">Kilde: SSB, tabell 14746, og SSBs klassifikasjon av sentralitet (Klass). Sist oppdatert: 12.06.2026.</p>
       </article>
     </div>
   </section>
@@ -231,9 +247,9 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
     <div class="bf-grid">
       <article class="bf-card" id="av-hundre">
         <h3 class="bf-h" data-h="hundre"></h3>
-        <p class="bf-note">Personer 70 år og eldre per 100 innbyggere, 2026 og 2050, hovedalternativet. Andelen er avrundet til hele personer.</p>
+        <p class="bf-note">Personer 70 år og eldre per 100 innbyggere, hovedalternativet, avrundet.</p>
+        <div class="bf-legend" data-leg="hundre"></div>
         <div class="bf-ruter" id="fig-hundre"></div>
-        <div class="bf-legend"><span><i class="bf-sw-dot"></i>70 år og eldre</span><span><i class="bf-sw-ring" style="border-color:var(--null);border-width:1.5px"></i>under 70 år</span></div>
         <details class="bf-tall" data-tall="hundre"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
         <p class="bf-src">Kilde: SSB, tabell 14746. Sist oppdatert: 12.06.2026.</p>
       </article>
@@ -246,7 +262,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
       </article>
       <article class="bf-card" id="eldre-fylker">
         <h3 class="bf-h" data-h="dumbbell"></h3>
-        <p class="bf-note">Andel 70 år og eldre, 2026 og 2050, prosent, hovedalternativet. Aksen starter ikke på null. Klikk på et fylke for å velge det.</p>
+        <p class="bf-note" data-n="dumbbell"></p>
         <div class="bf-legend"><span><i class="bf-sw-ring"></i>2026</span><span><i class="bf-sw-dot"></i>2050</span></div>
         <div class="bf-chart" id="fig-dumbbell" style="min-height:440px"></div>
         <details class="bf-tall" data-tall="dumbbell"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
@@ -295,6 +311,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 </script>
 <script>
 const DATA = /*__INKLUDER:build/regfram.json__*/;
+const KART = /*__INKLUDER:data/raw/kommuner.topojson__*/;
 </script>
 <script>
 (() => {
@@ -312,6 +329,7 @@ const kommuner = DATA.omrader.filter((o) => o[2] === 'kommune').map((o) => o[0])
 const fullt = (k) => (k === '0' ? 'Hele landet' : O[k].navn);
 const kort = (k) => fullt(k).split(' - ')[0];
 const sum = (a) => a.reduce((x, y) => x + y, 0);
+const liste = (a) => new Intl.ListFormat('nb', {type: 'conjunction'}).format(a.map(String));
 const pst1 = (ny, gml) => Math.round(1000 * (ny / gml - 1)) / 10;
 const andel1 = (del, hel) => Math.round(1000 * del / hel) / 10;
 const ELDRE = [7, 8, 9];          // 70–79, 80–89, 90+
@@ -355,8 +373,6 @@ const dato = (s) => s.split('-').reverse().join('.');
 const tankestrek = (s) => String(s).replace(/(\d)-(\d)/g, '$1–$2');
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const GRONN = css('--gronn'), BLA = css('--bla'), OKER = css('--oker');
-// Sekvensiell grønn, trinn 2–7 av sju i diagramstandarden: klasse 1 mørkest
-const KLASSEFARGE = {1: '#014235', 2: '#066049', 3: '#00824d', 4: '#499e69', 5: '#75ba86', 6: '#9ed7a5'};
 
 // ---------- Tilstand: valgt område i adressen (#omrade=1804) ----------
 const root = document.querySelector('.bf');
@@ -430,7 +446,7 @@ const legende = (el, items) => el.replaceChildren(...items.map(({c, n, cls}) => 
 }));
 
 function tidsakse(svg, w, H, m, xs, ys, yt, aksetittel, fmt = nf0) {
-  const steg = w < 440 ? 8 : 4, y0 = xs.domain()[0], y1 = xs.domain()[1];
+  const indre = w - m.l - m.r, steg = indre < 260 ? 12 : indre < 440 ? 8 : 4, y0 = xs.domain()[0], y1 = xs.domain()[1];
   const xt = d3.range(y0, y1 + 1).filter((y) => (y - y0) % steg === 0 || y === y1).filter((y, i, a) => y === y1 || a[a.length - 1] - y >= steg / 2);
   const g = svg.append('g');
   g.selectAll('line.h').data(yt).join('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', (t) => ys(t)).attr('y2', (t) => ys(t)).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
@@ -457,12 +473,9 @@ function sveip(svg, w, H, m, xs, punkter, tegn) {
 // ---------- Ingress ----------
 function ingress() {
   const n = nokkel['0'], fv = fylker.map((k) => nokkel[k]).sort((a, b) => b.pst - a.pst);
-  const krympF = fv.filter((r) => r.pst < 0).map((r) => kort(r.kode));
   const el = $('#ingress'), b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
-  el.replaceChildren('Framskrivingene viser hvordan folketallet i kommunene utvikler seg fram mot 2050 hvis forutsetningene slår til. I hovedalternativet vokser landet med ',
-    b(`om lag ${nf0.format(Math.round(n.pst))} prosent`), '. Veksten er sterkest i ', `${kort(fv[0].kode)} og ${kort(fv[1].kode)}`,
-    krympF.length ? `, mens ${krympF.join(' og ')} krymper` : '', '. ', b(`${krymper('0')} av ${kommuner.length}`),
-    ' kommuner får færre innbyggere, og befolkningen eldes overalt.');
+  el.replaceChildren('I hovedalternativet vokser landet med ', b(`om lag ${nf0.format(Math.round(n.pst))} prosent`), ' fram mot 2050, mest i ',
+    `${kort(fv[0].kode)} og ${kort(fv[1].kode)}`, '. ', b(`${krymper('0')} av ${kommuner.length}`), ' kommuner får færre innbyggere, og befolkningen eldes overalt.');
 }
 
 // ---------- Toppgrafikk: tallet og spennet ----------
@@ -527,7 +540,11 @@ function stolper(box, items, o) {
   const xs = d3.scaleLinear().domain([lo, hi || 1]).range([nameW + (lo < 0 ? valW : 0), Math.max(nameW + valW + 40, w - valW)]);
   let xt = xs.ticks(Math.max(2, Math.min(6, Math.floor((xs.range()[1] - xs.range()[0]) / 80))));
   const tickW = d3.max(xt, (t) => bredde(svg, o.tick(t), 'bf-tick')) + 12;
-  while (xt.length > 2 && Math.abs(xs(xt[1]) - xs(xt[0])) < tickW) xt = xt.filter((t, i) => t === 0 || i % 2 === 0);
+  while (xt.length > 2 && Math.abs(xs(xt[1]) - xs(xt[0])) < tickW) {
+    const f = xt.filter((t, i) => t === 0 || i % 2 === 0);
+    xt = f.length < xt.length ? f : [xt[0], xt[xt.length - 1]];   // unngår evig løkke når null står midt i
+  }
+  if (xt.length === 2 && Math.abs(xs(xt[1]) - xs(xt[0])) < tickW) xt = xt.includes(0) ? [0] : [xt[0]];
   svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(o.aksetittel);
   const g = svg.append('g');
   g.selectAll('line').data(xt).join('line').attr('x1', (t) => xs(t)).attr('x2', (t) => xs(t)).attr('y1', mt - 4).attr('y2', H - mb).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
@@ -558,82 +575,184 @@ function interaktiv(rad, w, rowH, o) {
     .on('keydown', (ev, d) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); o.velg(d.key); } });
 }
 
-// ---------- Hvor: kommunene som prikker ----------
+// ---------- Hvor: kartet ----------
+// Kommunegrensene ligger som TopoJSON. Koordinatene er lengde og bredde. De tegnes plant,
+// med lengdegradene krympet med cos(65°), så Norge får omtrent riktige proporsjoner.
+const KOS = Math.cos(65 * Math.PI / 180);
+const KARTDATA = (() => {
+  const t = KART, [sx, sy] = t.transform.scale, [tx, ty] = t.transform.translate;
+  const arcs = t.arcs.map((a) => { let x = 0, y = 0; return a.map(([dx, dy]) => { x += dx; y += dy; return [(x * sx + tx) * KOS, y * sy + ty]; }); });
+  const arc = (i) => (i < 0 ? arcs[~i].slice().reverse() : arcs[i]);
+  const ring = (r) => { const pts = []; r.forEach((i, j) => { const a = arc(i); pts.push(...(j ? a.slice(1) : a)); }); return pts; };
+  const bruk = new Map();   // bue -> fylkene som bruker den
+  const features = t.objects.Kommuner.geometries.map((g) => {
+    const k = g.properties.kommunenummer, poly = g.type === 'Polygon' ? [g.arcs] : g.arcs;
+    for (const p of poly) for (const r of p) for (const i of r) { const j = i < 0 ? ~i : i; if (!bruk.has(j)) bruk.set(j, new Set()); bruk.get(j).add(k.slice(0, 2)); }
+    return {type: 'Feature', id: k, geometry: {type: 'MultiPolygon', coordinates: poly.map((p) => p.map(ring))}};
+  });
+  const fylkesgrenser = {type: 'MultiLineString', coordinates: [...bruk].filter(([, f]) => f.size > 1).map(([j]) => arcs[j])};
+  return {features, fylkesgrenser};
+})();
+const KARTGRENSER = [-10, -5, 0, 10, 20];
+const KARTFARGER = ['#5e2f01', '#af7102', '#e3be7f', '#90cdf4', '#0f86d1', '#0c328e'];   // blå–oker, 7 trinn uten midtpunktet
+const KARTETIKETT = ['under −10', '−10 til −5', '−5 til 0', '0 til 10', '10 til 20', '20 eller mer'];
+const kartfarge = (v) => KARTFARGER[d3.bisectRight(KARTGRENSER, v)];
+function tegnKart(sel) {
+  const box = $('#fig-kart'), fy = fylkeAv(sel), o = O[sel];
+  const omr = fy ? kommunerI(fy) : kommuner;
+  const rekke = omr.map((k) => nokkel[k]).sort((a, b) => b.pst - a.pst);
+  const ned = rekke.filter((r) => r.pst < 0);
+  // Ytterpunktene blant kommuner med minst SMAA innbyggere, så overskriften ikke styres av de minste
+  const store = rekke.filter((r) => r.f26 >= SMAA), forst = store[0], sist = store[store.length - 1];
+  if (rekke.length === 1) settH('kart', `${kort(fy)}: ${sgn(rekke[0].pst, nf1)} prosent, fylket er én kommune`);
+  else settH('kart', `${fy ? kort(fy) + ': s' : 'S'}terkest vekst i ${kort(forst.kode)} (${sgn(forst.pst, nf0)} %), ` +
+    (sist.pst < 0 ? `størst nedgang i ${kort(sist.kode)} (${sgn(sist.pst, nf0)} %)` : `svakest i ${kort(sist.kode)} (${sgn(sist.pst, nf0)} %)`));
+  $('[data-leg="kart"]').replaceChildren(...KARTFARGER.map((c, i) => { const s = document.createElement('span'), b = document.createElement('i'); b.style.background = c; s.append(b, KARTETIKETT[i]); return s; }));
+  $('[data-n="kart"]').textContent = `Hele landet: ${sgn(nokkel['0'].pst, nf1)} prosent.` + (fy ? ` ${kort(fy)}: ${sgn(nokkel[fy].pst, nf1)} prosent.` : '') + ' Overskriften gjelder kommuner med minst ${nf0.format(SMAA)} innbyggere. Store kommuner med få innbyggere fyller mye i kartet. Prikkfiguren under viser hvor mange som bor der. Tallene står i tabellen under den.';
+  const fokus = KARTDATA.features.filter((f) => !fy || f.id.slice(0, 2) === fy);
+  const w = Math.max(260, Math.floor(box.clientWidth));
+  const proj = d3.geoIdentity().reflectY(true);
+  proj.fitWidth(w, {type: 'FeatureCollection', features: fokus});
+  const [[, y0], [, y1]] = d3.geoPath(proj).bounds({type: 'FeatureCollection', features: fokus});
+  const maksH = fy ? 520 : 760, H = Math.min(maksH, Math.ceil(y1 - y0) + 8);
+  proj.fitExtent([[4, 4], [w - 4, H - 4]], {type: 'FeatureCollection', features: fokus});
+  const {svg} = lerret(box, H, `Kart over endring i folkemengde 2026–2050 per kommune${fy ? ' i ' + fullt(fy) : ''}.`);
+  const path = d3.geoPath(proj);
+  svg.append('g').selectAll('path').data(KARTDATA.features).join('path').attr('class', 'k').attr('d', path)
+    .attr('fill', (f) => (!fy || f.id.slice(0, 2) === fy ? kartfarge(nokkel[f.id].pst) : '#eceff0'))
+    .attr('stroke', '#fff').attr('stroke-width', fy ? 0.8 : 0.3)
+    .on('pointermove', (ev, f) => { const r = nokkel[f.id]; visTips(ev, fullt(f.id), [{c: kartfarge(r.pst), n: 'Endring', v: `${sgn(r.pst, nf1)} prosent`}, {n: '2026', v: `${nf0.format(r.f26)} personer`}, {n: '2050', v: `${nf0.format(r.f50)} personer`}]); })
+    .on('pointerleave', skjulTips)
+    .on('click', (ev, f) => veksle(f.id));
+  svg.append('path').attr('d', path(KARTDATA.fylkesgrenser)).attr('fill', 'none').attr('stroke', css('--tekst')).attr('stroke-width', fy ? 1.2 : 0.7).attr('stroke-opacity', 0.55).style('pointer-events', 'none');
+  if (o.type === 'kommune') {
+    const f = KARTDATA.features.find((x) => x.id === sel);
+    svg.append('path').attr('d', path(f)).attr('fill', 'none').attr('stroke', css('--tekst')).attr('stroke-width', 2.5).style('pointer-events', 'none');
+    const [cx, cy] = path.centroid(f);
+    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('y', Math.max(14, cy - 10)).text(kort(sel));
+    const tw = t.node().getComputedTextLength();
+    t.attr('x', Math.max(2, Math.min(w - tw - 2, cx - tw / 2))).style('pointer-events', 'none');
+  }
+}
+
+// ---------- Hvor: kommunene som prikker, én rad per sentralitetsklasse ----------
 function tegnSverm(sel) {
   const box = $('#fig-sverm'), o = O[sel], land = nokkel['0'];
   const fy = fylkeAv(sel);
-  const n = kommunerI(sel === '0' ? '0' : fy || sel).length, kr = krymper(fy || '0');
+  const n = kommunerI(fy || '0').length, kr = krymper(fy || '0');
   settH('sverm', sel === '0' ? `${krymper('0')} av ${kommuner.length} kommuner får færre innbyggere i 2050 enn i 2026`
+    : o.type === 'fylke' && n === 1 ? `${kort(sel)}: ${sgn(nokkel[sel].pst, nf1)} prosent, ${nokkel[sel].pst > land.pst ? 'mer' : 'mindre'} enn landet`
     : o.type === 'fylke' ? `${kr} av ${n} kommuner i ${kort(sel)} får færre innbyggere`
     : `${kort(sel)}: ${sgn(nokkel[sel].pst, nf1)} prosent, ${nokkel[sel].pst > land.pst ? 'mer' : 'mindre'} enn landet`);
-  legende($('[data-leg="sentral"]'), KLASSER.map((c) => ({c: KLASSEFARGE[c], n: `Klasse ${KLASSENAVN[c]}`, cls: 'bf-sw-dot'})));
-  $$('[data-leg="sentral"] i').forEach((i, j) => { i.style.background = KLASSEFARGE[KLASSER[j]]; });
+  const leg = $('[data-leg="sverm"]');
+  leg.hidden = !fy;
+  if (fy) legende(leg, [{c: GRONN, n: `Kommuner i ${kort(fy)}`, cls: 'bf-sw-dot'}, {c: css('--dempet'), n: 'Andre kommuner', cls: 'bf-sw-dot'}]);
   talltabell('sverm', 'Endring i folkemengde 2026–2050 per kommune', ['Kommune', 'Sentralitetsklasse', '2026', '2050', 'Endring, prosent'],
     kommunerI(fy || '0').map((k) => nokkel[k]).sort((a, b) => b.pst - a.pst).map((r) => [fullt(r.kode), O[r.kode].klasse, nf0.format(r.f26), nf0.format(r.f50), sgn(r.pst, nf1)]));
 
-  const w = Math.max(260, Math.floor(box.clientWidth));
-  const lo = -20, hi = 45, ml = 10, mr = 10;
+  const w = Math.max(260, Math.floor(box.clientWidth)), smal = w < 560;
+  const lo = -20, hi = 45, ml = smal ? 8 : 140, mr = 10;
   const xs = d3.scaleLinear().domain([lo, hi]).range([ml, w - mr]);
-  const skala = Math.max(0.55, Math.min(1, w / 1100));
-  const rad = (k) => (2.4 + 10 * Math.sqrt(nokkel[k].f26 / nokkel['0301'].f26)) * skala;
-  // Bisverm: store kommuner først, så minste avstand fra midtlinjen uten overlapp
-  const plass = [];
-  for (const k of kommuner.slice().sort((a, b) => nokkel[b].f26 - nokkel[a].f26)) {
-    const x = xs(Math.max(lo, Math.min(hi, nokkel[k].pst))), r = rad(k);
-    const naer = plass.filter((p) => Math.abs(p.x - x) < p.r + r + 0.5);
-    let y = 0;
-    const kand = [0];
-    for (const p of naer) { const dx = p.x - x, dd = (p.r + r + 0.6) ** 2 - dx * dx; if (dd > 0) { kand.push(p.y + Math.sqrt(dd), p.y - Math.sqrt(dd)); } }
-    kand.sort((a, b) => Math.abs(a) - Math.abs(b));
-    for (const c of kand) { if (naer.every((p) => (p.x - x) ** 2 + (p.y - c) ** 2 >= (p.r + r + 0.5) ** 2)) { y = c; break; } }
-    plass.push({k, x, y, r});
-  }
-  const ymax = d3.max(plass, (p) => Math.abs(p.y) + p.r) + 4;
-  const mt = 34, H = mt + 2 * ymax + 30, ymid = mt + ymax;
-  const {svg} = lerret(box, H, `Endring i folkemengde 2026–2050 for alle ${kommuner.length} kommuner, farget etter sentralitet.`);
+  const skala = Math.max(0.5, Math.min(0.9, w / 1200));
+  const radius = (k) => (2.2 + 9 * Math.sqrt(nokkel[k].f26 / nokkel['0301'].f26)) * skala;
+  const aktiv = (k) => !fy || O[k].fylke === fy;
+  // Bisverm per klasse: store kommuner først, så minste avstand fra midtlinjen uten overlapp
+  const rader = KLASSER.map((c) => {
+    const plass = [];
+    for (const k of kommuner.filter((x) => O[x].klasse === c).sort((a, b) => nokkel[b].f26 - nokkel[a].f26)) {
+      const x = xs(Math.max(lo, Math.min(hi, nokkel[k].pst))), r = radius(k);
+      const naer = plass.filter((p) => Math.abs(p.x - x) < p.r + r + 0.5);
+      const kand = [0];
+      for (const p of naer) { const dx = p.x - x, dd = (p.r + r + 0.6) ** 2 - dx * dx; if (dd > 0) kand.push(p.y + Math.sqrt(dd), p.y - Math.sqrt(dd)); }
+      kand.sort((a, b) => Math.abs(a) - Math.abs(b));
+      let y = 0;
+      for (const cand of kand) { if (naer.every((p) => (p.x - x) ** 2 + (p.y - cand) ** 2 >= (p.r + r + 0.5) ** 2)) { y = cand; break; } }
+      plass.push({k, x, y, r});
+    }
+    return {c, plass, halv: Math.max(10, d3.max(plass, (p) => Math.abs(p.y) + p.r) + 3)};
+  });
+  const etikettH = smal ? 20 : 0, mt = 30;
+  const kommunerTekst = (n) => `${n} ${n === 1 ? 'kommune' : 'kommuner'}`;
+  let y = mt;
+  for (const rad of rader) { rad.top = y + etikettH; rad.mid = rad.top + rad.halv; y = rad.top + 2 * rad.halv + 6; }
+  const H = y + 22;
+  const {svg} = lerret(box, H, `Endring i folkemengde 2026–2050 for alle ${kommuner.length} kommuner, én rad per sentralitetsklasse.`);
   const xt = d3.range(lo, hi + 1, w < 520 ? 20 : 10);
   svg.append('g').selectAll('line').data(xt).join('line').attr('x1', (t) => xs(t)).attr('x2', (t) => xs(t)).attr('y1', mt - 8).attr('y2', H - 22).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
   svg.append('g').selectAll('text').data(xt).join('text').attr('class', 'bf-tick').attr('x', (t) => xs(t)).attr('y', H - 6).attr('text-anchor', 'middle').text((t) => (t ? sgn(t, nf0) : '0'));
   svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text('Prosent');
-  const rx = xs(land.pst);
+  const ref = fy ? nokkel[fy] : land, rx = xs(ref.pst);
   svg.append('line').attr('x1', rx).attr('x2', rx).attr('y1', mt - 14).attr('y2', H - 22).attr('stroke', css('--sek')).attr('stroke-dasharray', '3 3');
-  svg.append('text').attr('class', 'bf-tick bf-halo').attr('x', rx + 5).attr('y', mt - 6).text(`Landet ${sgn(land.pst, nf1)}`);
-  const aktiv = (k) => sel === '0' || (fy ? O[k].fylke === fy : true);
+  const rt = svg.append('text').attr('class', 'bf-tick bf-halo').attr('y', mt - 16).text(`${fy ? kort(fy) : 'Landet'} ${sgn(ref.pst, nf1)}`);
+  rt.attr('x', Math.min(w - rt.node().getComputedTextLength(), rx + 5));
   const g = svg.append('g');
-  g.selectAll('circle').data(plass).join('circle')
-    .attr('cx', (p) => p.x).attr('cy', (p) => ymid + p.y).attr('r', (p) => p.r)
-    .attr('fill', (p) => KLASSEFARGE[O[p.k].klasse]).attr('fill-opacity', (p) => (aktiv(p.k) ? 1 : 0.18))
-    .attr('stroke', '#fff').attr('stroke-width', 0.8).style('cursor', 'pointer')
-    .on('pointermove', (ev, p) => { const r = nokkel[p.k]; visTips(ev, fullt(p.k), [{c: KLASSEFARGE[O[p.k].klasse], n: 'Sentralitetsklasse', v: String(O[p.k].klasse)}, {n: '2026', v: `${nf0.format(r.f26)} personer`}, {n: '2050', v: `${nf0.format(r.f50)} personer`}, {n: 'Endring', v: `${sgn(r.pst, nf1)} prosent`}]); })
-    .on('pointerleave', skjulTips)
-    .on('click', (ev, p) => veksle(p.k));
+  for (const rad of rader) {
+    const ant = rad.plass.filter((p) => aktiv(p.k)).length;
+    const lab = `Klasse ${KLASSENAVN[rad.c]}`;
+    if (smal) svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', 0).attr('y', rad.top - 4).text(`${lab} · ${kommunerTekst(ant)}`);
+    else {
+      svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', 0).attr('y', rad.mid - 3).text(lab);
+      svg.append('text').attr('class', 'bf-tick').attr('x', 0).attr('y', rad.mid + 12).text(kommunerTekst(ant));
+    }
+    svg.append('line').attr('x1', ml).attr('x2', w - mr).attr('y1', rad.mid).attr('y2', rad.mid).attr('stroke', css('--stotte')).attr('stroke-dasharray', '1 3');
+    const sortert = rad.plass.slice().sort((a, b) => aktiv(a.k) - aktiv(b.k));
+    g.append('g').selectAll('circle').data(sortert).join('circle')
+      .attr('cx', (p) => p.x).attr('cy', (p) => rad.mid + p.y).attr('r', (p) => p.r)
+      .attr('fill', (p) => (aktiv(p.k) ? GRONN : css('--dempet')))
+      .attr('stroke', '#fff').attr('stroke-width', 0.8).style('cursor', 'pointer')
+      .on('pointermove', (ev, p) => { const r = nokkel[p.k]; visTips(ev, fullt(p.k), [{n: 'Sentralitetsklasse', v: String(O[p.k].klasse)}, {n: '2026', v: `${nf0.format(r.f26)} personer`}, {n: '2050', v: `${nf0.format(r.f50)} personer`}, {n: 'Endring', v: `${sgn(r.pst, nf1)} prosent`}]); })
+      .on('pointerleave', skjulTips)
+      .on('click', (ev, p) => veksle(p.k));
+  }
   if (o.type === 'kommune') {
-    const p = plass.find((q) => q.k === sel);
-    g.append('circle').attr('cx', p.x).attr('cy', ymid + p.y).attr('r', p.r + 3.5).attr('fill', 'none').attr('stroke', css('--tekst')).attr('stroke-width', 2);
-    const ly = ymid - ymax + 2;
-    svg.append('line').attr('x1', p.x).attr('x2', p.x).attr('y1', ly + 4).attr('y2', ymid + p.y - p.r - 4).attr('stroke', css('--tekst'));
-    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('y', ly).text(kort(sel));
+    const rad = rader.find((r) => r.c === o.klasse), p = rad.plass.find((q) => q.k === sel);
+    g.append('circle').attr('cx', p.x).attr('cy', rad.mid + p.y).attr('r', p.r + 3.5).attr('fill', 'none').attr('stroke', css('--tekst')).attr('stroke-width', 2);
+    const t = svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').text(kort(sel));
     const tw = t.node().getComputedTextLength();
-    t.attr('x', Math.max(0, Math.min(w - tw, p.x - tw / 2)));
+    if (smal) {   // på mobil står navnet ved siden av prikken, så det ikke treffer radetiketten over
+      const venstre = p.x + p.r + 6 + tw > w;
+      t.attr('x', venstre ? p.x - p.r - 6 - tw : p.x + p.r + 6).attr('y', rad.mid + p.y).attr('dy', '0.32em');
+    } else t.attr('y', rad.mid + p.y - p.r - 7).attr('x', Math.max(ml, Math.min(w - tw, p.x - tw / 2)));
   }
 }
 
-// ---------- Hvor: sentralitet og fylker ----------
+// ---------- Hvor: sentralitet, for landet eller innenfor fylket ----------
+const FAA = 3;   // klasser med færre kommuner vises grå, se kvalitetssikringslisten
 function tegnSentral(sel) {
-  const o = O[sel], rader = KLASSER.map((c) => klasseSum[c]);
-  const topp = rader.reduce((a, b) => (b.pst > a.pst ? b : a)), neg = rader.filter((r) => r.pst < 0);
-  settH('sentral', `Sterkest vekst i de mest sentrale kommunene` + (neg.length ? `, nedgang i klasse ${neg.map((r) => r.klasse).join(' og ')}` : ''));
-  talltabell('sentral', 'Folkemengde per sentralitetsklasse', ['Klasse', 'Kommuner', '2026', '2050', 'Endring, prosent', 'Lav nasjonal vekst, prosent', 'Høy nasjonal vekst, prosent'],
+  const o = O[sel], fy = fylkeAv(sel);
+  const ks = fy ? kommunerI(fy) : kommuner;
+  const rader = KLASSER.map((c) => {
+    const kk = ks.filter((k) => O[k].klasse === c);
+    const s = (i, j) => sum(kk.map((k) => DATA.folk[k][i][j]));
+    if (!kk.length) return null;
+    const r = {klasse: c, antall: kk.length, f26: s(0, 0), f50: s(0, SIST), l50: s(1, SIST), h50: s(2, SIST)};
+    r.pst = pst1(r.f50, r.f26); r.lpst = pst1(r.l50, r.f26); r.hpst = pst1(r.h50, r.f26);
+    return r;
+  }).filter(Boolean);
+  const sikre = rader.filter((r) => r.antall >= FAA);
+  const topp = (sikre.length ? sikre : rader).reduce((a, b) => (b.pst > a.pst ? b : a));
+  const neg = sikre.filter((r) => r.pst < 0);
+  const negAndre = neg.filter((r) => r !== topp);
+  settH('sentral', fy
+    ? (topp.pst < 0 ? `${kort(fy)}: nedgang i klasse ${liste(neg.map((r) => r.klasse))}`
+      : `${kort(fy)}: sterkest vekst i klasse ${topp.klasse}` + (negAndre.length ? `, nedgang i klasse ${liste(negAndre.map((r) => r.klasse))}` : ''))
+    : `Sterkest vekst i de mest sentrale kommunene` + (neg.length ? `, nedgang i klasse ${liste(neg.map((r) => r.klasse))}` : ''));
+  const faa = rader.filter((r) => r.antall < FAA);
+  $('[data-n="sentral"]').textContent = `Endring 2026–2050 per sentralitetsklasse${fy ? ' i ' + kort(fy) : ''}, prosent, hovedalternativet.` +
+    (faa.length ? ` Klasser med færre enn ${FAA} kommuner er grå, fordi én kommune kan avgjøre tallet.` : '') + (fy ? ` Klasser uten kommuner i fylket er utelatt.` : '');
+  talltabell('sentral', `Folkemengde per sentralitetsklasse${fy ? ', ' + fullt(fy) : ''}`, ['Klasse', 'Kommuner', '2026', '2050', 'Endring, prosent', 'Lav nasjonal vekst, prosent', 'Høy nasjonal vekst, prosent'],
     rader.map((r) => [KLASSENAVN[r.klasse], r.antall, nf0.format(r.f26), nf0.format(r.f50), sgn(r.pst, nf1), sgn(r.lpst, nf1), sgn(r.hpst, nf1)]));
+  const ref = fy ? nokkel[fy] : nokkel['0'];
   stolper($('#fig-sentral'), rader.map((r) => ({
-    key: r.klasse, label: `Klasse ${KLASSENAVN[r.klasse]}`, v: r.pst, c: KLASSEFARGE[r.klasse], sterk: o.type === 'kommune' && o.klasse === r.klasse,
-    tips: {tittel: `Sentralitetsklasse ${r.klasse}, ${r.antall} kommuner`, linjer: [{n: '2026', v: `${nf0.format(r.f26)} personer`}, {n: '2050', v: `${nf0.format(r.f50)} personer`}, {n: 'Hovedalternativet', v: `${sgn(r.pst, nf1)} prosent`}, {n: 'Lav–høy nasjonal vekst', v: `${sgn(r.lpst, nf1)} til ${sgn(r.hpst, nf1)}`}]},
+    key: r.klasse, label: `Klasse ${KLASSENAVN[r.klasse]} (${r.antall})`, v: r.pst, c: GRONN, dempet: r.antall < FAA, sterk: o.type === 'kommune' && o.klasse === r.klasse,
+    tips: {tittel: `Sentralitetsklasse ${r.klasse}${fy ? ' i ' + kort(fy) : ''}, ${r.antall} kommuner`, linjer: [{n: '2026', v: `${nf0.format(r.f26)} personer`}, {n: '2050', v: `${nf0.format(r.f50)} personer`}, {n: 'Hovedalternativet', v: `${sgn(r.pst, nf1)} prosent`}, {n: 'Lav–høy nasjonal vekst', v: `${sgn(r.lpst, nf1)} til ${sgn(r.hpst, nf1)}`}]},
   })), {
-    rowH: 30, aksetittel: 'Prosent', fmt: (v) => sgn(v, nf1), tick: (t) => nf0.format(t),
-    ref: {v: nokkel['0'].pst, label: `Hele landet: ${sgn(nokkel['0'].pst, nf1)}`},
-    aria: 'Endring i folkemengde 2026–2050 per sentralitetsklasse, prosent.',
+    rowH: 30, aksetittel: 'Prosent. Antall kommuner i parentes', fmt: (v) => sgn(v, nf1), tick: (t) => nf0.format(t),
+    ref: {v: ref.pst, label: `${fy ? kort(fy) : 'Hele landet'}: ${sgn(ref.pst, nf1)}`},
+    aria: `Endring i folkemengde 2026–2050 per sentralitetsklasse${fy ? ' i ' + fullt(fy) : ''}, prosent.`,
   });
 }
+
 function tegnFylker(sel) {
   const fy = fylkeAv(sel), f = fylker.map((k) => nokkel[k]).sort((a, b) => b.pst - a.pst), land = nokkel['0'];
   const neg = f.filter((r) => r.pst < 0);
@@ -641,7 +760,7 @@ function tegnFylker(sel) {
   talltabell('fylker', 'Folkemengde og endring 2026–2050 per fylke', ['Fylke', '2026', '2050', 'Endring, personer', 'Endring, prosent'],
     [...f, land].map((r) => [fullt(r.kode), nf0.format(r.f26), nf0.format(r.f50), sgn(r.endring, nf0), sgn(r.pst, nf1)]));
   stolper($('#fig-fylker'), f.map((r) => ({
-    key: r.kode, label: kort(r.kode), v: r.pst, sterk: r.kode === fy, dempet: !!fy && r.kode !== fy,
+    key: r.kode, label: kort(r.kode), v: r.pst, sterk: r.kode === fy,
     aria: `${fullt(r.kode)}: ${sgn(r.pst, nf1)} prosent. Velg fylket.`,
     tips: {tittel: fullt(r.kode), linjer: [{n: '2026', v: `${nf0.format(r.f26)} personer`}, {n: '2050', v: `${nf0.format(r.f50)} personer`}, {n: 'Endring', v: `${sgn(r.endring, nf0)} personer`}, {n: 'Endring', v: `${sgn(r.pst, nf1)} prosent`}]},
   })), {
@@ -701,24 +820,34 @@ function tegnAar(sel) {
 }
 
 // ---------- Eldre ----------
-function rute(andel, aar) {
-  const n = Math.round(andel), NS = 'http://www.w3.org/2000/svg';
+const LYSGRONN = '#9ed7a5';
+function rute(n26, n50) {
+  const NS = 'http://www.w3.org/2000/svg';
   const wrap = document.createElement('div'); wrap.className = 'bf-rute';
   const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('viewBox', '0 0 168 168'); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', `${aar}: ${n} av 100 er 70 år eller eldre`);
+  svg.setAttribute('viewBox', '0 0 168 168'); svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', `${n26} av 100 er 70 år eller eldre i 2026, ${n50} av 100 i 2050`);
+  const lo = Math.min(n26, n50), hi = Math.max(n26, n50);
   for (let i = 0; i < 100; i++) {
-    const c = document.createElementNS(NS, 'circle');
+    const c = document.createElementNS(NS, 'circle'), j = 99 - i;   // fylles nedenfra
     c.setAttribute('cx', 8 + (i % 10) * 16.8); c.setAttribute('cy', 8 + Math.floor(i / 10) * 16.8); c.setAttribute('r', 6.2);
-    if (i >= 100 - n) c.setAttribute('fill', GRONN); else { c.setAttribute('fill', '#fff'); c.setAttribute('stroke', css('--null')); c.setAttribute('stroke-width', 1.2); }
+    if (j < lo) c.setAttribute('fill', GRONN);
+    else if (j < hi && n50 > n26) c.setAttribute('fill', LYSGRONN);
+    else if (j < hi) { c.setAttribute('fill', '#fff'); c.setAttribute('stroke', GRONN); c.setAttribute('stroke-width', 2); }
+    else { c.setAttribute('fill', '#fff'); c.setAttribute('stroke', css('--null')); c.setAttribute('stroke-width', 1.2); }
     svg.append(c);
   }
-  const t = document.createElement('div'); t.className = 'bf-rute-tekst'; t.textContent = `${aar}: ${n} av 100`;
-  wrap.append(svg, t); return wrap;
+  wrap.append(svg); return wrap;
 }
 function tegnHundre(sel) {
-  const n = nokkel[sel];
-  settH('hundre', `${kort(sel)}: ${Math.round(n.a26)} av 100 er 70 år eller eldre i dag, ${Math.round(n.a50)} av 100 i 2050`);
-  $('#fig-hundre').replaceChildren(rute(n.a26, 2026), rute(n.a50, 2050));
+  const n = nokkel[sel], n26 = Math.round(n.a26), n50 = Math.round(n.a50);
+  settH('hundre', `${kort(sel)}: ${n26} av 100 er 70 år eller eldre i dag, ${n50} av 100 i 2050`);
+  const leg = [{c: GRONN, n: n50 >= n26 ? '70 år og eldre i 2026' : '70 år og eldre i 2050', cls: 'bf-sw-dot'}];
+  if (n50 > n26) leg.push({c: LYSGRONN, n: `flere fram mot 2050 (+${n50 - n26})`, cls: 'bf-sw-dot'});
+  if (n50 < n26) leg.push({c: '#fff', n: `færre fram mot 2050 (−${n26 - n50})`, cls: 'bf-sw-ring'});
+  legende($('[data-leg="hundre"]'), leg);
+  $$('[data-leg="hundre"] .bf-sw-ring').forEach((i) => { i.style.borderColor = GRONN; });
+  $('#fig-hundre').replaceChildren(rute(n26, n50));
   talltabell('hundre', `Personer 70 år og eldre, ${fullt(sel)}`, ['År', 'Personer 70 år og eldre', 'Andel, prosent'],
     [[2026, nf0.format(n.e26), nf1.format(n.a26)], [2050, nf0.format(n.e50), nf1.format(n.a50)]]);
 }
@@ -738,32 +867,55 @@ function tegnAlder(sel) {
 }
 function tegnDumbbell(sel) {
   const box = $('#fig-dumbbell'), land = nokkel['0'], fy = fylkeAv(sel);
-  const f = fylker.map((k) => nokkel[k]).sort((a, b) => b.a50 - a.a50);
-  settH('dumbbell', f.every((r) => r.a50 > r.a26) ? `Andelen eldre øker i alle fylker, og blir høyest i ${kort(f[0].kode)}` : 'Andel 70 år og eldre per fylke');
-  talltabell('dumbbell', 'Andel 70 år og eldre per fylke, prosent', ['Fylke', '2026', '2050'], [...f, land].map((r) => [fullt(r.kode), nf1.format(r.a26), nf1.format(r.a50)]));
-  const rowH = 26, mt = 46, mb = 26, H = mt + f.length * rowH + mb;
-  const {svg, w} = lerret(box, H, `Andel 70 år og eldre i 2026 og 2050 per fylke, prosent.`);
-  const nameW = Math.ceil(d3.max(f, (d) => bredde(svg, kort(d.kode), 'bf-lab bf-strong'))) + 10;
+  const MAKS = 20;
+  let f, ref, utvalg = '', brudd = -1;
+  if (fy) {
+    const alle = kommunerI(fy).map((k) => nokkel[k]).sort((a, b) => b.a50 - a.a50);
+    f = alle;
+    if (alle.length > MAKS) {
+      f = [...alle.slice(0, MAKS / 2), ...alle.slice(-MAKS / 2)];
+      if (O[sel].type === 'kommune' && !f.some((r) => r.kode === sel)) f.push(nokkel[sel]);
+      f.sort((a, b) => b.a50 - a.a50);
+      brudd = MAKS / 2;   // bruddet står etter de ti høyeste; en valgt kommune fra midten kommer rett etter bruddet
+      utvalg = ` Viser de ${MAKS / 2} høyeste og ${MAKS / 2} laveste av ${alle.length} kommuner${O[sel].type === 'kommune' && f.length > MAKS ? ', og ' + kort(sel) : ''}. Alle står i tabellen nederst.`;
+    }
+    ref = nokkel[fy];
+    const okt = alle.filter((r) => r.a50 > r.a26).length;
+    if (alle.length === 1) settH('dumbbell', `${kort(fy)}: ${nf1.format(alle[0].a26)} prosent er 70 år og eldre i 2026, ${nf1.format(alle[0].a50)} prosent i 2050`);
+    else settH('dumbbell', `${kort(fy)}: andelen eldre øker i ${okt === alle.length ? 'alle' : okt + ' av ' + alle.length} kommuner, høyest i ${kort(alle[0].kode)} i 2050`);
+  } else {
+    f = fylker.map((k) => nokkel[k]).sort((a, b) => b.a50 - a.a50);
+    ref = land;
+    settH('dumbbell', f.every((r) => r.a50 > r.a26) ? `Andelen eldre øker i alle fylker, og blir høyest i ${kort(f[0].kode)}` : 'Andel 70 år og eldre per fylke');
+  }
+  $('[data-n="dumbbell"]').textContent = `Andel 70 år og eldre${fy ? ' per kommune' : ' per fylke'}, 2026 og 2050, prosent. Aksen starter ikke på null. Klikk for å velge.` + utvalg;
+  talltabell('dumbbell', `Andel 70 år og eldre${fy ? ', kommunene i ' + fullt(fy) : ' per fylke'}, prosent`, [fy ? 'Kommune' : 'Fylke', '2026', '2050'], [...(fy ? kommunerI(fy).map((k) => nokkel[k]).sort((a, b) => b.a50 - a.a50) : f), ref].map((r) => [fullt(r.kode), nf1.format(r.a26), nf1.format(r.a50)]));
+  const rowH = fy ? 22 : 26, mt = 46, mb = 26, GAP = brudd > 0 ? 18 : 0, H = mt + f.length * rowH + GAP + mb;
+  const yrad = (i) => mt + i * rowH + (brudd > 0 && i >= brudd ? GAP : 0);
+  const {svg, w} = lerret(box, H, `Andel 70 år og eldre i 2026 og 2050${fy ? ' per kommune i ' + fullt(fy) : ' per fylke'}, prosent.`);
+  const nameW = Math.min(w * 0.42, Math.ceil(d3.max(f, (d) => bredde(svg, kort(d.kode), 'bf-lab bf-strong'))) + 10);
   const valW = Math.ceil(d3.max(f, (d) => bredde(svg, nf1.format(d.a50), 'bf-lab bf-strong'))) + 14;
-  const xs = d3.scaleLinear().domain([Math.floor(d3.min(f, (d) => d.a26)) - 1, Math.ceil(d3.max(f, (d) => d.a50))]).range([nameW + 8, Math.max(nameW + 60, w - valW)]);
+  const lo = Math.floor(d3.min(f, (d) => Math.min(d.a26, d.a50))) - 1, hi = Math.ceil(d3.max(f, (d) => Math.max(d.a26, d.a50, ref.a50)));
+  const xs = d3.scaleLinear().domain([lo, hi]).range([nameW + 8, Math.max(nameW + 60, w - valW)]);
   const xt = xs.ticks(Math.max(2, Math.min(6, Math.floor((xs.range()[1] - xs.range()[0]) / 60))));
   svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text('Prosent');
   const g = svg.append('g');
   g.selectAll('line').data(xt).join('line').attr('x1', (t) => xs(t)).attr('x2', (t) => xs(t)).attr('y1', mt - 4).attr('y2', H - mb).attr('stroke', css('--stotte'));
   g.selectAll('text').data(xt).join('text').attr('class', 'bf-tick').attr('x', (t) => xs(t)).attr('y', mt - 10).attr('text-anchor', 'middle').text((t) => nf0.format(t));
-  referanse(svg, w, xs(land.a50), mt, H, mb, `Hele landet 2050: ${nf1.format(land.a50)}`);
+  referanse(svg, w, xs(ref.a50), mt, H, mb, `${fy ? kort(fy) : 'Hele landet'} 2050: ${nf1.format(ref.a50)}`);
   const items = f.map((r) => ({
-    ...r, key: r.kode, sterk: r.kode === fy, dempet: !!fy && r.kode !== fy,
-    aria: `${fullt(r.kode)}: ${nf1.format(r.a26)} prosent i 2026, ${nf1.format(r.a50)} prosent i 2050. Velg fylket.`,
+    ...r, key: r.kode, sterk: r.kode === sel, dempet: !fy && !!fy,
+    aria: `${fullt(r.kode)}: ${nf1.format(r.a26)} prosent i 2026, ${nf1.format(r.a50)} prosent i 2050. Velg.`,
     tips: {tittel: `${fullt(r.kode)}, 70 år og eldre`, linjer: [{n: '2026', v: `${nf1.format(r.a26)} prosent`}, {n: '2050', v: `${nf1.format(r.a50)} prosent`}]},
   }));
-  const rad = svg.append('g').selectAll('g').data(items).join('g').attr('transform', (d, i) => `translate(0,${mt + i * rowH})`);
-  const farge = (d) => (d.dempet ? css('--dempet') : GRONN);
-  rad.append('line').attr('x1', (d) => xs(d.a26)).attr('x2', (d) => xs(d.a50)).attr('y1', rowH / 2).attr('y2', rowH / 2).attr('stroke-width', 2).attr('stroke', farge);
-  rad.append('circle').attr('cx', (d) => xs(d.a26)).attr('cy', rowH / 2).attr('r', 4.5).attr('stroke-width', 2).attr('fill', '#fff').attr('stroke', (d) => (d.dempet ? css('--dempet') : css('--sek')));
-  rad.append('circle').attr('cx', (d) => xs(d.a50)).attr('cy', rowH / 2).attr('r', 5).attr('fill', farge);
+  const rad = svg.append('g').selectAll('g').data(items).join('g').attr('transform', (d, i) => `translate(0,${yrad(i)})`);
+  if (brudd > 0) svg.append('text').attr('class', 'bf-tick').attr('x', nameW - 10).attr('y', yrad(brudd) - GAP / 2 + 4).attr('text-anchor', 'end').text('…');
+  rad.append('line').attr('x1', (d) => xs(d.a26)).attr('x2', (d) => xs(d.a50)).attr('y1', rowH / 2).attr('y2', rowH / 2).attr('stroke-width', 2).attr('stroke', GRONN);
+  rad.append('circle').attr('cx', (d) => xs(d.a26)).attr('cy', rowH / 2).attr('r', 4.5).attr('stroke-width', 2).attr('fill', '#fff').attr('stroke', css('--sek'));
+  rad.append('circle').attr('cx', (d) => xs(d.a50)).attr('cy', rowH / 2).attr('r', 5).attr('fill', GRONN);
   rad.append('text').attr('class', (d) => 'bf-lab' + (d.sterk ? ' bf-strong' : '')).attr('x', nameW - 10).attr('y', rowH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text((d) => kort(d.kode));
-  rad.append('text').attr('class', (d) => 'bf-lab bf-halo' + (d.sterk ? ' bf-strong' : '')).attr('x', (d) => xs(d.a50) + 10).attr('y', rowH / 2).attr('dy', '0.32em').text((d) => nf1.format(d.a50));
+  rad.append('text').attr('class', (d) => 'bf-lab bf-halo' + (d.sterk ? ' bf-strong' : '')).attr('x', (d) => xs(Math.max(d.a50, d.a26)) + 10).attr('y', rowH / 2).attr('dy', '0.32em').text((d) => nf1.format(d.a50));
+  rad.filter((d) => d.sterk).insert('rect', ':first-child').attr('x', 0).attr('y', 1).attr('width', w).attr('height', rowH - 2).attr('fill', css('--lys'));
   interaktiv(rad, w, rowH, {velg: veksle});
 }
 
@@ -824,7 +976,7 @@ function tegnAlt() {
   nullstill.hidden = sel === '0';
   document.title = sel === '0' ? 'Regionale befolkningsframskrivinger 2026–2050' : `${kort(sel)}: befolkningsframskriving 2026–2050`;
   tegnTopp(sel);
-  tegnSverm(sel); tegnSentral(sel); tegnFylker(sel);
+  tegnKart(sel); tegnFylker(sel); tegnSverm(sel); tegnSentral(sel);
   tegnSum(sel); tegnAar(sel);
   tegnHundre(sel); tegnAlder(sel); tegnDumbbell(sel);
   tabell(sel);

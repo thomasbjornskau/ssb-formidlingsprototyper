@@ -20,6 +20,20 @@ Samlet liste over det som er tolkning, eget valg eller ikke bekreftet. Grunnlag 
 | 12 | Sentralitetsklasse 1 i mørkest grønn | Sekvensiell skala fra diagramstandarden, trinn 2–7. Klasse 6 er lys og har lav kontrast mot hvitt, men står også i tabellen | Avklares med fagkontakten |
 | 13 | Overskrifter generert fra tallene, for eksempel «flere døde enn fødte fra 2046» | Teksten følger valgt område. Formuleringene bør leses av fagkontakten for et utvalg kommuner | Avklares med fagkontakten |
 
+## Nye valg i versjon 0.3
+
+| | Påstand eller valg | Grunnlag | Hva må sjekkes |
+|---|---|---|---|
+| 18 | Kartet: seks klasser med grensene −10, −5, 0, 10 og 20 prosent, blå–oker | Diagramstandarden anbefaler fem klasser, men et midtpunkt ved null gir partall. Grensene er valgt for denne runden, ikke kvantiler | Er klassene nyttige for fag, og skal de være faste mellom publiseringer? |
+| 19 | Kommunegrenser 2024 fra Kartverket, via en åpen GitHub-samling, forenklet | Samme kommuneinndeling som tallene (357) | Bør SSBs egne kartdata brukes i en offisiell versjon? |
+| 20 | Sentralitet innenfor fylke, med klasser under tre kommuner grå | Vårt valg mot tilfeldige prosenter | Er grensen fornuftig? |
+| 21 | Eldrefiguren for fylke viser de ti høyeste og ti laveste kommunene når fylket har flere enn 20 | Plass. Alle står i tabellen | Godt nok? |
+| 22 | Kartoverskriften nevner ytterpunktene blant kommuner med minst 2 000 innbyggere | Samme grense som varselet om små tall (punkt 10) | Avklares sammen med punkt 10 |
+
+## Svar fra fagseksjonen 02.11.2026
+
+Fra møtet i fagseksjonen: ingen feil i tekst, og ingenting som er veldig misvisende. Innspillene om figurer etter nivå, kart, farger i prikkfiguren, sentralitet innenfor fylke, eldrefiguren og mengden tekst er fulgt opp i versjon 0.3. Innspillet om «Slik lages tallene» er foreslått som eget arbeid. Punkt 12 om grønne klassefarger er ikke lenger aktuelt: prikkfiguren bruker én rad per klasse.
+
 ## Data og begreper
 
 | | Spørsmål | Grunnlag |
