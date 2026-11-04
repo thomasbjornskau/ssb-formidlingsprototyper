@@ -96,6 +96,21 @@
     ],
     "ukjent land": [
       "97"
+    ],
+    "lavverdisendinger": [
+      "97"
+    ],
+    "lavverdisending": [
+      "97"
+    ],
+    "småsendinger": [
+      "97"
+    ],
+    "voec": [
+      "97"
+    ],
+    "netthandel": [
+      "97"
     ]
   },
   "usikker": [
@@ -105,6 +120,7 @@
     "nord-irland",
     "korea",
     "dubai",
-    "abu dhabi"
+    "abu dhabi",
+    "netthandel"
   ]
 }
