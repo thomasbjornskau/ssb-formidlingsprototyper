@@ -129,7 +129,7 @@ def main():
 
     # K3 Balansene, 1960–2025. Faktisk største avvik 1 mill. kr.
     kontroll("K3 handelsbalansen", max(abs(null(hv("Etot", t)) - null(hv("Itot", t)) - null(hv("Hbtot", t))) for t in haar), 2)
-    kontroll("K3 fastlandsbalansen", max(abs(null(hv("Etotusorn", t)) - null(hv("Itotuso", t)) - null(hv("Hbtusorn", t)))
+    kontroll("K3 handelsbalansen fastland", max(abs(null(hv("Etotusorn", t)) - null(hv("Itotuso", t)) - null(hv("Hbtusorn", t)))
                                          for t in haar), 2)
 
     # K4 «Alle land» i 08804 er lik 08800. Skal være eksakt.

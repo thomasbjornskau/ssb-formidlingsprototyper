@@ -127,3 +127,24 @@ Kriterier: (a) sentralt i SSBs egne nøkkelbudskap, (b) stor fare for misforstå
 - `[K10]` Statistikkbanken, tabell 06322: volum- og prisindekser, årlig 1989–2025. Hentet 14.10.2026.
 - `[K11]` Statistikkbanken, tabell 12308: foreløpige og reviderte månedstall 2016M01–2026M08. Hentet 14.10.2026.
 - `[K12]` Statistikkbanken, tabell 08804: hovedtall etter land, årlig 1988–2025. Hentet 14.10.2026.
+- `[K13]` Giang Pham, SSB: Lavverdisendinger i statistikken, 16.06.2025, endret 07.07.2025. https://www.ssb.no/utenriksokonomi/utenrikshandel/statistikk/utenrikshandel-med-varer/artikler/lavverdisendinger-i-statistikken
+- `[K14]` SSB: Om statistikken, Utenrikshandel med varer (arkivversjon, side oppdatert 15.06.2021). https://www.ssb.no/utenriksokonomi/statistikker/muh/maaned
+
+## 10. Etter faglig kontroll (04.11.2026)
+
+Fagseksjonen svarte på del A i `05-kvalitetssikring.md`. Hypotesene er ikke vurdert hver for seg (spørsmål 20), men svarene berører fire av dem.
+
+| | Hypotese | Hva svarene viser |
+|---|---|---|
+| H1 | Høyere eksportverdi betyr at Norge eksporterer mer | Står. Men vi brukte selv ordet «mengde» om volumindeksen, og det er upresist: volumindeksen er handelen i faste priser, ikke tonn eller kubikkmeter. Prototypen bruker nå «volum» |
+| H2 | Handelsoverskuddet viser at næringslivet går godt | Står, men vårt motsvar var for skarpt. Overskuddet følger i stor grad olje- og gassprisene, og påvirkes også av fisk, aluminium og andre fastlandsvarer. Handelsbalansen fastland er ikke bare fastlandets egen handel, fordi importen omfatter utstyr til sokkelen |
+| H4 | Fastlandseksport er eksport uten energi | Avgrensningen av olje og gass (råolje, naturgass, kondensater) er bekreftet |
+| H5 | Eksport til et land betyr at landet bruker varen | Bekreftet og presisert: gass i rør føres på landingspunktet siden 2013, fordi SSB mangler opplysninger om bestemmelsesland `[K14]` |
+| H6 | Månedstallene er endelige | Bekreftet og presisert: for olje og gass kommer endelige tall for første halvår samme høst, ellers i mai to år etter |
+| H11, ny | «Uspesifisert» leses som feil eller ukjent land. Bruddet i importen fra 2023 overses | `[H]` «Uspesifisert» er lavverdisendinger, med fra 2023 og 2,7 prosent av importen i 2025 `[K13]`. Bruddet trekker begge balansene ned med om lag 29 mrd. kr i 2025 `[T]` |
+
+**Lærdom for neste statistikk.**
+- Les dagens «Om statistikken». Arkivversjonen fra 2015 var utdatert på et vesentlig punkt (lavverdisendinger), og det slo inn i konseptgrafikken.
+- Hent rådata direkte fra API-et med `valueCodes[...]` når det går. Da følger de ekte symbolene med, og «:» (undertrykt) forklarer hvorfor varegruppene ikke summerer.
+- Bruk SSBs egne navn på avledede serier («handelsbalansen fastland», ikke «fastlandsbalansen»).
+- Når nye varer eller koder kommer inn i en serie, se etter brudd og merk dem.

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Utenrikshandel med varer</title>
 <link rel="icon" href="data:,">
-<meta name="description" content="Prototype: utenrikshandel med varer, med olje og gass skilt fra fastlandet, pris og mengde, handelsbalansen og alle Norges handelspartnere. Tall fra SSB, tabell 08800, 08792, 08804, 08809, 08819, 06322 og 12308.">
+<meta name="description" content="Prototype: utenrikshandel med varer, med olje og gass skilt fra fastlandet, pris og volum, handelsbalansen og alle Norges handelspartnere. Tall fra SSB, tabell 08800, 08792, 08804, 08809, 08819, 06322 og 12308.">
 <style>
 /*__FONT__*/
 :root {
@@ -185,6 +185,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
       <div class="bf-legend" data-leg="topp"></div>
       <div class="bf-chart" id="fig-topp" style="min-height:280px"></div>
       <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+      <p class="bf-note" data-t="topp-brudd"></p>
     </div>
     <div class="bf-tiles">
       <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
@@ -218,8 +219,8 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
   </section>
 
   <section class="bf-section" id="pris">
-    <h2 class="bf-sh">Pris eller mengde?</h2>
-    <p class="bf-ingress">Eksportverdien er pris ganger mengde. SSB lager egne indekser som skiller de to. Når prisene på olje og gass svinger, kan verdien endre seg mye uten at Norge selger mer.</p>
+    <h2 class="bf-sh">Pris eller volum?</h2>
+    <p class="bf-ingress">Eksportverdien endrer seg når prisene endrer seg, når volumet endrer seg, eller begge deler. SSBs pris- og volumindekser skiller de to. Når prisene på olje og gass svinger, kan verdien endre seg mye uten at Norge selger mer.</p>
     <article class="bf-card">
       <h3 class="bf-h" data-h="pris"></h3>
       <p class="bf-note">Pris- og volumindeks for eksporten, 2000 = 100. Velg varegruppe.</p>
@@ -234,7 +235,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <section class="bf-section" id="balanse">
     <h2 class="bf-sh">Hva forteller handelsoverskuddet?</h2>
-    <p class="bf-ingress">Handelsbalansen er eksport minus import av varer. Fastlandsbalansen er fastlandseksporten minus importen utenom skip og plattformer. Forskjellen mellom dem er i hovedsak olje og gass.</p>
+    <p class="bf-ingress">Handelsbalansen er eksport minus import av varer. Handelsbalansen fastland er fastlandseksporten minus importen utenom skip og oljeplattformer. Forskjellen mellom dem er i hovedsak olje og gass. Importen omfatter også utstyr til olje- og gassvirksomheten på sokkelen, så handelsbalansen fastland er ikke bare fastlandets egen handel.</p>
     <div class="bf-grid">
       <article class="bf-card">
         <h3 class="bf-h" data-h="mnd"></h3>
@@ -251,6 +252,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
         <div class="bf-legend" data-leg="lang"></div>
         <div class="bf-chart" id="fig-lang" style="min-height:280px"></div>
         <details class="bf-tall" data-tall="lang"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-note" data-t="lang-merk"></p>
         <p class="bf-src" data-kilde="08800"></p>
       </article>
     </div>
@@ -281,7 +283,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <section class="bf-section" id="land">
     <h2 class="bf-sh">Hvem handler Norge med?</h2>
-    <p class="bf-ingress">Eksporten føres på landet varen sendes til, importen på landet den er laget i. Olje og gass i rør føres på landet røret går til, selv om den selges videre derfra. Klikk på et land for å se mer.</p>
+    <p class="bf-ingress">Eksporten føres på landet varen sendes til, importen på landet den er laget i. Olje og gass i rør føres på landet der rørledningen går i land, ikke der den til slutt brukes. Klikk på et land for å se mer.</p>
     <div class="bf-grid">
       <article class="bf-card">
         <h3 class="bf-h" data-h="eland"></h3>
@@ -304,7 +306,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <section class="bf-section" id="revisjon">
     <h2 class="bf-sh">Hvor sikre er de siste tallene?</h2>
-    <p class="bf-ingress">Månedstallene publiseres foreløpig og endres når nye opplysninger kommer inn. Olje og gass føres først med en anslått pris. Endelige tall kommer i mai to år etter.</p>
+    <p class="bf-ingress">Månedstallene er foreløpige og revideres når neste måned publiseres. Olje og gass føres først med en foreløpig pris. Alle månedene i et år revideres igjen i mai året etter, og tallene blir endelige i mai to år etter. For olje og gass kommer endelige tall for første halvår allerede samme høst.</p>
     <article class="bf-card">
       <h3 class="bf-h" data-h="rev"></h3>
       <p class="bf-note">Endring fra første publiserte tall til siste kjente tall for eksporten, prosent.</p>
@@ -317,7 +319,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <footer class="bf-foot">
     <p>Om tallene: Utenrikshandel med varer måler verdien av varer som krysser Norges grense, i løpende kroner. Eksport er regnet ved grensen uten frakt videre, import med frakt og forsikring fram til grensen. Toll og merverdiavgift er ikke med.</p>
-    <p>Egne beregninger: andeler, fastlandsbalansen per land, fastlandseksporten per varegruppe og størrelsen på revisjonene er regnet av oss fra tallene i statistikkbanken. Søkeordene som ikke står i SSBs landnavn, er vårt valg.</p>
+    <p>Egne beregninger: andeler, handelsbalansen fastland per land, fastlandseksporten per varegruppe og størrelsen på revisjonene er regnet av oss fra tallene i statistikkbanken. Søkeordene som ikke står i SSBs landnavn, er vårt valg.</p>
     <p>Kilder: SSB, statistikkbanken tabell 08800, 08792, 08804, 08809, 08819, 06322 og 12308. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/muh">ssb.no/muh</a>.</p>
   </footer>
   <div class="bf-tip" hidden></div>
@@ -447,6 +449,14 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
         g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', ex + 7).attr('y', e.y + 4)
           .text(`${w < 520 && e.s.kortNavn ? e.s.kortNavn : e.s.navn} ${fmt(e.v)}`);
       });
+      if (o.brudd) {
+        const [d0, d1] = x.domain(), b1 = tilDato(o.brudd.k), b0 = tilDato(String(+o.brudd.k - 1));
+        if (b0 >= d0 && b1 <= d1) {
+          const xb = (x(b0) + x(b1)) / 2;
+          g.append('line').attr('x1', xb).attr('x2', xb).attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.tekst).attr('stroke-dasharray', '4 3');
+          g.append('text').attr('class', 'bf-tick').attr('x', xb + 4).attr('y', 10).text(o.brudd.tekst);
+        }
+      }
       (o.marker || []).forEach(mk => {
         g.append('circle').attr('cx', x(tilDato(mk.k))).attr('cy', y(mk.v)).attr('r', 4).attr('fill', mk.farge);
         g.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', x(tilDato(mk.k))).attr('y', y(mk.v) - 9).attr('text-anchor', 'middle').text(mk.tekst);
@@ -508,6 +518,11 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
           .attr('fill', d => d.data.farge?.[kat[j].k] || kat[j].farge));
       }
       g.append('line').attr('x1', 0).attr('x2', iw).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', FARGE.null);
+      if (o.brudd && x(o.brudd.k) != null) {
+        const xb = x(o.brudd.k) - (x.step() - x.bandwidth()) / 2;
+        g.append('line').attr('x1', xb).attr('x2', xb).attr('y1', 0).attr('y2', ih).attr('stroke', FARGE.tekst).attr('stroke-dasharray', '4 3');
+        g.append('text').attr('class', 'bf-tick').attr('x', xb + 4).attr('y', 10).text(o.brudd.tekst);
+      }
       (o.merk || []).forEach(mk => {
         const r = rader.find(rr => rr.t === mk.t); if (!r) return;
         const topp = o.gruppert ? d3.max(kat, c => r[c.k]) : d3.sum(kat, c => Math.max(0, r[c.k] || 0));
@@ -565,35 +580,41 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
   T('les-1').textContent = ix > 0
     ? `Tallene måler verdi. I ${AT[iMax]} steg eksportprisene ${nb(ind0.pe[ix])} prosent, mens volumet endret seg ${sgn(ind0.ve[ix])} prosent.`
     : 'Tallene måler verdi. Når prisene stiger, stiger eksporten uten at Norge selger mer.';
-  T('les-2').textContent = `Uten olje og gass har Norge underskudd i varehandelen. Fastlandsbalansen har vært negativ hvert år siden ${forsteNeg}.`;
+  T('les-2').textContent = `Uten olje og gass har Norge underskudd i varehandelen. Handelsbalansen fastland har vært negativ hvert år fra ${forsteNeg} til ${AT[AT.length - 1]}.`;
   const RV = D.rev, rnest = RV.mnd.length - 2;
   const revNest = RV.e.s[rnest] - RV.e.f[rnest];
-  T('les-4').textContent = `Eksporten i ${mndTekst(RV.mnd[rnest])} ble endret med ${sgn(revNest / 1e6)} mrd. kr fra første publisering til nå. Endelige tall kommer i mai to år etter.`;
+  T('les-4').textContent = `Eksporten i ${mndTekst(RV.mnd[rnest])} ble endret med ${sgn(revNest / 1e6)} mrd. kr fra første publisering til nå. Tallene blir endelige i mai to år etter, for olje og gass tidligere.`;
 
-  // ---------- Toppgrafikk: handelsbalansen og fastlandsbalansen ----------
+  // ---------- Toppgrafikk: handelsbalansen, totalt og fastland ----------
   const fb = mrd(A.Hbtusorn[ai]), hb = mrd(A.Hbtot[ai]);
   const rundt = v => Math.round(v / 10) * 10;
   T('omr').textContent = `Utenrikshandel med varer · ${SISTAAR}`;
   T('stort').textContent = `${nb(rundt(fb), 0)} mrd. kr`;
-  T('setning').textContent = `Fastlands-Norge kjøpte varer for om lag ${nb(Math.abs(rundt(fb)), 0)} milliarder kroner mer enn det solgte i ${SISTAAR}.`;
-  T('under').innerHTML = `<p>Med olje og gass ble det likevel et overskudd på ${nb(hb, 0)} milliarder kroner. Handelsoverskuddet følger prisene på olje og gass, ikke hvordan det går i fastlandsøkonomien.</p>
-    <p>Fastlandsbalansen har vært negativ hvert år siden ${forsteNeg}.</p>`;
+  T('setning').textContent = `Norge importerte varer for om lag ${nb(Math.abs(rundt(fb)), 0)} milliarder kroner mer enn fastlands-Norge eksporterte i ${SISTAAR}.`;
+  T('under').innerHTML = `<p>En del av importen er utstyr til olje- og gassvirksomheten på sokkelen. Med olje og gass ble det likevel et overskudd på ${nb(hb, 0)} milliarder kroner.</p>
+    <p>Handelsoverskuddet følger i stor grad prisene på olje og gass, ikke hvordan det går i fastlandsøkonomien. Det påvirkes også av eksporten av fisk, aluminium og andre fastlandsvarer.</p>
+    <p>Handelsbalansen fastland har vært negativ hvert år fra ${forsteNeg} til ${AT[AT.length - 1]}.</p>`;
   const TOPPFRA = AT.indexOf('2015');
   const toppRader = AT.slice(TOPPFRA).map((t, j) => ({ t, hb: mrd(A.Hbtot[TOPPFRA + j]), fb: mrd(A.Hbtusorn[TOPPFRA + j]) }));
-  const toppKat = [{ k: 'hb', navn: 'Handelsbalansen', farge: FARGE.okerF }, { k: 'fb', navn: 'Fastlandsbalansen', farge: FARGE.gronnF }];
-  T('topp-note').textContent = `Milliarder kroner per år, ${AT[TOPPFRA]}–${SISTAAR}.`;
+  const toppKat = [{ k: 'hb', navn: 'Handelsbalansen', farge: FARGE.okerF }, { k: 'fb', navn: 'Handelsbalansen fastland', farge: FARGE.gronnF }];
+  // Lavverdisendinger (kode 97) er med i importen fra 2023 og gir et brudd i serien. Netto effekt på begge balansene = eksport − import på kode 97
+  const LAV = L.get('97'), lavI0 = LAV.i.findIndex(v => v > 0), LAVFRA = LT[lavI0];
+  const lavNetto = mrd((LAV.e[li] || 0) - LAV.i[li]), lavAndel = 100 * LAV.i[li] / A.Itot[AT.indexOf(LT[li])];
+  const bruddTekst = `Brudd i ${LAVFRA}: lavverdisendinger er med i importen fra da av. I ${LT[li]} var de ${nb(lavAndel, 1)} prosent av importen og trakk begge balansene ned med om lag ${nb(Math.abs(lavNetto), 0)} milliarder kroner.`;
+  T('topp-note').textContent = `Milliarder kroner per år, ${AT[TOPPFRA]}–${SISTAAR}. Stiplet strek: brudd i ${LAVFRA}, se under.`;
   legend('topp', toppKat.map(c => ['bf-sw-sq', c.farge, c.navn]));
   kolonner($('#fig-topp'), toppKat, toppRader, {
-    gruppert: true, aria: 'Handelsbalansen og fastlandsbalansen per år', fmt: v => `${nb(v)} mrd. kr`,
-    merk: [{ t: SISTAAR, tekst: `${nb(hb, 0)}` }],
+    gruppert: true, aria: 'Handelsbalansen, totalt og fastland, per år', fmt: v => `${nb(v)} mrd. kr`,
+    merk: [{ t: SISTAAR, tekst: `${nb(hb, 0)}` }], brudd: { k: LAVFRA, tekst: 'Brudd' },
   });
-  tabell('topp', ['År', 'Handelsbalansen, mrd. kr', 'Fastlandsbalansen, mrd. kr'], toppRader.map(r => [r.t, nb(r.hb), nb(r.fb)]).reverse());
+  T('topp-brudd').textContent = bruddTekst;
+  tabell('topp', ['År', 'Handelsbalansen, mrd. kr', 'Handelsbalansen fastland, mrd. kr'], toppRader.map(r => [r.t, nb(r.hb), nb(r.fb)]).reverse());
   const sa = SISTMND.slice(0, 4), fa = String(+sa - 1), mn = MNDNAVN[+SISTMND.slice(5) - 1];
   const periode = SISTMND.slice(5) === '01' ? `januar ${sa}` : `januar–${mn} ${sa}`;
   T('t1-lab').textContent = `Eksport ${SISTAAR}`; T('t1').innerHTML = `${nb(mrd(A.Etot[ai]))} <span class="bf-unit">mrd. kr</span>`;
   T('t2-lab').textContent = `Import ${SISTAAR}`; T('t2').innerHTML = `${nb(mrd(A.Itot[ai]))} <span class="bf-unit">mrd. kr</span>`;
   T('t3-lab').textContent = `Handelsbalansen, ${periode}`; T('t3').innerHTML = `${nb(mrd(hittil('Hbtot', sa)))} <span class="bf-unit">mrd. kr</span>`;
-  T('t4-lab').textContent = `Fastlandsbalansen, ${periode}`; T('t4').innerHTML = `${nb(mrd(hittil('Hbtusorn', sa)))} <span class="bf-unit">mrd. kr</span>`;
+  T('t4-lab').textContent = `Handelsbalansen fastland, ${periode}`; T('t4').innerHTML = `${nb(mrd(hittil('Hbtusorn', sa)))} <span class="bf-unit">mrd. kr</span>`;
 
   // ---------- Olje, gass og fastland ----------
   const OLJEFRA = AT.indexOf('1970');
@@ -627,12 +648,12 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
   const andelM = 100 * (M.Eolje[mi] + M.Egass[mi]) / M.Etot[mi];
   T('regne-merk').textContent = `Råolje og naturgass var ${nb(andelM, 0)} prosent av eksporten i ${mndTekst(SISTMND)}. Andelen svinger mye fra måned til måned.`;
 
-  // ---------- Pris eller mengde ----------
+  // ---------- Pris eller volum ----------
   const IG = D.ind.grupper;
   const INAVN = { '-': 'Alle varer', 'T02': 'Fastlandsvarer', '333': 'Råolje', '34': 'Naturgass', '03': 'Fisk' };
   let gruppe = '-';
   $('#bf-indeksvalg').innerHTML = Object.keys(INAVN).map(k => `<button type="button" class="bf-knapp" data-g="${k}" aria-pressed="${k === gruppe}">${INAVN[k]}</button>`).join('');
-  legend('pris', [['bf-sw-line', FARGE.oker, 'Pris'], ['bf-sw-line', FARGE.gronn, 'Volum (mengde)']]);
+  legend('pris', [['bf-sw-line', FARGE.oker, 'Pris'], ['bf-sw-line', FARGE.gronn, 'Volum']]);
   function tegnPris() {
     const g = IG[gruppe];
     const iMaxP = d3.maxIndex(g.pe, v => v == null ? -Infinity : Math.abs(v));
@@ -642,7 +663,7 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
       { navn: 'Volum', farge: FARGE.gronn, tid: it, v: g.v, bredde: 2.5 },
     ], { aria: `Pris- og volumindeks for ${INAVN[gruppe]}`, hoyde: 300, hoyreMarg: 96, marker: [{ k: it[iMaxP], v: g.p[iMaxP], farge: FARGE.oker, tekst: sgn(g.pe[iMaxP], 0) + ' %' }] });
     tabell('pris', ['År', 'Prisindeks', 'Volumindeks', 'Pris, endring i prosent', 'Volum, endring i prosent'], it.map((t, i) => [t, nb(g.p[i]), nb(g.v[i]), sgn(g.pe[i]), sgn(g.ve[i])]).reverse());
-    T('pris-merk').textContent = `SSBs navn på gruppen: ${g.n}. Endringene er publiserte tall fra SSB.`;
+    T('pris-merk').textContent = `Volumindeksen viser handelen med prisendringene tatt ut. Den er beregnet, for mange varer ved å dele verdien på prisutviklingen, og er ikke det samme som tonn eller kubikkmeter. Særlig for olje og gass kan den avvike fra de fysiske mengdene. Indeksene finnes ikke per land. SSBs navn på gruppen: ${g.n}. Endringene er publiserte tall fra SSB.`;
   }
   $('#bf-indeksvalg').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
@@ -652,24 +673,25 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
 
   // ---------- Handelsbalansen ----------
   const mHb = mrd(M.Hbtot[mi]), mFb = mrd(M.Hbtusorn[mi]);
-  H('mnd').textContent = `Handelsoverskuddet var ${nb(mHb)} mrd. kr i ${mndTekst(SISTMND)}. Fastlandsbalansen var ${nb(mFb)} mrd. kr.`;
-  legend('mnd', [['bf-sw-line', FARGE.oker, 'Handelsbalansen'], ['bf-sw-line', FARGE.gronn, 'Fastlandsbalansen']]);
+  H('mnd').textContent = `Handelsoverskuddet var ${nb(mHb)} mrd. kr i ${mndTekst(SISTMND)}. Handelsbalansen fastland var ${nb(mFb)} mrd. kr.`;
+  legend('mnd', [['bf-sw-line', FARGE.oker, 'Handelsbalansen'], ['bf-sw-line', FARGE.gronn, 'Handelsbalansen fastland']]);
   linjediagram($('#fig-mnd'), [
     { navn: 'Handelsbalansen', kortNavn: 'Handel', farge: FARGE.oker, tid: MT, v: M.Hbtot.map(mrd), bredde: 2.5 },
-    { navn: 'Fastlandsbalansen', kortNavn: 'Fastland', farge: FARGE.gronn, tid: MT, v: M.Hbtusorn.map(mrd), bredde: 2.5 },
-  ], { aria: 'Handelsbalansen og fastlandsbalansen per måned', hoyreMarg: 150 });
-  tabell('mnd', ['Måned', 'Handelsbalansen, mrd. kr', 'Fastlandsbalansen, mrd. kr'], MT.map((k, i) => [mndTekst(k), nb(mrd(M.Hbtot[i])), nb(mrd(M.Hbtusorn[i]))]).reverse());
+    { navn: 'Handelsbalansen fastland', kortNavn: 'Fastland', farge: FARGE.gronn, tid: MT, v: M.Hbtusorn.map(mrd), bredde: 2.5 },
+  ], { aria: 'Handelsbalansen, totalt og fastland, per måned', hoyreMarg: 150 });
+  tabell('mnd', ['Måned', 'Handelsbalansen, mrd. kr', 'Handelsbalansen fastland, mrd. kr'], MT.map((k, i) => [mndTekst(k), nb(mrd(M.Hbtot[i])), nb(mrd(M.Hbtusorn[i]))]).reverse());
   if (fmi >= 0) {
     const f0 = mrd(M.Hbtusorn[fmi]), endr = 100 * (M.Hbtusorn[mi] - M.Hbtusorn[fmi]) / Math.abs(M.Hbtusorn[fmi]);
-    T('mnd-merk').textContent = `Prosent på et underskudd kan lure. Fastlandsbalansen gikk fra ${nb(f0)} mrd. kr i ${mndTekst(fjor(SISTMND))} til ${nb(mFb)} mrd. kr i ${mndTekst(SISTMND)}. Det vises gjerne som ${sgn(endr)} prosent, men ${endr > 0 ? 'plusset betyr et mindre underskudd' : 'minuset betyr et større underskudd'}. Sammenlign med samme måned året før, fordi tallene ikke er sesongjustert.`;
+    T('mnd-merk').textContent = `Prosent på et underskudd kan lure. Handelsbalansen fastland gikk fra ${nb(f0)} mrd. kr i ${mndTekst(fjor(SISTMND))} til ${nb(mFb)} mrd. kr i ${mndTekst(SISTMND)}. Det vises gjerne som ${sgn(endr)} prosent, men ${endr > 0 ? 'plusset betyr et mindre underskudd' : 'minuset betyr et større underskudd'}. Sammenlign med samme måned året før, fordi tallene her ikke er sesongjustert.`;
   }
-  H('lang').textContent = `Fastlandsbalansen har vært negativ hvert år siden ${forsteNeg}`;
-  legend('lang', [['bf-sw-line', FARGE.oker, 'Handelsbalansen'], ['bf-sw-line', FARGE.gronn, 'Fastlandsbalansen']]);
+  H('lang').textContent = `Handelsbalansen fastland har vært negativ hvert år fra ${forsteNeg} til ${AT[AT.length - 1]}`;
+  legend('lang', [['bf-sw-line', FARGE.oker, 'Handelsbalansen'], ['bf-sw-line', FARGE.gronn, 'Handelsbalansen fastland']]);
   linjediagram($('#fig-lang'), [
     { navn: 'Handelsbalansen', kortNavn: 'Handel', farge: FARGE.oker, tid: AT, v: A.Hbtot.map(mrd), bredde: 2.5 },
-    { navn: 'Fastlandsbalansen', kortNavn: 'Fastland', farge: FARGE.gronn, tid: AT, v: A.Hbtusorn.map(mrd), bredde: 2.5 },
-  ], { aria: 'Handelsbalansen og fastlandsbalansen per år fra 1960', hoyreMarg: 150, fmt: v => nb(v, 0) });
-  tabell('lang', ['År', 'Handelsbalansen, mrd. kr', 'Fastlandsbalansen, mrd. kr'], AT.map((t, i) => [t, nb(mrd(A.Hbtot[i])), nb(mrd(A.Hbtusorn[i]))]).reverse());
+    { navn: 'Handelsbalansen fastland', kortNavn: 'Fastland', farge: FARGE.gronn, tid: AT, v: A.Hbtusorn.map(mrd), bredde: 2.5 },
+  ], { aria: 'Handelsbalansen, totalt og fastland, per år fra 1960', hoyreMarg: 150, fmt: v => nb(v, 0), brudd: { k: LAVFRA, tekst: 'Brudd' } });
+  T('lang-merk').textContent = bruddTekst;
+  tabell('lang', ['År', 'Handelsbalansen, mrd. kr', 'Handelsbalansen fastland, mrd. kr'], AT.map((t, i) => [t, nb(mrd(A.Hbtot[i])), nb(mrd(A.Hbtusorn[i]))]).reverse());
 
   // ---------- Fastlands-Norge ----------
   const VT = D.varer.tid, vi = VT.length - 1;
@@ -677,14 +699,14 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
   const VTOPP = VAR.slice(0, 12);
   const vnavn = r => r.kn || r.n;
   const sumFast = d3.sum(D.varer.fastland, r => r.v[vi]);
-  H('varer').textContent = `${vnavn(VTOPP[0])} er den største varen i fastlandseksporten`;
+  H('varer').textContent = `${vnavn(VTOPP[0])} er den største varegruppen i fastlandseksporten`;
   T('varer-note').textContent = `Milliarder kroner, ${VT[vi]}. De tolv største av ${D.varer.fastland.length} varegrupper.`;
   liggende($('#fig-varer'), VTOPP.map(r => ({ k: r.k, navn: vnavn(r), sum: mrd(r.v[vi]), deler: [{ v: mrd(r.v[vi]), farge: FARGE.gronn }] })), {
     fmt: v => nb(v), aria: 'Største varegrupper i fastlandseksporten', venstreMaks: 210,
     tip: r => `<div class="bf-tip-h">${esc(VAR.find(x => x.k === r.k).n)}</div>${tipRad(FARGE.gronn, String(VT[vi]), `${nb(r.sum)} mrd. kr`)}`,
   });
   tabell('varer', ['Varegruppe (SITC)', `${VT[vi]}, mrd. kr`, 'Andel, prosent'], VAR.slice(0, 40).map(r => [`${r.n} (${r.k})`, nb(mrd(r.v[vi])), nb(100 * r.v[vi] / sumFast)]));
-  T('varer-merk').textContent = `${nb(mrd(D.varer.uford[vi]))} mrd. kr av eksporten er ikke fordelt på varegrupper i denne tabellen, mest kjemiske produkter. Skip og båter er med her, men det SSB fører som skip og plattformer i hovedtallene, er trukket fra fastlandseksporten.`;
+  T('varer-merk').textContent = `${nb(mrd(D.varer.uford[vi]))} mrd. kr av eksporten er ikke fordelt på varegrupper i denne tabellen, fordi tallene for enkelte varegrupper er undertrykt av konfidensialitetshensyn. Det gjelder mest kjemiske produkter. Skip og båter er med her, men det SSB fører som skip og plattformer i hovedtallene, er trukket fra fastlandseksporten.`;
   const V4 = VAR.slice(0, 4), VF = [FARGE.gronn, FARGE.bla, FARGE.oker, FARGE.marine];
   H('varetid').textContent = `De fire største varegruppene, ${VT[0]}–${VT[vi]}`;
   legend('varetid', V4.map((r, j) => ['bf-sw-line', VF[j], vnavn(r)]));
@@ -713,7 +735,7 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
   });
   tabell('iland', ['Land', 'Import, mrd. kr'], rangI.slice(0, 40).map(k => [L.get(k).n, nb(mrd(L.get(k).i[li]))]));
   const usp = L.get('97');
-  T('iland-merk').textContent = usp && usp.i[li] ? `«Uspesifisert» er import der landet ikke er oppgitt. Den finnes fra ${LT[usp.i.findIndex(v => v > 0)]} og var ${nb(mrd(usp.i[li]))} mrd. kr i ${LT[li]}.` : '';
+  T('iland-merk').textContent = usp && usp.i[li] ? `«Uspesifisert» er lavverdisendinger: varer med lav verdi der landet ikke er oppgitt. De er med i statistikken fra ${LT[usp.i.findIndex(v => v > 0)]} og var ${nb(mrd(usp.i[li]))} mrd. kr i ${LT[li]}.` : '';
 
   // ---------- Revisjoner ----------
   const revRader = RV.mnd.map((t, i) => ({ t, v: RV.e.f[i] ? 100 * (RV.e.s[i] / RV.e.f[i] - 1) : null, p: RV.e.p[i] }))
@@ -816,8 +838,8 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
     if (!harNoe) {
       hoved = `<p class="bf-stort">Ingen handel</p><p class="bf-setning">Ingen registrert handel med ${esc(l.n)} på minst 0,5 mill. kr i årene ${LT[0]}–${LT[li]}.</p>`;
     } else if (k === '97') {
-      hoved = `<p class="bf-stort">${esc(belop(i))}</p><p class="bf-setning">import i ${LT[li]} der landet ikke er oppgitt.</p>`;
-      fakta.push(`<p class="bf-varsel">«Uspesifisert» er med i totalen for importen, men ikke på noe land. Den finnes fra ${LT[l.i.findIndex(v => v > 0)]}. Hvorfor landet mangler, er ikke avklart i denne prototypen.</p>`);
+      hoved = `<p class="bf-stort">${esc(belop(i))}</p><p class="bf-setning">var importen av lavverdisendinger i ${LT[li]}. Landet er ikke oppgitt for disse sendingene.</p>`;
+      fakta.push(`<p class="bf-varsel">Lavverdisendinger er varer med lav verdi, blant annet fra utenlandske nettbutikker. De er med i statistikken fra ${LT[l.i.findIndex(v => v > 0)]}, er ikke fordelt på land og står under «Andre varer» i varegruppene. De er med i totalen for importen, og gir et brudd i importserien fra ${LT[l.i.findIndex(v => v > 0)]}.</p>`);
     } else {
       const bal = (e || 0) - (i || 0), fbal = (f || 0) - ((i || 0) - isk);
       hoved = `<p class="bf-stort">${esc(belop(e))}</p><p class="bf-setning">var eksporten til ${esc(l.n)} i ${LT[li]}. Importen derfra var ${esc(belop(i))}, og det gir et ${bal >= 0 ? 'overskudd' : 'underskudd'} på ${esc(belop(Math.abs(bal)))}.</p>`;
@@ -825,9 +847,9 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
         const a = 100 * ol / e;
         if (ol > 0) fakta.push(`<p><b>${nb(a, 0)} prosent av eksporten var olje og gass.</b> Uten olje og gass solgte Norge varer for ${esc(belop(f))}.</p>`);
         else fakta.push(`<p><b>Ingen olje eller gass.</b> Alt Norge solgte til ${esc(l.n)}, var fastlandsvarer${sk > 0 ? ', skip og plattformer' : ''}.</p>`);
-        if (a >= 50) fakta.push(`<p class="bf-varsel">Olje og gass i rør føres som eksport til landet røret går til, selv om den kan selges videre derfra. Eksporten til ${esc(l.n)} sier derfor ikke alene hvor mye som brukes der.</p>`);
+        if (a >= 50) fakta.push(`<p class="bf-varsel">Olje og gass i rør føres som eksport til landet der rørledningen går i land. For gass er grunnen at SSB mangler opplysninger om hvilket land den til slutt går til. Eksporten til ${esc(l.n)} sier derfor ikke alene hvor mye som brukes der.</p>`);
       }
-      fakta.push(`<p><b>Fastlandsbalansen:</b> fastlandseksporten minus importen utenom skip og plattformer gir et ${fbal >= 0 ? 'overskudd' : 'underskudd'} på ${esc(belop(Math.abs(fbal)))}.</p>`);
+      fakta.push(`<p><b>Handelsbalansen fastland:</b> fastlandseksporten minus importen utenom skip og plattformer gir et ${fbal >= 0 ? 'overskudd' : 'underskudd'} på ${esc(belop(Math.abs(fbal)))}.</p>`);
       if (sk > 0 || isk > 0) fakta.push(`<p>Skip og plattformer: eksport ${esc(belop(sk))}, import ${esc(belop(isk))}. Enkeltleveranser kan gi store hopp fra år til år.</p>`);
       const e0 = l.e[0];
       if (e0 > 0 && e > 0) fakta.push(`<p>Eksporten var ${esc(belop(e0))} i ${LT[0]}.</p>`);
@@ -844,8 +866,8 @@ const DATA = /*__INKLUDER:build/muh.json__*/;
         <details class="bf-tall" data-tall="kort"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>` : ''}
         <p class="bf-src">Kilde: SSB, tabell 08804. Sist oppdatert: ${dato(D.oppdatert_aar)}.</p></div>
       ${harNoe && (ve.length || vi_.length) ? `<div class="bf-under">
-        <div><h3>Hva Norge solgte til ${esc(l.n)}, ${LT[li]}</h3>${ve.length ? '<div class="bf-chart" id="fig-ve"></div>' : '<p class="bf-note">Ingen varegruppe over 0,5 mill. kr.</p>'}</div>
-        <div><h3>Hva Norge kjøpte fra ${esc(l.n)}, ${LT[li]}</h3>${vi_.length ? '<div class="bf-chart" id="fig-vi"></div>' : '<p class="bf-note">Ingen varegruppe over 0,5 mill. kr.</p>'}</div>
+        <div><h3>${k === '97' ? 'Eksport av lavverdisendinger' : `Hva Norge solgte til ${esc(l.n)}`}, ${LT[li]}</h3>${ve.length ? '<div class="bf-chart" id="fig-ve"></div>' : '<p class="bf-note">Ingen varegruppe over 0,5 mill. kr.</p>'}</div>
+        <div><h3>${k === '97' ? 'Import av lavverdisendinger' : `Hva Norge kjøpte fra ${esc(l.n)}`}, ${LT[li]}</h3>${vi_.length ? '<div class="bf-chart" id="fig-vi"></div>' : '<p class="bf-note">Ingen varegruppe over 0,5 mill. kr.</p>'}</div>
         <p class="bf-note" style="grid-column:1/-1">Millioner kroner, etter hovedgruppe i SITC. «Olje, gass, strøm og annen energi» omfatter også raffinerte produkter og propan. Kilde: SSB, tabell 08809. Sist oppdatert: ${dato(D.oppdatert_aar)}.</p>
       </div>` : ''}`;
     kortEl.hidden = false;

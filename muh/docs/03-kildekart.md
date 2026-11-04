@@ -94,3 +94,10 @@ Alle spørringer er langt under API-grensen på 800 000 celler, og sju spørring
 8. **Månedstallene blir utdatert 15.10.2026**, dagen etter henting. `hent_data.py` kjøres på nytt før steg 4 bygges ferdig.
 9. **Repoet mangler i arbeidsområdet.** `hent_data.py` er skrevet nytt, ikke kopiert fra en eksisterende prototype, og `felles/` er fortsatt midlertidig.
 10. **Revisjonene i 2021–2022 er store.** Påstanden om at gasspriser er årsaken er vår tolkning og må prøves i fagkontrollen.
+
+## Oppdatering 04.11.2026
+
+- Hull 1 og 2 er løst: `hent_data.py` er kjørt mot PxWebApi med `valueCodes[...]`. `selection[...]` filtrerer ikke riktig. De fem årstabellene er identiske med de rekonstruerte rådataene, og symbolene er nå de ekte: «:» (undertrykt) i 99 celler i 08819, «..» i 140 celler i 06322.
+- Hull 4, 5 og 6 er avklart av fagseksjonen: kode 97 er lavverdisendinger og skal telles, og tresifret SITC summerer ikke fordi tall er undertrykt.
+- Hull 8 er løst: månedstallene gjelder publiseringen 15.10.2026.
+- Nytt: lavverdisendingene gir et brudd i importserien fra 2023. Se `05-kvalitetssikring.md`, punkt 33.

@@ -1,4 +1,4 @@
-Steg 4 i formidlingsprototype for muh · versjon 0.1 · 14.10.2026 · Status: utkast
+Steg 4 i formidlingsprototype for muh · versjon 0.2 · 04.11.2026 · Status: rettet etter fagets svar på del A
 
 # Byggenotat: Utenrikshandel med varer (muh)
 
@@ -78,3 +78,27 @@ Nummerert videre fra steg 2 (G1–G9, T1–T11, X1–X2).
 - Rådataene er rekonstruert fra SSB-tilkoblingen. `hent_data.py` er ikke kjørt mot API-et.
 - Søket finner bare landnavn og synonymer. Skrivefeil gir ingen treff.
 - Landvalget viser bare enkeltland. EU, Norden og andre grupper er utelatt fordi de skifter innhold og er ulike mellom tabellene.
+
+## Versjon 0.2 (04.11.2026)
+
+Rettet etter fagseksjonens svar på del A i `05-kvalitetssikring.md`, og bygget med ferske tall.
+
+| Endring | Hvor | Grunnlag |
+|---|---|---|
+| Rådata hentet direkte fra PxWebApi med `hent_data.py`, ikke rekonstruert. URL-ene bruker `valueCodes[...]`, fordi `selection[...]` ikke filtrerer riktig | `data/raw/`, `data/kilder.json` | Punkt 28–29. Årstabellene er identiske med de rekonstruerte |
+| Månedstall til og med september 2026 (publisert 15.10.2026) | Hele siden | Punkt 30 |
+| «Fastlandsbalansen» heter nå «handelsbalansen fastland» | Hele siden | Punkt 1, 32 |
+| Toppgrafikken: «Norge importerte varer for om lag 350 milliarder kroner mer enn fastlands-Norge eksporterte», med setning om utstyr til sokkelen, «i stor grad» og fisk og aluminium | Toppgrafikk, balanseseksjonen | Punkt 1 |
+| «Mengde» byttet med «volum», og ny merknad om hva volumindeksen er og ikke er | «Pris eller volum?» | Punkt 2 |
+| Undertrykte tall forklarer hvorfor varegruppene ikke summerer | «Hva selger fastlands-Norge?» | Punkt 4 |
+| «Uspesifisert» forklart som lavverdisendinger, med egne titler i kortet og fem nye søkeord | Kortet, importlandene, søket | Punkt 5 |
+| Brudd i importserien fra 2023 markert med stiplet strek og forklart | Toppgrafikk, balansene fra 1960 | Punkt 33 |
+| Rørledningenes landingspunkt, også for gass | Landkortene, «Hvem handler Norge med?» | Punkt 6 |
+| «Foreløpig pris» i stedet for «anslått pris», og når tallene blir endelige | Revisjoner, «Slik leser du», konseptgrafikken | Punkt 7 |
+| «Småsendinger» fjernet fra «Ikke med i tallene» | Konseptgrafikken | Punkt 8 |
+
+Nye funksjoner i diagramkoden: `brudd` i `kolonner()` og `linjediagram()` tegner en stiplet strek mellom året før og bruddåret.
+
+**Testet:** 1280 og 390 px uten konsollfeil og uten vannrett rulling, søk på de ti tilfellene fra versjon 0.1 og på «lavverdisendinger» og «netthandel». Bygget to ganger med identisk fil. Kontrollene har samme største avvik som i versjon 0.1.
+
+**Kjente svakheter som står igjen:** dagens «Om statistikken» er ikke lest (punkt 23), og pris og volum er ikke kontrollert av prisseksjonen (punkt 2).

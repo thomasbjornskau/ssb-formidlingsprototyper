@@ -51,7 +51,7 @@ def kort_innhold():
             "tittel": "Verdien settes ved grensen",
             "blokker": [
                 ("tekst", "Eksport regnes uten frakt videre fra grensen, import med frakt og forsikring fram til grensen. Toll og merverdiavgift er ikke med."),
-                ("merknad", "Olje og gass får først en anslått pris, fra Brent og europeiske spotpriser for gass. Den byttes senere ut med faktisk pris."),
+                ("merknad", "Olje og gass føres først med en foreløpig pris, fra Brent Blend og europeiske spotpriser for gass. Den erstattes av endelig pris fra rettighetshaverne."),
             ],
         },
         {   # [K2][K9]
@@ -78,7 +78,7 @@ def kort_innhold():
                     "overskrift": "Eksport juli 2026, mrd. kr",
                     "rader": [("Først publisert", jul_forst), ("En måned senere", jul_sept)],
                 }),
-                ("merknad", "Endelige tall kommer i mai to år etter."),
+                ("merknad", "Endelige tall kommer i mai to år etter. For olje og gass kommer endelige tall for første halvår samme høst."),
             ],
         },
     ]
@@ -160,10 +160,9 @@ IKKE_MED = ("Ikke med i tallene", [
     "Tjenester, som frakt, reiser og konsulentarbeid",
     "Renter og utbytte",
     "Varer i transitt gjennom Norge",
-    "Småsendinger under om lag 1 000 kr",
 ])
 
-KILDE_KONSEPT = "Kilde: SSB, Om statistikken (arkivversjon 2015) og tabell 08792 og 12308. Sist oppdatert: 15.09.2026."
+KILDE_KONSEPT = "Kilde: SSB, Om statistikken (arkivversjon 2021), artikkelen «Lavverdisendinger i statistikken» (2025) og tabell 08792 og 12308. Sist oppdatert: 15.09.2026."
 
 
 def konsept_bred():
