@@ -1,0 +1,20 @@
+{
+ "statistikk": "Lønn",
+ "kortnavn": "lonnutforsk",
+ "versjon": "0.1",
+ "dato_valg": "2026-11-04",
+ "merknad": "Utforskende dashbord laget som internt eksempel i veileder E. Bruker bare publiserte tall fra statistikkbanken. URL-ene bruker valueCodes[...] og codelist[...], som filtrerer riktig i PxWebApi v2. Hentet direkte fra data.ssb.no 04.11.2026.",
+ "manglende_verdier": {":": "Konfidensielt, gruppen er for liten. Vises som «skjult».", ".": "Kan ikke forekomme. Vises som «ingen»."},
+ "datasett": [
+  {"id": "naering", "tabell": "11421", "fane": [1, 2, 5], "beskrivelse": "Median, gjennomsnitt, kvartiler og heltidsekvivalenter etter næringshovedområde, sektor, kjønn og arbeidstid.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11421/data?lang=no&outputFormat=json-stat2&valueCodes[MaaleMetode]=01,02,051,061,11&codelist[NACE2007]=vs_NACELonnalle02&valueCodes[NACE2007]=*&valueCodes[Sektor]=*&valueCodes[Alder]=999&valueCodes[Kjonn]=0,1,2&valueCodes[ArbeidsTid]=0,5,6&valueCodes[ContentsCode]=Manedslonn&valueCodes[Tid]=from(2016)"},
+  {"id": "alder", "tabell": "11421", "fane": [4], "beskrivelse": "Samme mål etter alder, alle næringer.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11421/data?lang=no&outputFormat=json-stat2&valueCodes[MaaleMetode]=01,02,051,061,11&valueCodes[NACE2007]=A-S&valueCodes[Sektor]=*&valueCodes[Alder]=*&valueCodes[Kjonn]=0,1,2&valueCodes[ArbeidsTid]=0,5,6&valueCodes[ContentsCode]=Manedslonn&valueCodes[Tid]=from(2016)"},
+  {"id": "komponenter", "tabell": "11421", "fane": [3], "beskrivelse": "Gjennomsnittlig månedslønn og delene av den, og overtid, etter næring, sektor og kjønn.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11421/data?lang=no&outputFormat=json-stat2&valueCodes[MaaleMetode]=02&codelist[NACE2007]=vs_NACELonnalle02&valueCodes[NACE2007]=*&valueCodes[Sektor]=*&valueCodes[Alder]=999&valueCodes[Kjonn]=0,1,2&valueCodes[ArbeidsTid]=0&valueCodes[ContentsCode]=Manedslonn,AvtaltManedslonn,Uregtil,Bonus,Overtid&valueCodes[Tid]=from(2016)"},
+  {"id": "yrke_naering", "tabell": "11419", "fane": [6], "beskrivelse": "Median og heltidsekvivalenter etter yrkesgruppe (ettsifret) og næring, 2016 og 2025.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11419/data?lang=no&outputFormat=json-stat2&valueCodes[MaaleMetode]=01,11&valueCodes[Yrke]=*&codelist[NACE2007]=vs_NACELonnalle02&valueCodes[NACE2007]=*&valueCodes[Sektor]=ALLE&valueCodes[Kjonn]=0,1,2&valueCodes[AvtaltVanlig]=0&valueCodes[ContentsCode]=Manedslonn&valueCodes[Tid]=2016,2025"},
+  {"id": "yrker2", "tabell": "11418", "fane": [7], "beskrivelse": "Median og heltidsekvivalenter for tosifrede yrker, 2016–2025.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11418/data?lang=no&outputFormat=json-stat2&valueCodes[MaaleMetode]=01,11&codelist[Yrke]=vs_NYK08Lonnansatt2siff&valueCodes[Yrke]=*&valueCodes[Sektor]=ALLE&valueCodes[Kjonn]=0,1,2&valueCodes[AvtaltVanlig]=0&valueCodes[ContentsCode]=Manedslonn&valueCodes[Tid]=from(2016)"}
+ ]
+}

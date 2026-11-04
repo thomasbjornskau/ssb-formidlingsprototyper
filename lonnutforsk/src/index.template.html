@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lønnsforskjeller mellom kvinner og menn</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: utforskende dashbord om lønnsforskjeller mellom kvinner og menn, etter næring, sektor, arbeidstid, alder og yrke, med lønnens deler og spredning. Tall fra SSB, tabell 11421, 11419 og 11418.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --kv: #c78800; --menn: #1d9de2; --valgt: #0f2080; --lilla: #4b2fb0; --lilla-l: #f1f1fe; --lilla-m: #c3baff;
+  --avtalt: #274246; --uregtil: #5e9ea0; --bonus: #b6d7d8;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.bf { max-width: 1440px; margin: 0 auto; padding: 16px 24px 32px; display: grid; gap: 14px; }
+.bf-proto { font-size: 12px; color: var(--sek); margin: 0; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 28px; font-weight: 700; line-height: 1.15; margin: 2px 0 4px; }
+.bf-lede { margin: 0; font-size: 16px; max-width: 64rem; }
+.bf b { font-weight: 600; }
+.bf a { color: var(--tekst); text-underline-offset: 3px; }
+/* filtre */
+.bf-filtre { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; background: var(--flate); border-radius: 8px; padding: 10px 16px; }
+.bf-filtre label { display: grid; gap: 2px; font-size: 12px; font-weight: 600; color: var(--sek); }
+.bf-filtre select { font: inherit; font-size: 14px; color: var(--lilla); background: var(--lilla-l); border: 1.5px solid var(--lilla-m); border-radius: 16px; padding: 4px 10px; max-width: 280px; }
+.bf-filtre label.av { opacity: .45; }
+.bf-filtre label.av select { cursor: not-allowed; }
+.bf-filtre .bf-fnote { font-size: 12px; color: var(--sek); margin-left: auto; max-width: 22rem; }
+/* nøkkeltall */
+.bf-tall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.bf-kort { background: var(--flate); border-radius: 8px; padding: 10px 16px; }
+.bf-kort h2 { font-size: 13px; font-weight: 600; color: var(--sek); margin: 0; }
+.bf-kort .bf-stor { font-size: 26px; font-weight: 700; line-height: 1.2; margin: 2px 0; }
+.bf-kort p { margin: 0; font-size: 12px; color: var(--sek); }
+/* faner */
+.bf-faner { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 2px solid var(--stotte); }
+.bf-faner button { font: inherit; font-size: 14px; border: 0; background: none; color: var(--sek); padding: 8px 12px 6px; border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; text-align: left; }
+.bf-faner button small { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.bf-faner button[aria-selected="true"] { color: var(--tekst); font-weight: 600; border-bottom-color: var(--lilla); }
+.bf-faner button:focus-visible { outline: 2px solid var(--lilla-m); }
+.bf-panel { background: var(--flate); border-radius: 8px; padding: 14px 18px 10px; display: grid; gap: 6px; }
+.bf-panel h2 { font-size: 18px; font-weight: 700; margin: 0; }
+.bf-formaal { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--lilla); background: var(--lilla-l); border-radius: 10px; padding: 1px 8px; margin-right: 8px; vertical-align: 2px; }
+.bf-note { margin: 0; font-size: 13px; color: var(--sek); max-width: 70rem; }
+.bf-svg { position: relative; height: 560px; }
+.bf-svg svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-figbunn { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 13px; color: var(--lilla); background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.bf-tips { z-index: 5; position: absolute; pointer-events: none; background: var(--tekst); color: #fff; font-size: 12px; line-height: 1.5; padding: 6px 9px; border-radius: 4px; max-width: 320px; }
+.bf-klikk { cursor: pointer; }
+.bf-klikk:focus { outline: 2px solid var(--lilla); }
+.bf-legende { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 12px; color: var(--sek); }
+.bf-legende span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--f); }
+.bf-bunn { font-size: 12px; color: var(--sek); display: grid; gap: 4px; max-width: 70rem; }
+.bf-bunn p { margin: 0; }
+dialog { border: 0; border-radius: 10px; padding: 20px 24px; max-width: min(1100px, 94vw); max-height: 90vh; color: var(--tekst); }
+dialog::backdrop { background: rgba(39,66,70,.45); }
+dialog h2 { margin: 0 0 10px; font-size: 20px; }
+dialog table { border-collapse: collapse; font-size: 13px; }
+dialog th, dialog td { padding: 3px 12px 3px 0; text-align: right; border-bottom: 1px solid var(--stotte); }
+dialog th:first-child, dialog td:first-child { text-align: left; }
+.bf-lukk { float: right; font: inherit; border: 0; background: var(--lys); border-radius: 16px; padding: 4px 12px; cursor: pointer; }
+@media (max-width: 760px) {
+  .bf { padding: 12px 14px 24px; }
+  .bf-tall { grid-template-columns: 1fr 1fr; }
+  .bf-title { font-size: 23px; }
+  .bf-svg { height: 480px; }
+  .bf-filtre .bf-fnote { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering. Internt eksempel i veileder E om dashbord.</p>
+    <h1 class="bf-title">Lønnsforskjeller mellom kvinner og menn</h1>
+    <p class="bf-lede" id="lede"></p>
+  </header>
+
+  <section class="bf-filtre" aria-label="Valg">
+    <label id="l-aar">År<select id="f-aar"></select></label>
+    <label id="l-sektor">Sektor<select id="f-sektor"></select></label>
+    <label id="l-arb">Arbeidstid<select id="f-arb"></select></label>
+    <label id="l-maal">Mål<select id="f-maal"><option value="01">Median</option><option value="02">Gjennomsnitt</option></select></label>
+    <label id="l-naering">Næring<select id="f-naering"></select></label>
+    <span class="bf-fnote" id="fnote"></span>
+  </section>
+
+  <section class="bf-tall" aria-label="Nøkkeltall">
+    <div class="bf-kort"><h2>Kvinners lønn i prosent av menns</h2><div class="bf-stor" id="t1"></div><p id="t1-m"></p></div>
+    <div class="bf-kort"><h2 id="t2-h"></h2><div class="bf-stor" id="t2"></div><p id="t2-m"></p></div>
+    <div class="bf-kort"><h2 id="t3-h"></h2><div class="bf-stor" id="t3"></div><p id="t3-m"></p></div>
+    <div class="bf-kort"><h2>Kvinners andel av heltidsekvivalentene</h2><div class="bf-stor" id="t4"></div><p id="t4-m"></p></div>
+  </section>
+
+  <div class="bf-faner" role="tablist" id="faner" aria-label="Formål"></div>
+  <section class="bf-panel" role="tabpanel" id="panel" aria-labelledby="">
+    <h2><span class="bf-formaal" id="p-formaal"></span><span id="p-tittel"></span></h2>
+    <p class="bf-note" id="p-note"></p>
+    <div class="bf-legende" id="p-leg"></div>
+    <div class="bf-svg" id="fig"></div>
+    <div class="bf-figbunn"><span id="p-kilde"></span><button class="bf-knapp" id="vis-tall">Vis tallene</button></div>
+  </section>
+
+  <footer class="bf-bunn">
+    <p>Månedslønn er avtalt månedslønn, uregelmessige tillegg og bonus i november, før skatt og regnet om til heltid. Overtid er ikke med. Forskjellen mellom kvinner og menn er ikke justert for alder, utdanning, ansiennitet eller yrke, med mindre figuren deler opp etter det.</p>
+    <p>Egne beregninger: kvinners lønn i prosent av menns, kvinners andel av heltidsekvivalentene og endringen i prosentpoeng er regnet fra kronebeløp og antall i statistikkbanken, avrundet til 10 kroner. Grupper med få personer er skjult av SSB.</p>
+    <p id="hentet"></p>
+    <p><a href="https://www.ssb.no/arbeid-og-lonn/lonn-og-arbeidskraftkostnader/statistikk/lonn">Lønn på ssb.no</a> · <a href="../lonnyrke/">Kommunikasjonsdashbordet: lønn i yrket ditt</a></p>
+  </footer>
+</main>
+<dialog id="dlg" aria-labelledby="dlg-h"><button class="bf-lukk" id="lukk">Lukk</button><h2 id="dlg-h"></h2><div id="dlg-innhold"></div></dialog>
+
+<script>/*__D3__*/</script>
+<script>
+const D = /*__INKLUDER:build/lonnutforsk.json__*/;
+(function () {
+  const T = id => document.getElementById(id);
+  const loc = d3.formatLocale({ decimal: ',', thousands: ' ', grouping: [3], currency: ['', ''] });
+  const tall = v => loc.format(',.0f')(v), kr = v => tall(v) + ' kr', pst = v => loc.format('.1f')(v);
+  const pp = v => (v > 0 ? '+' : v < 0 ? '−' : '') + loc.format('.1f')(Math.abs(v));
+  const er = v => typeof v === 'number';
+  const SYM = { ':': 'skjult', '.': 'ingen' };
+  const vis = v => er(v) ? tall(v) : (SYM[v] || '–');
+  const andel = (k, m) => er(k) && er(m) && m ? 100 * k / m : null;
+  const AAR = D.aar, MI = { '01': 0, '02': 1, '051': 2, '061': 3, '11': 4 };
+  const idx = (liste, k) => liste.findIndex(x => x[0] === k);
+  const dato = s => s.split('-').reverse().join('.');
+  T('hentet').textContent = `Tallene er hentet ${dato(D.hentet)}. Tabell 11421 og 11419 ble sist oppdatert ${dato(D.oppdatert['11421'])}, tabell 11418 ${dato(D.oppdatert['11418'])}.`;
+  const NAER = D.naering.filter(n => n[0] !== 'A-S' && n[0] !== '00');
+  let MAKS = 34;
+  const kort = n => n.length > MAKS ? n.slice(0, MAKS - 2).replace(/[ ,]+\S*$/, '') + ' …' : n;
+  const venstre = (W, px) => { MAKS = W < 600 ? 18 : 34; return W < 600 ? Math.min(px, 120) : px; };
+
+  // ---------- tilstand ----------
+  const S = { fane: 1, aar: AAR[AAR.length - 1], sektor: 'ALLE', arb: '5', maal: '01', naering: 'A-S' };
+  const les = () => { const h = new URLSearchParams(location.hash.slice(1)); for (const k in S) if (h.has(k)) S[k] = k === 'fane' || k === 'aar' ? +h.get(k) : h.get(k); };
+  const skriv = () => history.replaceState(null, '', '#' + new URLSearchParams(S).toString());
+
+  // verdier
+  const nv = (maal, sektor, arb, kj, naering, aar) => D.N[MI[maal]][idx(D.sektor, sektor)][idx(D.arbtid, arb)][kj][idx(D.naering, naering)][AAR.indexOf(aar)];
+  const ratioN = (naering, aar = S.aar, sektor = S.sektor, arb = S.arb, maal = S.maal) => andel(nv(maal, sektor, arb, 2, naering, aar), nv(maal, sektor, arb, 1, naering, aar));
+
+  // ---------- filtre ----------
+  const fyll = (id, liste) => T(id).innerHTML = liste.map(([v, n]) => `<option value="${v}">${n}</option>`).join('');
+  fyll('f-aar', AAR.map(a => [a, a]).reverse());
+  fyll('f-sektor', D.sektor.map(([k, n]) => [k, k === 'ALLE' ? 'Alle sektorer' : n]));
+  fyll('f-arb', D.arbtid.map(([k, n]) => [k, k === '0' ? 'Heltid og deltid' : n]));
+  fyll('f-naering', D.naering.filter(n => n[0] !== '00'));
+  const FILTRE = { aar: 'f-aar', sektor: 'f-sektor', arb: 'f-arb', maal: 'f-maal', naering: 'f-naering' };
+  for (const [k, id] of Object.entries(FILTRE)) T(id).onchange = e => { S[k] = k === 'aar' ? +e.target.value : e.target.value; oppdater(); };
+
+  // ---------- faner ----------
+  const FANER = [
+    { n: 1, f: 'Sammenligning', t: 'Næringer', bruker: ['aar', 'sektor', 'arb', 'maal'], tegn: fane1 },
+    { n: 2, f: 'Utvikling over tid', t: 'Over tid', bruker: ['aar', 'arb', 'maal', 'naering', 'sektor'], tegn: fane2 },
+    { n: 3, f: 'Del av helhet', t: 'Lønnens deler', bruker: ['aar', 'sektor'], tegn: fane3 },
+    { n: 4, f: 'Fordeling', t: 'Spredning etter alder', bruker: ['aar', 'sektor', 'arb'], tegn: fane4 },
+    { n: 5, f: 'Sammenheng', t: 'Kvinneandel', bruker: ['aar', 'sektor', 'arb', 'maal'], tegn: fane5 },
+    { n: 6, f: 'Sammenligning i to dimensjoner', t: 'Yrke og næring', bruker: ['aar'], tegn: fane6 },
+    { n: 7, f: 'Rangering og avvik', t: 'Yrker over tid', bruker: ['aar'], tegn: fane7 },
+  ];
+  T('faner').innerHTML = FANER.map(f => `<button role="tab" id="fane-${f.n}" aria-controls="panel"><small>${f.f}</small>${f.t}</button>`).join('');
+  FANER.forEach(f => T('fane-' + f.n).onclick = () => { S.fane = f.n; oppdater(); });
+  T('faner').addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    S.fane = (S.fane - 1 + (e.key === 'ArrowRight' ? 1 : FANER.length - 1)) % FANER.length + 1;
+    oppdater(); T('fane-' + S.fane).focus();
+  });
+
+  // ---------- felles figurhjelp ----------
+  let TABELL = { h: '', hode: [], rader: [] };
+  function lerret() {
+    const el = T('fig'); el.innerHTML = '';
+    const tips = document.createElement('div'); tips.className = 'bf-tips'; tips.hidden = true; el.appendChild(tips);
+    const W = el.clientWidth, H = el.clientHeight;
+    const svg = d3.select(el).append('svg');
+    const visTips = (html, x, y) => {
+      tips.innerHTML = html; tips.hidden = false;
+      const w = tips.offsetWidth, h = tips.offsetHeight;
+      tips.style.left = Math.min(Math.max(x - w / 2, 0), W - w) + 'px';
+      tips.style.top = (y - h - 12 < 0 ? y + 14 : y - h - 12) + 'px';
+    };
+    return { el, svg, W, H, visTips, skjulTips: () => tips.hidden = true };
+  }
+  const tomt = tekst => T('fig').innerHTML = `<div style="display:grid;place-items:center;height:100%;color:var(--sek)">${tekst}</div>`;
+  const legende = liste => T('p-leg').innerHTML = liste.map(([n, c]) => `<span style="--f:${c}">${n}</span>`).join('');
+  const kilde = (tab) => `Kilde: SSB, tabell ${tab}. Sist oppdatert: ${dato(D.oppdatert[tab])}.`;
+  const maalNavn = () => S.maal === '01' ? 'median' : 'gjennomsnittlig';
+  const sektorNavn = () => S.sektor === 'ALLE' ? 'alle sektorer' : D.sektor[idx(D.sektor, S.sektor)][1].toLowerCase();
+  const arbNavn = () => ({ '0': 'heltid og deltid', '5': 'heltidsansatte', '6': 'deltidsansatte' })[S.arb];
+  const naerNavn = k => D.naering[idx(D.naering, k)][1];
+  function akseY(svg, y, x0, x1, fmt = tall, n = 5) {
+    svg.append('g').selectAll('line').data(y.ticks(n)).join('line').attr('x1', x0).attr('x2', x1).attr('y1', y).attr('y2', y).attr('stroke', 'var(--stotte)');
+    svg.append('g').selectAll('text').data(y.ticks(n)).join('text').attr('x', x0 - 8).attr('y', d => y(d) + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--sek)').text(fmt);
+  }
+  function akseX(svg, x, y0, y1, fmt, n = 6, under = true) {
+    svg.append('g').selectAll('line').data(x.ticks(n)).join('line').attr('x1', x).attr('x2', x).attr('y1', y0).attr('y2', y1).attr('stroke', 'var(--stotte)');
+    svg.append('g').selectAll('text').data(x.ticks(n)).join('text').attr('x', x).attr('y', under ? y1 + 16 : y0 - 6).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text(fmt);
+  }
+  function klikkbar(sel, f) {
+    sel.attr('class', 'bf-klikk').attr('role', 'button').attr('tabindex', 0).on('click', (e, d) => f(d))
+      .on('keydown', (e, d) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f(d); } });
+  }
+
+  // ---------- fane 1: næringer ----------
+  function fane1() {
+    T('p-tittel').textContent = `Kvinners lønn i prosent av menns, etter næring, ${S.aar}`;
+    T('p-note').textContent = `${S.maal === '01' ? 'Median' : 'Gjennomsnittlig'} månedslønn, ${sektorNavn()}, ${arbNavn()}. Sortert fra størst til minst forskjell. Linjen viser alle næringer. Klikk på en næring for å velge den i de andre fanene.`;
+    legende([['Næring', 'var(--menn)'], ['Valgt næring', 'var(--valgt)']]);
+    T('p-kilde').textContent = kilde('11421');
+    const rader = NAER.map(([k, n]) => ({ k, n, p: ratioN(k), kv: nv(S.maal, S.sektor, S.arb, 2, k, S.aar), m: nv(S.maal, S.sektor, S.arb, 1, k, S.aar) }));
+    const med = rader.filter(r => r.p != null).sort((a, b) => a.p - b.p), uten = rader.filter(r => r.p == null);
+    const alle = ratioN('A-S');
+    TABELL = { h: T('p-tittel').textContent, hode: ['Næring', 'Kvinner, kr', 'Menn, kr', 'Kvinner i % av menn'], rader: [...med, ...uten].map(r => [r.n, vis(r.kv), vis(r.m), r.p != null ? pst(r.p) : 'skjult']).concat([['Alle næringer', vis(nv(S.maal, S.sektor, S.arb, 2, 'A-S', S.aar)), vis(nv(S.maal, S.sektor, S.arb, 1, 'A-S', S.aar)), alle != null ? pst(alle) : '–']]) };
+    if (!med.length) return tomt('Ingen næringer har tall for både kvinner og menn med disse valgene.');
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 10, r: 60, b: 28, l: venstre(W, 290) };
+    const y = d3.scaleBand(med.map(r => r.k), [M.t, H - M.b - (uten.length ? 22 : 0)]).padding(.22);
+    const lo = Math.min(60, d3.min(med, r => r.p) - 3), hi = Math.max(105, d3.max(med, r => r.p) + 3);
+    const x = d3.scaleLinear([lo, hi], [M.l, W - M.r]);
+    akseX(svg, x, M.t, H - M.b - (uten.length ? 22 : 0), d => d + ' %');
+    const g = svg.append('g').selectAll('g').data(med).join('g');
+    g.append('text').attr('x', M.l - 8).attr('y', r => y(r.k) + y.bandwidth() / 2 + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--tekst)').attr('font-weight', r => r.k === S.naering ? 700 : 400).text(r => kort(r.n));
+    const b = g.append('rect').attr('x', x(lo)).attr('y', r => y(r.k)).attr('height', y.bandwidth()).attr('width', r => x(r.p) - x(lo)).attr('fill', r => r.k === S.naering ? 'var(--valgt)' : 'var(--menn)')
+      .on('mouseenter', (e, r) => visTips(`<b>${r.n}</b><br>Kvinner ${kr(r.kv)}, menn ${kr(r.m)}<br>Kvinner i prosent av menn: <b>${pst(r.p)} %</b>`, x(r.p), y(r.k)))
+      .on('mouseleave', skjulTips);
+    klikkbar(b, r => { S.naering = S.naering === r.k ? 'A-S' : r.k; oppdater(); });
+    b.attr('aria-label', r => `${r.n}: ${pst(r.p)} prosent`);
+    g.append('text').attr('x', r => x(r.p) + 4).attr('y', r => y(r.k) + y.bandwidth() / 2 + 4).attr('font-size', 11).attr('fill', 'var(--sek)').text(r => pst(r.p));
+    if (alle != null) {
+      svg.append('line').attr('x1', x(alle)).attr('x2', x(alle)).attr('y1', M.t - 4).attr('y2', H - M.b - (uten.length ? 22 : 0)).attr('stroke', 'var(--tekst)').attr('stroke-dasharray', '4,3');
+      svg.append('text').attr('x', x(alle) + 4).attr('y', M.t + 6).attr('font-size', 11).attr('fill', 'var(--tekst)').text(`Alle næringer ${pst(alle)} %`);
+    }
+    if (x(100) < W - M.r) svg.append('line').attr('x1', x(100)).attr('x2', x(100)).attr('y1', M.t).attr('y2', H - M.b - (uten.length ? 22 : 0)).attr('stroke', 'var(--null)');
+    if (uten.length) svg.append('text').attr('x', M.l).attr('y', H - 4).attr('font-size', 12).attr('fill', 'var(--sek)').text(`Ikke vist fordi tallet for kvinner eller menn er skjult: ${uten.map(r => r.n).join(', ')}.`);
+  }
+
+  // ---------- fane 2: over tid ----------
+  function fane2() {
+    const nn = S.naering === 'A-S' ? 'alle næringer' : naerNavn(S.naering).toLowerCase();
+    T('p-tittel').textContent = `Kvinners lønn i prosent av menns, ${nn}, ${AAR[0]}–${AAR[AAR.length - 1]}`;
+    T('p-note').textContent = `${S.maal === '01' ? 'Median' : 'Gjennomsnittlig'} månedslønn, ${arbNavn()}. Én linje per sektor. Valgt sektor er tykkest. Pek på et år for tallene.`;
+    const FARGER = { 'ALLE': 'var(--tekst)', 'A+B+D+E': 'var(--menn)', '6500': 'var(--kv)', '6100': '#009E73' };
+    legende(D.sektor.map(([k, n]) => [k === 'ALLE' ? 'Alle sektorer' : n, FARGER[k]]));
+    T('p-kilde').textContent = kilde('11421');
+    const serier = D.sektor.map(([k, n]) => ({ k, n: k === 'ALLE' ? 'Alle sektorer' : n, v: AAR.map(a => ratioN(S.naering, a, k)) }));
+    TABELL = { h: T('p-tittel').textContent, hode: ['År', ...serier.map(s => s.n)], rader: AAR.map((a, i) => [a, ...serier.map(s => s.v[i] != null ? pst(s.v[i]) : 'skjult')]) };
+    const alleV = serier.flatMap(s => s.v).filter(v => v != null);
+    if (!alleV.length) return tomt('Ingen tall for kvinner og menn i denne næringen med disse valgene.');
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 14, r: W < 600 ? 90 : 170, b: 28, l: 56 };
+    const x = d3.scaleLinear([AAR[0], AAR[AAR.length - 1]], [M.l, W - M.r]);
+    const y = d3.scaleLinear([Math.min(...alleV, 100) - 2, Math.max(...alleV, 100) + 1], [H - M.b, M.t]).nice();
+    akseY(svg, y, M.l, W - M.r, d => d + ' %');
+    svg.append('g').selectAll('text').data(AAR).join('text').attr('x', x).attr('y', H - 8).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text(d => d);
+    svg.append('line').attr('x1', x(S.aar)).attr('x2', x(S.aar)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--lilla-m)').attr('stroke-width', 6).attr('opacity', .5);
+    if (y(100) > M.t) svg.append('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', y(100)).attr('y2', y(100)).attr('stroke', 'var(--null)').attr('stroke-dasharray', '4,3');
+    const linje = d3.line().defined(d => d[1] != null).x(d => x(d[0])).y(d => y(d[1]));
+    const et = [];
+    serier.forEach(s => {
+      const w = s.k === S.sektor ? 4 : 2;
+      svg.append('path').attr('d', linje(AAR.map((a, i) => [a, s.v[i]]))).attr('fill', 'none').attr('stroke', FARGER[s.k]).attr('stroke-width', w);
+      const i = s.v.map((v, i) => v != null ? i : -1).filter(i => i >= 0).pop();
+      if (i != null) et.push({ s, y: y(s.v[i]) });
+    });
+    et.sort((a, b) => a.y - b.y); for (let i = 1; i < et.length; i++) if (et[i].y - et[i - 1].y < 15) et[i].y = et[i - 1].y + 15;
+    et.forEach(e => svg.append('text').attr('x', W - M.r + 8).attr('y', e.y + 4).attr('font-size', 12).attr('font-weight', e.s.k === S.sektor ? 700 : 400).attr('fill', FARGER[e.s.k]).text(kort(e.s.n)));
+    const hl = svg.append('line').attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--tekst)').attr('visibility', 'hidden');
+    svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+      .on('mousemove', e => {
+        const i = Math.max(0, Math.min(AAR.length - 1, Math.round(x.invert(d3.pointer(e)[0])) - AAR[0]));
+        hl.attr('x1', x(AAR[i])).attr('x2', x(AAR[i])).attr('visibility', 'visible');
+        visTips(`<b>${AAR[i]}</b><br>` + serier.map(s => `${s.n}: <b>${s.v[i] != null ? pst(s.v[i]) + ' %' : 'skjult'}</b>`).join('<br>'), x(AAR[i]), M.t + 120);
+      })
+      .on('mouseleave', () => { hl.attr('visibility', 'hidden'); skjulTips(); });
+  }
+
+  // ---------- fane 3: lønnens deler ----------
+  function fane3() {
+    T('p-tittel').textContent = `Hva månedslønnen består av, kvinner og menn, ${S.aar}`;
+    T('p-note').textContent = `Gjennomsnittlig månedslønn delt i avtalt lønn, uregelmessige tillegg og bonus, ${sektorNavn()}, heltid og deltid. Overtid er ikke med i månedslønn og vises bare i tabellen. Sortert etter bonus og tillegg for menn. I hvert par er menn øverst (blått merke) og kvinner nederst (gult merke).`;
+    const DEL = [['AvtaltManedslonn', 'Avtalt månedslønn', 'var(--avtalt)'], ['Uregtil', 'Uregelmessige tillegg', 'var(--uregtil)'], ['Bonus', 'Bonus', 'var(--bonus)']];
+    legende(DEL.map(d => [d[1], d[2]]));
+    T('p-kilde').textContent = kilde('11421');
+    const ki = c => idx(D.Kdel, c), si = idx(D.sektor, S.sektor), ai = AAR.indexOf(S.aar);
+    const kv = (c, kj, n) => D.K[ki(c)][si][kj][idx(D.naering, n)][ai];
+    const rader = [['A-S', 'Alle næringer'], ...NAER].map(([k, n]) => ({ k, n, kj: [1, 2].map(kj => ({ kj, d: DEL.map(d => kv(d[0], kj, k)), o: kv('Overtid', kj, k), sum: kv('Manedslonn', kj, k) })) }))
+      .filter(r => r.kj.every(x => x.d.every(er)));
+    TABELL = { h: T('p-tittel').textContent, hode: ['Næring', 'Kjønn', 'Avtalt', 'Uregelmessige tillegg', 'Bonus', 'Månedslønn', 'Overtid'],
+      rader: rader.flatMap(r => r.kj.map(x => [r.n, x.kj === 1 ? 'Menn' : 'Kvinner', ...x.d.map(tall), vis(x.sum), vis(x.o)])) };
+    if (!rader.length) return tomt('Ingen næringer har alle delene for både kvinner og menn med disse valgene.');
+    const sortert = [rader[0], ...rader.slice(1).sort((a, b) => (b.kj[0].d[1] + b.kj[0].d[2]) - (a.kj[0].d[1] + a.kj[0].d[2]))];
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 10, r: 20, b: 28, l: venstre(W, 290) };
+    const y = d3.scaleBand(sortert.map(r => r.k), [M.t, H - M.b]).padding(.16);
+    const x = d3.scaleLinear([0, d3.max(sortert, r => d3.max(r.kj, k => d3.sum(k.d)))], [M.l, W - M.r]).nice();
+    akseX(svg, x, M.t, H - M.b, tall);
+    const hb = y.bandwidth() / 2;
+    sortert.forEach(r => {
+      svg.append('text').attr('x', M.l - 8).attr('y', y(r.k) + hb + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', r.k === 'A-S' ? 700 : 400).attr('fill', 'var(--tekst)').text(kort(r.n));
+      r.kj.forEach((k, j) => {
+        let x0 = 0; const yy = y(r.k) + j * hb;
+        k.d.forEach((v, i) => {
+          svg.append('rect').attr('x', x(x0)).attr('y', yy).attr('width', Math.max(0, x(x0 + v) - x(x0))).attr('height', hb - 1).attr('fill', DEL[i][2])
+            .on('mouseenter', () => visTips(`<b>${r.n}, ${j ? 'kvinner' : 'menn'}</b><br>Avtalt: ${kr(k.d[0])}<br>Uregelmessige tillegg: ${kr(k.d[1])}<br>Bonus: ${kr(k.d[2])}<br>Månedslønn: <b>${kr(k.sum)}</b><br>Overtid (ikke med): ${er(k.o) ? kr(k.o) : 'skjult'}`, x(x0 + v / 2), yy))
+            .on('mouseleave', skjulTips);
+          x0 += v;
+        });
+        svg.append('rect').attr('x', x(x0) + 2).attr('y', yy).attr('width', 4).attr('height', hb - 1).attr('fill', j ? 'var(--kv)' : 'var(--menn)');
+      });
+    });
+  }
+
+  // ---------- fane 4: spredning etter alder ----------
+  function fane4() {
+    T('p-tittel').textContent = `Spredningen i lønn etter alder, kvinner og menn, ${S.aar}`;
+    T('p-note').textContent = `Strekene går fra nedre til øvre kvartil: halvparten av de ansatte har lønn innenfor streken. Prikken er medianen. Alle næringer, ${sektorNavn()}, ${arbNavn()}.`;
+    legende([['Kvinner', 'var(--kv)'], ['Menn', 'var(--menn)']]);
+    T('p-kilde').textContent = kilde('11421');
+    const si = idx(D.sektor, S.sektor), ri = idx(D.arbtid, S.arb), ai = AAR.indexOf(S.aar);
+    const av = (m, kj, a) => D.A[MI[m]][si][ri][kj][a][ai];
+    const grp = D.alder.map(([k, n], a) => ({ k, n: k === '999' ? 'Alle aldre' : n, kj: [2, 1].map(kj => ({ kj, lo: av('051', kj, a), me: av('01', kj, a), hi: av('061', kj, a) })) }));
+    TABELL = { h: T('p-tittel').textContent, hode: ['Alder', 'Kjønn', 'Nedre kvartil', 'Median', 'Øvre kvartil'], rader: grp.flatMap(g => g.kj.map(k => [g.n, k.kj === 2 ? 'Kvinner' : 'Menn', vis(k.lo), vis(k.me), vis(k.hi)])) };
+    const verdier = grp.flatMap(g => g.kj.flatMap(k => [k.lo, k.hi])).filter(er);
+    if (!verdier.length) return tomt('Ingen tall med disse valgene.');
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 10, r: 30, b: 28, l: W < 600 ? 80 : 120 };
+    const y = d3.scaleBand(grp.map(g => g.k), [M.t, H - M.b]).padding(.25);
+    const x = d3.scaleLinear([Math.min(...verdier) * .95, Math.max(...verdier) * 1.02], [M.l, W - M.r]).nice();
+    akseX(svg, x, M.t, H - M.b, tall);
+    grp.forEach(g => {
+      svg.append('text').attr('x', M.l - 8).attr('y', y(g.k) + y.bandwidth() / 2 + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', g.k === '999' ? 700 : 400).attr('fill', 'var(--tekst)').text(g.n);
+      g.kj.forEach((k, j) => {
+        const yy = y(g.k) + y.bandwidth() * (j ? .72 : .28), c = k.kj === 2 ? 'var(--kv)' : 'var(--menn)';
+        if (![k.lo, k.me, k.hi].every(er)) { svg.append('text').attr('x', M.l + 4).attr('y', yy + 4).attr('font-size', 11).attr('fill', 'var(--sek)').text('skjult'); return; }
+        svg.append('line').attr('x1', x(k.lo)).attr('x2', x(k.hi)).attr('y1', yy).attr('y2', yy).attr('stroke', c).attr('stroke-width', 7).attr('stroke-linecap', 'round').attr('opacity', .55);
+        svg.append('circle').attr('cx', x(k.me)).attr('cy', yy).attr('r', 6).attr('fill', c).attr('stroke', '#fff').attr('stroke-width', 2)
+          .on('mouseenter', () => visTips(`<b>${g.n}, ${k.kj === 2 ? 'kvinner' : 'menn'}</b><br>Nedre kvartil: ${kr(k.lo)}<br>Median: <b>${kr(k.me)}</b><br>Øvre kvartil: ${kr(k.hi)}`, x(k.me), yy))
+          .on('mouseleave', skjulTips);
+      });
+    });
+  }
+
+  // ---------- fane 5: kvinneandel og forskjell ----------
+  function fane5() {
+    T('p-tittel').textContent = `Er forskjellen størst der det er få kvinner? Næringer, ${S.aar}`;
+    T('p-note').textContent = `Hver boble er en næring. Vannrett: kvinners andel av heltidsekvivalentene. Loddrett: kvinners ${maalNavn()} månedslønn i prosent av menns. Størrelsen viser antall heltidsekvivalenter. ${sektorNavn()[0].toUpperCase() + sektorNavn().slice(1)}, ${arbNavn()}.`;
+    legende([['Næring', 'var(--dempet)'], ['Valgt næring', 'var(--valgt)']]);
+    T('p-kilde').textContent = kilde('11421');
+    const pkt = NAER.map(([k, n]) => {
+      const b = nv('11', S.sektor, S.arb, 0, k, S.aar), kv = nv('11', S.sektor, S.arb, 2, k, S.aar);
+      return { k, n, x: er(b) && er(kv) && b ? 100 * kv / b : null, y: ratioN(k), s: b };
+    }).filter(d => d.x != null && d.y != null && er(d.s));
+    TABELL = { h: T('p-tittel').textContent, hode: ['Næring', 'Kvinners andel, %', 'Kvinner i % av menn', 'Heltidsekvivalenter'], rader: pkt.map(d => [d.n, pst(d.x), pst(d.y), tall(d.s)]) };
+    if (pkt.length < 3) return tomt('For få næringer har tall med disse valgene.');
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 16, r: 30, b: 40, l: 60 };
+    const x = d3.scaleLinear([0, 100], [M.l, W - M.r]);
+    const y = d3.scaleLinear().domain(d3.extent([...pkt.map(d => d.y), 100])).nice().range([H - M.b, M.t]);
+    const r = d3.scaleSqrt([0, d3.max(pkt, d => d.s)], [3, 34]);
+    akseY(svg, y, M.l, W - M.r, d => d + ' %');
+    svg.append('g').selectAll('text').data(x.ticks(10)).join('text').attr('x', x).attr('y', H - M.b + 16).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text(d => d + ' %');
+    svg.append('text').attr('x', (M.l + W - M.r) / 2).attr('y', H - 4).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text('Kvinners andel av heltidsekvivalentene');
+    if (y(100) >= M.t) svg.append('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', y(100)).attr('y2', y(100)).attr('stroke', 'var(--tekst)').attr('stroke-dasharray', '4,3');
+    svg.append('line').attr('x1', x(50)).attr('x2', x(50)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--null)').attr('stroke-dasharray', '4,3');
+    const b = svg.append('g').selectAll('circle').data([...pkt].sort((a, b) => b.s - a.s)).join('circle')
+      .attr('cx', d => x(d.x)).attr('cy', d => y(d.y)).attr('r', d => r(d.s))
+      .attr('fill', d => d.k === S.naering ? 'var(--valgt)' : 'var(--dempet)').attr('fill-opacity', .75).attr('stroke', '#fff')
+      .on('mouseenter', (e, d) => visTips(`<b>${d.n}</b><br>Kvinners andel: ${pst(d.x)} %<br>Kvinner i prosent av menn: <b>${pst(d.y)} %</b><br>${tall(d.s)} heltidsekvivalenter`, x(d.x), y(d.y) - r(d.s)))
+      .on('mouseleave', skjulTips);
+    klikkbar(b, d => { S.naering = S.naering === d.k ? 'A-S' : d.k; oppdater(); });
+    b.attr('aria-label', d => `${d.n}: ${pst(d.x)} prosent kvinner, ${pst(d.y)} prosent av menns lønn`);
+    svg.append('g').selectAll('text').data(pkt.filter(d => r(d.s) > 16 || d.k === S.naering)).join('text')
+      .attr('x', d => x(d.x)).attr('y', d => y(d.y) - r(d.s) - 4).attr('text-anchor', 'middle').attr('font-size', 11).attr('font-weight', d => d.k === S.naering ? 700 : 400)
+      .attr('fill', 'var(--tekst)').attr('paint-order', 'stroke').attr('stroke', '#fff').attr('stroke-width', 3).attr('pointer-events', 'none').text(d => kort(d.n));
+  }
+
+  // ---------- fane 6: yrke og næring ----------
+  function fane6() {
+    const aar = D.YNaar.includes(S.aar) ? S.aar : D.YNaar[D.YNaar.length - 1], ai = D.YNaar.indexOf(aar);
+    T('p-tittel').textContent = `Kvinners lønn i prosent av menns, etter yrkesgruppe og næring, ${aar}`;
+    T('p-note').textContent = `Median månedslønn, alle sektorer, heltid og deltid. Hver rute er en yrkesgruppe i en næring. Oransje: kvinner tjener mindre enn menn. Blå: kvinner tjener mer. Grå: tallet er skjult.` + (aar !== S.aar ? ` Tabellen har bare ${D.YNaar.join(' og ')}, så fanen viser ${aar}.` : '');
+    legende([['Under 80 %', '#D55E00'], ['90 %', '#f4b38a'], ['100 %', '#f2f2f2'], ['110 %', '#8cc0e3'], ['Over 120 %', '#0072B2'], ['Skjult', 'var(--stotte)']]);
+    T('p-kilde').textContent = kilde('11419');
+    const yrker = D.YNyrke, naer = [['A-S', 'Alle næringer'], ...NAER];
+    const verdi = (yi, nk) => { const n = idx(D.naering, nk); return andel(D.YN[0][yi][n][2][ai], D.YN[0][yi][n][1][ai]); };
+    TABELL = { h: T('p-tittel').textContent, hode: ['Yrkesgruppe', ...naer.map(n => n[1])], rader: yrker.map(([k, n], yi) => [n, ...naer.map(([nk]) => { const v = verdi(yi, nk); return v != null ? pst(v) : 'skjult'; })]) };
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 150, r: 70, b: 10, l: venstre(W, 230) };
+    const x = d3.scaleBand(naer.map(n => n[0]), [M.l, W - M.r]).padding(.06);
+    const y = d3.scaleBand(yrker.map(y => y[0]), [M.t, H - M.b]).padding(.06);
+    const farge = d3.scaleDiverging([80, 100, 120], t => d3.interpolateRgbBasis(['#D55E00', '#f4b38a', '#f2f2f2', '#8cc0e3', '#0072B2'])(t)).clamp(true);
+    svg.append('g').selectAll('text').data(naer).join('text').attr('transform', d => `translate(${x(d[0]) + x.bandwidth() / 2},${M.t - 6}) rotate(-55)`)
+      .attr('font-size', 11).attr('fill', d => d[0] === S.naering ? 'var(--valgt)' : 'var(--tekst)').attr('font-weight', d => d[0] === 'A-S' || d[0] === S.naering ? 700 : 400).text(d => kort(d[1]));
+    yrker.forEach(([yk, yn], yi) => {
+      svg.append('text').attr('x', M.l - 8).attr('y', y(yk) + y.bandwidth() / 2 + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('font-weight', yk === '0-9' ? 700 : 400).attr('fill', 'var(--tekst)').text(kort(yn));
+      naer.forEach(([nk, nn]) => {
+        const v = verdi(yi, nk), n = idx(D.naering, nk);
+        svg.append('rect').attr('x', x(nk)).attr('y', y(yk)).attr('width', x.bandwidth()).attr('height', y.bandwidth())
+          .attr('fill', v != null ? farge(v) : 'var(--stotte)').attr('stroke', nk === S.naering ? 'var(--valgt)' : 'none').attr('stroke-width', 2)
+          .on('mouseenter', () => visTips(`<b>${yn}</b><br>${nn}<br>${v != null ? `Kvinner ${kr(D.YN[0][yi][n][2][ai])}, menn ${kr(D.YN[0][yi][n][1][ai])}<br>Kvinner i prosent av menn: <b>${pst(v)} %</b>` : 'Tallet for kvinner eller menn er skjult'}`, x(nk) + x.bandwidth() / 2, y(yk)))
+          .on('mouseleave', skjulTips);
+        if (v != null && x.bandwidth() > 30) svg.append('text').attr('x', x(nk) + x.bandwidth() / 2).attr('y', y(yk) + y.bandwidth() / 2 + 4).attr('text-anchor', 'middle').attr('font-size', 10)
+          .attr('fill', Math.abs(v - 100) > 14 ? '#fff' : 'var(--tekst)').attr('pointer-events', 'none').text(Math.round(v));
+      });
+    });
+  }
+
+  // ---------- fane 7: yrker over tid ----------
+  function fane7() {
+    const a0 = AAR[0], a1 = S.aar === AAR[0] ? AAR[AAR.length - 1] : S.aar, i0 = 0, i1 = AAR.indexOf(a1);
+    T('p-tittel').textContent = `Kvinners lønn i prosent av menns, tosifrede yrker, ${a0} og ${a1}`;
+    T('p-note').textContent = `Median månedslønn, alle sektorer og næringer, heltid og deltid. Sortert etter ${a1}. Yrker der forskjellen har endret seg med mer enn 4 prosentpoeng, er fremhevet som avvik.`;
+    legende([[String(a0), 'var(--null)'], [String(a1), 'var(--valgt)'], ['Avvik: mer enn 4 prosentpoeng', 'var(--kv)']]);
+    T('p-kilde').textContent = kilde('11418');
+    const rad = D.Y2yrke.map(([k, n], yi) => {
+      const p0 = andel(D.Y2[0][yi][2][i0], D.Y2[0][yi][1][i0]), p1 = andel(D.Y2[0][yi][2][i1], D.Y2[0][yi][1][i1]);
+      return { k, n, p0, p1, d: p0 != null && p1 != null ? p1 - p0 : null };
+    });
+    const med = rad.filter(r => r.p1 != null).sort((a, b) => a.p1 - b.p1), uten = rad.filter(r => r.p1 == null);
+    TABELL = { h: T('p-tittel').textContent, hode: ['Yrke', String(a0), String(a1), 'Endring, prosentpoeng'], rader: [...med, ...uten].map(r => [r.n, r.p0 != null ? pst(r.p0) : 'skjult', r.p1 != null ? pst(r.p1) : 'skjult', r.d != null ? pp(r.d) : '–']) };
+    const { svg, W, H, visTips, skjulTips } = lerret();
+    const M = { t: 18, r: 70, b: 30, l: venstre(W, 330) };
+    const y = d3.scaleBand(med.map(r => r.k), [M.t, H - M.b]).padding(.2);
+    const v = med.flatMap(r => [r.p0, r.p1]).filter(x => x != null);
+    const x = d3.scaleLinear([Math.min(...v, 70) - 2, Math.max(...v, 105) + 2], [M.l, W - M.r]);
+    akseX(svg, x, M.t, H - M.b, d => d + ' %', 8);
+    svg.append('line').attr('x1', x(100)).attr('x2', x(100)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--tekst)').attr('stroke-dasharray', '4,3');
+    svg.append('text').attr('x', x(100) + 4).attr('y', M.t - 4).attr('font-size', 11).attr('fill', 'var(--tekst)').text('Lik lønn');
+    med.forEach(r => {
+      const yy = y(r.k) + y.bandwidth() / 2, avvik = r.d != null && Math.abs(r.d) > 4;
+      svg.append('text').attr('x', M.l - 8).attr('y', yy + 4).attr('text-anchor', 'end').attr('font-size', 11).attr('font-weight', avvik ? 700 : 400).attr('fill', avvik ? 'var(--kv)' : 'var(--tekst)').text(kort(r.n));
+      if (r.p0 != null) svg.append('line').attr('x1', x(r.p0)).attr('x2', x(r.p1)).attr('y1', yy).attr('y2', yy).attr('stroke', avvik ? 'var(--kv)' : 'var(--stotte)').attr('stroke-width', avvik ? 3 : 2);
+      if (r.p0 != null) svg.append('circle').attr('cx', x(r.p0)).attr('cy', yy).attr('r', 3.5).attr('fill', 'var(--null)');
+      svg.append('circle').attr('cx', x(r.p1)).attr('cy', yy).attr('r', 5).attr('fill', 'var(--valgt)')
+        .on('mouseenter', () => visTips(`<b>${r.n}</b><br>${a0}: ${r.p0 != null ? pst(r.p0) + ' %' : 'skjult'}<br>${a1}: <b>${pst(r.p1)} %</b><br>Endring: ${r.d != null ? pp(r.d) + ' prosentpoeng' : '–'}`, x(r.p1), yy))
+        .on('mouseleave', skjulTips);
+      if (avvik) svg.append('text').attr('x', Math.max(x(r.p0), x(r.p1)) + 8).attr('y', yy + 4).attr('font-size', 11).attr('font-weight', 700).attr('fill', 'var(--kv)').text(pp(r.d));
+    });
+    if (uten.length) svg.append('text').attr('x', M.l).attr('y', H - 2).attr('font-size', 12).attr('fill', 'var(--sek)').text(`Skjult for kvinner eller menn: ${uten.map(r => kort(r.n)).join(', ')}.`);
+  }
+
+  // ---------- tekster og nøkkeltall ----------
+  function nokkeltall() {
+    const nk = S.fane === 6 || S.fane === 7 || S.fane === 4 ? 'A-S' : S.naering;
+    const maal = S.fane === 3 ? '02' : S.fane >= 6 ? '01' : S.maal, arb = S.fane === 3 || S.fane >= 6 ? '0' : S.arb, sek = S.fane >= 6 ? 'ALLE' : S.sektor;
+    const kv = nv(maal, sek, arb, 2, nk, S.aar), m = nv(maal, sek, arb, 1, nk, S.aar), p = andel(kv, m);
+    const nn = nk === 'A-S' ? 'alle næringer' : naerNavn(nk).toLowerCase();
+    const mn = maal === '01' ? 'Median' : 'Gjennomsnittlig';
+    const p0 = andel(nv(maal, sek, arb, 2, nk, AAR[0]), nv(maal, sek, arb, 1, nk, AAR[0]));
+    T('t1').textContent = p != null ? pst(p) + ' %' : '–';
+    T('t1-m').textContent = p != null && p0 != null ? `${pp(p - p0)} prosentpoeng siden ${AAR[0]}. ${nn[0].toUpperCase() + nn.slice(1)}.` : 'Tallet for kvinner eller menn er skjult.';
+    T('t2-h').textContent = `${mn} månedslønn, kvinner`; T('t2').textContent = er(kv) ? kr(kv) : '–'; T('t2-m').textContent = `${S.aar}, ${sek === 'ALLE' ? 'alle sektorer' : D.sektor[idx(D.sektor, sek)][1].toLowerCase()}`;
+    T('t3-h').textContent = `${mn} månedslønn, menn`; T('t3').textContent = er(m) ? kr(m) : '–'; T('t3-m').textContent = er(kv) && er(m) ? `${kr(Math.abs(m - kv))} ${m >= kv ? 'mer' : 'mindre'} enn kvinner` : '';
+    const hb = nv('11', sek, arb, 0, nk, S.aar), hk = nv('11', sek, arb, 2, nk, S.aar);
+    T('t4').textContent = er(hb) && er(hk) ? pst(100 * hk / hb) + ' %' : '–';
+    T('t4-m').textContent = er(hb) ? `${tall(hb)} heltidsekvivalenter i alt` : '';
+    T('lede').innerHTML = p != null
+      ? `I ${nn} tjente kvinner <b>${pst(p)} prosent</b> av det menn tjente i ${S.aar}, målt som ${maal === '01' ? 'median' : 'gjennomsnittlig'} månedslønn for ${arb === '0' ? 'heltid og deltid' : arb === '5' ? 'heltidsansatte' : 'deltidsansatte'} i ${sek === 'ALLE' ? 'alle sektorer' : D.sektor[idx(D.sektor, sek)][1].toLowerCase()}. ` + (p0 != null ? `I ${AAR[0]} var det ${pst(p0)} prosent.` : '')
+      : `For ${nn} er tallet for kvinner eller menn skjult med disse valgene.`;
+  }
+
+  function oppdater() {
+    const f = FANER[S.fane - 1];
+    for (const [k, id] of Object.entries(FILTRE)) {
+      T(id).value = S[k]; const av = !f.bruker.includes(k);
+      T(id).disabled = av; T('l-' + k).classList.toggle('av', av);
+      T('l-' + k).title = av ? 'Gjelder ikke denne fanen' : '';
+    }
+    const ikke = Object.keys(FILTRE).filter(k => !f.bruker.includes(k)).map(k => ({ aar: 'år', sektor: 'sektor', arb: 'arbeidstid', maal: 'mål', naering: 'næring' })[k]);
+    T('fnote').textContent = ikke.length ? `Gjelder ikke fanen «${f.t}»: ${ikke.join(', ')}.` : '';
+    FANER.forEach(x => { const b = T('fane-' + x.n); b.setAttribute('aria-selected', x.n === S.fane); b.tabIndex = x.n === S.fane ? 0 : -1; });
+    T('panel').setAttribute('aria-labelledby', 'fane-' + S.fane);
+    T('p-formaal').textContent = f.f;
+    skriv(); nokkeltall(); f.tegn();
+  }
+
+  // ---------- tabell ----------
+  const dlg = T('dlg'); T('lukk').onclick = () => dlg.close();
+  T('vis-tall').onclick = () => {
+    T('dlg-h').textContent = TABELL.h;
+    T('dlg-innhold').innerHTML = `<table><thead><tr>${TABELL.hode.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${TABELL.rader.map(r => `<tr>${r.map((c, i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join('')}</tr>`).join('')}</tbody></table>`;
+    dlg.showModal();
+  };
+
+  les();
+  window.addEventListener('hashchange', () => { les(); oppdater(); });
+  let tid; window.addEventListener('resize', () => { clearTimeout(tid); tid = setTimeout(oppdater, 150); });
+  oppdater();
+})();
+</script>
+</body>
+</html>
