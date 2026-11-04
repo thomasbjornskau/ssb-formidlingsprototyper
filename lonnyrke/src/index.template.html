@@ -265,6 +265,23 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     svg.append('g').selectAll('text').data(yS.ticks(5)).join('text').attr('x', M.l - 8).attr('y', d => yS(d) + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--sek)').text(tall);
     svg.append('g').selectAll('text').data(AAR.filter((a, i) => i % 3 === 0 || i === SI)).join('text').attr('x', x).attr('y', H - 4).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text(d => d);
     const linje = d3.line().defined(d => d[1] != null).x(d => x(d[0])).y(d => yS(d[1]));
+    // skyggen mellom kvinner og menn, i en svak variant av fargen til den som tjener mest
+    const er = v => typeof v === 'number';
+    for (let i = 0; i < AAR.length - 1; i++) {
+      const m0 = y.m[i], m1 = y.m[i + 1], k0 = y.kv[i], k1 = y.kv[i + 1];
+      if (![m0, m1, k0, k1].every(er)) continue;
+      const d0 = m0 - k0, d1 = m1 - k1;
+      const biter = [];
+      if (d0 * d1 < 0) {  // linjene krysser hverandre: del ved skjæringspunktet
+        const t = d0 / (d0 - d1), xa = AAR[i] + t, ya = m0 + t * (m1 - m0);
+        biter.push([[AAR[i], m0, k0], [xa, ya, ya], d0], [[xa, ya, ya], [AAR[i + 1], m1, k1], d1]);
+      } else biter.push([[AAR[i], m0, k0], [AAR[i + 1], m1, k1], d0 + d1]);
+      biter.forEach(([p, q, d]) => {
+        if (!d) return;
+        svg.append('path').attr('d', `M${x(p[0])},${yS(p[1])} L${x(q[0])},${yS(q[1])} L${x(q[0])},${yS(q[2])} L${x(p[0])},${yS(p[2])} Z`)
+          .attr('fill', d > 0 ? 'var(--menn)' : 'var(--kv)').attr('fill-opacity', .14);
+      });
+    }
     const etiketter = [];
     serier.forEach(s => {
       const pkt = AAR.map((a, i) => [a, s.v[i]]);
@@ -392,7 +409,7 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     const med = PKT.some(d => d.y === valgt);
     T('f2-note').innerHTML = valgt === ALLE ? 'Hvert punkt er et yrke. Klikk på et punkt for å velge det.' : (med ? '' : `<b>${valgt.n} er ikke med</b>, fordi tallet for kvinner eller menn er skjult. `)
       + `Hvert punkt er et yrke. Mørkere punkter er i samme hovedgruppe (${D.grupper[valgt.g].toLowerCase()}).`;
-    T('f1-note').textContent = 'Median månedslønn, kroner.' + (valgt === ALLE ? '' : ' Grå linje: alle yrker.') + ' Pek på et år for tallene.';
+    T('f1-note').textContent = 'Median månedslønn, kroner. Fargen mellom linjene viser hvem som tjener mest.' + (valgt === ALLE ? '' : ' Grå linje: alle yrker.') + ' Pek på et år for tallene.';
     figur1(); figur2();
   }
   let tid; window.addEventListener('resize', () => { clearTimeout(tid); tid = setTimeout(() => valgt && tegn(), 120); });

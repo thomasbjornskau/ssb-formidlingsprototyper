@@ -12,7 +12,7 @@ Prototypen er eksempelet på et kommunikasjonsdashbord i veileder E. Den bygger 
 |---|---|---|
 | Hode | Hvilket yrke? | Tittel, ingress generert fra tallene, søk etter yrke, snarveier til alle yrker samlet og listen over alle yrker |
 | Nøkkeltall | Hva tjener de? Ikoner fra ssb-ikoner: 53 (person med mynter), 115 (kvinne og mann) og 2 (to personer). | Median månedslønn mot alle yrker, kvinners lønn i prosent av menns, antall jobber og andel kvinner |
-| Figur 1 | Hvordan har det utviklet seg? | Median for kvinner og menn 2016–2025, med alle yrker som grå referanse. Pek på et år, eller bruk piltastene, for kroner og kvinners lønn i prosent av menns |
+| Figur 1 | Hvordan har det utviklet seg? | Median for kvinner og menn 2016–2025, med alle yrker som grå referanse. Området mellom linjene er skyggelagt i en svak variant av fargen til kjønnet som tjener mest, også der linjene krysser. Pek på et år, eller bruk piltastene, for kroner og kvinners lønn i prosent av menns |
 | Figur 2 | Hvor ligger yrket? | Alle 302 yrker med tall for begge kjønn: lønn mot kvinners lønn i prosent av menns. Valgt yrke fremhevet, samme hovedgruppe mørkere |
 | Bunn | Hva er tallene? | Definisjon i én setning, «Slik lages tallene», «Om tallene», lenke til ssb.no |
 
