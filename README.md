@@ -18,6 +18,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Innvandrere og norskfødte med innvandrerforeldre](innvbef/) | `innvbef` | Under arbeid, ikke faglig kontrollert | 26.10.2026 |
 | [Antall arbeidsforhold og lønn](arblonn/) | `arblonn` | Til faglig kontroll | 02.11.2026 |
 | [Pasienter i spesialisthelsetjenesten](pasient/) | `pasient` | Under arbeid, ikke faglig kontrollert | 02.11.2026 |
+| [Lønn i yrket ditt (dashbord på ett skjermbilde)](lonnyrke/) | `lonnyrke` | Under arbeid, eksempel i veileder E. Bygger på tall kontrollert i `lonnansatt` | 04.11.2026 |
 
 ## Arbeidsprosess
 
