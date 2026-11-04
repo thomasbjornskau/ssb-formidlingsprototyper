@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lønn i yrket ditt</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: hva tjener de i yrket ditt, og er det forskjell på kvinner og menn? Median månedslønn for over 300 yrker, 2016–2025. Tall fra SSB, tabell 11418.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --kv: #c78800; --menn: #1d9de2; --valgt: #0f2080; --lilla: #4b2fb0;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.bf { height: 100vh; max-width: 1440px; margin: 0 auto; padding: 14px 24px 10px; display: grid; gap: 12px;
+  grid-template-rows: auto auto minmax(0, 1fr) auto; }
+.bf-proto { font-size: 12px; color: var(--sek); margin: 0; }
+.bf-proto b { color: var(--tekst); }
+.bf-hode { display: grid; grid-template-columns: 1fr minmax(280px, 400px); gap: 6px 32px; align-items: end; }
+.bf-title { font-size: 28px; font-weight: 700; line-height: 1.15; margin: 2px 0 4px; }
+.bf-lede { margin: 0; font-size: 16px; max-width: 58rem; }
+.bf b { font-weight: 600; }
+.bf a { color: var(--tekst); text-underline-offset: 3px; }
+/* søk */
+.bf-sok { position: relative; }
+.bf-sok label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.bf-sok input { width: 100%; font: inherit; font-size: 16px; padding: 9px 14px; border: 2px solid var(--lilla); border-radius: 22px; background: #f1f1fe; color: var(--tekst); }
+.bf-sok input:focus { outline: 3px solid #c3baff; outline-offset: 1px; }
+.bf-liste { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 4px 0 0; padding: 4px 0; list-style: none; background: var(--flate); border: 1px solid var(--stotte); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,.12); max-height: 320px; overflow: auto; }
+.bf-liste li { padding: 6px 14px; cursor: pointer; }
+.bf-liste li small { display: block; color: var(--sek); font-size: 12px; }
+.bf-liste li[aria-selected="true"], .bf-liste li:hover { background: var(--lys); }
+.bf-liste .bf-ingen { cursor: default; color: var(--sek); }
+/* nøkkeltall */
+.bf-tall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.bf-kort { background: var(--flate); border-radius: 8px; padding: 10px 16px; }
+.bf-kort h2 { font-size: 13px; font-weight: 600; color: var(--sek); margin: 0; }
+.bf-kort .bf-stor { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 2px 0; }
+.bf-kort p { margin: 0; font-size: 13px; color: var(--sek); }
+/* figurer */
+.bf-fig { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; min-height: 0; }
+.bf-figkort { background: var(--flate); border-radius: 8px; padding: 10px 16px 8px; display: grid; grid-template-rows: auto auto minmax(0, 1fr) auto; min-height: 0; }
+.bf-figkort h2 { font-size: 16px; font-weight: 700; margin: 0; }
+.bf-note { margin: 0; font-size: 13px; color: var(--sek); }
+.bf-svg { min-height: 0; position: relative; }
+.bf-svg svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tom { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: var(--sek); padding: 0 24px; }
+.bf-figbunn { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 13px; color: var(--lilla); background: none; border: 0; padding: 2px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap; }
+.bf-pkt { cursor: pointer; }
+.bf-tips { position: absolute; pointer-events: none; background: var(--tekst); color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; transform: translate(-50%, -130%); }
+/* bunn */
+.bf-bunn { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 24px; font-size: 12px; color: var(--sek); }
+.bf-bunn .bf-knapp { font-size: 12px; }
+/* dialog */
+dialog { border: 0; border-radius: 10px; padding: 20px 24px; max-width: min(1100px, 94vw); max-height: 90vh; color: var(--tekst); }
+dialog::backdrop { background: rgba(39,66,70,.45); }
+dialog h2 { margin: 0 0 10px; font-size: 20px; }
+dialog table { border-collapse: collapse; font-size: 13px; }
+dialog th, dialog td { padding: 3px 12px 3px 0; text-align: right; border-bottom: 1px solid var(--stotte); }
+dialog th:first-child, dialog td:first-child { text-align: left; }
+.bf-lukk { float: right; font: inherit; border: 0; background: var(--lys); border-radius: 16px; padding: 4px 12px; cursor: pointer; }
+.bf-konsept svg { width: 100%; height: auto; }
+.bf-konsept .smal { display: none; }
+.bf-alle ul { columns: 3; padding-left: 18px; font-size: 13px; }
+.bf-alle h3 { font-size: 14px; margin: 12px 0 2px; }
+/* smal skjerm: siden kan rulle */
+@media (max-width: 760px) {
+  .bf { height: auto; min-height: 100vh; padding: 12px 14px; }
+  .bf-hode, .bf-tall, .bf-fig { grid-template-columns: 1fr; }
+  .bf-title { font-size: 23px; }
+  .bf-figkort { height: 340px; }
+  .bf-kort .bf-stor { font-size: 24px; }
+  .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; }
+  .bf-alle ul { columns: 1; }
+}
+@media (max-height: 640px) and (min-width: 761px) { .bf { height: auto; min-height: 100vh; } .bf-figkort { height: 360px; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <div class="bf-hode">
+      <div>
+        <h1 class="bf-title">Hva tjener de i yrket ditt?</h1>
+        <p class="bf-lede" id="lede"></p>
+      </div>
+      <div class="bf-sok">
+        <label for="sok">Velg yrke</label>
+        <input id="sok" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="treff" autocomplete="off" placeholder="Søk, for eksempel sykepleier">
+        <ul class="bf-liste" id="treff" role="listbox" hidden></ul>
+      </div>
+    </div>
+  </header>
+
+  <section class="bf-tall" aria-label="Nøkkeltall">
+    <div class="bf-kort"><h2 id="t1-h">Median månedslønn</h2><div class="bf-stor" id="t1"></div><p id="t1-m"></p></div>
+    <div class="bf-kort"><h2>Kvinners lønn i prosent av menns</h2><div class="bf-stor" id="t2"></div><p id="t2-m"></p></div>
+    <div class="bf-kort"><h2 id="t3-h">Jobber i yrket</h2><div class="bf-stor" id="t3"></div><p id="t3-m"></p></div>
+  </section>
+
+  <section class="bf-fig">
+    <div class="bf-figkort">
+      <h2 id="f1-h">Utviklingen for kvinner og menn</h2>
+      <p class="bf-note">Median månedslønn, kroner. Grå linje: alle yrker.</p>
+      <div class="bf-svg" id="f1"></div>
+      <div class="bf-figbunn"><span>Kilde: SSB, tabell 11418. Sist oppdatert: <span class="dato"></span>.</span><button class="bf-knapp" data-vis="f1">Vis tallene</button></div>
+    </div>
+    <div class="bf-figkort">
+      <h2>Yrket blant alle yrker</h2>
+      <p class="bf-note" id="f2-note"></p>
+      <div class="bf-svg" id="f2"></div>
+      <div class="bf-figbunn"><span>Kilde: SSB, tabell 11418. Egne beregninger.</span><button class="bf-knapp" data-vis="f2">Vis tallene</button></div>
+    </div>
+  </section>
+
+  <footer class="bf-bunn">
+    <span>Median månedslønn i november, før skatt, regnet om til heltid. Alle sektorer og arbeidstider. Forskjellen mellom kvinner og menn er ikke justert for alder, utdanning eller ansiennitet.</span>
+    <span><button class="bf-knapp" data-vis="konsept">Slik lages tallene</button> · <button class="bf-knapp" data-vis="om">Om tallene</button> · <a href="https://www.ssb.no/arbeid-og-lonn/lonn-og-arbeidskraftkostnader/statistikk/lonn">Lønn på ssb.no</a></span>
+  </footer>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlg-h"><button class="bf-lukk" id="lukk">Lukk</button><h2 id="dlg-h"></h2><div id="dlg-innhold"></div></dialog>
+<template id="konsept-tpl"><div class="bf-konsept"><div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div><div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div></div></template>
+
+<script>/*__D3__*/</script>
+<script>
+const D = /*__INKLUDER:build/lonnyrke.json__*/;
+(function () {
+  const AAR = D.aar, SI = AAR.length - 1, SISTE = AAR[SI];
+  const loc = d3.formatLocale({ decimal: ',', thousands: ' ', grouping: [3], currency: ['', ' kr'] });
+  const kr = v => loc.format(',.0f')(v) + ' kr';
+  const tall = v => loc.format(',.0f')(v);
+  const pst = v => loc.format('.1f')(v);
+  const T = id => document.getElementById(id);
+  const datoTekst = s => s ? s.split('-').reverse().join('.') : '';
+  document.querySelectorAll('.dato').forEach(e => e.textContent = datoTekst(D.oppdatert));
+  const YRK = new Map(D.yrker.map(y => [y.k, y]));
+  const andel = (k, m) => (k && m) ? 100 * k / m : null;
+  const ALLE_P = andel(D.alle.kv[SI], D.alle.m[SI]);
+  const SKJULT = { ':': 'skjult fordi gruppen er for liten', '.': 'ingen jobber registrert' };
+  const STANDARD = '2223';
+
+  // ---------- søk ----------
+  const sok = T('sok'), liste = T('treff');
+  const norm = s => s.toLowerCase().normalize('NFC');
+  function finn(q) {
+    q = norm(q.trim());
+    if (!q) return [];
+    const r = [];
+    for (const y of D.yrker) {
+      const n = norm(y.n);
+      let s = n === q ? 0 : n.startsWith(q) ? 1 : n.split(/[\s\-/,()]+/).some(o => o.startsWith(q)) ? 2 : n.includes(q) ? 3 : 9;
+      if (s < 9) r.push([s, y]);
+    }
+    return r.sort((a, b) => a[0] - b[0] || a[1].n.localeCompare(b[1].n, 'nb')).slice(0, 12).map(x => x[1]);
+  }
+  let aktiv = -1, treff = [];
+  function visTreff() {
+    treff = finn(sok.value);
+    liste.innerHTML = '';
+    if (!sok.value.trim()) { lukkListe(); return; }
+    if (!treff.length) {
+      liste.innerHTML = '<li class="bf-ingen" role="option" aria-disabled="true">Ingen treff. <button class="bf-knapp" type="button" id="se-alle">Se alle yrker</button></li>';
+      T('se-alle').onclick = () => { lukkListe(); visDialog('alle'); };
+    }
+    treff.forEach((y, i) => {
+      const li = document.createElement('li');
+      li.id = 'tr-' + i; li.setAttribute('role', 'option');
+      li.innerHTML = `${y.n}<small>${D.grupper[y.g]}</small>`;
+      li.onmousedown = e => { e.preventDefault(); velg(y.k); lukkListe(); sok.blur(); };
+      liste.appendChild(li);
+    });
+    aktiv = -1; liste.hidden = false; sok.setAttribute('aria-expanded', 'true');
+  }
+  function lukkListe() { liste.hidden = true; sok.setAttribute('aria-expanded', 'false'); sok.removeAttribute('aria-activedescendant'); }
+  function marker(i) {
+    const li = liste.querySelectorAll('[role=option]:not([aria-disabled])');
+    if (!li.length) return;
+    aktiv = (i + li.length) % li.length;
+    li.forEach((e, n) => e.setAttribute('aria-selected', n === aktiv));
+    sok.setAttribute('aria-activedescendant', li[aktiv].id);
+    li[aktiv].scrollIntoView({ block: 'nearest' });
+  }
+  sok.addEventListener('input', visTreff);
+  sok.addEventListener('focus', () => { if (sok.value) visTreff(); });
+  sok.addEventListener('blur', () => setTimeout(lukkListe, 120));
+  sok.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visTreff(); marker(aktiv + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); marker(aktiv - 1); }
+    else if (e.key === 'Enter') { const y = treff[aktiv >= 0 ? aktiv : 0]; if (y) { velg(y.k); lukkListe(); sok.select(); } }
+    else if (e.key === 'Escape') { lukkListe(); }
+  });
+
+  // ---------- tilstand ----------
+  let valgt = null;
+  function velg(k, fraHash) {
+    if (!YRK.has(k)) k = STANDARD;
+    valgt = YRK.get(k);
+    sok.value = valgt.n;
+    if (!fraHash) history.replaceState(null, '', '#yrke=' + k);
+    tegn();
+  }
+  window.addEventListener('hashchange', () => velg((location.hash.match(/yrke=(\w+)/) || [])[1], true));
+
+  // ---------- tekst og nøkkeltall ----------
+  function tekster() {
+    const y = valgt, b = y.b[SI], m = y.m[SI], k = y.kv[SI], p = andel(k, m);
+    let lede;
+    if (b == null) lede = `For ${y.n.toLowerCase()} finnes det ikke tall for ${SISTE}: ${SKJULT[y.sb] || 'tallet mangler'}.`;
+    else {
+      lede = `${y.n} hadde en median månedslønn på <b>${kr(b)}</b> i november ${SISTE}. Halvparten tjente mer, halvparten mindre. `;
+      lede += p != null ? `Kvinner tjente <b>${pst(p)} prosent</b> av det menn tjente, mot ${pst(ALLE_P)} prosent i alle yrker.`
+        : `Forskjellen mellom kvinner og menn kan ikke vises, fordi tallet for ${y.sk ? 'kvinner' : 'menn'} er ${SKJULT[y.sk || y.sm] || 'ukjent'}.`;
+    }
+    T('lede').innerHTML = lede;
+    T('t1-h').textContent = `Median månedslønn ${SISTE}`;
+    T('t1').textContent = b != null ? kr(b) : '–';
+    T('t1-m').textContent = b != null ? `${b >= D.alle.b[SI] ? kr(b - D.alle.b[SI]) + ' mer' : kr(D.alle.b[SI] - b) + ' mindre'} enn alle yrker (${kr(D.alle.b[SI])})` : 'Ingen tall for siste år';
+    T('t2').textContent = p != null ? pst(p) + ' %' : '–';
+    T('t2-m').textContent = p != null ? `Kvinner ${kr(k)}, menn ${kr(m)}. Alle yrker: ${pst(ALLE_P)} %.`
+      : `Tallet for ${y.sk ? 'kvinner' : 'menn'} er ${SKJULT[y.sk || y.sm] || 'ukjent'}.`;
+    T('t3-h').textContent = `Jobber i yrket, november ${SISTE}`;
+    const [jb, jm, jk] = y.j;
+    T('t3').textContent = jb != null ? tall(jb) : '–';
+    T('t3-m').textContent = (jb && jk != null && jm != null) ? `${pst(100 * jk / jb)} prosent av jobbene har kvinner. En person kan ha flere jobber.` : 'Fordelingen på kjønn er skjult.';
+  }
+
+  // ---------- figur 1: utvikling ----------
+  const tips = document.createElement('div'); tips.className = 'bf-tips'; tips.hidden = true;
+  function figur1() {
+    const el = T('f1'); el.innerHTML = '';
+    const y = valgt, W = el.clientWidth, H = el.clientHeight;
+    if (y.b.every(v => v == null)) { el.innerHTML = '<div class="bf-tom">Ingen tall for dette yrket.</div>'; return; }
+    const M = { t: 14, r: 74, b: 24, l: 56 };
+    const serier = [
+      { n: 'Alle yrker', v: D.alle.b, c: 'var(--null)', w: 2 },
+      { n: 'Menn', v: y.m, c: 'var(--menn)', w: 3 },
+      { n: 'Kvinner', v: y.kv, c: 'var(--kv)', w: 3 },
+    ];
+    if (y.m.every(v => v == null) || y.kv.every(v => v == null)) serier.push({ n: 'Begge kjønn', v: y.b, c: 'var(--valgt)', w: 3 });
+    const alleV = serier.flatMap(s => s.v).filter(v => v != null);
+    const x = d3.scaleLinear([AAR[0], SISTE], [M.l, W - M.r]);
+    const yS = d3.scaleLinear([Math.min(...alleV) * 0.95, Math.max(...alleV) * 1.03], [H - M.b, M.t]).nice(5);
+    const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', `Median månedslønn ${AAR[0]}–${SISTE} for kvinner og menn i ${y.n}`);
+    svg.append('g').selectAll('line').data(yS.ticks(5)).join('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', yS).attr('y2', yS).attr('stroke', 'var(--stotte)');
+    svg.append('g').selectAll('text').data(yS.ticks(5)).join('text').attr('x', M.l - 8).attr('y', d => yS(d) + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--sek)').text(tall);
+    svg.append('g').selectAll('text').data(AAR.filter((a, i) => i % 3 === 0 || i === SI)).join('text').attr('x', x).attr('y', H - 4).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text(d => d);
+    const linje = d3.line().defined(d => d[1] != null).x(d => x(d[0])).y(d => yS(d[1]));
+    const etiketter = [];
+    serier.forEach(s => {
+      const pkt = AAR.map((a, i) => [a, s.v[i]]);
+      svg.append('path').attr('d', linje(pkt)).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', s.w);
+      const sist = pkt.filter(p => p[1] != null).pop();
+      if (sist) etiketter.push({ s, y: yS(sist[1]), x: x(sist[0]) });
+      if (s.n !== 'Alle yrker' && s.v.some(v => v != null)) svg.append('g').selectAll('circle').data(pkt.filter(p => p[1] != null)).join('circle')
+        .attr('cx', d => x(d[0])).attr('cy', d => yS(d[1])).attr('r', 3).attr('fill', s.c);
+    });
+    // direkte etiketter, skjøvet fra hverandre
+    etiketter.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < etiketter.length; i++) if (etiketter[i].y - etiketter[i - 1].y < 15) etiketter[i].y = etiketter[i - 1].y + 15;
+    etiketter.forEach(e => svg.append('text').attr('x', W - M.r + 8).attr('y', e.y + 4).attr('font-size', 12).attr('font-weight', 600).attr('fill', e.s.c).text(e.s.n));
+    const mangler = [];
+    if (y.m.every(v => v == null)) mangler.push('menn'); if (y.kv.every(v => v == null)) mangler.push('kvinner');
+    if (mangler.length) svg.append('text').attr('x', M.l + 4).attr('y', M.t + 12).attr('font-size', 12).attr('fill', 'var(--sek)').text(`Tallene for ${mangler.join(' og ')} er skjult fordi gruppen er for liten.`);
+  }
+
+  // ---------- figur 2: alle yrker ----------
+  const PKT = D.yrker.filter(y => y.b[SI] != null && andel(y.kv[SI], y.m[SI]) != null)
+    .map(y => ({ y, p: andel(y.kv[SI], y.m[SI]), l: y.b[SI] }));
+  function figur2() {
+    const el = T('f2'); el.innerHTML = ''; el.appendChild(tips);
+    const W = el.clientWidth, H = el.clientHeight, M = { t: 12, r: 16, b: 34, l: 56 };
+    const x = d3.scaleLinear(d3.extent(PKT, d => d.p), [M.l, W - M.r]).nice();
+    const yS = d3.scaleLinear(d3.extent(PKT, d => d.l), [H - M.b, M.t]).nice();
+    const svg = d3.select(el).append('svg').attr('role', 'img').attr('aria-label', `Median månedslønn og kvinners lønn i prosent av menns for ${PKT.length} yrker`);
+    svg.append('g').selectAll('line').data(yS.ticks(5)).join('line').attr('x1', M.l).attr('x2', W - M.r).attr('y1', yS).attr('y2', yS).attr('stroke', 'var(--stotte)');
+    svg.append('g').selectAll('text').data(yS.ticks(5)).join('text').attr('x', M.l - 8).attr('y', d => yS(d) + 4).attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--sek)').text(tall);
+    svg.append('g').selectAll('text').data(x.ticks(6)).join('text').attr('x', x).attr('y', H - 18).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text(d => d + ' %');
+    svg.append('text').attr('x', (M.l + W - M.r) / 2).attr('y', H - 2).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--sek)').text('Kvinners lønn i prosent av menns');
+    // referanser
+    [[100, 'Lik lønn'], [ALLE_P, 'Alle yrker']].forEach(([v, n], i) => {
+      svg.append('line').attr('x1', x(v)).attr('x2', x(v)).attr('y1', M.t).attr('y2', H - M.b).attr('stroke', i ? 'var(--null)' : 'var(--tekst)').attr('stroke-dasharray', '4,3');
+      svg.append('text').attr('x', x(v) + (i ? -4 : 4)).attr('y', M.t + 10).attr('text-anchor', i ? 'end' : 'start').attr('font-size', 11).attr('fill', 'var(--sek)').text(n);
+    });
+    const g = svg.append('g');
+    g.selectAll('circle').data(PKT).join('circle').attr('class', 'bf-pkt')
+      .attr('cx', d => x(d.p)).attr('cy', d => yS(d.l)).attr('r', 3.5)
+      .attr('fill', d => d.y.g === valgt.g ? '#8fa1c4' : 'var(--dempet)').attr('fill-opacity', .8)
+      .on('mouseenter', (e, d) => { tips.hidden = false; tips.textContent = `${d.y.n}: ${kr(d.l)}, ${pst(d.p)} %`; tips.style.left = x(d.p) + 'px'; tips.style.top = yS(d.l) + 'px'; })
+      .on('mouseleave', () => tips.hidden = true)
+      .on('click', (e, d) => velg(d.y.k));
+    const v = PKT.find(d => d.y === valgt);
+    if (v) {
+      svg.append('circle').attr('cx', x(v.p)).attr('cy', yS(v.l)).attr('r', 7).attr('fill', 'var(--valgt)').attr('stroke', '#fff').attr('stroke-width', 2);
+      const venstre = x(v.p) + 12 + valgt.n.length * 7.5 > W - M.r;
+      svg.append('text').attr('x', x(v.p) + (venstre ? -12 : 12)).attr('y', yS(v.l) + 4).attr('text-anchor', venstre ? 'end' : 'start')
+        .attr('font-size', 13).attr('font-weight', 700).attr('fill', 'var(--valgt)').attr('paint-order', 'stroke').attr('stroke', '#fff').attr('stroke-width', 4).text(valgt.n);
+    }
+  }
+
+  // ---------- dialog ----------
+  const dlg = T('dlg');
+  T('lukk').onclick = () => dlg.close();
+  function tabell(hode, rader) {
+    return `<table><thead><tr>${hode.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${rader.map(r => `<tr>${r.map((c, i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join('')}</tr>`).join('')}</tbody></table>`;
+  }
+  const v = (x, s) => x != null ? tall(x) : (s === ':' ? 'skjult' : s === '.' ? 'ingen jobber' : '–');
+  function visDialog(hva) {
+    let h = '', inn = '';
+    if (hva === 'f1') {
+      h = `Median månedslønn, ${valgt.n}, kroner`;
+      inn = tabell(['År', 'Kvinner', 'Menn', 'Begge kjønn', 'Alle yrker'], AAR.map((a, i) => [a, v(valgt.kv[i]), v(valgt.m[i]), v(valgt.b[i]), tall(D.alle.b[i])]));
+    } else if (hva === 'f2') {
+      h = `Alle yrker med tall for både kvinner og menn, ${SISTE}`;
+      inn = tabell(['Yrke', 'Median, kr', 'Kvinner i % av menn'], [...PKT].sort((a, b) => a.p - b.p).map(d => [d.y.n, tall(d.l), pst(d.p)]));
+    } else if (hva === 'konsept') {
+      h = 'Slik lages tallene'; inn = T('konsept-tpl').innerHTML;
+    } else if (hva === 'om') {
+      h = 'Om tallene';
+      inn = `<p>Tallene er median månedslønn i november, før skatt, fra SSBs lønnsstatistikk (tabell 11418). Månedslønn er avtalt månedslønn, uregelmessige tillegg og bonus. Overtid, naturalytelser og feriepenger er ikke med. Lønn for deltidsjobber er regnet om til heltid.</p>
+      <p>Medianen er lønnen i midten: halvparten tjener mer, halvparten mindre. Kvinners lønn i prosent av menns er vår egen beregning fra kronebeløpene, som er avrundet til 10 kroner.</p>
+      <p>Forskjellen mellom kvinner og menn er ikke justert for alder, utdanning, ansiennitet eller arbeidssted, og sier derfor ikke noe om lik lønn for likt arbeid.</p>
+      <p>Yrker med få jobber er skjult av SSB for å beskytte personvernet. ${D.yrker.length} av 406 yrker har tall, ${PKT.length} har tall for både kvinner og menn i ${SISTE}. Tidsserien starter i 2016, første år som kan sammenlignes.</p>
+      <p>Tallene er hentet ${datoTekst(D.hentet)}. Tabellen ble sist oppdatert ${datoTekst(D.oppdatert)}.</p>`;
+    } else if (hva === 'alle') {
+      h = 'Alle yrker';
+      inn = '<div class="bf-alle">' + Object.entries(D.grupper).map(([g, n]) =>
+        `<h3>${n}</h3><ul>${D.yrker.filter(y => y.g === g).map(y => `<li><a href="#yrke=${y.k}">${y.n}</a></li>`).join('')}</ul>`).join('') + '</div>';
+    }
+    T('dlg-h').textContent = h; T('dlg-innhold').innerHTML = inn;
+    dlg.showModal();
+    T('dlg-innhold').querySelectorAll('a[href^="#yrke"]').forEach(a => a.onclick = () => dlg.close());
+  }
+  document.querySelectorAll('[data-vis]').forEach(b => b.onclick = () => visDialog(b.dataset.vis));
+
+  function tegn() {
+    tekster();
+    const med = PKT.some(d => d.y === valgt);
+    T('f2-note').innerHTML = (med ? '' : `<b>${valgt.n} er ikke med</b>, fordi tallet for kvinner eller menn er skjult. `)
+      + `Hvert punkt er et yrke. Mørkere punkter er i samme hovedgruppe (${D.grupper[valgt.g].toLowerCase()}).`;
+    figur1(); figur2();
+  }
+  let tid; window.addEventListener('resize', () => { clearTimeout(tid); tid = setTimeout(() => valgt && tegn(), 120); });
+  velg((location.hash.match(/yrke=(\w+)/) || [])[1] || STANDARD, true);
+})();
+</script>
+</body>
+</html>

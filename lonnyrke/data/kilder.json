@@ -1,0 +1,21 @@
+{
+ "statistikk": "Lønn",
+ "kortnavn": "lonnyrke",
+ "versjon": "0.1",
+ "dato_valg": "2026-11-04",
+ "merknad": "Dashbordvariant av lonnansatt, laget som eksempel i veileder E (kommunikasjonsdashbord på ett skjermbilde). URL-en bruker valueCodes[...], som filtrerer riktig i PxWebApi v2. Rådataene er hentet direkte fra data.ssb.no 04.11.2026.",
+ "valg": "Ett valg: yrke (STYRK-08, firesifret). Median månedslønn for kvinner, menn og begge kjønn, alle sektorer og alle arbeidstider, 2016–2025. 2016 er første sammenlignbare år (se lonnansatt).",
+ "manglende_verdier": {
+  ":": "Konfidensielt. Undertrykt fordi gruppen er for liten. Vises som «tallet er skjult», aldri som null.",
+  ".": "Kan ikke forekomme. Yrket har ingen jobber dette året."
+ },
+ "datasett": [
+  {
+   "id": "yrker",
+   "tabell": "11418",
+   "beskrivelse": "Median månedslønn og antall arbeidsforhold med lønn per yrke, etter kjønn. Alle sektorer, alle arbeidstider.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11418/data?lang=no&outputFormat=json-stat2&valueCodes[MaaleMetode]=01,10&valueCodes[Yrke]=*&valueCodes[Sektor]=ALLE&valueCodes[Kjonn]=0,1,2&valueCodes[AvtaltVanlig]=0&valueCodes[ContentsCode]=Manedslonn&valueCodes[Tid]=from(2016)",
+   "omfang": "2 mål × 582 yrkeskoder × 3 kjønn × 2016–2025 = 34 920 celler. Prototypen bruker de 406 firesifrede yrkene og totalen."
+  }
+ ]
+}
