@@ -29,6 +29,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 .bf a { color: var(--tekst); text-underline-offset: 3px; }
 /* søk */
 .bf-sok { position: relative; }
+.bf-snarvei { margin: 4px 0 0; font-size: 13px; }
 .bf-sok label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
 .bf-sok input { width: 100%; font: inherit; font-size: 16px; padding: 9px 14px; border: 2px solid var(--lilla); border-radius: 22px; background: #f1f1fe; color: var(--tekst); }
 .bf-sok input:focus { outline: 3px solid #c3baff; outline-offset: 1px; }
@@ -40,6 +41,9 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 /* nøkkeltall */
 .bf-tall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .bf-kort { background: var(--flate); border-radius: 8px; padding: 10px 16px; }
+.bf-kort { display: grid; grid-template-columns: 52px 1fr; gap: 0 14px; align-items: center; }
+.bf-ikon { color: var(--tekst); width: 52px; height: 52px; }
+.bf-ikon svg { width: 100%; height: 100%; display: block; }
 .bf-kort h2 { font-size: 13px; font-weight: 600; color: var(--sek); margin: 0; }
 .bf-kort .bf-stor { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 2px 0; }
 .bf-kort p { margin: 0; font-size: 13px; color: var(--sek); }
@@ -55,7 +59,8 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 .bf-figbunn { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; color: var(--sek); }
 .bf-knapp { font: inherit; font-size: 13px; color: var(--lilla); background: none; border: 0; padding: 2px 0; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap; }
 .bf-pkt { cursor: pointer; }
-.bf-tips { position: absolute; pointer-events: none; background: var(--tekst); color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; transform: translate(-50%, -130%); }
+.bf-svg svg:focus { outline: 2px solid #c3baff; outline-offset: 2px; }
+.bf-tips { z-index: 5; position: absolute; pointer-events: none; background: var(--tekst); color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; transform: translate(-50%, -130%); }
 /* bunn */
 .bf-bunn { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 24px; font-size: 12px; color: var(--sek); }
 .bf-bunn .bf-knapp { font-size: 12px; }
@@ -97,20 +102,21 @@ dialog th:first-child, dialog td:first-child { text-align: left; }
         <label for="sok">Velg yrke</label>
         <input id="sok" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="treff" autocomplete="off" placeholder="Søk, for eksempel sykepleier">
         <ul class="bf-liste" id="treff" role="listbox" hidden></ul>
+        <p class="bf-snarvei"><button class="bf-knapp" type="button" id="vis-alle">Vis alle yrker samlet</button> · <button class="bf-knapp" type="button" data-vis="alle">Se listen over alle yrker</button></p>
       </div>
     </div>
   </header>
 
   <section class="bf-tall" aria-label="Nøkkeltall">
-    <div class="bf-kort"><h2 id="t1-h">Median månedslønn</h2><div class="bf-stor" id="t1"></div><p id="t1-m"></p></div>
-    <div class="bf-kort"><h2>Kvinners lønn i prosent av menns</h2><div class="bf-stor" id="t2"></div><p id="t2-m"></p></div>
-    <div class="bf-kort"><h2 id="t3-h">Jobber i yrket</h2><div class="bf-stor" id="t3"></div><p id="t3-m"></p></div>
+    <div class="bf-kort"><div class="bf-ikon">/*__INKLUDER:src/ikoner/ikon-053.svg__*/</div><div><h2 id="t1-h">Median månedslønn</h2><div class="bf-stor" id="t1"></div><p id="t1-m"></p></div></div>
+    <div class="bf-kort"><div class="bf-ikon">/*__INKLUDER:src/ikoner/ikon-115.svg__*/</div><div><h2>Kvinners lønn i prosent av menns</h2><div class="bf-stor" id="t2"></div><p id="t2-m"></p></div></div>
+    <div class="bf-kort"><div class="bf-ikon">/*__INKLUDER:src/ikoner/ikon-002.svg__*/</div><div><h2 id="t3-h">Jobber i yrket</h2><div class="bf-stor" id="t3"></div><p id="t3-m"></p></div></div>
   </section>
 
   <section class="bf-fig">
     <div class="bf-figkort">
       <h2 id="f1-h">Utviklingen for kvinner og menn</h2>
-      <p class="bf-note">Median månedslønn, kroner. Grå linje: alle yrker.</p>
+      <p class="bf-note" id="f1-note">Median månedslønn, kroner. Grå linje: alle yrker. Pek på et år for tallene.</p>
       <div class="bf-svg" id="f1"></div>
       <div class="bf-figbunn"><span>Kilde: SSB, tabell 11418. Sist oppdatert: <span class="dato"></span>.</span><button class="bf-knapp" data-vis="f1">Vis tallene</button></div>
     </div>
@@ -143,7 +149,8 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
   const T = id => document.getElementById(id);
   const datoTekst = s => s ? s.split('-').reverse().join('.') : '';
   document.querySelectorAll('.dato').forEach(e => e.textContent = datoTekst(D.oppdatert));
-  const YRK = new Map(D.yrker.map(y => [y.k, y]));
+  const ALLE = { k: 'alle', n: 'Alle yrker', g: null, b: D.alle.b, m: D.alle.m, kv: D.alle.kv, j: D.alle.j, sb: '', sm: '', sk: '' };
+  const YRK = new Map(D.yrker.map(y => [y.k, y])); YRK.set('alle', ALLE);
   const andel = (k, m) => (k && m) ? 100 * k / m : null;
   const ALLE_P = andel(D.alle.kv[SI], D.alle.m[SI]);
   const SKJULT = { ':': 'skjult fordi gruppen er for liten', '.': 'ingen jobber registrert' };
@@ -155,7 +162,7 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
   function finn(q) {
     q = norm(q.trim());
     if (!q) return [];
-    const r = [];
+    const r = 'alle yrker'.startsWith(q) || q === 'alle' ? [[-1, ALLE]] : [];
     for (const y of D.yrker) {
       const n = norm(y.n);
       let s = n === q ? 0 : n.startsWith(q) ? 1 : n.split(/[\s\-/,()]+/).some(o => o.startsWith(q)) ? 2 : n.includes(q) ? 3 : 9;
@@ -175,7 +182,7 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     treff.forEach((y, i) => {
       const li = document.createElement('li');
       li.id = 'tr-' + i; li.setAttribute('role', 'option');
-      li.innerHTML = `${y.n}<small>${D.grupper[y.g]}</small>`;
+      li.innerHTML = `${y.n}<small>${y.g ? D.grupper[y.g] : 'Alle yrker samlet'}</small>`;
       li.onmousedown = e => { e.preventDefault(); velg(y.k); lukkListe(); sok.blur(); };
       liste.appendChild(li);
     });
@@ -209,13 +216,16 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     if (!fraHash) history.replaceState(null, '', '#yrke=' + k);
     tegn();
   }
+  T('vis-alle').onclick = () => velg('alle');
   window.addEventListener('hashchange', () => velg((location.hash.match(/yrke=(\w+)/) || [])[1], true));
 
   // ---------- tekst og nøkkeltall ----------
   function tekster() {
     const y = valgt, b = y.b[SI], m = y.m[SI], k = y.kv[SI], p = andel(k, m);
     let lede;
-    if (b == null) lede = `For ${y.n.toLowerCase()} finnes det ikke tall for ${SISTE}: ${SKJULT[y.sb] || 'tallet mangler'}.`;
+    const erAlle = y === ALLE;
+    if (erAlle) lede = `Median månedslønn for alle yrker var <b>${kr(b)}</b> i november ${SISTE}. Halvparten tjente mer, halvparten mindre. Kvinner tjente <b>${pst(p)} prosent</b> av det menn tjente.`;
+    else if (b == null) lede = `For ${y.n.toLowerCase()} finnes det ikke tall for ${SISTE}: ${SKJULT[y.sb] || 'tallet mangler'}.`;
     else {
       lede = `${y.n} hadde en median månedslønn på <b>${kr(b)}</b> i november ${SISTE}. Halvparten tjente mer, halvparten mindre. `;
       lede += p != null ? `Kvinner tjente <b>${pst(p)} prosent</b> av det menn tjente, mot ${pst(ALLE_P)} prosent i alle yrker.`
@@ -224,11 +234,11 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     T('lede').innerHTML = lede;
     T('t1-h').textContent = `Median månedslønn ${SISTE}`;
     T('t1').textContent = b != null ? kr(b) : '–';
-    T('t1-m').textContent = b != null ? `${b >= D.alle.b[SI] ? kr(b - D.alle.b[SI]) + ' mer' : kr(D.alle.b[SI] - b) + ' mindre'} enn alle yrker (${kr(D.alle.b[SI])})` : 'Ingen tall for siste år';
+    T('t1-m').textContent = erAlle ? 'Alle yrker samlet' : b != null ? `${b >= D.alle.b[SI] ? kr(b - D.alle.b[SI]) + ' mer' : kr(D.alle.b[SI] - b) + ' mindre'} enn alle yrker (${kr(D.alle.b[SI])})` : 'Ingen tall for siste år';
     T('t2').textContent = p != null ? pst(p) + ' %' : '–';
-    T('t2-m').textContent = p != null ? `Kvinner ${kr(k)}, menn ${kr(m)}. Alle yrker: ${pst(ALLE_P)} %.`
+    T('t2-m').textContent = p != null ? `Kvinner ${kr(k)}, menn ${kr(m)}.` + (erAlle ? '' : ` Alle yrker: ${pst(ALLE_P)} %.`)
       : `Tallet for ${y.sk ? 'kvinner' : 'menn'} er ${SKJULT[y.sk || y.sm] || 'ukjent'}.`;
-    T('t3-h').textContent = `Jobber i yrket, november ${SISTE}`;
+    T('t3-h').textContent = erAlle ? `Jobber i alt, november ${SISTE}` : `Jobber i yrket, november ${SISTE}`;
     const [jb, jm, jk] = y.j;
     T('t3').textContent = jb != null ? tall(jb) : '–';
     T('t3-m').textContent = (jb && jk != null && jm != null) ? `${pst(100 * jk / jb)} prosent av jobbene har kvinner. En person kan ha flere jobber.` : 'Fordelingen på kjønn er skjult.';
@@ -242,7 +252,7 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     if (y.b.every(v => v == null)) { el.innerHTML = '<div class="bf-tom">Ingen tall for dette yrket.</div>'; return; }
     const M = { t: 14, r: 74, b: 24, l: 56 };
     const serier = [
-      { n: 'Alle yrker', v: D.alle.b, c: 'var(--null)', w: 2 },
+      ...(y === ALLE ? [] : [{ n: 'Alle yrker', v: D.alle.b, c: 'var(--null)', w: 2 }]),
       { n: 'Menn', v: y.m, c: 'var(--menn)', w: 3 },
       { n: 'Kvinner', v: y.kv, c: 'var(--kv)', w: 3 },
     ];
@@ -270,6 +280,28 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     etiketter.forEach(e => svg.append('text').attr('x', W - M.r + 8).attr('y', e.y + 4).attr('font-size', 12).attr('font-weight', 600).attr('fill', e.s.c).text(e.s.n));
     const mangler = [];
     if (y.m.every(v => v == null)) mangler.push('menn'); if (y.kv.every(v => v == null)) mangler.push('kvinner');
+    // pek på et år: verdier og forholdstall
+    const tipsF1 = document.createElement('div'); tipsF1.className = 'bf-tips'; tipsF1.hidden = true; el.appendChild(tipsF1);
+    const hl = svg.append('line').attr('y1', M.t).attr('y2', H - M.b).attr('stroke', 'var(--tekst)').attr('stroke-width', 1).attr('visibility', 'hidden');
+    function visAar(i) {
+      const a = AAR[i], X = x(a);
+      hl.attr('x1', X).attr('x2', X).attr('visibility', 'visible');
+      const rad = (n, v, s) => `<div>${n}: <b>${v != null ? kr(v) : (SKJULT[s] || 'mangler')}</b></div>`;
+      const p = andel(y.kv[i], y.m[i]);
+      tipsF1.innerHTML = `<div><b>${a}</b></div>` + rad('Kvinner', y.kv[i]) + rad('Menn', y.m[i])
+        + (y === ALLE ? '' : rad('Alle yrker', D.alle.b[i])) + `<div>Kvinner i prosent av menn: <b>${p != null ? pst(p) + ' %' : '–'}</b></div>`;
+      tipsF1.hidden = false;
+      tipsF1.style.left = Math.min(Math.max(X, 110), W - 110) + 'px'; tipsF1.style.top = (M.t + 10) + 'px';
+      tipsF1.style.transform = 'translate(-50%, 0)'; tipsF1.style.whiteSpace = 'normal'; tipsF1.style.lineHeight = '1.5';
+    }
+    const skjul = () => { tipsF1.hidden = true; hl.attr('visibility', 'hidden'); };
+    let fokusAar = SI;
+    svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+      .on('mousemove', e => { const [mx] = d3.pointer(e); fokusAar = Math.round(x.invert(mx)) - AAR[0]; visAar(Math.max(0, Math.min(SI, fokusAar))); })
+      .on('mouseleave', skjul);
+    svg.attr('tabindex', 0)
+      .on('focus', () => visAar(fokusAar)).on('blur', skjul)
+      .on('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); fokusAar = Math.max(0, Math.min(SI, fokusAar + (e.key === 'ArrowRight' ? 1 : -1))); visAar(fokusAar); } });
     if (mangler.length) svg.append('text').attr('x', M.l + 4).attr('y', M.t + 12).attr('font-size', 12).attr('fill', 'var(--sek)').text(`Tallene for ${mangler.join(' og ')} er skjult fordi gruppen er for liten.`);
   }
 
@@ -294,10 +326,23 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
     const g = svg.append('g');
     g.selectAll('circle').data(PKT).join('circle').attr('class', 'bf-pkt')
       .attr('cx', d => x(d.p)).attr('cy', d => yS(d.l)).attr('r', 3.5)
-      .attr('fill', d => d.y.g === valgt.g ? '#8fa1c4' : 'var(--dempet)').attr('fill-opacity', .8)
-      .on('mouseenter', (e, d) => { tips.hidden = false; tips.textContent = `${d.y.n}: ${kr(d.l)}, ${pst(d.p)} %`; tips.style.left = x(d.p) + 'px'; tips.style.top = yS(d.l) + 'px'; })
-      .on('mouseleave', () => tips.hidden = true)
-      .on('click', (e, d) => velg(d.y.k));
+      .attr('fill', d => valgt.g && d.y.g === valgt.g ? '#8fa1c4' : 'var(--dempet)').attr('fill-opacity', .8);
+    // nærmeste punkt under pekeren, så tette punkter ikke skjuler hverandre
+    const del = d3.Delaunay.from(PKT, d => x(d.p), d => yS(d.l));
+    const ring = svg.append('circle').attr('r', 7).attr('fill', 'none').attr('stroke', 'var(--tekst)').attr('stroke-width', 2).attr('visibility', 'hidden');
+    let naer = null;
+    svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', W - M.l - M.r).attr('height', H - M.t - M.b).attr('fill', 'transparent')
+      .style('cursor', 'pointer')
+      .on('mousemove', e => {
+        const [mx, my] = d3.pointer(e), d = PKT[del.find(mx, my)];
+        naer = Math.hypot(x(d.p) - mx, yS(d.l) - my) < 24 ? d : null;
+        if (!naer) { tips.hidden = true; ring.attr('visibility', 'hidden'); return; }
+        ring.attr('cx', x(d.p)).attr('cy', yS(d.l)).attr('visibility', 'visible');
+        tips.hidden = false; tips.innerHTML = `<b>${d.y.n}</b><br>${kr(d.l)} · kvinner ${pst(d.p)} % av menn`;
+        tips.style.left = x(d.p) + 'px'; tips.style.top = (yS(d.l) - 10) + 'px';
+      })
+      .on('mouseleave', () => { tips.hidden = true; ring.attr('visibility', 'hidden'); naer = null; })
+      .on('click', () => { if (naer) velg(naer.y.k); });
     const v = PKT.find(d => d.y === valgt);
     if (v) {
       svg.append('circle').attr('cx', x(v.p)).attr('cy', yS(v.l)).attr('r', 7).attr('fill', 'var(--valgt)').attr('stroke', '#fff').attr('stroke-width', 2);
@@ -345,8 +390,9 @@ const D = /*__INKLUDER:build/lonnyrke.json__*/;
   function tegn() {
     tekster();
     const med = PKT.some(d => d.y === valgt);
-    T('f2-note').innerHTML = (med ? '' : `<b>${valgt.n} er ikke med</b>, fordi tallet for kvinner eller menn er skjult. `)
+    T('f2-note').innerHTML = valgt === ALLE ? 'Hvert punkt er et yrke. Klikk på et punkt for å velge det.' : (med ? '' : `<b>${valgt.n} er ikke med</b>, fordi tallet for kvinner eller menn er skjult. `)
       + `Hvert punkt er et yrke. Mørkere punkter er i samme hovedgruppe (${D.grupper[valgt.g].toLowerCase()}).`;
+    T('f1-note').textContent = 'Median månedslønn, kroner.' + (valgt === ALLE ? '' : ' Grå linje: alle yrker.') + ' Pek på et år for tallene.';
     figur1(); figur2();
   }
   let tid; window.addEventListener('resize', () => { clearTimeout(tid); tid = setTimeout(() => valgt && tegn(), 120); });

@@ -1,4 +1,4 @@
-Steg 4 i formidlingsprototype for lonnyrke · versjon 0.1 · 04.11.2026 · Status: utkast
+Steg 4 i formidlingsprototype for lonnyrke · versjon 0.2 · 04.11.2026 · Status: utkast
 
 # Byggenotat: Lønn i yrket ditt (lonnyrke)
 
@@ -10,9 +10,9 @@ Prototypen er eksempelet på et kommunikasjonsdashbord i veileder E. Den bygger 
 
 | Del | Svarer på | Innhold |
 |---|---|---|
-| Hode | Hvilket yrke? | Tittel, ingress generert fra tallene, søk etter yrke |
-| Nøkkeltall | Hva tjener de? | Median månedslønn mot alle yrker, kvinners lønn i prosent av menns, antall jobber og andel kvinner |
-| Figur 1 | Hvordan har det utviklet seg? | Median for kvinner og menn 2016–2025, med alle yrker som grå referanse |
+| Hode | Hvilket yrke? | Tittel, ingress generert fra tallene, søk etter yrke, snarveier til alle yrker samlet og listen over alle yrker |
+| Nøkkeltall | Hva tjener de? Ikoner fra ssb-ikoner: 53 (person med mynter), 115 (kvinne og mann) og 2 (to personer). | Median månedslønn mot alle yrker, kvinners lønn i prosent av menns, antall jobber og andel kvinner |
+| Figur 1 | Hvordan har det utviklet seg? | Median for kvinner og menn 2016–2025, med alle yrker som grå referanse. Pek på et år, eller bruk piltastene, for kroner og kvinners lønn i prosent av menns |
 | Figur 2 | Hvor ligger yrket? | Alle 302 yrker med tall for begge kjønn: lønn mot kvinners lønn i prosent av menns. Valgt yrke fremhevet, samme hovedgruppe mørkere |
 | Bunn | Hva er tallene? | Definisjon i én setning, «Slik lages tallene», «Om tallene», lenke til ssb.no |
 
@@ -45,10 +45,11 @@ Nummerert videre fra `lonnansatt`.
 | V2 | Alle arbeidstider, regnet om til heltid | Samme valg som i `lonnansatt` |
 | V3 | Kvinners lønn i prosent av menns per yrke er egen beregning fra avrundede kronebeløp | Ingen publisert rate per yrke |
 | V4 | Sykepleiere som standardvisning | Et kjent yrke med mange jobber og tall for begge kjønn |
+| V6 | «Alle yrker samlet» er et eget valg (`#yrke=alle`) | Gir publikum referansen før de velger et yrke |
 | V5 | Hovedgruppe 3 omfatter de militære yrkene (01–03), som i 11418 | Følger tabellens egen gruppering |
 
 ## Kjente svakheter
 
 - Søket har ingen synonymer. «Lærer» finner ikke «Grunnskolelærere» øverst.
-- Punktene i figur 2 kan bare velges med mus. Tastaturbrukere velger med søket.
+- Punktene i figur 2 kan bare velges med mus. Pekeren finner nærmeste punkt, så tette punkter kan velges. Tastaturbrukere velger med søket.
 - På smal skjerm (under 760 px) kan siden rulle. Ett skjermbilde gjelder bred skjerm fra 1280 × 720.
