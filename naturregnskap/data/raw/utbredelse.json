@@ -1,0 +1,97 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Utbredelse og utbygd areal, etter økosystemtype. Hele landet (DUMMY)",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-05T12:00:00Z",
+ "note": [
+  "DUMMYDATA: oppdiktede tall og koder for å bygge prototypen før publisering 25.11.2026. Erstattes av ekte data."
+ ],
+ "id": [
+  "Okosystem",
+  "ContentsCode"
+ ],
+ "size": [
+  12,
+  2
+ ],
+ "dimension": {
+  "Okosystem": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "00": 0,
+     "01": 1,
+     "02": 2,
+     "03": 3,
+     "04": 4,
+     "05": 5,
+     "06": 6,
+     "07": 7,
+     "08": 8,
+     "09": 9,
+     "10": 10,
+     "11": 11
+    },
+    "label": {
+     "00": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02": "Jordbruksmark",
+     "03": "Åpent lavland",
+     "04": "Skog",
+     "05": "Fastmark i fjellet",
+     "06": "Våtmark",
+     "07": "Elver og bekker",
+     "08": "Innsjøer og dammer",
+     "09": "Kyststrender",
+     "10": "Kystvann",
+     "11": "Åpent hav"
+    }
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "Areal": 0,
+     "Utbygd": 1
+    },
+    "label": {
+     "Areal": "Areal 2024 (1000 hektar)",
+     "Utbygd": "Utbygd areal 2017–2024 (hektar)"
+    }
+   }
+  }
+ },
+ "value": [
+  240180,
+  34000,
+  650,
+  null,
+  1100,
+  6500,
+  2600,
+  4000,
+  12100,
+  18000,
+  10300,
+  3500,
+  2300,
+  2000,
+  150,
+  0,
+  1900,
+  0,
+  80,
+  0,
+  9000,
+  null,
+  200000,
+  null
+ ],
+ "status": {
+  "3": ".",
+  "21": ".",
+  "23": "."
+ }
+}

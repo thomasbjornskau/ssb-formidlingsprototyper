@@ -1,0 +1,111 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Tilstandsregnskap for åpent lavland og jordbruksmark (DUMMY)",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-05T12:00:00Z",
+ "note": [
+  "DUMMYDATA: oppdiktede tall og koder for å bygge prototypen før publisering 25.11.2026. Erstattes av ekte data."
+ ],
+ "id": [
+  "Okosystem",
+  "Egenskap",
+  "Region",
+  "Tid"
+ ],
+ "size": [
+  2,
+  7,
+  1,
+  1
+ ],
+ "dimension": {
+  "Okosystem": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "02": 0,
+     "03": 1
+    },
+    "label": {
+     "02": "Jordbruksmark",
+     "03": "Åpent lavland"
+    }
+   }
+  },
+  "Egenskap": {
+   "label": "tilstandsegenskap",
+   "category": {
+    "index": {
+     "TOT": 0,
+     "A1": 1,
+     "A2": 2,
+     "B1": 3,
+     "B2": 4,
+     "B3": 5,
+     "C1": 6
+    },
+    "label": {
+     "TOT": "Totalindeks",
+     "A1": "Fysiske egenskaper",
+     "A2": "Kjemiske egenskaper",
+     "B1": "Biologisk mangfold",
+     "B2": "Strukturelle egenskaper",
+     "B3": "Funksjonelle egenskaper",
+     "C1": "Landskapsegenskaper"
+    }
+   }
+  },
+  "Region": {
+   "label": "landsdel",
+   "category": {
+    "index": {
+     "0": 0
+    },
+    "label": {
+     "0": "Hele landet"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   }
+  }
+ },
+ "value": [
+  null,
+  null,
+  0.64,
+  0.41,
+  null,
+  0.52,
+  null,
+  null,
+  null,
+  null,
+  0.55,
+  0.48,
+  0.6,
+  null
+ ],
+ "status": {
+  "0": ".",
+  "1": "..",
+  "4": "..",
+  "6": "..",
+  "7": ".",
+  "8": "..",
+  "9": "..",
+  "13": ".."
+ },
+ "extension": {
+  "enhet": "skalert 0–1"
+ }
+}

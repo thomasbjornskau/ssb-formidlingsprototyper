@@ -1,0 +1,75 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Forsyning av tømmer (1000 m³) 2015–2024 (DUMMY)",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-05T12:00:00Z",
+ "note": [
+  "DUMMYDATA: oppdiktede tall og koder for å bygge prototypen før publisering 25.11.2026. Erstattes av ekte data."
+ ],
+ "id": [
+  "Okosystem",
+  "Tid"
+ ],
+ "size": [
+  1,
+  10
+ ],
+ "dimension": {
+  "Okosystem": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "04": 0
+    },
+    "label": {
+     "04": "Skog"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2015": 0,
+     "2016": 1,
+     "2017": 2,
+     "2018": 3,
+     "2019": 4,
+     "2020": 5,
+     "2021": 6,
+     "2022": 7,
+     "2023": 8,
+     "2024": 9
+    },
+    "label": {
+     "2015": "2015",
+     "2016": "2016",
+     "2017": "2017",
+     "2018": "2018",
+     "2019": "2019",
+     "2020": "2020",
+     "2021": "2021",
+     "2022": "2022",
+     "2023": "2023",
+     "2024": "2024"
+    }
+   }
+  }
+ },
+ "value": [
+  10200,
+  10650,
+  11000,
+  11400,
+  11050,
+  10900,
+  11300,
+  10500,
+  10600,
+  10800
+ ],
+ "extension": {
+  "enhet": "1000 m³"
+ }
+}

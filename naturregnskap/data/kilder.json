@@ -1,0 +1,97 @@
+{
+ "statistikk": "naturregnskap",
+ "status": "DUMMY: kodene i url-ene er oppdiktet og må rettes mot de ekte kodelistene etter 25.11.2026",
+ "datasett": [
+  {
+   "id": "utbredelse",
+   "tabell": "UKJENT",
+   "svarer_paa": "Hvor mye natur har vi?",
+   "beskrivelse": "Areal per økosystemtype 2024 og utbygd areal 2017–2024",
+   "url": null,
+   "omfang": "alle koder"
+  },
+  {
+   "id": "15012",
+   "tabell": "15012",
+   "svarer_paa": "Hvordan har naturen det? (skog)",
+   "beskrivelse": "Totalindeks og egenskaper, landsdel, 2019 og 2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15012/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=2019,2024",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "15013",
+   "tabell": "15013",
+   "svarer_paa": "Hvordan har naturen det? (fjell)",
+   "beskrivelse": "Som 15012",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15013/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=2019,2024",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "15014",
+   "tabell": "15014",
+   "svarer_paa": "Hvordan har naturen det? (åpent lavland, jordbruksmark)",
+   "beskrivelse": "Egenskaper uten totalindeks, 2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15014/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=0&valueCodes[Tid]=2024",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "15015",
+   "tabell": "15015",
+   "svarer_paa": "Hvordan har naturen det? (våtmark)",
+   "beskrivelse": "Naturindeks per landsdel",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15015/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=TOT&valueCodes[Region]=*&valueCodes[Tid]=2019,2024",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "15016",
+   "tabell": "15016",
+   "svarer_paa": "Hvordan har naturen det? (vassdrag, kystvann)",
+   "beskrivelse": "Totalindeks og egenskaper, 2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15016/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=0&valueCodes[Tid]=2024",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "14967",
+   "tabell": "14967",
+   "svarer_paa": "Hva gir naturen oss?",
+   "beskrivelse": "Tilgang per tjeneste og økosystemtype, 2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14967/data?lang=no&outputFormat=json-stat2&valueCodes[Tjeneste]=*&valueCodes[Okosystem]=*",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "14968",
+   "tabell": "14968",
+   "svarer_paa": "Hvem bruker tjenestene?",
+   "beskrivelse": "Anvendelse per tjeneste og økonomisk enhet, 2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14968/data?lang=no&outputFormat=json-stat2&valueCodes[Tjeneste]=*&valueCodes[Bruker]=*",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "14994",
+   "tabell": "14994",
+   "svarer_paa": "Avlinger over tid",
+   "beskrivelse": "Forsyning av avlinger 2010–2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14994/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Tid]=*",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "14996",
+   "tabell": "14996",
+   "svarer_paa": "Tømmer over tid",
+   "beskrivelse": "Forsyning av tømmer 2015–2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14996/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Tid]=*",
+   "omfang": "alle koder"
+  }
+ ],
+ "manglende_verdier": {
+  "..": "tall mangler",
+  ".": "kan ikke forekomme (for eksempel utbygging av hav)",
+  ":": "undertrykt"
+ },
+ "fallgruver": [
+  "Tjenestene har ulike enheter og kan ikke summeres",
+  "Totalindeks er publisert med to desimaler; kontroll mot snitt av egenskaper har toleranse 0,006",
+  "Andel av landarealet: nevneren er land og ferskvann (økosystem 01–09), ikke kystvann og hav – må bekreftes",
+  "Våtmark har Naturindeks, ikke totalindeks"
+ ]
+}

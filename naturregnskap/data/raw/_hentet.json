@@ -1,0 +1,17 @@
+{
+ "hentet": "2026-11-05",
+ "metode": "DUMMY, laget av scripts/lag_dummy.py",
+ "note": "DUMMYDATA: oppdiktede tall og koder for å bygge prototypen før publisering 25.11.2026. Erstattes av ekte data.",
+ "filer": [
+  "14967.json",
+  "14968.json",
+  "14994.json",
+  "14996.json",
+  "15012.json",
+  "15013.json",
+  "15014.json",
+  "15015.json",
+  "15016.json",
+  "utbredelse.json"
+ ]
+}

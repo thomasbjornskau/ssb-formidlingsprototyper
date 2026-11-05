@@ -1,0 +1,126 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Regnskap for økosystemtjenester, etter anvendelse fra økonomisk enhet 2024 (DUMMY)",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-05T12:00:00Z",
+ "note": [
+  "DUMMYDATA: oppdiktede tall og koder for å bygge prototypen før publisering 25.11.2026. Erstattes av ekte data."
+ ],
+ "id": [
+  "Tjeneste",
+  "Bruker"
+ ],
+ "size": [
+  9,
+  5
+ ],
+ "dimension": {
+  "Tjeneste": {
+   "label": "økosystemtjeneste",
+   "category": {
+    "index": {
+     "AVL": 0,
+     "TOM": 1,
+     "POL": 2,
+     "KLI": 3,
+     "TMP": 4,
+     "FLO": 5,
+     "LUF": 6,
+     "TUR": 7,
+     "REK": 8
+    },
+    "label": {
+     "AVL": "Forsyning av avlinger",
+     "TOM": "Forsyning av tømmer",
+     "POL": "Pollinering av avlinger",
+     "KLI": "Global klimaregulering",
+     "TMP": "Temperaturregulering i byer",
+     "FLO": "Flomdemping",
+     "LUF": "Luftrensing",
+     "TUR": "Naturbasert turisme",
+     "REK": "Naturbasert rekreasjon"
+    }
+   }
+  },
+  "Bruker": {
+   "label": "økonomisk enhet",
+   "category": {
+    "index": {
+     "TOT": 0,
+     "NAER": 1,
+     "HUS": 2,
+     "OFF": 3,
+     "EKS": 4
+    },
+    "label": {
+     "TOT": "I alt",
+     "NAER": "Næringer",
+     "HUS": "Husholdninger",
+     "OFF": "Offentlig forvaltning",
+     "EKS": "Eksport"
+    }
+   }
+  }
+ },
+ "value": [
+  4200,
+  4200,
+  0,
+  0,
+  0,
+  10800,
+  10800,
+  0,
+  0,
+  0,
+  95,
+  95,
+  0,
+  0,
+  0,
+  21900,
+  0,
+  0,
+  21900,
+  0,
+  2.2,
+  0.0,
+  2.2,
+  0.0,
+  0.0,
+  980000,
+  0,
+  980000,
+  0,
+  0,
+  12.5,
+  0.0,
+  12.5,
+  0.0,
+  0.0,
+  10600,
+  0,
+  4770.0,
+  0,
+  5830.0,
+  188000,
+  0,
+  188000,
+  0,
+  0
+ ],
+ "extension": {
+  "enheter": {
+   "AVL": "1000 tonn",
+   "TOM": "1000 m³",
+   "POL": "1000 tonn",
+   "KLI": "1000 tonn CO₂-ekvivalenter",
+   "TMP": "grader celsius",
+   "FLO": "hektar",
+   "LUF": "1000 tonn",
+   "TUR": "1000 overnattinger",
+   "REK": "1000 dagsturer"
+  }
+ }
+}

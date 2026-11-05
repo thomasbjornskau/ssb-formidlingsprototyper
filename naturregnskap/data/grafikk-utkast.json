@@ -1,0 +1,26 @@
+{
+  "merknad": "EKSEMPELTALL, IKKE STATISTIKK. Tabellene er ikke publisert før 25.11.2026. Tallene er valgt for å teste grafikken og erstattes av data/raw/ i steg 3.",
+  "kilder": {"utbredelse": "utbredelsestabell (nummer ukjent)", "tilstand": "15012, 15013, 15016", "tjenester": "14967"},
+  "utbredelse": {
+    "andel": {"Skog": 38, "Fjell": 31, "Åpent lavland": 9, "Våtmark": 7, "Innsjøer og elver": 6, "Jordbruksmark": 3, "Bebygd": 2, "Kyststrender": 1},
+    "utbygd_ha": 40000
+  },
+  "tilstand": {
+    "Skog": {"2019": 0.50, "2024": 0.52},
+    "Fjell": {"2019": 0.72, "2024": 0.70},
+    "Elver": {"2024": 0.68},
+    "Innsjøer": {"2024": 0.74},
+    "Kystvann": {"2024": 0.66}
+  },
+  "tjenester": {
+    "Tømmer": {"Skog": 100},
+    "Lagring av karbon": {"Skog": 90},
+    "Renere luft": {"Skog": 70},
+    "Turer i naturen": {"Skog": 45},
+    "Turisme i naturen": {"Skog": 30},
+    "Demping av flom": {"Skog": 40},
+    "Kjøling av byer": {"Skog": 25},
+    "Mat fra jordbruket": {"Skog": 0},
+    "Pollinering": {"Skog": 0}
+  }
+}

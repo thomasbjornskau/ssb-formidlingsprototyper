@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naturregnskap 2024 – prototype</title>
+<style>
+/*__FONT__*/
+:root{--m5:#274247;--m2:#c3dcdc;--m1:#f0f8f9;--g4:#00824d;--grey:#5e787a;--line:#cdd3d4;--gm:#b9c5c6;--gl:#f3f5f5;
+--blue:#0072B2;--green:#009E73;--orange:#E69F00;--verm:#D55E00;--tb:#e2eef7;--tg:#dff3ec;--to:#fcf0d6;--tv:#fae3d6}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;background:var(--m1);color:var(--m5);font-family:'Open Sans',Arial,sans-serif;font-size:17px;line-height:1.5}
+.bf-wrap{max-width:1200px;margin:0 auto;padding:0 16px 64px}
+.bf-proto{background:var(--tv);border-left:5px solid var(--verm);padding:10px 16px;font-size:15px;margin:16px 0}
+h1{font-family:'Roboto Condensed','Arial Narrow',Arial,sans-serif;font-weight:700;font-size:44px;line-height:1.1;margin:24px 0 8px}
+h2{font-family:Roboto,Arial,sans-serif;font-weight:700;font-size:28px;margin:48px 0 16px}
+h3{font-family:Roboto,Arial,sans-serif;font-weight:700;font-size:20px;margin:0 0 6px}
+.bf-ingress{font-size:20px;max-width:820px;margin:0 0 20px}
+.bf-card{background:#fff;border:1px solid var(--m2);border-radius:2px;padding:24px;margin:0 0 24px}
+.bf-note{color:var(--grey);font-size:15px;margin:0 0 12px;max-width:760px}
+.bf-kilde{color:var(--grey);font-size:14px;margin:12px 0 0}
+.bf-velg{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 24px}
+.bf-velg button{display:flex;align-items:center;gap:6px;font:inherit;font-size:15px;border:1px solid var(--m2);background:#fff;color:var(--m5);
+ border-radius:999px;padding:6px 14px 6px 10px;cursor:pointer}
+.bf-velg button[aria-pressed=true]{background:var(--m5);color:#fff;border-color:var(--m5)}
+.bf-velg button[aria-pressed=true] svg *{stroke:#fff}
+.bf-velg button:focus-visible,.bf-card [tabindex]:focus-visible{outline:3px solid var(--g4);outline-offset:2px}
+.bf-ik{width:20px;height:20px;flex:none}
+.bf-valgt{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:24px;align-items:start}
+.bf-valgt .bf-ikon{width:56px;height:56px}
+.bf-tile{border-top:5px solid var(--m2);padding-top:10px}
+.bf-tile .bf-lbl{font-size:14px;font-weight:700;text-transform:uppercase;color:var(--grey);letter-spacing:.02em}
+.bf-tile .bf-big{font-family:Roboto,Arial,sans-serif;font-weight:700;font-size:30px;line-height:1.2}
+.bf-tile .bf-sub{font-size:15px}
+.bf-lese{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 32px;margin:0;padding:0;list-style:none}
+.bf-lese li{padding-left:40px;position:relative}
+.bf-lese li b{display:block}
+.bf-lese li span.n{position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;background:var(--m5);color:#fff;
+ font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
+details summary{cursor:pointer;font-weight:700;margin-top:16px}
+.bf-konsept-smal{display:none}
+.bf-topp{display:grid;grid-template-columns:360px 1fr;gap:32px;align-items:center}
+.bf-topp .bf-tall{font-family:Roboto,Arial,sans-serif;font-weight:700;font-size:72px;line-height:1;color:var(--green)}
+.bf-topp .bf-setn{font-family:Roboto,Arial,sans-serif;font-weight:700;font-size:22px;margin:8px 0}
+.bf-nok{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px;border-top:1px solid var(--m2);padding-top:16px}
+.bf-nok div b{display:block;font-family:Roboto,Arial,sans-serif;font-size:24px}
+.bf-nok div{font-size:15px}
+.bf-to{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.bf-to .bf-card{margin:0}
+.bf-fig svg{display:block;width:100%;height:auto;overflow:visible}
+table.bf-tab{border-collapse:collapse;font-size:15px;margin-top:8px;font-variant-numeric:tabular-nums}
+table.bf-tab th,table.bf-tab td{border-bottom:1px solid var(--line);padding:4px 12px 4px 0;text-align:left}
+table.bf-tab td.t{text-align:right}
+.bf-tom{background:var(--gl);border:1px dashed var(--gm);padding:16px;color:var(--grey);border-radius:2px}
+.bf-dummy{display:inline-block;background:var(--tv);font-weight:700;font-size:14px;padding:2px 10px;border-radius:999px;margin-left:8px;vertical-align:middle}
+footer{font-size:15px;color:var(--grey);border-top:1px solid var(--m2);margin-top:48px;padding-top:16px}
+@media (max-width:760px){
+ h1{font-size:34px}
+ .bf-valgt{grid-template-columns:1fr 1fr}
+ .bf-valgt .bf-ikon{grid-column:1/-1}
+ .bf-lese{grid-template-columns:1fr}
+ .bf-topp{grid-template-columns:1fr}
+ .bf-nok{grid-template-columns:1fr 1fr}
+ .bf-to{grid-template-columns:1fr}
+ .bf-konsept-bred{display:none}.bf-konsept-smal{display:block}
+}
+</style>
+</head>
+<body>
+<div class="bf-wrap">
+<p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.
+<b>Alle tall er dummydata</b> fram til publiseringen 25. november 2026.</p>
+<h1>Naturregnskap 2024</h1>
+<p class="bf-ingress" id="ingress"></p>
+<div class="bf-velg" id="velg" role="group" aria-label="Velg naturtype"></div>
+
+<section class="bf-card" id="valgt" aria-live="polite"></section>
+
+<section class="bf-card">
+<h3>Slik leser du naturregnskapet</h3>
+<ul class="bf-lese">
+<li><span class="n">1</span><b>Tre regnskap, ikke ett</b>Utbredelse, tilstand og tjenester er målt på ulike måter og legges ikke sammen.</li>
+<li><span class="n">2</span><b>0,7 er ikke 70 prosent</b>Tilstand måles fra 0 (helt ødelagt) til 1 (intakt). 0,7 betyr nærmere intakt enn ødelagt.</li>
+<li><span class="n">3</span><b>Endring betyr bare utbygging</b>Gjengroing og andre endringer i naturen er ikke med ennå.</li>
+<li><span class="n">4</span><b>Ikke i kroner</b>Alt er målt i hektar, tonn og antall. Naturens verdi i penger er ikke med i 2026.</li>
+</ul>
+<details><summary>Slik lages tallene</summary>
+<div class="bf-konsept-bred bf-fig">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+<div class="bf-konsept-smal bf-fig">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+</details>
+</section>
+
+<section class="bf-card" id="topp"></section>
+
+<h2>Hvor mye natur har vi?</h2>
+<div class="bf-to">
+<section class="bf-card" id="s-utb"></section>
+<section class="bf-card" id="s-bygd"></section>
+</div>
+
+<h2>Hvordan har naturen det?</h2>
+<div class="bf-to">
+<section class="bf-card" id="s-eg"></section>
+<section class="bf-card" id="s-ld"></section>
+</div>
+
+<h2>Hva gir naturen oss?</h2>
+<section class="bf-card" id="s-tj"></section>
+<div class="bf-to">
+<section class="bf-card" id="s-anv"></section>
+<section class="bf-card" id="s-serie"></section>
+</div>
+
+<h2>Hvor sikre er tallene?</h2>
+<section class="bf-card" id="s-kval"></section>
+
+<footer id="bunn"></footer>
+</div>
+<script>
+const D = /*__INKLUDER:build/naturregnskap.json__*/;
+const IK = /*__IKONER__*/;
+const C = {m5:"#274247",m2:"#c3dcdc",grey:"#5e787a",line:"#cdd3d4",gm:"#b9c5c6",gl:"#f3f5f5",blue:"#0072B2",green:"#009E73",orange:"#E69F00",verm:"#D55E00",sky:"#56B4E9",lilla:"#7e5ee8"};
+const OPPD = D.meta.oppdatert.split("-").reverse().join(".");
+const nf = (x, d=0) => x == null ? "–" : x.toLocaleString("nb-NO", {minimumFractionDigits:d, maximumFractionDigits:d}).replace(/ /g, " ");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ikon = (n, sz=20, col=C.m5, cls="bf-ik") => `<svg class="${cls}" width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IK[n]||""}</svg>`;
+const OKO = Object.fromEntries(D.oko.map(o => [o.kode, o]));
+const kilde = tab => `<p class="bf-kilde">Kilde: SSB, ${tab} (dummydata). Sist oppdatert: ${OPPD}.</p>`;
+const visTall = (hode, rader) => `<details><summary>Vis tallene</summary><table class="bf-tab"><thead><tr>${hode.map((h,i)=>`<th${i?' class="t"':""}>${esc(h)}</th>`).join("")}</tr></thead><tbody>${rader.map(r=>`<tr>${r.map((c,i)=>`<td${i?' class="t"':""}>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></details>`;
+const W = el => Math.max(300, document.getElementById(el).clientWidth - 48);
+const ix = v => nf(v, 2);
+
+let valgt = "04";
+function lesHash(){ const m = location.hash.match(/oko=(\d\d)/); if (m && OKO[m[1]]) valgt = m[1]; }
+
+// ---------- diagramfunksjoner
+function stolper(rader, {w, farge, enhet, maks, dec=0, valgtKode}){
+  // liggende stolper; rader: [{kode, navn, v, status}]
+  const lw = w < 500 ? 120 : 150, rh = 30, top = 28, bw = w - lw - 70;
+  const m = maks || Math.max(...rader.map(r => r.v || 0));
+  let s = `<svg viewBox="0 0 ${w} ${top + rader.length*rh + 30}" role="img" aria-label="${esc(enhet)}">`;
+  s += `<text x="${lw}" y="14" font-size="14" fill="${C.grey}">${esc(enhet)}</text>`;
+  const steg = niceStep(m, Math.max(2, Math.floor(bw/90)));
+  for (let t = 0; t <= m + 1e-9; t += steg){ const x = lw + bw*t/m;
+    s += `<line x1="${x}" y1="${top-6}" x2="${x}" y2="${top + rader.length*rh}" stroke="${t?C.line:C.gm}" stroke-width="1"/>`;
+    s += `<text x="${x}" y="${top + rader.length*rh + 18}" font-size="14" fill="${C.grey}" text-anchor="middle">${nf(t, steg<1?1:0)}</text>`; }
+  rader.forEach((r, i) => { const y = top + i*rh, sel = r.kode === valgtKode;
+    s += `<g data-kode="${r.kode}" role="button" tabindex="0" style="cursor:pointer" aria-label="Velg ${esc(r.navn)}">`;
+    s += `<rect x="0" y="${y}" width="${w}" height="${rh}" fill="transparent"/>`;
+    s += `<text x="${lw-10}" y="${y+20}" font-size="15" text-anchor="end" font-weight="${sel?700:400}" fill="${C.m5}">${esc(r.navn)}</text>`;
+    if (r.v == null) s += `<text x="${lw+6}" y="${y+20}" font-size="14" fill="${C.grey}" font-style="italic">${esc(r.status||"ingen tall")}</text>`;
+    else { const bwr = Math.max(1, bw*r.v/m);
+      s += `<rect x="${lw}" y="${y+6}" width="${bwr}" height="${rh-12}" fill="${sel?farge:C.gm}"/>`;
+      s += `<text x="${lw+bwr+6}" y="${y+20}" font-size="14" font-weight="${sel?700:400}" fill="${C.m5}">${nf(r.v, dec)}</text>`; }
+    s += `</g>`; });
+  return s + `</svg>`;
+}
+function niceStep(m, n=4){ const r = m/n, p = Math.pow(10, Math.floor(Math.log10(r))), f = r/p; return (f<1.5?1:f<3?2:f<7?5:10)*p; }
+
+function prikker(rader, {w, valgtKode, farge, label="Totalindeks, 0–1"}){
+  // rader: [{kode, navn, a (2019), b (2024)}]
+  const smal = w < 500, lw = smal ? 110 : 140, rh = 40, top = smal ? 56 : 34, bw = w - lw - 30, ly = smal ? 34 : 10;
+  const sx = v => lw + bw*v;
+  let s = `<svg viewBox="0 0 ${w} ${top + rader.length*rh + 30}" role="img" aria-label="${esc(label)}">`;
+  s += `<text x="${lw}" y="14" font-size="14" fill="${C.grey}">${esc(label)}</text>`;
+  const lx = smal ? lw : w - 130;
+  s += `<circle cx="${lx}" cy="${ly}" r="5" fill="#fff" stroke="${C.grey}" stroke-width="1.5"/><text x="${lx+10}" y="${ly+5}" font-size="14" fill="${C.grey}">2019</text>`;
+  s += `<circle cx="${lx+65}" cy="${ly}" r="7" fill="${farge}"/><text x="${lx+76}" y="${ly+5}" font-size="14" fill="${C.grey}">2024</text>`;
+  [0,.25,.5,.75,1].forEach(t => { s += `<line x1="${sx(t)}" y1="${top-8}" x2="${sx(t)}" y2="${top+rader.length*rh-10}" stroke="${t?C.line:C.gm}"/>`;
+    s += `<text x="${sx(t)}" y="${top+rader.length*rh+10}" font-size="14" fill="${C.grey}" text-anchor="middle">${nf(t, t%1?2:0)}</text>`; });
+  rader.forEach((r, i) => { const y = top + i*rh + 10, sel = r.kode === valgtKode;
+    s += `<g ${r.kode?`data-kode="${r.kode}" role="button" tabindex="0" style="cursor:pointer"`:""}>`;
+    s += `<rect x="0" y="${y-18}" width="${w}" height="${rh-4}" fill="transparent"/>`;
+    s += `<text x="${lw-12}" y="${y+5}" font-size="15" text-anchor="end" font-weight="${sel?700:400}" fill="${C.m5}">${esc(r.navn)}</text>`;
+    if (r.b == null){ s += `<text x="${lw+6}" y="${y+5}" font-size="14" fill="${C.grey}" font-style="italic">${esc(r.status||"ikke målt")}</text>`; }
+    else {
+      if (r.a != null){ s += `<line x1="${sx(r.a)}" y1="${y}" x2="${sx(r.b)}" y2="${y}" stroke="${C.grey}" stroke-width="1.5"/>`;
+        s += `<circle cx="${sx(r.a)}" cy="${y}" r="5" fill="#fff" stroke="${C.grey}" stroke-width="1.5"/>`; }
+      s += `<circle cx="${sx(r.b)}" cy="${y}" r="${sel?9:7}" fill="${sel?farge:"#8fd3bf"}"/>`;
+      s += `<text x="${sx(r.b) + (r.a!=null && r.a>r.b ? -14 : 14)}" y="${y+5}" font-size="14" text-anchor="${r.a!=null && r.a>r.b?"end":"start"}" font-weight="${sel?700:400}" fill="${C.m5}">${ix(r.b)}</text>`; }
+    s += `</g>`; });
+  return s + `</svg>`;
+}
+
+// ---------- tekst om tilstandstype
+function tilstandTekst(k){
+  const t = D.tilstand[k], o = OKO[k];
+  if (t.type === "indeks") return {tall: ix(t.tot["2024"]), setn: `er tilstanden i ${o.kort.toLowerCase()} på en skala fra 0 til 1`};
+  if (t.type === "naturindeks") return {tall: ix(t.tot["2024"]), setn: `er Naturindeks for våtmark. Det finnes ingen egen tilstandsindeks for våtmark ennå`};
+  if (t.type === "profil") return {tall: "–", setn: `${o.kort} har noen målinger, men ingen samlet tilstandsindeks`};
+  if (t.type === "uskalert") return {tall: "–", setn: `${o.kort} har bare målinger uten referanseverdi, og ingen tilstandsindeks`};
+  return {tall: "–", setn: `${o.kort} har ingen tilstandsmålinger i 2024`};
+}
+
+// ---------- seksjoner
+function tegnVelger(){
+  document.getElementById("velg").innerHTML = D.oko.map(o =>
+    `<button type="button" data-kode="${o.kode}" aria-pressed="${o.kode===valgt}">${ikon(o.ikon)}${esc(o.kort)}</button>`).join("");
+}
+function tegnIngress(){
+  const skog = OKO["04"], n = Object.values(D.tilstand).filter(t => t.type === "indeks").length;
+  const ub = D.oko.reduce((a,o) => a + (o.utbygd||0), 0);
+  document.getElementById("ingress").innerHTML = `Skog dekker ${nf(skog.andel)} prosent av landarealet. ${nf(ub)} hektar natur og jordbruksareal ble bygd ut fra 2017 til 2024. ` +
+    `${n} av ${D.oko.length} naturtyper har en samlet tilstandsindeks. <span class="bf-dummy">Dummydata</span>`;
+}
+function tegnValgt(){
+  const o = OKO[valgt], t = D.tilstand[valgt], tt = tilstandTekst(valgt);
+  const nT = D.tjenester.filter(x => x.tilgang[valgt]).length;
+  const areal = o.areal*1000;
+  document.getElementById("valgt").innerHTML = `<div class="bf-valgt">${ikon(o.ikon, 56, C.m5, "bf-ikon")}
+   <div class="bf-tile" style="border-color:${C.blue}"><div class="bf-lbl">Utbredelse</div><div class="bf-big">${o.andel!=null?nf(o.andel,1).replace(",0","")+" %":nf(areal/1e6,1)+" mill. ha"}</div>
+     <div class="bf-sub">${o.andel!=null?`av landarealet, ${nf(areal/1e6,2)} millioner hektar`:`${o.kort} regnes ikke med i landarealet`}</div></div>
+   <div class="bf-tile" style="border-color:${C.green}"><div class="bf-lbl">Tilstand</div><div class="bf-big">${tt.tall}</div><div class="bf-sub">${t.type==="indeks"?"totalindeks 2024, 0–1":esc(tt.setn)}</div></div>
+   <div class="bf-tile" style="border-color:${C.orange}"><div class="bf-lbl">Tjenester</div><div class="bf-big">${nT} av 9</div><div class="bf-sub">tjenester kommer helt eller delvis fra ${esc(o.kort.toLowerCase())}</div></div></div>`;
+}
+function tegnTopp(){
+  const tt = tilstandTekst(valgt), el = document.getElementById("topp");
+  const rader = D.oko.filter(o => ["indeks","naturindeks"].includes(D.tilstand[o.kode].type)).map(o => ({kode:o.kode, navn:o.kort + (D.tilstand[o.kode].type==="naturindeks"?"*":""), a:D.tilstand[o.kode].tot["2019"], b:D.tilstand[o.kode].tot["2024"]}))
+    .sort((x,y) => y.b - x.b);
+  const ind = rader.filter(r => D.tilstand[r.kode].type === "indeks"), hoy = ind[0], lav = ind[ind.length-1];
+  const sk = D.tilstand["04"], end = sk.tot["2024"] - sk.tot["2019"];
+  el.innerHTML = `<p class="bf-note" style="text-transform:uppercase;font-weight:700;font-size:14px">Naturregnskap · tilstand 2024</p>
+   <div class="bf-topp"><div><div class="bf-tall" style="color:${tt.tall==="–"?C.grey:C.green}">${tt.tall}</div><p class="bf-setn">${esc(tt.setn)}</p>
+   <p class="bf-note">1 er intakt natur, 0 er helt ødelagt. ${tt.tall!=="–"?`${tt.tall} betyr ikke at ${Math.round(parseFloat(tt.tall.replace(",","."))*100)} prosent er intakt.`:"Figuren viser de fem naturtypene som har en samlet indeks."}</p></div>
+   <div class="bf-fig" id="topp-fig"></div></div>
+   <p class="bf-note" style="margin-top:8px">* Våtmark har bare Naturindeks, som er beregnet på en annen måte.</p><div class="bf-nok"><div><b>${ind.length} av ${D.oko.length}</b>naturtyper har samlet indeks</div><div><b>${ix(hoy.b)}</b>høyest: ${esc(hoy.navn.toLowerCase())}</div>
+   <div><b>${ix(lav.b)}</b>lavest: ${esc(lav.navn.toLowerCase())}</div><div><b>${end>=0?"+":"−"}${ix(Math.abs(end))}</b>endring i skog, 2019–2024</div></div>
+   ${visTall(["Naturtype","2019","2024"], rader.map(r => [r.navn, r.a!=null?ix(r.a):"–", ix(r.b)]))}${kilde("tabell 15012, 15013 og 15016")}`;
+  document.getElementById("topp-fig").innerHTML = prikker(rader, {w: Math.min(760, W("topp") - (innerWidth>760?392:0)), valgtKode: valgt, farge: C.green});
+}
+function tegnUtb(){
+  const rad = D.oko.filter(o => o.andel != null).sort((a,b) => b.andel - a.andel).map(o => ({kode:o.kode, navn:o.kort, v:o.andel}));
+  const ky = OKO["10"], hav = OKO["11"];
+  document.getElementById("s-utb").innerHTML = `<h3>Hvor stor del av landet er ${esc(OKO[valgt].kort.toLowerCase())}?</h3>
+   <p class="bf-note">Andel av landarealet, inkludert innsjøer og elver. Kystvann (${nf(ky.areal/1000,1)} mill. ha) og hav (${nf(hav.areal/1000)} mill. ha) er ikke med i andelen.</p>
+   <div class="bf-fig">${stolper(rad, {w: W("s-utb"), farge: C.blue, enhet: "Prosent", dec: 1, valgtKode: valgt})}</div>
+   ${visTall(["Naturtype","1000 hektar","Prosent"], D.oko.map(o => [o.kort, nf(o.areal), o.andel!=null?nf(o.andel,1):"–"]))}${kilde("utbredelsestabell (nummer ukjent)")}`;
+}
+function tegnBygd(){
+  const rad = D.oko.filter(o => o.utbygd_status !== ".").sort((a,b) => (b.utbygd||0) - (a.utbygd||0)).map(o => ({kode:o.kode, navn:o.kort, v:o.utbygd}));
+  const tot = D.oko.reduce((a,o) => a + (o.utbygd||0), 0), o = OKO[valgt];
+  const tekst = o.utbygd_status === "." ? `${o.kort} kan ikke bygges ut i denne statistikken.` : o.utbygd ? `${nf(o.utbygd)} hektar ${o.kort.toLowerCase()} ble bygd ut, ${nf(100*o.utbygd/tot)} prosent av alt utbygd areal.` : `Ingen ${o.kort.toLowerCase()} er registrert som utbygd.`;
+  document.getElementById("s-bygd").innerHTML = `<h3>Hvor mye er bygd ut, 2017–2024?</h3>
+   <p class="bf-note">${esc(tekst)} Bare utbygging telles som endring. Tallene gjelder hele landet.</p>
+   <div class="bf-fig">${stolper(rad, {w: W("s-bygd"), farge: C.blue, enhet: "Hektar", valgtKode: valgt})}</div>
+   ${visTall(["Naturtype","Hektar"], D.oko.map(o => [o.kort, o.utbygd_status==="."?"kan ikke forekomme":nf(o.utbygd)]))}${kilde("utbredelsestabell (nummer ukjent)")}`;
+}
+function tegnEg(){
+  const t = D.tilstand[valgt], o = OKO[valgt], el = document.getElementById("s-eg");
+  let h = `<h3>Hva trekker opp og ned i ${esc(o.kort.toLowerCase())}?</h3>`;
+  if (t.type === "indeks" || t.type === "profil"){
+    const a = t.eg["2019"]||{}, b = t.eg["2024"]||{};
+    const rad = Object.entries(D.egenskaper).map(([k,n]) => ({navn:n, a:a[k]??null, b:b[k]??null, status:"ikke målt"}));
+    h += `<p class="bf-note">Tilstandsegenskaper, 0–1. ${t.type==="profil"?"Det finnes ingen samlet indeks, fordi for få egenskaper er dekket.":"Totalindeksen er snittet av egenskapene, og hver egenskap teller likt."}</p>
+      <div class="bf-fig">${prikker(rad, {w: W("s-eg"), farge: C.green, label: "Egenskap, 0–1"})}</div>
+      ${visTall(["Egenskap","2019","2024"], rad.map(r => [r.navn, r.a!=null?ix(r.a):"–", r.b!=null?ix(r.b):"ikke målt"]))}${kilde("tabell "+t.kilde)}`;
+  } else if (t.type === "naturindeks"){
+    h += `<div class="bf-tom">Våtmark har bare Naturindeks, som ikke er delt i egenskaper.</div>${kilde("tabell 15015")}`;
+  } else {
+    h += `<div class="bf-tom">${t.type==="uskalert"?"Bebygd areal har bare målinger uten referanseverdi (tabell 14852). De sier ikke om tilstanden er god eller dårlig.":`Det finnes ingen tilstandsmålinger for ${esc(o.kort.toLowerCase())} i 2024.`}</div>`;
+  }
+  el.innerHTML = h;
+}
+function tegnLd(){
+  const t = D.tilstand[valgt], o = OKO[valgt], el = document.getElementById("s-ld");
+  let h = `<h3>Er det forskjell mellom landsdelene?</h3>`;
+  if (t.landsdel && Object.keys(t.landsdel).length){
+    const rad = Object.entries(D.landsdel).map(([k,n]) => ({navn:n, a:t.landsdel[k]?.["2019"]??null, b:t.landsdel[k]?.["2024"]??null}));
+    h += `<p class="bf-note">${t.type==="naturindeks"?"Naturindeks":"Totalindeks"} for ${esc(o.kort.toLowerCase())} i fem landsdeler. Landsdelene er egne for naturregnskapet og er ikke SSBs vanlige inndeling.</p>
+      <div class="bf-fig">${prikker(rad, {w: W("s-ld"), farge: C.green})}</div>
+      ${visTall(["Landsdel","2019","2024"], rad.map(r => [r.navn, ix(r.a), ix(r.b)]))}${kilde("tabell "+t.kilde)}`;
+  } else h += `<div class="bf-tom">Tilstanden for ${esc(o.kort.toLowerCase())} finnes ikke per landsdel. Bare skog, fjell og våtmark har tall for landsdeler.</div>`;
+  el.innerHTML = h;
+}
+function tegnTj(){
+  const o = OKO[valgt], w = W("s-tj"), el = document.getElementById("s-tj");
+  const lw = w < 600 ? 178 : 230, rh = 40, top = 30, bw = w - lw - (w<600?40:300);
+  let s = `<svg viewBox="0 0 ${w} ${top + D.tjenester.length*rh + 10}" role="img" aria-label="Andel fra ${esc(o.kort)}">`;
+  s += `<text x="${lw}" y="14" font-size="14" fill="${C.grey}">Andel fra ${esc(o.kort.toLowerCase())}, prosent</text>`;
+  const rows = D.tjenester.map(t => ({t, p: 100*(t.tilgang[valgt]||0)/t.total})).sort((a,b) => b.p - a.p);
+  rows.forEach(({t,p}, i) => { const y = top + i*rh;
+    s += `<g transform="translate(0 ${y+8})">${IK[t.ikon].replace(/<(\w+)/g, `<$1 fill="none" stroke="${C.m5}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`)}</g>`;
+    s += `<text x="34" y="${y+24}" font-size="15" fill="${C.m5}">${esc(t.kort)}</text>`;
+    s += `<rect x="${lw}" y="${y+10}" width="${bw}" height="20" fill="${C.gl}"/>`;
+    if (p > 0) s += `<rect x="${lw}" y="${y+10}" width="${bw*p/100}" height="20" fill="${C.orange}"/>`;
+    s += `<text x="${lw + bw*p/100 + 6}" y="${y+25}" font-size="14" font-weight="700" fill="${C.m5}">${nf(p)}</text>`;
+    if (w >= 600) s += `<text x="${lw+bw+50}" y="${y+25}" font-size="14" fill="${C.grey}">${p>0?esc(nf(t.tilgang[valgt], t.tilgang[valgt]<10?1:0)+" ("+t.enhet+")"):"–"}</text>`;
+  });
+  s += `</svg>`;
+  const n = rows.filter(r => r.p > 0).length;
+  el.innerHTML = `<h3>Hvor mye av hver tjeneste kommer fra ${esc(o.kort.toLowerCase())}?</h3>
+   <p class="bf-note">${n ? `${o.kort} bidrar til ${n} av 9 tjenester.` : `${o.kort} bidrar ikke til noen av de ni tjenestene i regnskapet.`} Hver tjeneste har sin egen enhet, så figuren viser andeler. Tjenestene kan ikke legges sammen eller sammenlignes i størrelse.</p>
+   <div class="bf-fig">${s}</div>
+   ${visTall(["Tjeneste","Fra "+o.kort.toLowerCase(),"I alt","Enhet"], D.tjenester.map(t => [t.kort, nf(t.tilgang[valgt]||0, t.total<100?1:0), nf(t.total, t.total<100?1:0), t.enhet]))}${kilde("tabell 14967")}`;
+}
+function tegnAnv(){
+  const w = W("s-anv"), el = document.getElementById("s-anv");
+  const BF = {NAER:C.m5, HUS:C.sky, OFF:C.lilla, EKS:C.gm};
+  const lw = w < 500 ? 140 : 170, rh = 30, bw = w - lw - 10;
+  let lg = "", lx = 0, ly = 4; Object.entries(D.brukere).forEach(([k,n]) => { const lwid = 30 + n.length*8; if (lx + lwid > w){ lx = 0; ly += 24; }
+    lg += `<rect x="${lx}" y="${ly}" width="14" height="14" fill="${BF[k]}"/><text x="${lx+20}" y="${ly+12}" font-size="14" fill="${C.m5}">${esc(n)}</text>`; lx += lwid; });
+  const top = ly + 40;
+  let s = `<svg viewBox="0 0 ${w} ${top + D.tjenester.length*rh + 6}" role="img" aria-label="Hvem bruker tjenestene">` + lg;
+  D.tjenester.forEach((t,i) => { const y = top + i*rh; let x = lw;
+    s += `<text x="${lw-10}" y="${y+18}" font-size="14" text-anchor="end" fill="${C.m5}">${esc(t.kort)}</text>`;
+    Object.keys(D.brukere).forEach(k => { const v = (t.anvendelse[k]||0)/t.total; if (v>0){ s += `<rect x="${x}" y="${y+5}" width="${bw*v}" height="${rh-10}" fill="${BF[k]}" stroke="#fff" stroke-width="1"/>`; x += bw*v; } }); });
+  el.innerHTML = `<h3>Hvem bruker tjenestene?</h3><p class="bf-note">Andel av hver tjeneste. Gjelder alle naturtyper samlet.</p><div class="bf-fig">${s}</div>
+   ${visTall(["Tjeneste", ...Object.values(D.brukere)], D.tjenester.map(t => [t.kort, ...Object.keys(D.brukere).map(k => nf(100*(t.anvendelse[k]||0)/t.total)+" %")]))}${kilde("tabell 14968")}`;
+}
+function tegnSerie(){
+  const el = document.getElementById("s-serie"), w = W("s-serie");
+  const sr = Object.entries(D.serier).find(([k,v]) => v.oko === valgt);
+  if (!sr){ el.innerHTML = `<h3>Utvikling over tid</h3><div class="bf-tom">Det finnes ingen tidsserie for tjenester fra ${esc(OKO[valgt].kort.toLowerCase())}. Bare avlinger (jordbruksmark, fra 2010) og tømmer (skog, fra 2015) har tall for flere år.</div>`; return; }
+  const [k, v] = sr, t = D.tjenester.find(x => x.kode === k), d = v.data;
+  const h = 220, l = 50, top = 30, bt = 30, x0 = d[0][0], x1 = d[d.length-1][0], mx = Math.max(...d.map(p=>p[1]));
+  const st = niceStep(mx), ym = Math.ceil(mx/st)*st;
+  const X = yr => l + (w-l-20)*(yr-x0)/(x1-x0), Y = val => top + (h-top-bt)*(1-val/ym);
+  let s = `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(t.kort)} over tid"><text x="${l}" y="14" font-size="14" fill="${C.grey}">${esc(t.enhet)}</text>`;
+  for (let g = 0; g <= ym; g += st) s += `<line x1="${l}" x2="${w-20}" y1="${Y(g)}" y2="${Y(g)}" stroke="${g?C.line:C.gm}"/><text x="${l-8}" y="${Y(g)+5}" font-size="14" fill="${C.grey}" text-anchor="end">${nf(g)}</text>`;
+  d.forEach(([yr]) => { if ((yr-x0) % (d.length>12?4:3) === 0 || yr === x1) s += `<text x="${X(yr)}" y="${h-8}" font-size="14" fill="${C.grey}" text-anchor="middle">${yr}</text>`; });
+  s += `<polyline points="${d.map(([yr,val]) => X(yr)+","+Y(val)).join(" ")}" fill="none" stroke="${C.orange}" stroke-width="3"/>`;
+  s += `<circle cx="${X(x1)}" cy="${Y(d[d.length-1][1])}" r="5" fill="${C.orange}"/></svg>`;
+  el.innerHTML = `<h3>${esc(t.kort)} over tid</h3><p class="bf-note">${esc(t.navn)}, ${esc(t.enhet)}, ${x0}–${x1}.</p><div class="bf-fig">${s}</div>
+   ${visTall(["År", t.enhet], d.map(([yr,val]) => [yr, nf(val)]))}${kilde("tabell "+v.tabell)}`;
+}
+function tegnKval(){
+  const el = document.getElementById("s-kval"), Q = {H:["Høy",C.m5,"#fff"], M:["Middels",C.m2,C.m5], L:["Lav",C.gl,C.m5]};
+  const rows = D.tjenester.map(t => { const bid = t.tilgang[valgt];
+    return `<tr style="${bid?"":"opacity:.45"}"><td>${ikon(t.ikon,18)} ${esc(t.kort)}</td>${["data","metode","dekning"].map(k => { const q = Q[t.kvalitet[k]]; return `<td style="background:${q[1]};color:${q[2]};font-weight:700;text-align:center;border:2px solid #fff">${q[0]}</td>`; }).join("")}</tr>`; }).join("");
+  el.innerHTML = `<h3>SSBs egen vurdering av de ni tjenestene</h3>
+   <p class="bf-note">Tjenester som ikke kommer fra ${esc(OKO[valgt].kort.toLowerCase())}, er nedtonet. Ingen tjeneste har høy vurdering på alle tre spørsmålene. Vurderingen er hentet fra metodenotatet og er ikke dummydata.</p>
+   <div style="overflow-x:auto"><table class="bf-tab" style="width:100%"><thead><tr><th>Tjeneste</th><th>Er dataene gode?</th><th>Er metoden etablert?</th><th>Måler tallet det vi tror?</th></tr></thead><tbody>${rows}</tbody></table></div>
+   <p class="bf-kilde">Kilde: SSB, metodenotat for naturregnskapet (utkast), tabell 3.7.1.</p>`;
+}
+function tegnBunn(){
+  document.getElementById("bunn").innerHTML = `<p><b>Om tallene.</b> ${esc(D.meta.note)} Andelene er egne beregninger: areal per naturtype delt på landarealet inkludert ferskvann (${nf(D.meta.landareal/1000,1)} millioner hektar). Andelen av hver tjeneste er regnet fra tilgang per naturtype i tabell 14967.</p>
+   <p><b>Kilder:</b> SSB, tabell 14967, 14968, 14994, 14996, 15012–15016 og utbredelsestabellen. Metodenotat og «Når naturen telles» (utkast). Dummydata laget ${OPPD}.</p>
+   <p>Les mer på <a href="https://www.ssb.no">ssb.no</a>. Ikoner: Lucide (ISC-lisens).</p>`;
+}
+function tegnAlt(){
+  tegnVelger(); tegnValgt(); tegnTopp(); tegnUtb(); tegnBygd(); tegnEg(); tegnLd(); tegnTj(); tegnAnv(); tegnSerie(); tegnKval();
+}
+function velg(k){ if (!OKO[k]) return; valgt = k; history.replaceState(null, "", "#oko=" + k); tegnAlt(); }
+document.addEventListener("click", e => { const g = e.target.closest("[data-kode]"); if (g) velg(g.dataset.kode); });
+document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("g[data-kode]")){ e.preventDefault(); velg(e.target.dataset.kode); } });
+addEventListener("hashchange", () => { lesHash(); tegnAlt(); });
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(tegnAlt, 150); });
+lesHash(); tegnIngress(); tegnBunn(); tegnAlt();
+</script>
+</body>
+</html>
