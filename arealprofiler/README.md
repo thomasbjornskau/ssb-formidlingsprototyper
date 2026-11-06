@@ -4,7 +4,7 @@
 
 **Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/arealprofiler/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/arealprofiler/index.html)
 
-Arealprofilene er 35 indikatorer per kommune for planleggere i kommuner og fylkeskommuner. Prototypen er et alternativ til dagens Tableau-app: én side per kommune i stedet for én side per indikator, og kommunen sammenlignet med kommuner med samme sentralitet i stedet for rangert. Kommunen ligger i adressen, for eksempel `#kommune=3405` for Lillehammer.
+Arealprofilene er 35 indikatorer per kommune for planleggere i kommuner og fylkeskommuner. Prototypen er et alternativ til dagens Tableau-app: én side per kommune i stedet for én side per indikator, og kommunen sammenlignet med kommuner med samme sentralitet i stedet for rangert. Sentralitetsklasse 1 og 2 er slått sammen. Kommunen velges på kartet eller med søk. Kommunen ligger i adressen, for eksempel `#kommune=3405` for Lillehammer.
 
 ## Hva prototypen svarer på
 
@@ -33,6 +33,7 @@ Arealprofilene er 35 indikatorer per kommune for planleggere i kommuner og fylke
 | [Tabell 11776](https://www.ssb.no/statbank/table/11776) | Omdisponert dyrka og dyrkbar jord for landet |
 | [Klass 128](https://www.ssb.no/klass/klassifikasjoner/128) | Sentralitet 2020 for kommuneinndelingen 2024 |
 | [Klass 104](https://www.ssb.no/klass/klassifikasjoner/104) | Fylker 2024 |
+| [robhop/fylker-og-kommuner](https://github.com/robhop/fylker-og-kommuner) | Kommunegrenser 2024 fra Kartverket, forenklet. `data/raw/kommuner2024-S.geojson` |
 
 Tabell 14478 og 14488 med årets arealprofiler er ikke publisert eksternt. URL-ene står klare i [data/kilder.json](data/kilder.json).
 

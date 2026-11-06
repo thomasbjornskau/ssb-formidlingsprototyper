@@ -67,6 +67,14 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 .bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
 .bf-tre .v { color: var(--sek); font-size: 13px; white-space: nowrap; }
 
+/* Kart og kort */
+.bf-velg { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .bf-velg { grid-template-columns: 1fr; } }
+.bf-hoyre { display: grid; gap: 16px; align-content: start; }
+.bf-kart { background: var(--flate); padding: 20px; display: grid; gap: 8px; }
+.bf-kart svg { display: block; width: 100%; height: auto; max-height: 72vh; }
+.bf-kart svg:focus-visible { outline: 2px solid var(--tekst); outline-offset: 4px; }
+.bf-kart path { cursor: pointer; }
 /* Kort for valgt kommune */
 .bf-kort { background: var(--flate); border-left: 4px solid var(--gronn); padding: 16px 20px; display: grid; gap: 4px; }
 .bf-kort h2 { font-size: 20px; margin: 0; }
@@ -84,6 +92,7 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 .bf-konsept svg { display: block; width: 100%; height: auto; }
 .bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
 @media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+@media (min-width: 861px) { .bf-hoyre .bf-konsept .bred { display: none; } .bf-hoyre .bf-konsept .smal { display: block; } }
 
 /* Toppgrafikk */
 .bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 16px 32px; align-items: start; }
@@ -175,25 +184,36 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 
   <nav class="bf-tre" id="bf-tre" aria-label="Alle kommuner" hidden></nav>
 
-  <section class="bf-kort" id="bf-kort" aria-live="polite"></section>
+  <div class="bf-velg">
+    <section class="bf-kart" id="kart" aria-labelledby="kart-h">
+      <h2 class="bf-h" id="kart-h">Velg på kartet</h2>
+      <div class="bf-legend" data-leg="kart"></div>
+      <div class="bf-chart" id="fig-kart"></div>
+      <p class="bf-note">Fargen viser sentralitetsklassen kommunen sammenlignes med. Klasse 1 og 2 er slått sammen. Små kommuner rundt byene er lettere å finne med søket. Med tastatur: gå til kartet og bruk piltastene.</p>
+      <p class="bf-src">Kart: Kartverket, kommuner 2024, forenklet. Sentralitet: SSBs standard 2020 (Klass 128).</p>
+    </section>
+    <div class="bf-hoyre">
+    <section class="bf-kort" id="bf-kort" aria-live="polite"></section>
+    <section class="bf-les" aria-labelledby="les-h">
+      <h2 id="les-h">Slik leser du arealprofilen</h2>
+      <ul>
+        <li><b>Grunnareal, ikke boligstørrelse.</b> <span data-t="les-1"></span></li>
+        <li><b>Fire år om gangen.</b> <span data-t="les-2"></span></li>
+        <li><b>Ingen fasit.</b> Høyt eller lavt er ikke godt eller dårlig i seg selv. Kommunen sammenlignes med kommuner med samme sentralitet, ikke rangert.</li>
+        <li><b>Mangler er ikke null.</b> <span data-t="les-4"></span></li>
+      </ul>
+      <details>
+        <summary>Slik lages tallene</summary>
+        <div class="bf-konsept">
+          <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+          <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+          <p class="bf-note">Indikatorene er laget på fire måter: telt i registrene, rapportert av kommunen gjennom KOSTRA, plassert i kartet mot soner som tettsted og sentrum, og kommuneplanen lagt over kartet over faktisk arealbruk. Definisjonene er hentet fra forklaringstekstene i arealprofilene (Tableau Public, 2025).</p>
+        </div>
+      </details>
+    </section>
+    </div>
+  </div>
 
-  <section class="bf-les" aria-labelledby="les-h">
-    <h2 id="les-h">Slik leser du arealprofilen</h2>
-    <ul>
-      <li><b>Grunnareal, ikke boligstørrelse.</b> <span data-t="les-1"></span></li>
-      <li><b>Fire år om gangen.</b> <span data-t="les-2"></span></li>
-      <li><b>Ingen fasit.</b> Høyt eller lavt er ikke godt eller dårlig i seg selv. Kommunen sammenlignes med kommuner med samme sentralitet, ikke rangert.</li>
-      <li><b>Mangler er ikke null.</b> <span data-t="les-4"></span></li>
-    </ul>
-    <details>
-      <summary>Slik lages tallene</summary>
-      <div class="bf-konsept">
-        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
-        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
-        <p class="bf-note">Indikatorene er laget på fire måter: telt i registrene, rapportert av kommunen gjennom KOSTRA, plassert i kartet mot soner som tettsted og sentrum, og kommuneplanen lagt over kartet over faktisk arealbruk. Definisjonene er hentet fra forklaringstekstene i arealprofilene (Tableau Public, 2025).</p>
-      </div>
-    </details>
-  </section>
 
   <section class="bf-topp" id="hovedtall" aria-live="polite">
     <div>
@@ -335,12 +355,14 @@ const DATA = /*__INKLUDER:build/arealprofiler.json__*/;
 (() => {
 'use strict';
 // ---------- Data ----------
-// DATA.kommuner      [kommunenr, navn, fylkenr, sentralitetsklasse 1–6]
+// DATA.kommuner      [kommunenr, navn, fylkenr, sentralitetsgruppe ('1–2', '3' … '6'), sentralitetsklasse 1–6]
+// DATA.kart          {b, h, p: kommunenr -> SVG-sti}, projisert i lag_data.py
 // DATA.indikatorer   metadata: kode, kort_navn, enhet, type, seksjon, fire_aar, des, mangler, null_betyr
 // DATA.d[kode]       {aar, v[kommune][år]} eller med klasser: v[kommune][år][klasse]; null = mangler
 // DATA.jord          landet fra tabell 11776: dyrka_annet (andre formål enn landbruk), dyrka_alle, dyrkbar_alle
 // DATA.landNye       egne beregninger: andel nye boliger utenfor tettsted og i blokk, vektet med antall
-const O = Object.fromEntries(DATA.kommuner.map(([kode, navn, fylke, klasse], i) => [kode, {kode, navn, fylke, klasse, i}]));
+const O = Object.fromEntries(DATA.kommuner.map(([kode, navn, fylke, klasse, sk], i) => [kode, {kode, navn, fylke, klasse, sk, i}]));
+const GRUPPER = [...new Set(DATA.kommuner.map((x) => x[3]))].sort();
 const kommuner = DATA.kommuner.map((k) => k[0]);
 const I = Object.fromEntries(DATA.indikatorer.map((x) => [x.kode, x]));
 const D = DATA.d;
@@ -615,6 +637,37 @@ function stripeLegende(key, k, modus) {
     `<span><svg width="12" height="12"><polygon points="1,6 6,1 11,6 6,11" fill="#fff" stroke="${css('--tekst')}"/></svg>median for alle kommuner</span>`;
 }
 
+// ---------- Kartet ----------
+const SEKV = ['#075745', '#00824d', '#58a772', '#91cd9a', '#cff1d0'];   // mest til minst sentral
+const gruppeFarge = (g) => SEKV[GRUPPER.indexOf(g)];
+const KART_REKKE = kommuner.slice();   // piltastene går i kommunenummerrekkefølge
+function tegnKart(k) {
+  const box = $('#fig-kart'), K = DATA.kart;
+  let svg = d3.select(box).select('svg');
+  if (svg.empty()) {
+    svg = d3.select(box).append('svg').attr('viewBox', `-4 -4 ${K.b + 8} ${K.h + 8}`).attr('tabindex', 0).attr('role', 'group')
+      .attr('aria-label', 'Kart over kommunene. Piltastene flytter til neste eller forrige kommune.');
+    svg.append('g').attr('class', 'alle').selectAll('path').data(kommuner).join('path')
+      .attr('d', (x) => K.p[x]).attr('fill', (x) => gruppeFarge(O[x].klasse)).attr('stroke', '#fff').attr('stroke-width', 0.4)
+      .on('click', (ev, x) => { inp.value = navnK(x); velg(x); })
+      .on('pointermove', (ev, x) => visTips(ev, navnK(x), [{n: fylkenavn(O[x].fylke), v: ''}, {c: gruppeFarge(O[x].klasse), n: 'Sentralitetsklasse', v: O[x].klasse}]))
+      .on('pointerleave', skjulTips);
+    svg.append('circle').attr('class', 'mrk').attr('r', 9).attr('fill', 'none').attr('stroke', css('--oker')).attr('stroke-width', 2.5).attr('pointer-events', 'none');
+    svg.append('path').attr('class', 'valgt').attr('fill', 'none').attr('stroke', css('--oker')).attr('stroke-width', 2.5).attr('pointer-events', 'none');
+    svg.on('keydown', (ev) => {
+      const steg = {ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1}[ev.key];
+      if (!steg) return;
+      ev.preventDefault();
+      const i = (KART_REKKE.indexOf(valgt()) + steg + KART_REKKE.length) % KART_REKKE.length;
+      inp.value = navnK(KART_REKKE[i]); velg(KART_REKKE[i]);
+    });
+    legende('kart', GRUPPER.map((g, i) => ({c: SEKV[i], n: `Klasse ${g}${i === 0 ? ' (mest sentral)' : i === GRUPPER.length - 1 ? ' (minst sentral)' : ''}`})));
+  }
+  const v = svg.select('path.valgt').attr('d', K.p[k]);
+  const bb = v.node().getBBox();
+  svg.select('circle.mrk').attr('cx', bb.x + bb.width / 2).attr('cy', bb.y + bb.height / 2).attr('r', Math.max(9, Math.max(bb.width, bb.height) / 2 + 5));
+}
+
 // ---------- Ingress, kort og lesehjelp ----------
 function ingress() {
   $('#ingress').textContent = (`Arealprofilene samler ${N_IND} indikatorer for hver av de ${kommuner.length} kommunene: hvor tett det bygges, hva som bygges ned, hva som er satt av i planene og hvor mye som bygges i fareområder. Velg en kommune og se den mot kommuner med samme sentralitet.`);
@@ -623,7 +676,7 @@ function tegnKort(k) {
   const el = $('#bf-kort'), o = O[k], n = gruppe(k, 'klasse').length;
   const mangler = DATA.indikatorer.filter((x) => !D[x.kode].klasser && verdi(x.kode, k, sisteAar(x.kode)) == null).length;
   const deler = [`<h2>${esc(o.navn)}</h2>`,
-    `<p class="bf-sti">${esc(fylkenavn(o.fylke))} · sentralitetsklasse ${o.klasse} av 6, sammen med ${n - 1} andre kommuner · kommunenummer ${esc(k)}</p>`];
+    `<p class="bf-sti">${esc(fylkenavn(o.fylke))} · sentralitetsklasse ${o.sk} av 6${o.klasse.includes('–') ? ', sammenlignes med klasse 1–2 samlet' : ''} · ${n - 1} andre kommuner i sammenligningen · kommunenummer ${esc(k)}</p>`];
   if (!fraAdresse()) deler.push('<p><b>Eksempelkommune.</b> Velg din egen kommune i søkefeltet over.</p>');
   if (funnetMed) deler.push(`<p>Funnet med søkeordet «${esc(funnetMed)}».</p>`);
   deler.push(`<p>${mangler ? `${mangler} av ${N_IND} indikatorer har ikke tall for ${esc(o.navn)}. Det er forklart der tallet skulle stått.` : `Alle indikatorene har tall for ${esc(o.navn)}.`}</p>`);
@@ -875,7 +928,7 @@ function tegnAlt() {
   const k = valgt();
   document.title = fraAdresse() ? `${navnK(k)}: arealprofil` : 'Arealprofiler';
   if (document.activeElement !== inp) inp.value = fraAdresse() ? navnK(k) : '';
-  tegnKort(k); tegnLes(k); tegnTopp(k); tegnProfil(k);
+  tegnKart(k); tegnKort(k); tegnLes(k); tegnTopp(k); tegnProfil(k);
   tegnTetthet(k); tegnNedbygging(k); tegnPlan(k);
 }
 ingress();

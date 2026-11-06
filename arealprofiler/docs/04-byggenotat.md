@@ -1,4 +1,4 @@
-Steg 4 i formidlingsprototype for arealprofiler · versjon 0.1 · 06.11.2026 · Status: utkast
+Steg 4 i formidlingsprototype for arealprofiler · versjon 0.2 · 06.11.2026 · Status: utkast
 
 # Byggenotat: Arealprofiler
 
@@ -10,6 +10,7 @@ Steg 4 i formidlingsprototype for arealprofiler · versjon 0.1 · 06.11.2026 · 
 
 | Seksjon | Svarer på | Innhold |
 |---|---|---|
+| Velg på kartet (v0.2) | 1 | Kart over de 357 kommunene, farget etter sentralitetsklasse. Klikk velger kommunen, piltastene flytter mellom kommunene. Valgt kommune er markert med ring. Kort og lesehjelp står ved siden av |
 | Hode og søk | – | Søk på kommunenavn, også samiske navn og ti tidligere kommunenavn (`data/synonymer.json`). Liste over alle kommuner etter fylke |
 | Kort for valgt kommune | 1 | Fylke, sentralitetsklasse, antall kommuner i klassen, hvor mange indikatorer som mangler og hvorfor |
 | Slik leser du arealprofilen | H1, H2, H3, H5 | Fire punkter med tall for valgt kommune. Konseptgrafikken bak «Slik lages tallene» |
@@ -32,7 +33,7 @@ Alle figurer har «Vis tallene» og kildelinje. Overskrifter, ingresser og noter
 | Ikke kystkommune | Strandsonekortet viser forklaring i stedet for tom figur |
 | Ingen omdisponering | Jordkortet viser forklaring i stedet for tom figur |
 | År som mangler i serien | B3 2020: «mangler» i stolpen. Linjer brytes ved hull |
-| Klasse med få kommuner | Båndet tegnes bare når klassen har minst ti kommuner med tall. Klasse 1 (fem kommuner) vises som prikker |
+| Klasse med få kommuner | Klasse 1 og 2 er slått sammen (26 kommuner) fra v0.2. Båndet tegnes bare når gruppen har minst ti kommuner med tall |
 | Bare ett år for kommunen | Den lille tidsserien viser «bare ett år» |
 
 ## 3. Kontroller i `lag_data.py`
@@ -45,6 +46,7 @@ Alle figurer har «Vis tallene» og kildelinje. Overskrifter, ingresser og noter
 | K4 | Sum C4 mot 11776 dyrkbar jord, alle formål, 2020–2024 | 15 dekar | 10 dekar |
 | K5 | B8-klassene summerer til 90–102 prosent | 90–102 | 90,9 (Utsira 2024) og 101,5 |
 | – | Alle synonymer viser til kommuner som finnes | Eksakt | 0 |
+| K6 | Kartet har nøyaktig de samme 357 kommunenumrene som dataene | Eksakt | 0 |
 
 Negativ test: én verdi i en kopi av `kofola_land.json` endret med 500 dekar. Bygget stoppet med «Kontroll feilet: sum C3 2020 = 4760, tabell 11776 = 5239.9, avvik 480 > 40». Fila er satt tilbake.
 
@@ -69,6 +71,10 @@ Playwright i 1280 og 390 piksler bredde: ingen feil i konsollen, `scrollWidth` l
 | Q32 | Ti synonymer for tidligere kommunenavn, «Sandvika» merket som usikker | Eget valg `[T]` | Om listen bør utvides |
 | Q33 | B8 vist som de tre største arealklassene, uten sammenligning | Eget valg `[T]` | Om B8 heller skal ha egen figur |
 
+| Q34 | Sentralitetsklasse 1 og 2 slått sammen, 3–6 for seg (v0.2) | Valgt av Thomas og Claude 06.11.2026. Alternativet 1+2, 3+4, 5+6 ga grupper på 119 og 212 kommuner `[T]` | Om fag er enig, og om sammenslåingen skal nevnes i teksten der klasse 1–2 brukes |
+| Q35 | Kartgrunnlag fra robhop/fylker-og-kommuner (Kartverket, 2024), ikke fra SSB | Eget valg `[T]` | Om SSB har et eget forenklet kommunekart som bør brukes, og lisensvilkår |
+| Q36 | Kartet farget etter sentralitetsklasse, ikke etter en indikator | Eget valg `[T]` | Om kartet også skal kunne vise én indikator |
+
 ## 6. Kjente svakheter
 
 1. **Ikke årets tall.** Prototypen bygger på datagrunnlaget for Arealprofiler 2025. Når 14478/14488 er publisert, må `lag_data.py` bygges om. Etikettene er annerledes der, og B9, B11 og B12 må få ny behandling.
@@ -78,3 +84,5 @@ Playwright i 1280 og 390 piksler bredde: ingen feil i konsollen, `scrollWidth` l
 5. **Mobiloppsettet** av den lille tidsserien er skjult under 640 piksler, så tidsutviklingen vises bare i seksjonene.
 6. **Tastatur:** prikkene i stripene har bare `<title>` for mus. Verdiene finnes i «Vis tallene».
 7. **Mouseover** finnes på linjer og stolper, ikke på stripene.
+8. **Små kommuner** rundt byene er vanskelige å treffe på kartet. Ringen viser valgt kommune, men kartet kan ikke zoomes.
+9. **Piltastene** på kartet går i kommunenummerrekkefølge, ikke geografisk.

@@ -7,7 +7,9 @@ Rådata:
   data/raw/sentralitet.json                Klass 128, korrespondanse 1417 (kommuner 2024)
   data/raw/fylker.json                     Klass 104, fylker 2024
   data/raw/kofola_land.json                tabell 11776, landet (json-stat2)
+  data/raw/kommuner2024-S.geojson          kommunegrenser 2024, forenklet (robhop/fylker-og-kommuner, Kartverket)
 """
+import math
 import itertools
 import json
 import os
@@ -42,6 +44,71 @@ MANGLER = {
     "C8": "Ingen nye boliger", "C10": "Ingen nye boliger",
     "C12": "Ingen nye næringsbygg",
 }
+# Sentralitetsklassene 1 og 2 slås sammen: klasse 1 har bare fem kommuner (valgt 06.11.2026).
+SENTRALITETSGRUPPE = {1: "1–2", 2: "1–2", 3: "3", 4: "4", 5: "5", 6: "6"}
+
+
+def kartstier(geojson, knr):
+    """Projiserer kommunegrensene (sfærisk transvers Mercator, sentralmeridian 15° Ø, som UTM 33)
+    og forenkler med Douglas-Peucker. Gir SVG-stier i et koordinatsystem 1000 piksler bredt."""
+    l0 = math.radians(15)
+
+    def proj(lon, lat):
+        lam, phi = math.radians(lon) - l0, math.radians(lat)
+        b = math.cos(phi) * math.sin(lam)
+        return 0.5 * math.log((1 + b) / (1 - b)), -math.atan2(math.tan(phi), math.cos(lam))
+
+    def dp(pts, eps):
+        if len(pts) < 3:
+            return pts
+        (x1, y1), (x2, y2) = pts[0], pts[-1]
+        dx, dy = x2 - x1, y2 - y1
+        n = math.hypot(dx, dy) or 1e-12
+        imax, dmax = 0, 0
+        for i in range(1, len(pts) - 1):
+            d = abs(dy * pts[i][0] - dx * pts[i][1] + x2 * y1 - y2 * x1) / n
+            if d > dmax:
+                imax, dmax = i, d
+        if dmax <= eps:
+            return [pts[0], pts[-1]]
+        return dp(pts[:imax + 1], eps)[:-1] + dp(pts[imax:], eps)
+
+    feats = {f["properties"]["kommunenummer"]: f["geometry"] for f in geojson["features"]}
+    proj_ringer = {}
+    xs, ys = [], []
+    for k in knr:
+        g = feats[k]
+        polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
+        ringer = []
+        for poly in polys:
+            for ring in poly:
+                r = [proj(*c[:2]) for c in ring]
+                ringer.append(r)
+                xs += [p[0] for p in r]
+                ys += [p[1] for p in r]
+        proj_ringer[k] = ringer
+    x0, y0 = min(xs), min(ys)
+    skala = 1000 / (max(xs) - x0)
+    hoyde = math.ceil((max(ys) - y0) * skala)
+    stier = {}
+    for k in knr:
+        deler = []
+        for r in proj_ringer[k]:
+            pts = [((x - x0) * skala, (y - y0) * skala) for x, y in r]
+            pts = dp(pts, 0.5)
+            if len(pts) < 4:
+                continue
+            xs_, ys_ = [p[0] for p in pts], [p[1] for p in pts]
+            if (max(xs_) - min(xs_)) * (max(ys_) - min(ys_)) < 0.3:   # små holmer forsvinner
+                continue
+            deler.append("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in pts[:-1]) + "Z")
+        if not deler:   # en kommune skal aldri forsvinne helt: ta største ring uforenklet
+            r = max(proj_ringer[k], key=len)
+            deler.append("M" + "L".join(f"{(x - x0) * skala:.1f},{(y - y0) * skala:.1f}" for x, y in r[:-1]) + "Z")
+        stier[k] = "".join(deler)
+    return {"b": 1000, "h": hoyde, "p": stier}
+
+
 # Null som betyr «ikke aktuelt» heller enn null prosent
 NULL_BETYR = {"A3": "Ingen tettsted", "C6": "Ingen sentrumssone"}
 
@@ -148,6 +215,12 @@ def main():
         land_nye["blokk"].append(round(sum(a6[n] * (a7[n] or 0) for n in f) / sm, 1))
         land_nye["antall"].append(round(sum(a6[n] for n in f)))
 
+    geo = jload("data", "raw", "kommuner2024-S.geojson")
+    geo_k = {f["properties"]["kommunenummer"] for f in geo["features"]}
+    if geo_k != set(knr):   # K6: kartet har nøyaktig de samme kommunene
+        stopp(f"kartet og dataene har ulike kommuner: {sorted(geo_k ^ set(knr))[:5]}")
+    kart = kartstier(geo, knr)
+
     synonymer = jload("data", "synonymer.json")["synonymer"]
     for s in synonymer:
         for k in s["k"]:
@@ -159,7 +232,8 @@ def main():
         "kilde": {"oppdatert": {"arealprofiler": "2025-08-29", "kofola_land": js.get("updated", "")[:10],
                                 "sentralitet": sentr.get("lastModified", "")[:10]},
                   "hentet": hentet},
-        "kommuner": [[n, navn[n], n[:2], kl[n][1]] for n in knr],
+        "kommuner": [[n, navn[n], n[:2], SENTRALITETSGRUPPE[kl[n][1]], kl[n][1]] for n in knr],
+        "kart": kart,
         "fylker": fylker,
         "indikatorer": ut_ind,
         "d": verdier,
@@ -171,7 +245,8 @@ def main():
     with open(os.path.join(BUILD, "arealprofiler.json"), "w", encoding="utf-8") as f:
         json.dump(ut, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
     print(f"lag_data: {len(knr)} kommuner, {len(ind)} indikatorer, {sum(len(x['aar']) for x in verdier.values())} indikatorår. "
-          f"Største avvik mot 11776: {storst:.0f} dekar. B8-summer {b8_min:.1f}–{b8_maks:.1f}.")
+          f"Største avvik mot 11776: {storst:.0f} dekar. B8-summer {b8_min:.1f}–{b8_maks:.1f}. "
+          f"Kart: {len(kart['p'])} kommuner, {sum(len(x) for x in kart['p'].values()) // 1024} kB stier.")
 
 
 if __name__ == "__main__":

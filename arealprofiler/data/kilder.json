@@ -3,7 +3,7 @@
  "kortnavn": "arealprofiler",
  "versjon": "0.1",
  "dato_valg": "2026-11-06",
- "merknad": "Hoveddatagrunnlaget er fjorårets fil (Arealprofiler 2025, publisert 29.08.2025), valgt av Thomas 06.11.2026. Den ligger uendret i data/raw/ og hentes ikke av hent_data.py. Tabell 14478/14488 er ikke publisert eksternt per 06.11.2026; URL-ene står i 'framtidig' og tas i bruk når de er publisert. Klass og 11776 hentes direkte med hent_data.py. URL-ene bruker PxWebApi v2 med valueCodes[...].",
+ "merknad": "Hoveddatagrunnlaget er fjorårets fil (Arealprofiler 2025, publisert 29.08.2025), valgt av Thomas 06.11.2026. Den ligger uendret i data/raw/ og hentes ikke av hent_data.py. Tabell 14478/14488 er ikke publisert eksternt per 06.11.2026; URL-ene står i 'framtidig' og tas i bruk når de er publisert. Klass og 11776 hentes direkte med hent_data.py. URL-ene bruker PxWebApi v2 med valueCodes[...]. Kartet er hentet 06.11.2026 fra et åpent GitHub-repo som bygger på Kartverkets data; det er ikke en SSB-kilde.",
  "valg": "Middels (valgt av Thomas 06.11.2026): alle år 2015–2025 for alle 35 indikatorer og 357 kommuner, sentralitet fra Klass og landstall for omdisponert jord fra tabell 11776.",
  "datasett": [
   {
@@ -66,6 +66,19 @@
    "seksjon": "Hva bygger vi ned: landstall mot jordvernmålet",
    "beskrivelse": "Omdisponert dyrka og dyrkbar jord for landet, alle formål og andre formål enn landbruk, etter lov.",
    "omfang": "2 arealtyper × 2 formål × 3 lover × 11 år (2015–2025) = 132 celler."
+  },
+  {
+   "id": "kart",
+   "type": "fil",
+   "tabell": null,
+   "fil": "data/raw/kommuner2024-S.geojson",
+   "kilde_url": "https://github.com/robhop/fylker-og-kommuner (gren 2024, Kommuner-S.geojson, commit 8d178fa)",
+   "svarer_paa": [
+    1
+   ],
+   "seksjon": "Velg på kartet",
+   "beskrivelse": "Kommunegrenser 2024 fra Kartverket, klippet etter kystlinjen og forenklet av robhop. lag_data.py projiserer (transvers Mercator, 15° Ø) og forenkler videre til SVG-stier.",
+   "omfang": "357 kommuner, samme kommunenumre som dataene (kontroll K6)."
   }
  ],
  "manglende_verdier": [
