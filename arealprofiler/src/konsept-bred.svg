@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="820" viewBox="0 0 1200 820">
+<rect x="0" y="0" width="1200" height="820" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Slik lages tallene</text>
+<text x="40.0" y="72.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">35 indikatorer per kommune, laget på fire måter</text>
+<line x1="40.0" y1="88.0" x2="1160.0" y2="88.0" stroke="#cdd3d4" stroke-width="1"/>
+<circle cx="53.0" cy="120.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="53.0" y="125.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">1</text>
+<text x="74.0" y="126.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Telt i registrene</text>
+<rect x="40.0" y="144.0" width="118.0" height="24.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<text x="48.0" y="160.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">12 indikatorer</text>
+<text x="40.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Personer, husholdninger, boliger og</text>
+<text x="40.0" y="208.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">bygg telles i registrene og føres til</text>
+<text x="40.0" y="226.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">kommunen de hører til.</text>
+<circle cx="338.0" cy="120.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="338.0" y="125.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">2</text>
+<text x="359.0" y="126.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Rapportert av kommunen</text>
+<rect x="325.0" y="144.0" width="118.0" height="24.0" rx="2" fill="#f2f0ff" stroke="#d2ceff" stroke-width="1"/>
+<text x="333.0" y="160.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">4 indikatorer</text>
+<text x="325.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Kommunene rapporterer vedtak og</text>
+<text x="325.0" y="208.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">saksbehandling til SSB gjennom KOSTRA.</text>
+<circle cx="623.0" cy="120.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="623.0" y="125.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">3</text>
+<text x="644.0" y="126.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Plassert i kartet</text>
+<rect x="610.0" y="144.0" width="118.0" height="24.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<text x="618.0" y="160.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">18 indikatorer</text>
+<text x="610.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Bygninger og bosatte plasseres i</text>
+<text x="610.0" y="208.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">kartet og holdes opp mot soner:</text>
+<text x="610.0" y="226.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">tettsted, sentrum,</text>
+<text x="610.0" y="244.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">arbeidsplassklynger, strandsone,</text>
+<text x="610.0" y="262.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">fareområder, natur.</text>
+<circle cx="908.0" cy="120.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="908.0" y="125.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">4</text>
+<text x="929.0" y="126.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Planen mot virkeligheten</text>
+<rect x="895.0" y="144.0" width="118.0" height="24.0" rx="2" fill="#f2f0ff" stroke="#d2ceff" stroke-width="1"/>
+<text x="903.0" y="160.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">1 indikator</text>
+<text x="895.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Kommuneplanens arealdel legges over</text>
+<text x="895.0" y="208.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">kartet. Det som er satt av, men ikke</text>
+<text x="895.0" y="226.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">bygd, er reserven.</text>
+<rect x="40.0" y="284.0" width="265.0" height="118.0" rx="2" fill="#ffffff" stroke="#cdd3d4" stroke-width="1"/>
+<rect x="40.0" y="284.0" width="265.0" height="26.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<text x="50.0" y="302.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Register</text>
+<text x="295.0" y="302.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">kommune</text>
+<text x="50.0" y="330.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">person, 67 år</text>
+<text x="295.0" y="330.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">3405</text>
+<line x1="48.0" y1="338.0" x2="297.0" y2="338.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="50.0" y="356.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">husholdning, leier</text>
+<text x="295.0" y="356.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">3405</text>
+<line x1="48.0" y1="364.0" x2="297.0" y2="364.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="50.0" y="382.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">bolig i blokk, 2024</text>
+<text x="295.0" y="382.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">3405</text>
+<line x1="48.0" y1="390.0" x2="297.0" y2="390.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="40.0" y="424.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Gir blant annet</text>
+<text x="40.0" y="441.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">alder, inntekt, leie, flytting,</text>
+<text x="40.0" y="458.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">pendling, nye boliger og fritidsbygg</text>
+<text x="40.0" y="483.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">Lillehammer</text>
+<text x="40.0" y="500.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">28,0 % over 60 år (2025)</text>
+<text x="40.0" y="525.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilder: Folkeregisteret, Matrikkelen,</text>
+<text x="40.0" y="541.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">inntekts- og sysselsettingsregistre</text>
+<rect x="325.0" y="284.0" width="265.0" height="118.0" rx="2" fill="#ffffff" stroke="#cdd3d4" stroke-width="1"/>
+<rect x="325.0" y="284.0" width="5.0" height="118.0" rx="0" fill="#7e5ee8" stroke="none" stroke-width="1"/>
+<text x="339.0" y="304.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">Kommunens rapport til SSB</text>
+<text x="339.0" y="332.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Dispensasjoner, 100 m</text>
+<rect x="526.0" y="318.0" width="54.0" height="20.0" rx="2" fill="#f2f0ff" stroke="#d2ceff" stroke-width="1"/>
+<text x="553.0" y="333.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">antall</text>
+<text x="339.0" y="358.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Omdisponert dyrka jord</text>
+<rect x="526.0" y="344.0" width="54.0" height="20.0" rx="2" fill="#f2f0ff" stroke="#d2ceff" stroke-width="1"/>
+<text x="553.0" y="359.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">dekar</text>
+<text x="339.0" y="384.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Nydyrket areal</text>
+<rect x="526.0" y="370.0" width="54.0" height="20.0" rx="2" fill="#f2f0ff" stroke="#d2ceff" stroke-width="1"/>
+<text x="553.0" y="385.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">dekar</text>
+<text x="325.0" y="424.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Gir blant annet</text>
+<text x="325.0" y="441.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">dispensasjoner i strandsonen,</text>
+<text x="325.0" y="458.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">omdisponert og nydyrket jord</text>
+<text x="325.0" y="483.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">Lillehammer</text>
+<text x="325.0" y="500.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">49 dekar nydyrket (2024)</text>
+<text x="325.0" y="525.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilder: KOSTRA plan og byggesak, KOSTRA</text>
+<text x="325.0" y="541.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">landbruk</text>
+<rect x="610.0" y="284.0" width="265.0" height="118.0" rx="2" fill="#ffffff" stroke="#cdd3d4" stroke-width="1"/>
+<rect x="610.0" y="284.0" width="24.0" height="118.0" rx="0" fill="#f0f8f9" stroke="none" stroke-width="1"/>
+<rect x="634.0" y="284.0" width="16.0" height="118.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="670.0" y="300.0" width="189.0" height="74.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<text x="676.0" y="315.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">tettsted</text>
+<rect x="696.0" y="324.0" width="96.0" height="34.0" rx="2" fill="#b6e8b8" stroke="#00824d" stroke-width="1"/>
+<text x="744.0" y="345.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">sentrumssone</text>
+<rect x="805.0" y="378.0" width="56.0" height="18.0" rx="2" fill="#ffffff" stroke="#274246" stroke-width="1"/>
+<text x="833.0" y="391.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">fare</text>
+<rect x="802.0" y="362.0" width="8.0" height="8.0" rx="0" fill="#274246" stroke="none" stroke-width="1"/>
+<rect x="680.0" y="360.0" width="8.0" height="8.0" rx="0" fill="#274246" stroke="none" stroke-width="1"/>
+<rect x="638.0" y="340.0" width="8.0" height="8.0" rx="0" fill="#274246" stroke="none" stroke-width="1"/>
+<rect x="716.0" y="384.0" width="8.0" height="8.0" rx="0" fill="#274246" stroke="none" stroke-width="1"/>
+<rect x="841.0" y="310.0" width="8.0" height="8.0" rx="0" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="622.0" y="394.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="middle" style="font-variant-numeric:tabular-nums">sjø</text>
+<text x="610.0" y="424.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Gir blant annet</text>
+<text x="610.0" y="441.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">tetthet, avstander, strandsone, fare,</text>
+<text x="610.0" y="458.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">bebygd areal, tilgang til natur</text>
+<text x="610.0" y="483.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">Lillehammer</text>
+<text x="610.0" y="500.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">3,4 % av nye boliger utenfor tettsted</text>
+<text x="610.0" y="517.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">(2025)</text>
+<text x="610.0" y="542.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilder: Matrikkelen, Folkeregisteret, SSBs</text>
+<text x="610.0" y="558.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">arealbrukskart og soner, NVE, Kartverket</text>
+<rect x="895.0" y="284.0" width="265.0" height="118.0" rx="2" fill="#ffffff" stroke="#cdd3d4" stroke-width="1"/>
+<rect x="911.0" y="314.0" width="233.0" height="66.0" rx="2" fill="#f2f0ff" stroke="#7e5ee8" stroke-width="1" stroke-dasharray="6 4"/>
+<text x="911.0" y="304.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">Planlagt boligområde</text>
+<rect x="911.0" y="314.0" width="116.5" height="66.0" rx="2" fill="#b6e8b8" stroke="#00824d" stroke-width="1"/>
+<text x="921.0" y="352.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">bygd</text>
+<text x="1085.8" y="344.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">ledig</text>
+<text x="1085.8" y="362.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">= reserve</text>
+<text x="911.0" y="396.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">plan lagt over kart over faktisk arealbruk</text>
+<text x="895.0" y="424.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Gir blant annet</text>
+<text x="895.0" y="441.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">ledig areal til bolig</text>
+<text x="895.0" y="466.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">Lillehammer</text>
+<text x="895.0" y="483.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">197 dekar ledig til bolig (2024)</text>
+<text x="895.0" y="508.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilder: Kommuneplanens arealdel, SSBs</text>
+<text x="895.0" y="524.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">arealbrukskart</text>
+<line x1="315.0" y1="108.0" x2="315.0" y2="574.0" stroke="#d9dfe0" stroke-width="1"/>
+<line x1="600.0" y1="108.0" x2="600.0" y2="574.0" stroke="#d9dfe0" stroke-width="1"/>
+<line x1="885.0" y1="108.0" x2="885.0" y2="574.0" stroke="#d9dfe0" stroke-width="1"/>
+<rect x="40.0" y="600.0" width="550.0" height="170.0" rx="2" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1"/>
+<rect x="40.0" y="600.0" width="550.0" height="5.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="56.0" y="628.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Felles for alle</text>
+<text x="56.0" y="652.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Ett tall per kommune og år, for 35 indikatorer og 357 kommuner (inndeling</text>
+<text x="56.0" y="670.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">2024). 10 indikatorer er summer for de siste fire årene, så tre av fire år</text>
+<text x="56.0" y="688.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">går igjen fra ett år til det neste. Siste år er 2023, 2024 eller 2025,</text>
+<text x="56.0" y="706.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">avhengig av indikatoren.</text>
+<rect x="610.0" y="600.0" width="550.0" height="170.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="6 4"/>
+<text x="626.0" y="628.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Det tallene ikke viser</text>
+<text x="626.0" y="652.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Grunnareal er ikke boligstørrelse: tomt og uteareal til bolig,</text>
+<text x="626.0" y="670.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">ikke bruksarealet i boligen.</text>
+<text x="626.0" y="694.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">En reserve er planlagt, ikke bygd. Det finnes ingen landstall i</text>
+<text x="626.0" y="712.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">datagrunnlaget.</text>
+<text x="626.0" y="736.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Kommuner uten tettsted, sentrumssone eller kyst mangler noen tall.</text>
+<text x="626.0" y="754.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Det er ikke null.</text>
+<text x="40.0" y="794.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, datagrunnlaget for Arealprofiler 2025 (publisert 29.08.2025). Definisjoner: forklaringstekstene i arealprofilene. Lillehammer er eksempelkommune.</text>
+</svg>

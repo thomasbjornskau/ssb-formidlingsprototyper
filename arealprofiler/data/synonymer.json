@@ -1,0 +1,15 @@
+{
+ "merknad": "Tidligere kommunenavn som folk fortsatt søker på. ord = søkeordet, k = kommunenummer i inndelingen 2024, usikker = om koblingen er usikker. lag_data.py stopper hvis et nummer ikke finnes.",
+ "synonymer": [
+  {"ord": "Skedsmo", "k": ["3205"], "usikker": false},
+  {"ord": "Fet", "k": ["3205"], "usikker": false},
+  {"ord": "Sørum", "k": ["3205"], "usikker": false},
+  {"ord": "Røyken", "k": ["3203"], "usikker": false},
+  {"ord": "Hurum", "k": ["3203"], "usikker": false},
+  {"ord": "Nøtterøy", "k": ["3911"], "usikker": false},
+  {"ord": "Tjøme", "k": ["3911"], "usikker": false},
+  {"ord": "Rissa", "k": ["5054"], "usikker": false},
+  {"ord": "Leksvik", "k": ["5054"], "usikker": false},
+  {"ord": "Sandvika", "k": ["3201"], "usikker": true}
+ ]
+}

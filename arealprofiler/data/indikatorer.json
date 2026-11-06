@@ -1,0 +1,361 @@
+{
+ "merknad": "Indikatorliste for prototypen. etikett = statistikkvariabel i datagrunnlaget (tegn for tegn). kort_navn og seksjon er egne valg. kildetabell er hentet fra forklaringstekstene i Tableau-arbeidsboka der den er oppgitt.",
+ "typer": {
+  "register": "Telt i registrene",
+  "kostra": "Rapportert av kommunen (KOSTRA)",
+  "kart": "Plassert i kartet",
+  "plan": "Planen mot faktisk arealbruk"
+ },
+ "indikatorer": [
+  {
+   "kode": "A1",
+   "etikett": "Boligareal per bosatt. Kvadratmeter",
+   "kort_navn": "Grunnareal til bolig per bosatt",
+   "enhet": "m²",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "A2",
+   "etikett": "Bosatte per kvadratkilometer tettstedsareal",
+   "kort_navn": "Bosatte per km² tettstedsareal",
+   "enhet": "per km²",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": "04861"
+  },
+  {
+   "kode": "A3",
+   "etikett": "Andel bosatte i tettsted. Prosent",
+   "kort_navn": "Andel bosatte i tettsted",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": "04861"
+  },
+  {
+   "kode": "A4",
+   "etikett": "Andel boliger i blokk. Prosent",
+   "kort_navn": "Andel boliger i blokk",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "A5",
+   "etikett": "Andel leid bolig. Prosent av husholdninger",
+   "kort_navn": "Andel husholdninger som leier",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": "11084"
+  },
+  {
+   "kode": "A6",
+   "etikett": "Nye boliger siste 4 år",
+   "kort_navn": "Nye boliger",
+   "enhet": "antall",
+   "type": "register",
+   "seksjon": "tetthet",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "A7",
+   "etikett": "Andel nye boliger siste 4 år i blokk. Prosent",
+   "kort_navn": "Andel nye boliger i blokk",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "tetthet",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "A8",
+   "etikett": "Andel nye boliger siste 4 år utenfor tettsted",
+   "kort_navn": "Andel nye boliger utenfor tettsted",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "A9",
+   "etikett": "Andel over 60 år. Prosent",
+   "kort_navn": "Andel over 60 år",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "A10",
+   "etikett": "Andel husholdninger bestående av eldre minst 67 år. Prosent",
+   "kort_navn": "Andel husholdninger med eldre 67+",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": "06070"
+  },
+  {
+   "kode": "A11",
+   "etikett": "Andel personer i lavinntekthusholdning (EU60). Prosent",
+   "kort_navn": "Andel i lavinntektshusholdning",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": "06947"
+  },
+  {
+   "kode": "A12",
+   "etikett": "Andel kommunalt disponerte boliger. Prosent",
+   "kort_navn": "Andel kommunalt disponerte boliger",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": "12008"
+  },
+  {
+   "kode": "A13",
+   "etikett": "Flyttinger innen kommunen per 1 000 innbyggere",
+   "kort_navn": "Flyttinger innen kommunen per 1 000",
+   "enhet": "per 1 000",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "A14",
+   "etikett": "Netto innflytting. Antall personer",
+   "kort_navn": "Netto innflytting",
+   "enhet": "personer",
+   "type": "register",
+   "seksjon": "befolkning",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "B1",
+   "etikett": "Nye fritidsbygg siste 4 år",
+   "kort_navn": "Nye fritidsbygg",
+   "enhet": "antall",
+   "type": "register",
+   "seksjon": "nedbygging",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "B2",
+   "etikett": "Andel potensielt tilgjengelig strandsoneareal. Prosent",
+   "kort_navn": "Tilgjengelig strandsone",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "nedbygging",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "B3",
+   "etikett": "Nye bygg i strandsona siste 4 år",
+   "kort_navn": "Nye bygg i strandsonen",
+   "enhet": "antall",
+   "type": "kart",
+   "seksjon": "nedbygging",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "B4",
+   "etikett": "Byggesøknader i 100-m beltet innvilget gjennom dispensasjon. Antall",
+   "kort_navn": "Dispensasjoner i 100-metersbeltet",
+   "enhet": "antall",
+   "type": "kostra",
+   "seksjon": "nedbygging",
+   "fire_aar": false,
+   "kildetabell": "13128"
+  },
+  {
+   "kode": "B5",
+   "etikett": "Antall igangsatte bygninger innen aktsomhetsområder siste 4 år",
+   "kort_navn": "Nye bygninger i aktsomhetsområder",
+   "enhet": "antall",
+   "type": "kart",
+   "seksjon": "fare",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "B6",
+   "etikett": "Andel tettstedsbosatte med trygg tilgang til rekreasjonsareal. Prosent",
+   "kort_navn": "Trygg tilgang til rekreasjonsareal",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "natur",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "B7",
+   "etikett": "Andel tettstedsbosatte med trygg tilgang til nærturterreng. Prosent",
+   "kort_navn": "Trygg tilgang til nærturterreng",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "natur",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "B8",
+   "etikett": "Andel bebygd areal etter arealbruksklasse",
+   "kort_navn": "Bebygd areal etter arealbruk",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "nedbygging",
+   "fire_aar": false,
+   "kildetabell": "09594"
+  },
+  {
+   "kode": "B9",
+   "etikett": "Ledig ubebygd areal innen kommuneplanens arealdels 1110 Boligbebyggelse og 110 Boligområde (pbl 1985). Dekar",
+   "kort_navn": "Ledig areal til bolig i kommuneplanen",
+   "enhet": "dekar",
+   "type": "plan",
+   "seksjon": "plan",
+   "fire_aar": false,
+   "kildetabell": "14352"
+  },
+  {
+   "kode": "B10",
+   "etikett": "Antall igangsatte bygninger innen naturfareområder siste 4 år",
+   "kort_navn": "Nye bygninger i naturfareområder",
+   "enhet": "antall",
+   "type": "kart",
+   "seksjon": "fare",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "C1",
+   "etikett": "Godkjent nydyrket areal. Dekar",
+   "kort_navn": "Nydyrket areal",
+   "enhet": "dekar",
+   "type": "kostra",
+   "seksjon": "nedbygging",
+   "fire_aar": false,
+   "kildetabell": "08123"
+  },
+  {
+   "kode": "C3",
+   "etikett": "Omdisponering av dyrket jord aktuelt år. Dekar",
+   "kort_navn": "Omdisponert dyrka jord",
+   "enhet": "dekar",
+   "type": "kostra",
+   "seksjon": "nedbygging",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "C4",
+   "etikett": "Omdisponering av dyrkbar jord aktuelt år. Dekar",
+   "kort_navn": "Omdisponert dyrkbar jord",
+   "enhet": "dekar",
+   "type": "kostra",
+   "seksjon": "nedbygging",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "C5",
+   "etikett": "Andel sysselsatte bosatt i egen kommune. Prosent",
+   "kort_navn": "Andel som bor og jobber i kommunen",
+   "enhet": "prosent",
+   "type": "register",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": "03321"
+  },
+  {
+   "kode": "C6",
+   "etikett": "Andel som arbeider i hovedsentrum i egen kommune. Prosent",
+   "kort_navn": "Andel som jobber i sentrum",
+   "enhet": "prosent",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "C7",
+   "etikett": "Boligenes gj.avst. til arbeidsplassklynger. Km",
+   "kort_navn": "Boliger, avstand til arbeidsplassklynge",
+   "enhet": "km",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "C8",
+   "etikett": "Boliger igangs. siste 4 år, gj.avst. til arbeidsplassklynger. Km",
+   "kort_navn": "Nye boliger, avstand til arbeidsplassklynge",
+   "enhet": "km",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "C9",
+   "etikett": "Boliger, gj.avst. sentrumssone. Km",
+   "kort_navn": "Boliger, avstand til sentrumssone",
+   "enhet": "km",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "C10",
+   "etikett": "Boliger, igangs. siste 4 år, gj.avst. sentrumssone. Km",
+   "kort_navn": "Nye boliger, avstand til sentrumssone",
+   "enhet": "km",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": true,
+   "kildetabell": null
+  },
+  {
+   "kode": "C11",
+   "etikett": "Næringsbyggs nærhet til sentrumssone. Kilometer",
+   "kort_navn": "Næringsbygg, avstand til sentrumssone",
+   "enhet": "km",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": false,
+   "kildetabell": null
+  },
+  {
+   "kode": "C12",
+   "etikett": "Næringsbyggs nærhet til sentrumssone, bygg igangsatt siste 4 år. Kilometer",
+   "kort_navn": "Nye næringsbygg, avstand til sentrumssone",
+   "enhet": "km",
+   "type": "kart",
+   "seksjon": "tetthet",
+   "fire_aar": true,
+   "kildetabell": null
+  }
+ ]
+}

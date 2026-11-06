@@ -1,0 +1,358 @@
+kommunenr;kommune;sentralitetsklasse
+0301;Oslo;1
+1101;Eigersund;4
+1103;Stavanger;2
+1106;Haugesund;3
+1108;Sandnes;2
+1111;Sokndal;5
+1112;Lund;5
+1114;Bjerkreim;4
+1119;Hå;4
+1120;Klepp;3
+1121;Time;3
+1122;Gjesdal;3
+1124;Sola;2
+1127;Randaberg;3
+1130;Strand;3
+1133;Hjelmeland;5
+1134;Suldal;6
+1135;Sauda;5
+1144;Kvitsøy;6
+1145;Bokn;5
+1146;Tysvær;4
+1149;Karmøy;4
+1151;Utsira;6
+1160;Vindafjord;5
+1505;Kristiansund;4
+1506;Molde;4
+1508;Ålesund;3
+1511;Vanylven;6
+1514;Sande;6
+1515;Herøy (Møre og Romsdal);5
+1516;Ulstein;4
+1517;Hareid;4
+1520;Ørsta;4
+1525;Stranda;5
+1528;Sykkylven;4
+1531;Sula;4
+1532;Giske;4
+1535;Vestnes;5
+1539;Rauma;5
+1547;Aukra;5
+1554;Averøy;5
+1557;Gjemnes;5
+1560;Tingvoll;5
+1563;Sunndal;5
+1566;Surnadal;5
+1573;Smøla;6
+1576;Aure;6
+1577;Volda;4
+1578;Fjord;6
+1579;Hustadvika;5
+1580;Haram;5
+1804;Bodø;3
+1806;Narvik;4
+1811;Bindal;6
+1812;Sømna;6
+1813;Brønnøy;5
+1815;Vega;6
+1816;Vevelstad;6
+1818;Herøy (Nordland);6
+1820;Alstahaug;5
+1822;Leirfjord;6
+1824;Vefsn;4
+1825;Grane;6
+1826;Aarborte - Hattfjelldal;6
+1827;Dønna;6
+1828;Nesna;6
+1832;Hemnes;5
+1833;Rana - Raane;4
+1834;Lurøy;6
+1835;Træna;6
+1836;Rødøy;6
+1837;Meløy;6
+1838;Gildeskål;6
+1839;Beiarn;6
+1840;Saltdal;5
+1841;Fauske - Fuossko;4
+1845;Sørfold - Fuolldá;6
+1848;Steigen;6
+1851;Lødingen;6
+1853;Evenes - Evenášši;6
+1856;Røst;6
+1857;Værøy;6
+1859;Flakstad;6
+1860;Vestvågøy;5
+1865;Vågan;5
+1866;Hadsel;5
+1867;Bø;6
+1868;Øksnes;5
+1870;Sortland - Suortá;4
+1871;Andøy;6
+1874;Moskenes;6
+1875;Hábmer - Hamarøy;6
+3101;Halden;3
+3103;Moss;2
+3105;Sarpsborg;2
+3107;Fredrikstad;2
+3110;Hvaler;4
+3112;Råde;3
+3114;Våler (Østfold);3
+3116;Skiptvet;3
+3118;Indre Østfold;3
+3120;Rakkestad;3
+3122;Marker;4
+3124;Aremark;5
+3201;Bærum;1
+3203;Asker;2
+3205;Lillestrøm;1
+3207;Nordre Follo;2
+3209;Ullensaker;2
+3212;Nesodden;3
+3214;Frogn;2
+3216;Vestby;2
+3218;Ås;2
+3220;Enebakk;3
+3222;Lørenskog;1
+3224;Rælingen;1
+3226;Aurskog-Høland;3
+3228;Nes;3
+3230;Gjerdrum;2
+3232;Nittedal;2
+3234;Lunner;3
+3236;Jevnaker;3
+3238;Nannestad;3
+3240;Eidsvoll;3
+3242;Hurdal;4
+3301;Drammen;2
+3303;Kongsberg;3
+3305;Ringerike;3
+3310;Hole;3
+3312;Lier;2
+3314;Øvre Eiker;3
+3316;Modum;3
+3318;Krødsherad;5
+3320;Flå;5
+3322;Nesbyen;5
+3324;Gol;4
+3326;Hemsedal;5
+3328;Ål;5
+3330;Hol;5
+3332;Sigdal;5
+3334;Flesberg;4
+3336;Rollag;5
+3338;Nore og Uvdal;6
+3401;Kongsvinger;3
+3403;Hamar;2
+3405;Lillehammer;3
+3407;Gjøvik;3
+3411;Ringsaker;3
+3412;Løten;3
+3413;Stange;3
+3414;Nord-Odal;4
+3415;Sør-Odal;3
+3416;Eidskog;4
+3417;Grue;5
+3418;Åsnes;5
+3419;Våler (Innlandet);5
+3420;Elverum;3
+3421;Trysil;5
+3422;Åmot;5
+3423;Stor-Elvdal;6
+3424;Rendalen;6
+3425;Engerdal;6
+3426;Tolga;5
+3427;Tynset;5
+3428;Alvdal;5
+3429;Folldal;6
+3430;Os;6
+3431;Dovre;6
+3432;Lesja;6
+3433;Skjåk;6
+3434;Lom;6
+3435;Vågå;5
+3436;Nord-Fron;5
+3437;Sel;5
+3438;Sør-Fron;5
+3439;Ringebu;5
+3440;Øyer;4
+3441;Gausdal;4
+3442;Østre Toten;4
+3443;Vestre Toten;3
+3446;Gran;3
+3447;Søndre Land;4
+3448;Nordre Land;4
+3449;Sør-Aurdal;5
+3450;Etnedal;5
+3451;Nord-Aurdal;4
+3452;Vestre Slidre;5
+3453;Øystre Slidre;5
+3454;Vang;6
+3901;Horten;2
+3903;Holmestrand;3
+3905;Tønsberg;2
+3907;Sandefjord;3
+3909;Larvik;3
+3911;Færder;3
+4001;Porsgrunn;3
+4003;Skien;3
+4005;Notodden;4
+4010;Siljan;4
+4012;Bamble;3
+4014;Kragerø;4
+4016;Drangedal;5
+4018;Nome;4
+4020;Midt-Telemark;4
+4022;Seljord;5
+4024;Hjartdal;5
+4026;Tinn;5
+4028;Kviteseid;5
+4030;Nissedal;6
+4032;Fyresdal;6
+4034;Tokke;6
+4036;Vinje;6
+4201;Risør;4
+4202;Grimstad;3
+4203;Arendal;3
+4204;Kristiansand;3
+4205;Lindesnes;4
+4206;Farsund;4
+4207;Flekkefjord;4
+4211;Gjerstad;5
+4212;Vegårshei;5
+4213;Tvedestrand;4
+4214;Froland;4
+4215;Lillesand;3
+4216;Birkenes;4
+4217;Åmli;5
+4218;Iveland;5
+4219;Evje og Hornnes;4
+4220;Bygland;6
+4221;Valle;6
+4222;Bykle;6
+4223;Vennesla;3
+4224;Åseral;6
+4225;Lyngdal;4
+4226;Hægebostad;5
+4227;Kvinesdal;5
+4228;Sirdal;5
+4601;Bergen;2
+4602;Kinn;5
+4611;Etne;5
+4612;Sveio;4
+4613;Bømlo;5
+4614;Stord;4
+4615;Fitjar;5
+4616;Tysnes;5
+4617;Kvinnherad;5
+4618;Ullensvang;5
+4619;Eidfjord;6
+4620;Ulvik;6
+4621;Voss;4
+4622;Kvam;4
+4623;Samnanger;4
+4624;Bjørnafjorden;4
+4625;Austevoll;5
+4626;Øygarden;4
+4627;Askøy;3
+4628;Vaksdal;5
+4629;Modalen;6
+4630;Osterøy;4
+4631;Alver;4
+4632;Austrheim;5
+4633;Fedje;6
+4634;Masfjorden;6
+4635;Gulen;6
+4636;Solund;6
+4637;Hyllestad;6
+4638;Høyanger;6
+4639;Vik;6
+4640;Sogndal;5
+4641;Aurland;6
+4642;Lærdal;5
+4643;Årdal;5
+4644;Luster;5
+4645;Askvoll;6
+4646;Fjaler;6
+4647;Sunnfjord;5
+4648;Bremanger;6
+4649;Stad;5
+4650;Gloppen;5
+4651;Stryn;5
+5001;Trondheim - Tråante;2
+5006;Steinkjer;4
+5007;Namsos - Nåavmesjenjaelmie;4
+5014;Frøya;6
+5020;Osen;6
+5021;Oppdal;5
+5022;Rennebu;5
+5025;Røros - Rosse;5
+5026;Holtålen;6
+5027;Midtre Gauldal;5
+5028;Melhus;3
+5029;Skaun;4
+5031;Malvik;3
+5032;Selbu;5
+5033;Tydal;6
+5034;Meråker;5
+5035;Stjørdal;3
+5036;Frosta;5
+5037;Levanger - Levangke;4
+5038;Verdal;4
+5041;Snåase - Snåsa;6
+5042;Lierne;6
+5043;Raarvihke - Røyrvik;6
+5044;Namsskogan;6
+5045;Grong;5
+5046;Høylandet;6
+5047;Overhalla;5
+5049;Flatanger;6
+5052;Leka;6
+5053;Inderøy;4
+5054;Indre Fosen;5
+5055;Heim;5
+5056;Hitra;6
+5057;Ørland;5
+5058;Åfjord;6
+5059;Orkland;4
+5060;Nærøysund;5
+5061;Rindal;5
+5501;Tromsø;3
+5503;Harstad - Hárstták;4
+5510;Kvæfjord;5
+5512;Dielddanuorri - Tjeldsund;6
+5514;Ibestad;6
+5516;Gratangen - Rivtták;6
+5518;Loabák - Lavangen;6
+5520;Bardu;5
+5522;Salangen;6
+5524;Målselv;5
+5526;Sørreisa;5
+5528;Dyrøy;6
+5530;Senja;5
+5532;Balsfjord;6
+5534;Karlsøy;6
+5536;Lyngen;6
+5538;Storfjord - Omasvuotna - Omasvuono;6
+5540;Gáivuotna - Kåfjord - Kaivuono;6
+5542;Skjervøy;6
+5544;Nordreisa - Ráisa - Raisi;5
+5546;Kvænangen;6
+5601;Alta;4
+5603;Hammerfest - Hámmerfeasta;4
+5605;Sør-Varanger;5
+5607;Vadsø;5
+5610;Kárášjohka - Karasjok;6
+5612;Guovdageaidnu - Kautokeino;6
+5614;Loppa;6
+5616;Hasvik;6
+5618;Måsøy;6
+5620;Nordkapp;6
+5622;Porsanger - Porsángu - Porsanki;6
+5624;Lebesby;6
+5626;Gamvik;6
+5628;Deatnu - Tana;6
+5630;Berlevåg;6
+5632;Båtsfjord;6
+5634;Vardø;6
+5636;Unjárga - Nesseby;6

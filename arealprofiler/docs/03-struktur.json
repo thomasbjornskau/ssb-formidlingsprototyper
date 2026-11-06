@@ -1,0 +1,627 @@
+{
+ "rader": 105476,
+ "kommuner": 357,
+ "indikatorer": 35,
+ "verdier_med_desimalkomma_som_tekst": 43065,
+ "per_indikator": [
+  {
+   "kode": "A1",
+   "kort_navn": "Grunnareal til bolig per bosatt",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 70.0,
+   "median": 356.0,
+   "maks": 684.0
+  },
+  {
+   "kode": "A2",
+   "kort_navn": "Bosatte per km² tettstedsareal",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 335,
+   "mangler_siste_aar": 22,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 459.0,
+   "median": 1129.0,
+   "maks": 5484.0
+  },
+  {
+   "kode": "A3",
+   "kort_navn": "Andel bosatte i tettsted",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 22,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 59.0,
+   "maks": 100.0
+  },
+  {
+   "kode": "A4",
+   "kort_navn": "Andel boliger i blokk",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 46,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 4.0,
+   "maks": 72.0
+  },
+  {
+   "kode": "A5",
+   "kort_navn": "Andel husholdninger som leier",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 11.9,
+   "median": 21.6,
+   "maks": 38.6
+  },
+  {
+   "kode": "A6",
+   "kort_navn": "Nye boliger",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 352,
+   "mangler_siste_aar": 5,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 1.0,
+   "median": 59.0,
+   "maks": 8951.0
+  },
+  {
+   "kode": "A7",
+   "kort_navn": "Andel nye boliger i blokk",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 352,
+   "mangler_siste_aar": 5,
+   "nuller_siste_aar": 145,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 15.0,
+   "maks": 96.0
+  },
+  {
+   "kode": "A8",
+   "kort_navn": "Andel nye boliger utenfor tettsted",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 352,
+   "mangler_siste_aar": 5,
+   "nuller_siste_aar": 7,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 25.4,
+   "maks": 100.0
+  },
+  {
+   "kode": "A9",
+   "kort_navn": "Andel over 60 år",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 18.0,
+   "median": 30.0,
+   "maks": 43.0
+  },
+  {
+   "kode": "A10",
+   "kort_navn": "Andel husholdninger med eldre 67+",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 22.0,
+   "median": 43.0,
+   "maks": 60.4
+  },
+  {
+   "kode": "A11",
+   "kort_navn": "Andel i lavinntektshusholdning",
+   "aar_fra": 2015,
+   "aar_til": 2023,
+   "antall_aar": 9,
+   "kommuner_siste_aar": 355,
+   "mangler_siste_aar": 2,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 6.0,
+   "median": 11.0,
+   "maks": 20.0
+  },
+  {
+   "kode": "A12",
+   "kort_navn": "Andel kommunalt disponerte boliger",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 346,
+   "mangler_siste_aar": 11,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 0.6,
+   "median": 5.0,
+   "maks": 21.9
+  },
+  {
+   "kode": "A13",
+   "kort_navn": "Flyttinger innen kommunen per 1 000",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 27.0,
+   "median": 55.0,
+   "maks": 121.0
+  },
+  {
+   "kode": "A14",
+   "kort_navn": "Netto innflytting",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 4,
+   "hull_i_serien": [],
+   "min": -144.0,
+   "median": 25.0,
+   "maks": 1556.0
+  },
+  {
+   "kode": "B1",
+   "kort_navn": "Nye fritidsbygg",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 341,
+   "mangler_siste_aar": 16,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 1.0,
+   "median": 20.0,
+   "maks": 451.0
+  },
+  {
+   "kode": "B2",
+   "kort_navn": "Tilgjengelig strandsone",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 7,
+   "kommuner_siste_aar": 226,
+   "mangler_siste_aar": 131,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [
+    2016,
+    2017,
+    2018
+   ],
+   "min": 20.6,
+   "median": 64.44999999999999,
+   "maks": 94.4
+  },
+  {
+   "kode": "B3",
+   "kort_navn": "Nye bygg i strandsonen",
+   "aar_fra": 2019,
+   "aar_til": 2024,
+   "antall_aar": 5,
+   "kommuner_siste_aar": 226,
+   "mangler_siste_aar": 131,
+   "nuller_siste_aar": 9,
+   "hull_i_serien": [
+    2020
+   ],
+   "min": 0.0,
+   "median": 37.0,
+   "maks": 426.0
+  },
+  {
+   "kode": "B4",
+   "kort_navn": "Dispensasjoner i 100-metersbeltet",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 103,
+   "mangler_siste_aar": 254,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 1.0,
+   "median": 4.0,
+   "maks": 31.0
+  },
+  {
+   "kode": "B5",
+   "kort_navn": "Nye bygninger i aktsomhetsområder",
+   "aar_fra": 2024,
+   "aar_til": 2025,
+   "antall_aar": 2,
+   "kommuner_siste_aar": 354,
+   "mangler_siste_aar": 3,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 1.0,
+   "median": 76.0,
+   "maks": 1849.0
+  },
+  {
+   "kode": "B6",
+   "kort_navn": "Trygg tilgang til rekreasjonsareal",
+   "aar_fra": 2022,
+   "aar_til": 2024,
+   "antall_aar": 2,
+   "kommuner_siste_aar": 333,
+   "mangler_siste_aar": 24,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [
+    2023
+   ],
+   "min": 20.0,
+   "median": 71.0,
+   "maks": 100.0
+  },
+  {
+   "kode": "B7",
+   "kort_navn": "Trygg tilgang til nærturterreng",
+   "aar_fra": 2022,
+   "aar_til": 2024,
+   "antall_aar": 2,
+   "kommuner_siste_aar": 333,
+   "mangler_siste_aar": 24,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [
+    2023
+   ],
+   "min": 2.0,
+   "median": 75.0,
+   "maks": 100.0
+  },
+  {
+   "kode": "B8",
+   "kort_navn": "Bebygd areal etter arealbruk",
+   "aar_fra": 2024,
+   "aar_til": 2025,
+   "antall_aar": 2,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 93.19999999999999,
+   "median": 99.7,
+   "maks": 100.8
+  },
+  {
+   "kode": "B9",
+   "kort_navn": "Ledig areal til bolig i kommuneplanen",
+   "aar_fra": 2023,
+   "aar_til": 2024,
+   "antall_aar": 2,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 25,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 642.0,
+   "maks": 6060.0
+  },
+  {
+   "kode": "B10",
+   "kort_navn": "Nye bygninger i naturfareområder",
+   "aar_fra": 2024,
+   "aar_til": 2025,
+   "antall_aar": 2,
+   "kommuner_siste_aar": 195,
+   "mangler_siste_aar": 162,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 1.0,
+   "median": 8.0,
+   "maks": 310.0
+  },
+  {
+   "kode": "C1",
+   "kort_navn": "Nydyrket areal",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 168,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 3.0,
+   "maks": 739.0
+  },
+  {
+   "kode": "C3",
+   "kort_navn": "Omdisponert dyrka jord",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 159,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 1.0,
+   "maks": 317.0
+  },
+  {
+   "kode": "C4",
+   "kort_navn": "Omdisponert dyrkbar jord",
+   "aar_fra": 2015,
+   "aar_til": 2024,
+   "antall_aar": 10,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 238,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 0.0,
+   "maks": 616.0
+  },
+  {
+   "kode": "C5",
+   "kort_navn": "Andel som bor og jobber i kommunen",
+   "aar_fra": 2015,
+   "aar_til": 2023,
+   "antall_aar": 9,
+   "kommuner_siste_aar": 355,
+   "mangler_siste_aar": 2,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 16.0,
+   "median": 66.9,
+   "maks": 92.5
+  },
+  {
+   "kode": "C6",
+   "kort_navn": "Andel som jobber i sentrum",
+   "aar_fra": 2019,
+   "aar_til": 2024,
+   "antall_aar": 6,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 135,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 3.9,
+   "maks": 34.3
+  },
+  {
+   "kode": "C7",
+   "kort_navn": "Boliger, avstand til arbeidsplassklynge",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 12,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 1.6,
+   "maks": 10.9
+  },
+  {
+   "kode": "C8",
+   "kort_navn": "Nye boliger, avstand til arbeidsplassklynge",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 352,
+   "mangler_siste_aar": 5,
+   "nuller_siste_aar": 27,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 0.7,
+   "maks": 15.5
+  },
+  {
+   "kode": "C9",
+   "kort_navn": "Boliger, avstand til sentrumssone",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 0.3,
+   "median": 6.6,
+   "maks": 94.2
+  },
+  {
+   "kode": "C10",
+   "kort_navn": "Nye boliger, avstand til sentrumssone",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 352,
+   "mangler_siste_aar": 5,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 0.4,
+   "median": 5.3,
+   "maks": 95.2
+  },
+  {
+   "kode": "C11",
+   "kort_navn": "Næringsbygg, avstand til sentrumssone",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 357,
+   "mangler_siste_aar": 0,
+   "nuller_siste_aar": 0,
+   "hull_i_serien": [],
+   "min": 0.4,
+   "median": 8.4,
+   "maks": 94.6
+  },
+  {
+   "kode": "C12",
+   "kort_navn": "Nye næringsbygg, avstand til sentrumssone",
+   "aar_fra": 2015,
+   "aar_til": 2025,
+   "antall_aar": 11,
+   "kommuner_siste_aar": 318,
+   "mangler_siste_aar": 39,
+   "nuller_siste_aar": 1,
+   "hull_i_serien": [],
+   "min": 0.0,
+   "median": 6.25,
+   "maks": 58.8
+  }
+ ],
+ "b8_summer_utenfor_100_pm_1_5": [
+  [
+   "0301",
+   2025,
+   98.4
+  ],
+  [
+   "1112",
+   2025,
+   97.1
+  ],
+  [
+   "1144",
+   2024,
+   96.5
+  ],
+  [
+   "1144",
+   2025,
+   96.5
+  ],
+  [
+   "1151",
+   2024,
+   90.9
+  ],
+  [
+   "1151",
+   2025,
+   93.9
+  ],
+  [
+   "1539",
+   2025,
+   97.5
+  ],
+  [
+   "1816",
+   2024,
+   97.5
+  ],
+  [
+   "1816",
+   2025,
+   97.6
+  ],
+  [
+   "1824",
+   2025,
+   98.0
+  ],
+  [
+   "1825",
+   2025,
+   94.2
+  ],
+  [
+   "1833",
+   2025,
+   98.3
+  ],
+  [
+   "1840",
+   2025,
+   95.6
+  ],
+  [
+   "1856",
+   2024,
+   96.3
+  ],
+  [
+   "1856",
+   2025,
+   96.3
+  ],
+  [
+   "3234",
+   2025,
+   98.3
+  ],
+  [
+   "3240",
+   2025,
+   98.5
+  ],
+  [
+   "3316",
+   2025,
+   98.3
+  ],
+  [
+   "3320",
+   2025,
+   98.1
+  ],
+  [
+   "3336",
+   2025,
+   98.0
+  ]
+ ],
+ "b8_antall_avvik": 45,
+ "datamengde": {
+  "liten_siste_aar": {
+   "celler": 14637,
+   "bytes_gzip": [
+    103927,
+    26422
+   ]
+  },
+  "middels_alle_aar": {
+   "celler": 111741,
+   "bytes_gzip": [
+    569517,
+    131790
+   ]
+  }
+ }
+}

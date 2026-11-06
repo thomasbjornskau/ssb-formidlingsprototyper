@@ -1,0 +1,274 @@
+{
+ "kilde": "SSB, arealprofiler2024_ettark.xlsx (datagrunnlaget for Arealprofiler 2025, publisert 29.08.2025)",
+ "merknad": "Summer og vektede andeler for landet er egne beregninger.",
+ "antall_indikatorer": 35,
+ "typer": {
+  "kart": 18,
+  "register": 12,
+  "kostra": 4,
+  "plan": 1
+ },
+ "fireaarssummer": 10,
+ "siste_aar": [
+  2023,
+  2024,
+  2025
+ ],
+ "eksempelkommune": {
+  "kommunenr": "3405",
+  "navn": "Lillehammer",
+  "sentralitetsklasse": 3,
+  "tall": {
+   "A1": {
+    "aar": 2025,
+    "verdi": 245.0
+   },
+   "A6": {
+    "aar": 2025,
+    "verdi": 444.0
+   },
+   "A8": {
+    "aar": 2025,
+    "verdi": 3.4
+   },
+   "A9": {
+    "aar": 2025,
+    "verdi": 28.0
+   },
+   "C1": {
+    "aar": 2024,
+    "verdi": 49.0
+   },
+   "C4": {
+    "aar": 2024,
+    "verdi": 15.0
+   },
+   "C9": {
+    "aar": 2025,
+    "verdi": 1.6
+   },
+   "C10": {
+    "aar": 2025,
+    "verdi": 1.7
+   },
+   "B9": {
+    "aar": 2024,
+    "verdi": 197.0
+   }
+  }
+ },
+ "nye_boliger": [
+  {
+   "aar": 2015,
+   "nye_boliger": 113539,
+   "kommuner": 354,
+   "andel_utenfor_tettsted": 20.0,
+   "andel_blokk": 38.2
+  },
+  {
+   "aar": 2016,
+   "nye_boliger": 115372,
+   "kommuner": 354,
+   "andel_utenfor_tettsted": 20.5,
+   "andel_blokk": 37.3
+  },
+  {
+   "aar": 2017,
+   "nye_boliger": 119371,
+   "kommuner": 352,
+   "andel_utenfor_tettsted": 18.5,
+   "andel_blokk": 39.4
+  },
+  {
+   "aar": 2018,
+   "nye_boliger": 123774,
+   "kommuner": 354,
+   "andel_utenfor_tettsted": 16.3,
+   "andel_blokk": 42.7
+  },
+  {
+   "aar": 2019,
+   "nye_boliger": 127192,
+   "kommuner": 353,
+   "andel_utenfor_tettsted": 13.3,
+   "andel_blokk": 45.7
+  },
+  {
+   "aar": 2020,
+   "nye_boliger": 125638,
+   "kommuner": 354,
+   "andel_utenfor_tettsted": 12.6,
+   "andel_blokk": 47.9
+  },
+  {
+   "aar": 2021,
+   "nye_boliger": 119819,
+   "kommuner": 352,
+   "andel_utenfor_tettsted": 11.9,
+   "andel_blokk": 49.6
+  },
+  {
+   "aar": 2022,
+   "nye_boliger": 114671,
+   "kommuner": 353,
+   "andel_utenfor_tettsted": 13.0,
+   "andel_blokk": 49.8
+  },
+  {
+   "aar": 2023,
+   "nye_boliger": 114213,
+   "kommuner": 352,
+   "andel_utenfor_tettsted": 11.3,
+   "andel_blokk": 52.3
+  },
+  {
+   "aar": 2024,
+   "nye_boliger": 105473,
+   "kommuner": 351,
+   "andel_utenfor_tettsted": 11.1,
+   "andel_blokk": 51.3
+  },
+  {
+   "aar": 2025,
+   "nye_boliger": 94017,
+   "kommuner": 352,
+   "andel_utenfor_tettsted": 10.4,
+   "andel_blokk": 50.6
+  }
+ ],
+ "omdisponering": [
+  {
+   "aar": 2015,
+   "dyrka": 6079,
+   "dyrkbar": 6285,
+   "kommuner": 353
+  },
+  {
+   "aar": 2016,
+   "dyrka": 6460,
+   "dyrkbar": 5316,
+   "kommuner": 352
+  },
+  {
+   "aar": 2017,
+   "dyrka": 4013,
+   "dyrkbar": 4869,
+   "kommuner": 347
+  },
+  {
+   "aar": 2018,
+   "dyrka": 3672,
+   "dyrkbar": 9003,
+   "kommuner": 344
+  },
+  {
+   "aar": 2019,
+   "dyrka": 3644,
+   "dyrkbar": 4829,
+   "kommuner": 348
+  },
+  {
+   "aar": 2020,
+   "dyrka": 4760,
+   "dyrkbar": 7081,
+   "kommuner": 357
+  },
+  {
+   "aar": 2021,
+   "dyrka": 3104,
+   "dyrkbar": 2735,
+   "kommuner": 357
+  },
+  {
+   "aar": 2022,
+   "dyrka": 3613,
+   "dyrkbar": 4325,
+   "kommuner": 357
+  },
+  {
+   "aar": 2023,
+   "dyrka": 2997,
+   "dyrkbar": 4008,
+   "kommuner": 357
+  },
+  {
+   "aar": 2024,
+   "dyrka": 2981,
+   "dyrkbar": 2794,
+   "kommuner": 357
+  }
+ ],
+ "stripe": [
+  {
+   "kode": "A1",
+   "aar": 2025,
+   "navn": "Grunnareal til bolig per bosatt",
+   "enhet": "m²",
+   "kommune": 245.0,
+   "gruppe_p10": 176.9,
+   "gruppe_median": 294.0,
+   "gruppe_p90": 380.4,
+   "gruppe_n": 54,
+   "under_kommunen": 13,
+   "land_median": 356.0,
+   "land_n": 357
+  },
+  {
+   "kode": "A3",
+   "aar": 2024,
+   "navn": "Andel bosatte i tettsted",
+   "enhet": "prosent",
+   "kommune": 87.0,
+   "gruppe_p10": 61.6,
+   "gruppe_median": 81.0,
+   "gruppe_p90": 91.0,
+   "gruppe_n": 54,
+   "under_kommunen": 34,
+   "land_median": 59.0,
+   "land_n": 357
+  },
+  {
+   "kode": "A8",
+   "aar": 2025,
+   "navn": "Andel nye boliger utenfor tettsted",
+   "enhet": "prosent",
+   "kommune": 3.4,
+   "gruppe_p10": 3.5,
+   "gruppe_median": 10.1,
+   "gruppe_p90": 22.8,
+   "gruppe_n": 54,
+   "under_kommunen": 5,
+   "land_median": 25.4,
+   "land_n": 352
+  },
+  {
+   "kode": "C10",
+   "aar": 2025,
+   "navn": "Nye boliger, avstand til sentrumssone",
+   "enhet": "km",
+   "kommune": 1.7,
+   "gruppe_p10": 1.4,
+   "gruppe_median": 2.4,
+   "gruppe_p90": 8.0,
+   "gruppe_n": 54,
+   "under_kommunen": 14,
+   "land_median": 5.3,
+   "land_n": 352
+  },
+  {
+   "kode": "B6",
+   "aar": 2024,
+   "navn": "Trygg tilgang til rekreasjonsareal",
+   "enhet": "prosent",
+   "kommune": 52.0,
+   "gruppe_p10": 48.2,
+   "gruppe_median": 67.0,
+   "gruppe_p90": 80.0,
+   "gruppe_n": 53,
+   "under_kommunen": 9,
+   "land_median": 71.0,
+   "land_n": 333
+  }
+ ],
+ "jordvernmaal_dekar": 2000
+}

@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arealprofiler</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: arealprofilen for din kommune. 35 indikatorer om tetthet, nedbygging, arealreserver og fareområder, sammenlignet med kommuner med samme sentralitet. Tall fra SSB.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --bla: #1d9de2; --oker: #c78800; --marine: #0f2080; --rosa: #c775a7;
+  --gronn-f: #339b71; --bla-f: #3face6; --oker-f: #d5a640; --marine-f: #5763a6; --rosa-f: #cd83b0;
+  --band: #b6e8b8;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+:is(button, input, select, summary, a, [tabindex]):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; color: var(--tekst); font-size: 13px; margin: 0; }
+.bf-tom { background: var(--bg); padding: 18px; color: var(--sek); font-size: 14px; margin: 6px 0; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 8px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-brytere { display: flex; flex-wrap: wrap; gap: 0; margin: 2px 0 4px; align-items: center; }
+.bf-brytere .bf-knapp { padding: 5px 12px; font-size: 13px; margin-right: -1px; }
+.bf-brytere .lab { font-size: 13px; color: var(--sek); margin-right: 10px; }
+
+/* Alle kommuner */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre h3 { font-size: 15px; margin: 12px 0 4px; }
+.bf-tre h3:first-of-type { margin-top: 0; }
+.bf-tre ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 2px 32px; }
+.bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
+.bf-tre .v { color: var(--sek); font-size: 13px; white-space: nowrap; }
+
+/* Kort for valgt kommune */
+.bf-kort { background: var(--flate); border-left: 4px solid var(--gronn); padding: 16px 20px; display: grid; gap: 4px; }
+.bf-kort h2 { font-size: 20px; margin: 0; }
+.bf-kort p { margin: 0; font-size: 14px; }
+.bf-sti { font-size: 13px; color: var(--sek); }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(34px, 5.5vw, 56px); font-weight: 700; line-height: 1.1; margin: 6px 0 8px; overflow-wrap: anywhere; }
+.bf-setning { font-size: 20px; font-weight: 600; margin: 0 0 12px; line-height: 1.35; }
+.bf-topp-under { color: var(--tekst); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Indikatorstripe */
+.bf-stripe { display: grid; gap: 0; }
+.bf-sgr { font-size: 14px; font-weight: 700; margin: 14px 0 2px; padding-bottom: 4px; border-bottom: 1px solid var(--tekst); }
+.bf-sgr:first-child { margin-top: 0; }
+.bf-rad { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 6.5rem 5rem; gap: 4px 16px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--stotte); }
+.bf-rad .n { font-size: 14px; line-height: 1.3; }
+.bf-rad .n small { display: block; color: var(--sek); font-size: 12px; }
+.bf-rad .v { text-align: right; font-weight: 700; font-size: 14px; white-space: nowrap; }
+.bf-rad .v.tekst { font-weight: 400; color: var(--sek); font-size: 12px; white-space: normal; line-height: 1.3; }
+.bf-rad svg { display: block; overflow: visible; }
+@media (max-width: 640px) {
+  .bf-rad { grid-template-columns: minmax(0, 1fr) 6rem; }
+  .bf-rad .n { grid-column: 1 / -1; }
+  .bf-rad .sp { display: none; }
+}
+.bf-stripe.kompakt .bf-rad { grid-template-columns: minmax(0, 12rem) minmax(0, 1fr) 6rem; }
+.bf-stripe.kompakt .sp { display: none; }
+@media (max-width: 640px) { .bf-stripe.kompakt .bf-rad { grid-template-columns: minmax(0, 1fr) 6rem; } }
+.bf-leg2 { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 13px; color: var(--sek); }
+.bf-leg2 span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Figurer */
+.bf-chart { position: relative; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick, .bf-axt { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-sw-line { width: 18px; height: 0; border-top: 2px solid; }
+.bf-sw-dash { width: 18px; height: 0; border-top: 2px dashed; }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tall .bf-tablewrap { max-height: 18rem; margin-top: 6px; }
+.bf-tall tbody th { position: static; font-weight: 400; font-size: inherit; border-bottom: 1px solid var(--stotte); }
+
+/* Tabeller */
+.bf-tablewrap { max-height: 32rem; overflow: auto; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-brytere, .bf-eks { display: none; } .bf-tablewrap { max-height: none; overflow: visible; } .bf-card, .bf-topp, .bf-rad { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Arealprofiler</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok" role="search">
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Velg kommune</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="Skriv et kommunenavn" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle kommuner</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle kommuner" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite"></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du arealprofilen</h2>
+    <ul>
+      <li><b>Grunnareal, ikke boligstørrelse.</b> <span data-t="les-1"></span></li>
+      <li><b>Fire år om gangen.</b> <span data-t="les-2"></span></li>
+      <li><b>Ingen fasit.</b> Høyt eller lavt er ikke godt eller dårlig i seg selv. Kommunen sammenlignes med kommuner med samme sentralitet, ikke rangert.</li>
+      <li><b>Mangler er ikke null.</b> <span data-t="les-4"></span></li>
+    </ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Indikatorene er laget på fire måter: telt i registrene, rapportert av kommunen gjennom KOSTRA, plassert i kartet mot soner som tettsted og sentrum, og kommuneplanen lagt over kartet over faktisk arealbruk. Definisjonene er hentet fra forklaringstekstene i arealprofilene (Tableau Public, 2025).</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall" aria-live="polite">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div>
+      <h3 class="bf-h" data-h="topp"></h3>
+      <div class="bf-leg2" data-leg2="topp"></div>
+      <div class="bf-stripe kompakt" id="fig-topp"></div>
+      <p class="bf-note">Hver rad har sin egen skala. Grå prikker er de andre kommunene i klassen.</p>
+      <details class="bf-tall" data-tall="topp"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-src="topp"></p>
+  </section>
+
+  <section class="bf-section" id="profil">
+    <h2 class="bf-sh">Hele profilen</h2>
+    <p class="bf-ingress" data-t="profil-ingress"></p>
+    <article class="bf-card">
+      <div class="bf-brytere" role="group" aria-label="Sammenlign med">
+        <span class="lab">Sammenlign med</span>
+        <button type="button" class="bf-knapp" data-sml="klasse" aria-pressed="true">Samme sentralitet</button>
+        <button type="button" class="bf-knapp" data-sml="alle" aria-pressed="false">Alle kommuner</button>
+      </div>
+      <div class="bf-leg2" data-leg2="profil"></div>
+      <div class="bf-stripe" id="fig-profil"></div>
+      <details class="bf-tall" data-tall="profil"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+      <p class="bf-src" data-src="profil"></p>
+    </article>
+  </section>
+
+  <section class="bf-section" id="tetthet">
+    <h2 class="bf-sh">Bygger vi tettere?</h2>
+    <p class="bf-ingress" data-t="tett-ingress"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="nye"></h3>
+        <div class="bf-legend" data-leg="nye"></div>
+        <div class="bf-chart" id="fig-nye"></div>
+        <p class="bf-note" data-n="nye"></p>
+        <details class="bf-tall" data-tall="nye"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="nye"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="avst"></h3>
+        <div class="bf-legend" data-leg="avst"></div>
+        <div class="bf-chart" id="fig-avst"></div>
+        <p class="bf-note" data-n="avst"></p>
+        <details class="bf-tall" data-tall="avst"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="avst"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="nedbygging">
+    <h2 class="bf-sh">Hva bygger vi ned?</h2>
+    <p class="bf-ingress" data-t="ned-ingress"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="jordland"></h3>
+        <div class="bf-legend" data-leg="jordland"></div>
+        <div class="bf-chart" id="fig-jordland"></div>
+        <p class="bf-note" data-n="jordland"></p>
+        <details class="bf-tall" data-tall="jordland"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="jordland"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="jord"></h3>
+        <div class="bf-legend" data-leg="jord"></div>
+        <div class="bf-chart" id="fig-jord"></div>
+        <p class="bf-note" data-n="jord"></p>
+        <details class="bf-tall" data-tall="jord"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="jord"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="strand"></h3>
+        <div class="bf-legend" data-leg="strand"></div>
+        <div class="bf-chart" id="fig-strand"></div>
+        <p class="bf-note" data-n="strand"></p>
+        <details class="bf-tall" data-tall="strand"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="strand"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="planlagt">
+    <h2 class="bf-sh">Hva er satt av i planen?</h2>
+    <p class="bf-ingress" data-t="plan-ingress"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="plan"></h3>
+        <div class="bf-chart" id="fig-plan"></div>
+        <p class="bf-note" data-n="plan"></p>
+        <details class="bf-tall" data-tall="plan"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="plan"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="fare">
+    <h2 class="bf-sh">Bygger vi i fareområder?</h2>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="fare"></h3>
+        <div class="bf-legend" data-leg="fare"></div>
+        <div class="bf-chart" id="fig-fare"></div>
+        <p class="bf-note" data-n="fare"></p>
+        <details class="bf-tall" data-tall="fare"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="fare"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Arealprofilene er 35 indikatorer for hver kommune, laget av SSB for planleggere i kommuner og fylkeskommuner. Tallene i denne prototypen er datagrunnlaget for Arealprofiler 2025, publisert 29.08.2025, med kommuneinndelingen 2024. Indikatorene har ulikt siste år (2023, 2024 eller 2025), og ti av dem er summer for de siste fire årene.</p>
+    <p>Egne beregninger: median og spredning (10. til 90. persentil) blant kommuner med samme sentralitet og blant alle kommuner, og andelen nye boliger utenfor tettsted og i blokk for landet, vektet med antall nye boliger i hver kommune. Disse er ikke offisielle landstall. Landstallet for omdisponert dyrka jord er hentet fra tabell 11776.</p>
+    <p>Kilder: SSB, datagrunnlaget for Arealprofiler 2025, statistikkbanken tabell 11776 og SSBs klassifikasjoner for sentralitet (Klass 128, 2020) og fylker (Klass 104). Tabellene 14478 og 14488 med årets arealprofiler er ikke publisert ennå. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/natur-og-miljo/areal/arealprofiler">ssb.no</a>.</p>
+  </footer>
+
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/arealprofiler.json__*/;
+</script>
+<script>
+(() => {
+'use strict';
+// ---------- Data ----------
+// DATA.kommuner      [kommunenr, navn, fylkenr, sentralitetsklasse 1–6]
+// DATA.indikatorer   metadata: kode, kort_navn, enhet, type, seksjon, fire_aar, des, mangler, null_betyr
+// DATA.d[kode]       {aar, v[kommune][år]} eller med klasser: v[kommune][år][klasse]; null = mangler
+// DATA.jord          landet fra tabell 11776: dyrka_annet (andre formål enn landbruk), dyrka_alle, dyrkbar_alle
+// DATA.landNye       egne beregninger: andel nye boliger utenfor tettsted og i blokk, vektet med antall
+const O = Object.fromEntries(DATA.kommuner.map(([kode, navn, fylke, klasse], i) => [kode, {kode, navn, fylke, klasse, i}]));
+const kommuner = DATA.kommuner.map((k) => k[0]);
+const I = Object.fromEntries(DATA.indikatorer.map((x) => [x.kode, x]));
+const D = DATA.d;
+const EKSEMPEL = '3405';
+const N_IND = DATA.indikatorer.length;
+const SEKSJONER = [['tetthet', 'Tetthet og avstander'], ['nedbygging', 'Nedbygging, jord og strandsone'], ['plan', 'Planlagt'],
+  ['fare', 'Fareområder'], ['natur', 'Tilgang til natur'], ['befolkning', 'Befolkning og bolig']];
+const fylkenavn = (f) => DATA.fylker[f].split(' - ')[0];
+const navnK = (k) => O[k].navn;
+const dato = (s) => s.split('-').reverse().join('.');
+const OPPD = DATA.kilde.oppdatert;
+const KILDE_AP = `Kilde: SSB, datagrunnlaget for Arealprofiler 2025. Sist oppdatert: ${dato(OPPD.arealprofiler)}.`;
+const KILDE_11776 = `Kilde: SSB, tabell 11776. Sist oppdatert: ${dato(OPPD.kofola_land)}.`;
+const sisteAar = (kode) => D[kode].aar[D[kode].aar.length - 1];
+const verdi = (kode, k, a) => { const j = D[kode].aar.indexOf(a); return j < 0 ? null : D[kode].v[O[k].i][j]; };
+const serie = (kode, k) => D[kode].aar.map((a, j) => ({a, v: D[kode].v[O[k].i][j]}));
+const gruppe = (k, modus) => (modus === 'alle' ? kommuner : kommuner.filter((x) => O[x].klasse === O[k].klasse));
+const tilstand = (kode, v) => (v == null ? I[kode].mangler : v === 0 && I[kode].null_betyr ? I[kode].null_betyr : null);
+
+// ---------- Format ----------
+const nf0 = new Intl.NumberFormat('nb-NO', {maximumFractionDigits: 0});
+const nf1 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const tall = (v, des = 0) => (v == null ? '–' : (v < 0 ? '−' : '') + (des ? nf1 : nf0).format(Math.abs(v)));
+const ENH = {prosent: '%', 'm²': 'm²', km: 'km', dekar: 'dekar', antall: '', personer: '', 'per km²': 'per km²', 'per 1 000': 'per 1 000'};
+const medEnhet = (kode, v) => { const e = ENH[I[kode].enhet]; return tall(v, I[kode].des && v != null && !Number.isInteger(v) ? 1 : 0) + (e ? (e === '%' ? ' %' : ' ' + e) : ''); };
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+// ---------- Tilstand: valgt kommune i adressen (#kommune=3405) ----------
+const root = document.querySelector('.bf');
+const $ = (s) => root.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+const fraAdresse = () => { const k = new URLSearchParams(location.hash.slice(1)).get('kommune'); return k && O[k] ? k : null; };
+const valgt = () => fraAdresse() || EKSEMPEL;
+let funnetMed = null;
+const visning = {sml: 'klasse'};
+const velg = (k, o = {}) => {
+  funnetMed = o.ord || null;
+  try { history.replaceState(null, '', '#kommune=' + k); } catch (e) { /* ignorer */ }
+  tegnAlt();
+  if (o.rull) $('#bf-kort').scrollIntoView({behavior: 'smooth'});
+};
+
+// ---------- Verktøy ----------
+const tip = $('.bf-tip');
+const skjulTips = () => { tip.hidden = true; };
+const visTips = (ev, tittel, linjer) => {
+  tip.replaceChildren();
+  const h = document.createElement('div'); h.className = 'bf-tip-h'; h.textContent = tittel; tip.append(h);
+  for (const l of linjer) {
+    const r = document.createElement('div'); r.className = 'bf-tip-r';
+    if (l.c) { const i = document.createElement('i'); i.style.background = l.c; r.append(i); }
+    const n = document.createElement('span'); n.textContent = l.n;
+    const v = document.createElement('b'); v.textContent = l.v;
+    r.append(n, v); tip.append(r);
+  }
+  tip.hidden = false;
+  const b = root.getBoundingClientRect();
+  let x = ev.clientX - b.left + 14, y = ev.clientY - b.top + 14;
+  if (x + tip.offsetWidth > b.width) x = ev.clientX - b.left - tip.offsetWidth - 14;
+  tip.style.left = Math.max(0, x) + 'px'; tip.style.top = Math.max(0, y) + 'px';
+};
+const lerret = (box, h, beskrivelse) => {
+  const w = Math.max(260, Math.floor(box.clientWidth));
+  box.replaceChildren();
+  box.style.minHeight = h + 'px';
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', beskrivelse);
+  return {svg, w};
+};
+const tom = (box, tekst) => { box.style.minHeight = ''; box.replaceChildren(); const p = document.createElement('p'); p.className = 'bf-tom'; p.textContent = tekst; box.append(p); };
+const bredde = (svg, s, cls) => { const t = svg.append('text').attr('class', cls).text(s); const l = t.node().getComputedTextLength(); t.remove(); return l; };
+const sett = (key, tekst) => { $(`[data-t="${key}"]`).textContent = tekst; };
+const settH = (key, tekst) => { $(`[data-h="${key}"]`).textContent = tekst; };
+const settN = (key, tekst) => { $(`[data-n="${key}"]`).textContent = tekst; };
+const settSrc = (key, tekst) => { $(`[data-src="${key}"]`).textContent = tekst; };
+const talltabell = (id, tittel, kolonner, rader) => {
+  const t = document.createElement('table'); t.className = 'bf-table';
+  const cap = document.createElement('caption'); cap.textContent = tittel; t.append(cap);
+  const hr = t.createTHead().insertRow();
+  for (const k of kolonner) { const th = document.createElement('th'); th.scope = 'col'; th.textContent = k; hr.append(th); }
+  const tb = t.createTBody();
+  for (const r of rader) { const tr = tb.insertRow(); r.forEach((c, i) => { const e = document.createElement(i ? 'td' : 'th'); if (!i) e.scope = 'row'; e.textContent = c; tr.append(e); }); }
+  $(`[data-tall="${id}"] .bf-tablewrap`).replaceChildren(t);
+};
+const legende = (key, items) => $(`[data-leg="${key}"]`).replaceChildren(...items.map(({c, n, cls}) => {
+  const s = document.createElement('span'), i = document.createElement('i');
+  i.className = cls || 'bf-sw-sq';
+  if (cls === 'bf-sw-line' || cls === 'bf-sw-dash') i.style.borderColor = c; else if (c) i.style.background = c;
+  s.append(i, n); return s;
+}));
+const yakse = (svg, w, m, ys, yt, fmt, tittel) => {
+  const g = svg.append('g');
+  g.selectAll('line').data(yt).join('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', (t) => ys(t)).attr('y2', (t) => ys(t)).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
+  g.selectAll('text').data(yt).join('text').attr('class', 'bf-tick').attr('x', m.l - 8).attr('y', (t) => ys(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text(fmt);
+  svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(tittel);
+};
+const venstremarg = (svg, yt, fmt) => Math.ceil(d3.max(yt, (t) => bredde(svg, fmt(t), 'bf-tick'))) + 12;
+const kvantil = (vals, q) => d3.quantile([...vals].sort((a, b) => a - b), q);
+
+// ---------- Linjediagram med hull ----------
+// serier: [{n, c, dash, pts: [{a, v}]}]; årene er x
+function linjer(box, serier, o) {
+  const H = o.H || 260;
+  const {svg, w} = lerret(box, H, o.aria);
+  const alle = serier.flatMap((s) => s.pts.filter((p) => p.v != null));
+  const aar = [...new Set(serier.flatMap((s) => s.pts.map((p) => p.a)))].sort((a, b) => a - b);
+  const ys = d3.scaleLinear().domain([0, d3.max(alle, (p) => p.v) || 1]).nice(5), yt = ys.ticks(5);
+  const fmt = (t) => tall(t, Number.isInteger(t) ? 0 : 1);
+  const etiketter = serier.map((s) => { const sist = [...s.pts].reverse().find((p) => p.v != null); return sist ? `${tall(sist.v, o.des)} ${s.kort || ''}`.trim() : ''; });
+  const hoyre = w < 420 ? 8 : Math.min(150, Math.max(...etiketter.map((t) => bredde(svg, t, 'bf-lab bf-strong'))) + 14);
+  const m = {t: 26, b: 24, l: venstremarg(svg, yt, fmt), r: hoyre};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleLinear().domain([aar[0], aar[aar.length - 1]]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, yt, fmt, o.enhet);
+  const steg = w < 420 ? 4 : 2;
+  svg.append('g').selectAll('text').data(aar.filter((a) => (aar[aar.length - 1] - a) % steg === 0)).join('text')
+    .attr('class', 'bf-tick').attr('x', (a) => xs(a)).attr('y', H - 6).attr('text-anchor', 'middle').text((a) => a);
+  const linje = d3.line().defined((p) => p.v != null).x((p) => xs(p.a)).y((p) => ys(p.v));
+  const ender = [];
+  serier.forEach((s, si) => {
+    svg.append('path').attr('d', linje(s.pts)).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', 2.5).attr('stroke-dasharray', s.dash || null);
+    s.pts.forEach((p, i) => {   // enslige punkter (hull på begge sider) blir synlige
+      const ensom = p.v != null && (i === 0 || s.pts[i - 1].v == null) && (i === s.pts.length - 1 || s.pts[i + 1].v == null);
+      if (ensom) svg.append('circle').attr('cx', xs(p.a)).attr('cy', ys(p.v)).attr('r', 3.5).attr('fill', s.c);
+    });
+    const sist = [...s.pts].reverse().find((p) => p.v != null);
+    if (sist) { svg.append('circle').attr('cx', xs(sist.a)).attr('cy', ys(sist.v)).attr('r', 3.5).attr('fill', s.c); ender.push({y: ys(sist.v), x: xs(sist.a), t: etiketter[si]}); }
+  });
+  if (w >= 420) {
+    ender.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ender.length; i++) if (ender[i].y - ender[i - 1].y < 15) ender[i].y = ender[i - 1].y + 15;
+    ender.forEach((e) => svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', e.x + 8).attr('y', e.y).attr('dy', '0.32em').text(e.t));
+  }
+  // tips langs x
+  const lag = svg.append('g').style('display', 'none');
+  const strek = lag.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--sek'));
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [px] = d3.pointer(ev); const a = Math.round(xs.invert(px));
+      lag.style('display', null); strek.attr('x1', xs(a)).attr('x2', xs(a));
+      visTips(ev, String(a), serier.map((s) => { const p = s.pts.find((q) => q.a === a); return {c: s.c, n: s.n, v: p && p.v != null ? tall(p.v, o.des) : 'mangler'}; }));
+    })
+    .on('pointerleave', () => { lag.style('display', 'none'); skjulTips(); });
+}
+
+// ---------- Stolper (stablet fra null) ----------
+// aar: [..], serier: [{n, c, v: [...]}], o: {ref: {v, n}, aria, enhet}
+function stolper(box, aar, serier, o) {
+  const H = o.H || 250;
+  const {svg, w} = lerret(box, H, o.aria);
+  const sum = aar.map((_, i) => serier.reduce((s, x) => s + (x.v[i] || 0), 0));
+  const mangler = aar.map((_, i) => serier.every((x) => x.v[i] == null));
+  const ys = d3.scaleLinear().domain([0, Math.max(d3.max(sum) || 0, o.ref ? o.ref.v * 1.1 : 0) || 1]).nice(5), yt = ys.ticks(5);
+  const fmt = (t) => tall(t);
+  const m = {t: 26, b: 24, l: venstremarg(svg, yt, fmt), r: 8};
+  ys.range([H - m.b, m.t]);
+  const xs = d3.scaleBand().domain(aar).range([m.l, w - m.r]).paddingInner(0.33).paddingOuter(0.1);
+  yakse(svg, w, m, ys, yt, fmt, o.enhet);
+  const steg = w < 420 ? 3 : aar.length > 14 ? 2 : 1;
+  svg.append('g').selectAll('text').data(aar.filter((a, i) => (aar.length - 1 - i) % steg === 0)).join('text')
+    .attr('class', 'bf-tick').attr('x', (a) => xs(a) + xs.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').text((a) => a);
+  aar.forEach((a, i) => {
+    let y0 = 0;
+    if (mangler[i]) {
+      svg.append('text').attr('class', 'bf-tick').attr('x', xs(a) + xs.bandwidth() / 2).attr('y', ys(0) - 6).attr('text-anchor', 'middle').text('mangler')
+        .attr('transform', `rotate(-90 ${xs(a) + xs.bandwidth() / 2} ${ys(0) - 6})`).attr('text-anchor', 'start').attr('dy', '0.32em');
+      return;
+    }
+    serier.forEach((s) => {
+      const v = s.v[i] || 0; if (!v) return;
+      svg.append('rect').attr('x', xs(a)).attr('width', xs.bandwidth()).attr('y', ys(y0 + v)).attr('height', ys(y0) - ys(y0 + v)).attr('fill', s.c);
+      y0 += v;
+    });
+  });
+  if (o.ref) {
+    svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', ys(o.ref.v)).attr('y2', ys(o.ref.v)).attr('stroke', css('--tekst')).attr('stroke-width', 1.2).attr('stroke-dasharray', '5 4');
+  }
+  const i0 = sum.length - 1;
+  if (!mangler[i0]) svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', xs(aar[i0]) + xs.bandwidth() / 2).attr('y', ys(sum[i0]) - 6).attr('text-anchor', 'middle').text(tall(sum[i0]));
+  svg.append('g').selectAll('rect').data(aar).join('rect').attr('x', (a) => xs(a) - xs.step() * xs.paddingInner() / 2).attr('width', xs.step()).attr('y', m.t).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev, a) => { const i = aar.indexOf(a); visTips(ev, String(a), serier.map((s) => ({c: s.c, n: s.n, v: s.v[i] == null ? 'mangler' : tall(s.v[i]) + (o.enhetKort ? ' ' + o.enhetKort : '')}))); })
+    .on('pointerleave', skjulTips);
+}
+
+// ---------- Liggende stolper ----------
+// rader: [{n, v, c, tekst}] — tekst brukes når v mangler
+function liggende(box, rader, o) {
+  const rowH = 30, mt = 6, H = mt + rader.length * rowH + 4;
+  const {svg, w} = lerret(box, H, o.aria);
+  const lw = Math.min(w * 0.45, Math.max(...rader.map((r) => bredde(svg, r.n, 'bf-lab'))) + 12);
+  const maks = d3.max(rader, (r) => r.v) || 1;
+  const tw = Math.max(...rader.map((r) => bredde(svg, r.v == null ? '' : tall(r.v), 'bf-lab bf-strong'))) + 10;
+  const xs = d3.scaleLinear().domain([0, maks]).range([lw, w - tw]);
+  rader.forEach((r, i) => {
+    const y = mt + i * rowH;
+    svg.append('text').attr('class', 'bf-lab').attr('x', lw - 10).attr('y', y + rowH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r.n);
+    if (r.v == null) { svg.append('text').attr('class', 'bf-tick').attr('x', lw).attr('y', y + rowH / 2).attr('dy', '0.32em').text(r.tekst || 'mangler'); return; }
+    svg.append('rect').attr('x', lw).attr('y', y + 6).attr('width', Math.max(0, xs(r.v) - lw)).attr('height', rowH - 12).attr('fill', r.c);
+    svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', xs(r.v) + 6).attr('y', y + rowH / 2).attr('dy', '0.32em').text(tall(r.v));
+  });
+  svg.append('line').attr('x1', lw).attr('x2', lw).attr('y1', mt).attr('y2', H - 4).attr('stroke', css('--null'));
+}
+
+// ---------- Indikatorstripe ----------
+function stripeRad(kode, k, modus, medSpark) {
+  const rad = document.createElement('div'); rad.className = 'bf-rad';
+  const a = sisteAar(kode), v = verdi(kode, k, a), ind = I[kode];
+  const n = document.createElement('div'); n.className = 'n';
+  n.innerHTML = `${esc(ind.kort_navn)}<small>${esc(ind.enhet)}, ${a}${ind.fire_aar ? ', siste fire år' : ''}</small>`;
+  const fig = document.createElement('div'); fig.className = 'f';
+  const verdiEl = document.createElement('div'); verdiEl.className = 'v';
+  const spark = document.createElement('div'); spark.className = 'sp';
+  rad.append(n, fig, verdiEl, spark);
+  const st = tilstand(kode, v);
+  if (D[kode].klasser) {   // B8: fordeling på arealklasser, ingen sammenligning
+    const j = D[kode].aar.indexOf(a), deler = D[kode].klasser.map((c, ci) => ({c, v: D[kode].v[O[k].i][j][ci]})).filter((x) => x.v != null).sort((x, y) => y.v - x.v);
+    fig.innerHTML = `<span class="bf-note">${deler.slice(0, 3).map((x) => `${esc(x.c)} ${tall(x.v, 1)} %`).join(' · ')}</span>`;
+    verdiEl.className = 'v tekst'; verdiEl.textContent = 'tre største';
+    return {rad, tabell: [ind.kort_navn, String(a), deler.slice(0, 3).map((x) => `${x.c} ${tall(x.v, 1)} %`).join(', '), '', '']};
+  }
+  const gr = gruppe(k, modus).map((x) => ({k: x, v: verdi(kode, x, a)})).filter((x) => x.v != null);
+  const vals = gr.map((x) => x.v), alleVals = kommuner.map((x) => verdi(kode, x, a)).filter((x) => x != null);
+  const p10 = kvantil(vals, 0.1), med = kvantil(vals, 0.5), p90 = kvantil(vals, 0.9), land = kvantil(alleVals, 0.5);
+  verdiEl.textContent = st ? st : medEnhet(kode, v);
+  if (st) verdiEl.className = 'v tekst';
+  requestAnimationFrame(() => tegnStripe(fig, {kode, k, gr, v, p10, med, p90, land, n: vals.length}));
+  if (medSpark) tegnSpark(spark, serie(kode, k));
+  return {rad, tabell: [ind.kort_navn, String(a), st ? st : medEnhet(kode, v), vals.length ? medEnhet(kode, med) : '–', medEnhet(kode, land)]};
+}
+function tegnStripe(fig, s) {
+  const H = 26, w = Math.max(120, fig.clientWidth);
+  fig.replaceChildren();
+  if (!s.gr.length) return;
+  const svg = d3.select(fig).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${H}`).attr('role', 'img')
+    .attr('aria-label', `${I[s.kode].kort_navn}: ${navnK(s.k)} ${s.v == null ? 'mangler' : medEnhet(s.kode, s.v)}, median ${medEnhet(s.kode, s.med)}`);
+  const vals = s.gr.map((x) => x.v);
+  let lo = kvantil(vals, 0.02), hi = kvantil(vals, 0.98);
+  for (const x of [s.v, s.land]) if (x != null) { lo = Math.min(lo, x); hi = Math.max(hi, x); }
+  if (hi === lo) { hi = lo + 1; }
+  const pad = (hi - lo) * 0.04;
+  const xs = d3.scaleLinear().domain([lo - pad, hi + pad]).range([6, w - 6]).clamp(true);
+  const y = H / 2;
+  svg.append('line').attr('x1', 6).attr('x2', w - 6).attr('y1', y).attr('y2', y).attr('stroke', css('--stotte'));
+  if (s.n >= 10) svg.append('rect').attr('x', xs(s.p10)).attr('y', y - 5).attr('width', Math.max(1, xs(s.p90) - xs(s.p10))).attr('height', 10).attr('fill', css('--band'));
+  svg.append('g').selectAll('circle').data(s.gr.filter((x) => x.k !== s.k)).join('circle').attr('cx', (x) => xs(x.v)).attr('cy', y).attr('r', 2.2)
+    .attr('fill', css('--null')).attr('fill-opacity', s.gr.length > 100 ? 0.35 : 0.6)
+    .append('title').text((x) => `${navnK(x.k)}: ${medEnhet(s.kode, x.v)}`);
+  svg.append('line').attr('x1', xs(s.med)).attr('x2', xs(s.med)).attr('y1', y - 8).attr('y2', y + 8).attr('stroke', css('--tekst')).attr('stroke-width', 2);
+  const lx = xs(s.land);
+  svg.append('polygon').attr('points', `${lx - 5},${y} ${lx},${y - 5} ${lx + 5},${y} ${lx},${y + 5}`).attr('fill', '#fff').attr('stroke', css('--tekst')).attr('stroke-width', 1.2);
+  if (s.v != null) svg.append('circle').attr('cx', xs(s.v)).attr('cy', y).attr('r', 5.5).attr('fill', css('--gronn')).attr('stroke', '#fff').attr('stroke-width', 1);
+}
+function tegnSpark(el, pts) {
+  const H = 22, w = 72;
+  el.replaceChildren();
+  const ok = pts.filter((p) => p.v != null);
+  if (!ok.length) return;
+  if (ok.length < 2) { el.innerHTML = '<span class="bf-note">bare ett år</span>'; return; }
+  const svg = d3.select(el).append('svg').attr('width', w).attr('height', H).attr('aria-hidden', 'true');
+  const xs = d3.scaleLinear().domain(d3.extent(pts, (p) => p.a)).range([2, w - 4]);
+  const ys = d3.scaleLinear().domain(d3.extent(ok, (p) => p.v)).range([H - 3, 3]);
+  if (ys.domain()[0] === ys.domain()[1]) ys.domain([ys.domain()[0] - 1, ys.domain()[1] + 1]);
+  svg.append('path').attr('d', d3.line().defined((p) => p.v != null).x((p) => xs(p.a)).y((p) => ys(p.v))(pts)).attr('fill', 'none').attr('stroke', css('--gronn')).attr('stroke-width', 1.5);
+  const s = ok[ok.length - 1];
+  svg.append('circle').attr('cx', xs(s.a)).attr('cy', ys(s.v)).attr('r', 2.5).attr('fill', css('--gronn'));
+}
+function stripeLegende(key, k, modus) {
+  const gr = modus === 'alle' ? `alle ${kommuner.length} kommuner` : `sentralitetsklasse ${O[k].klasse} (${gruppe(k, 'klasse').length} kommuner)`;
+  const el = $(`[data-leg2="${key}"]`);
+  el.innerHTML = `<span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="${css('--gronn')}"/></svg>${esc(navnK(k))}</span>` +
+    `<span><svg width="22" height="10"><rect width="22" height="10" fill="${css('--band')}"/></svg>midtre 80 prosent av ${esc(gr)}</span>` +
+    `<span><svg width="6" height="14"><line x1="3" x2="3" y1="0" y2="14" stroke="${css('--tekst')}" stroke-width="2"/></svg>median</span>` +
+    `<span><svg width="12" height="12"><polygon points="1,6 6,1 11,6 6,11" fill="#fff" stroke="${css('--tekst')}"/></svg>median for alle kommuner</span>`;
+}
+
+// ---------- Ingress, kort og lesehjelp ----------
+function ingress() {
+  $('#ingress').textContent = (`Arealprofilene samler ${N_IND} indikatorer for hver av de ${kommuner.length} kommunene: hvor tett det bygges, hva som bygges ned, hva som er satt av i planene og hvor mye som bygges i fareområder. Velg en kommune og se den mot kommuner med samme sentralitet.`);
+}
+function tegnKort(k) {
+  const el = $('#bf-kort'), o = O[k], n = gruppe(k, 'klasse').length;
+  const mangler = DATA.indikatorer.filter((x) => !D[x.kode].klasser && verdi(x.kode, k, sisteAar(x.kode)) == null).length;
+  const deler = [`<h2>${esc(o.navn)}</h2>`,
+    `<p class="bf-sti">${esc(fylkenavn(o.fylke))} · sentralitetsklasse ${o.klasse} av 6, sammen med ${n - 1} andre kommuner · kommunenummer ${esc(k)}</p>`];
+  if (!fraAdresse()) deler.push('<p><b>Eksempelkommune.</b> Velg din egen kommune i søkefeltet over.</p>');
+  if (funnetMed) deler.push(`<p>Funnet med søkeordet «${esc(funnetMed)}».</p>`);
+  deler.push(`<p>${mangler ? `${mangler} av ${N_IND} indikatorer har ikke tall for ${esc(o.navn)}. Det er forklart der tallet skulle stått.` : `Alle indikatorene har tall for ${esc(o.navn)}.`}</p>`);
+  el.innerHTML = deler.join('');
+}
+function tegnLes(k) {
+  const n = navnK(k), a1 = sisteAar('A1'), a6 = sisteAar('A6');
+  sett('les-1', `${n} har ${medEnhet('A1', verdi('A1', k, a1))} grunnareal til bolig per bosatt (${a1}). Det er tomter, hager og veier i boligområdene, ikke bruksarealet inne i boligen.`);
+  const v6 = verdi('A6', k, a6);
+  sett('les-2', `${DATA.indikatorer.filter((x) => x.fire_aar).length} indikatorer er summer for de siste fire årene. ${v6 == null ? `${n} har ingen nye boliger i perioden` : `${n} fikk ${tall(v6)} ${v6 === 1 ? 'ny bolig' : 'nye boliger'} i perioden`} fram til ${a6}. Tre av fire år går igjen fra ett år til det neste.`);
+  sett('les-4', 'Kommuner uten tettsted, sentrumssone eller kyst mangler tall på noen indikatorer. Det står forklart i stedet for tallet.');
+}
+
+// ---------- Toppgrafikk: min kommune mot kommuner med samme sentralitet ----------
+const TOPP = ['A1', 'A3', 'A8', 'C10', 'B6'];
+function tegnTopp(k) {
+  const n = navnK(k), gr = gruppe(k, 'klasse');
+  sett('omr', `Min kommune · ${n}`);
+  sett('stort', n);
+  const a3 = sisteAar('A3'), v3 = verdi('A3', k, a3);
+  const g3 = gr.map((x) => verdi('A3', x, a3)).filter((x) => x != null);
+  const under = g3.filter((x) => x < v3).length / g3.length, med3 = kvantil(g3, 0.5);
+  sett('setning', v3 === 0 ? 'har ikke noe tettsted. Alle bor spredt.'
+    : under >= 0.6 ? 'bor tettere enn de fleste kommuner med samme sentralitet.'
+      : under <= 0.4 ? 'bor mer spredt enn de fleste kommuner med samme sentralitet.'
+        : 'bor omtrent like tett som andre kommuner med samme sentralitet.');
+  const a8 = sisteAar('A8'), v8 = verdi('A8', k, a8);
+  const p = (t) => { const e = document.createElement('p'); e.textContent = t; return e; };
+  $('[data-t="under"]').replaceChildren(
+    p(v3 === 0 ? `Ingen bor i tettsted (${a3}). I midten av sentralitetsklasse ${O[k].klasse} bor ${tall(med3)} prosent i tettsted.` : `${tall(v3)} prosent bor i tettsted (${a3}), mot ${tall(med3)} prosent i midten av sentralitetsklasse ${O[k].klasse}.`),
+    p(v8 == null ? `${n} har ingen nye boliger de siste fire årene fram til ${a8}.` : `${tall(v8, Number.isInteger(v8) ? 0 : 1)} prosent av boligene som ble satt i gang de siste fire årene fram til ${a8}, ligger utenfor tettsted.`));
+  settH('topp', `Mot ${gr.length} kommuner i sentralitetsklasse ${O[k].klasse}`);
+  stripeLegende('topp', k, 'klasse');
+  const fig = $('#fig-topp'); fig.replaceChildren();
+  const rader = TOPP.map((kode) => stripeRad(kode, k, 'klasse', false));
+  rader.forEach((r) => fig.append(r.rad));
+  talltabell('topp', `${n} mot sentralitetsklasse ${O[k].klasse}`, ['Indikator', 'År', n, 'Median i klassen', 'Median alle'], rader.map((r) => r.tabell));
+  const fliser = [['A6', 'Nye boliger, siste fire år'], ['C3', 'Omdisponert dyrka jord, alle formål'], ['B9', 'Ledig areal til bolig i kommuneplanen'], ['B5', 'Nye bygninger i aktsomhetsområder, siste fire år']];
+  fliser.forEach(([kode, lab], i) => {
+    const a = sisteAar(kode), v = verdi(kode, k, a), st = tilstand(kode, v);
+    sett(`t${i + 1}-lab`, `${lab} (${a})`);
+    const el = $(`[data-t="t${i + 1}"]`);
+    const e = ENH[I[kode].enhet];
+    el.innerHTML = st ? `<span class="bf-unit">${esc(st)}</span>` : `${tall(v, I[kode].des)}${e ? ` <span class="bf-unit">${esc(e)}</span>` : ''}`;
+  });
+  settSrc('topp', `${KILDE_AP} Sentralitet: SSBs standard for sentralitet 2020 (Klass 128). Median og spredning er egne beregninger.`);
+}
+
+// ---------- Hele profilen ----------
+function tegnProfil(k) {
+  const n = navnK(k), modus = visning.sml;
+  sett('profil-ingress', `Alle ${N_IND} indikatorene for ${n}, med siste år for hver. Prikken er ${n}, båndet er de midterste 80 prosentene av ${modus === 'alle' ? 'alle kommuner' : `kommunene i sentralitetsklasse ${O[k].klasse}`}, og den lille kurven til høyre viser ${n} over tid.`);
+  stripeLegende('profil', k, modus);
+  root.querySelectorAll('[data-sml]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.sml === modus)));
+  const fig = $('#fig-profil'); fig.replaceChildren();
+  const tab = [];
+  for (const [sek, tittel] of SEKSJONER) {
+    const h = document.createElement('div'); h.className = 'bf-sgr'; h.textContent = tittel; fig.append(h);
+    for (const ind of DATA.indikatorer.filter((x) => x.seksjon === sek)) {
+      const r = stripeRad(ind.kode, k, modus, true); fig.append(r.rad); tab.push(r.tabell);
+    }
+  }
+  talltabell('profil', `Arealprofil for ${n}`, ['Indikator', 'År', n, modus === 'alle' ? 'Median alle' : 'Median i klassen', 'Median alle'], tab);
+  settSrc('profil', `${KILDE_AP} Median og spredning er egne beregninger.`);
+}
+
+// ---------- Bygger vi tettere ----------
+function tegnTetthet(k) {
+  const n = navnK(k), L = DATA.landNye;
+  const sist = L.aar.length - 1, ti = L.aar.indexOf(L.aar[sist] - 10);
+  sett('tett-ingress', `Av boligene som ble satt i gang de siste fire årene fram til ${L.aar[sist]}, lå ${tall(L.utenfor[sist], 1)} prosent utenfor tettsted. I perioden fram til ${L.aar[ti]} var andelen ${tall(L.utenfor[ti], 1)} prosent. Andelen i blokk har økt fra ${tall(L.blokk[ti], 1)} til ${tall(L.blokk[sist], 1)} prosent.`);
+  settH('nye', 'Nye boliger utenfor tettsted og i blokk');
+  const s8 = serie('A8', k);
+  const serier = [
+    {n: 'Landet, i blokk', kort: 'i blokk', c: css('--bla'), pts: L.aar.map((a, i) => ({a, v: L.blokk[i]}))},
+    {n: 'Landet, utenfor tettsted', kort: 'utenfor tettsted', c: css('--gronn'), pts: L.aar.map((a, i) => ({a, v: L.utenfor[i]}))},
+    {n: `${n}, utenfor tettsted`, kort: n, c: css('--oker'), dash: '6 4', pts: s8},
+  ];
+  legende('nye', [{c: css('--bla'), n: 'Landet, i blokk', cls: 'bf-sw-line'}, {c: css('--gronn'), n: 'Landet, utenfor tettsted', cls: 'bf-sw-line'}, {c: css('--oker'), n: `${n}, utenfor tettsted`, cls: 'bf-sw-dash'}]);
+  linjer($('#fig-nye'), serier, {enhet: 'prosent av nye boliger, siste fire år', des: 1, aria: `Andel nye boliger utenfor tettsted og i blokk, landet og ${n}, ${L.aar[0]}–${L.aar[sist]}.`});
+  settN('nye', `Årstallet er slutten av fireårsperioden. Tallene for landet er egne beregninger: kommunenes andeler vektet med antall nye boliger. ${s8.every((p) => p.v == null) ? `${n} har ingen nye boliger i perioden.` : ''}`.trim());
+  talltabell('nye', 'Andel nye boliger', ['År', 'Landet, i blokk', 'Landet, utenfor tettsted', `${n}, utenfor tettsted`], L.aar.map((a, i) => [String(a), tall(L.blokk[i], 1), tall(L.utenfor[i], 1), tall(verdi('A8', k, a), 1)]));
+  settSrc('nye', `${KILDE_AP} Landet: egne beregninger.`);
+
+  settH('avst', `${n}: avstand fra boligene til sentrumssonen`);
+  const s9 = serie('C9', k), s10 = serie('C10', k);
+  const gr = gruppe(k, 'klasse');
+  const medKl = D.C10.aar.map((a) => ({a, v: kvantil(gr.map((x) => verdi('C10', x, a)).filter((x) => x != null), 0.5)}));
+  legende('avst', [{c: css('--gronn'), n: 'Alle boliger', cls: 'bf-sw-line'}, {c: css('--bla'), n: 'Nye boliger, siste fire år', cls: 'bf-sw-line'}, {c: css('--null'), n: `Nye boliger, median i klasse ${O[k].klasse}`, cls: 'bf-sw-dash'}]);
+  linjer($('#fig-avst'), [{n: 'Alle boliger', kort: 'alle', c: css('--gronn'), pts: s9}, {n: 'Nye boliger', kort: 'nye', c: css('--bla'), pts: s10}, {n: `Median klasse ${O[k].klasse}`, kort: 'median', c: css('--null'), dash: '6 4', pts: medKl}],
+    {enhet: 'km, gjennomsnitt', des: 1, aria: `Gjennomsnittlig avstand til sentrumssonen for alle boliger og nye boliger i ${n}.`});
+  const a = sisteAar('C10'), v9 = verdi('C9', k, a), v10 = verdi('C10', k, a);
+  settN('avst', v10 == null ? `${n} har ingen nye boliger de siste fire årene fram til ${a}.`
+    : `I ${a} lå nye boliger i ${n} i snitt ${tall(v10, 1)} km fra sentrumssonen, ${v10 < v9 ? 'nærmere enn' : v10 > v9 ? 'lenger unna enn' : 'like langt som'} boligene i kommunen samlet (${tall(v9, 1)} km). Avstanden måles også til sentrumssoner i nabokommuner.`);
+  talltabell('avst', `Avstand til sentrumssonen, ${n}`, ['År', 'Alle boliger', 'Nye boliger', `Median klasse ${O[k].klasse}`], D.C9.aar.map((y, i) => [String(y), tall(s9[i].v, 1), tall(verdi('C10', k, y), 1), tall(medKl.find((p) => p.a === y)?.v, 1)]));
+  settSrc('avst', `${KILDE_AP} Median: egne beregninger.`);
+}
+
+// ---------- Hva bygger vi ned ----------
+function tegnNedbygging(k) {
+  const n = navnK(k), J = DATA.jord, sist = J.aar.length - 1;
+  sett('ned-ingress', `I ${J.aar[sist]} ble ${tall(J.dyrka_annet[sist])} dekar dyrka jord omdisponert til andre formål enn landbruk, mot ${tall(J.dyrka_annet[0])} dekar i ${J.aar[0]}. Jordvernmålet er 2 000 dekar i året.`);
+  settH('jordland', 'Omdisponert dyrka jord i landet');
+  legende('jordland', [{c: css('--gronn'), n: 'Til andre formål enn landbruk'}, {c: css('--tekst'), n: 'Jordvernmålet, 2 000 dekar', cls: 'bf-sw-dash'}]);
+  stolper($('#fig-jordland'), J.aar, [{n: 'Andre formål enn landbruk', c: css('--gronn'), v: J.dyrka_annet}],
+    {enhet: 'dekar', enhetKort: 'dekar', ref: {v: 2000}, aria: `Omdisponert dyrka jord i landet ${J.aar[0]}–${J.aar[sist]}, med jordvernmålet på 2 000 dekar.`});
+  settN('jordland', `Arealprofilenes indikator for kommunene tar med alle formål, også landbruk. For landet var det ${tall(J.dyrka_alle[sist])} dekar i ${J.aar[sist]}.`);
+  talltabell('jordland', 'Omdisponert dyrka jord, landet', ['År', 'Andre formål enn landbruk', 'Alle formål', 'Dyrkbar jord, alle formål'], J.aar.map((a, i) => [String(a), tall(J.dyrka_annet[i]), tall(J.dyrka_alle[i]), tall(J.dyrkbar_alle[i])]));
+  settSrc('jordland', KILDE_11776);
+
+  settH('jord', `${n}: omdisponert jord`);
+  const aar = D.C3.aar, c3 = serie('C3', k).map((p) => p.v), c4 = aar.map((a) => verdi('C4', k, a));
+  legende('jord', [{c: css('--gronn-f'), n: 'Dyrka jord'}, {c: css('--oker-f'), n: 'Dyrkbar jord'}]);
+  const tot = d3.sum(c3) + d3.sum(c4);
+  if (!tot) tom($('#fig-jord'), `${n} har ikke omdisponert dyrka eller dyrkbar jord i ${aar[0]}–${aar[aar.length - 1]}.`);
+  else stolper($('#fig-jord'), aar, [{n: 'Dyrka jord', c: css('--gronn-f'), v: c3}, {n: 'Dyrkbar jord', c: css('--oker-f'), v: c4}], {enhet: 'dekar', enhetKort: 'dekar', aria: `Omdisponert dyrka og dyrkbar jord i ${n}.`});
+  settN('jord', `${n} har omdisponert ${tall(d3.sum(c3))} dekar dyrka jord og ${tall(d3.sum(c4))} dekar dyrkbar jord i ${aar[0]}–${aar[aar.length - 1]}, til alle formål. Dyrkbar jord kan dyrkes, men er ikke dyrket i dag.`);
+  talltabell('jord', `Omdisponert jord, ${n}`, ['År', 'Dyrka jord', 'Dyrkbar jord'], aar.map((a, i) => [String(a), tall(c3[i]), tall(c4[i])]));
+  settSrc('jord', KILDE_AP);
+
+  settH('strand', `${n}: nye bygg i strandsonen`);
+  const s3 = serie('B3', k), b2a = sisteAar('B2'), b2 = verdi('B2', k, b2a);
+  const kyst = s3.some((p) => p.v != null) || b2 != null;
+  legende('strand', kyst ? [{c: css('--gronn'), n: 'Nye bygg innenfor 100 meter fra sjøen, siste fire år'}] : []);
+  if (!kyst) {
+    tom($('#fig-strand'), `${n} er ikke kystkommune. Indikatorene for strandsonen gjelder bare de 226 kystkommunene.`);
+    settN('strand', '');
+    talltabell('strand', 'Strandsonen', ['År', 'Nye bygg'], []);
+  } else {
+    const aarS = d3.range(s3[0].a, s3[s3.length - 1].a + 1);
+    stolper($('#fig-strand'), aarS, [{n: 'Nye bygg', c: css('--gronn'), v: aarS.map((a) => verdi('B3', k, a))}], {enhet: 'bygninger, siste fire år', enhetKort: '', aria: `Nye bygg i strandsonen i ${n}.`});
+    settN('strand', `${b2 == null ? '' : `${tall(b2, 1)} prosent av strandsonen i ${n} var tilgjengelig for allmennheten i ${b2a}. `}Tallene for 2020 mangler i datagrunnlaget.`);
+    talltabell('strand', `Strandsonen, ${n}`, ['År', 'Nye bygg, siste fire år', 'Tilgjengelig strandsone, prosent'], aarS.map((a) => [String(a), tall(verdi('B3', k, a)), tall(verdi('B2', k, a), 1)]));
+  }
+  settSrc('strand', KILDE_AP);
+}
+
+// ---------- Planlagt og fare ----------
+function tegnPlan(k) {
+  const n = navnK(k), gr = gruppe(k, 'klasse');
+  sett('plan-ingress', 'Kommuneplanens arealdel viser hva som er satt av til bolig, fritid og næring. Det som er satt av, men ikke bygd ennå, er reserven. En reserve er en mulighet, ikke noe som blir bygd.');
+  settH('plan', `${n}: ledig areal til bolig i kommuneplanen`);
+  const aar = D.B9.aar;
+  const rader = aar.map((a) => ({n: `${n} ${a}`, v: verdi('B9', k, a), c: css('--gronn')}));
+  const sa = aar[aar.length - 1];
+  rader.push({n: `Median klasse ${O[k].klasse} ${sa}`, v: kvantil(gr.map((x) => verdi('B9', x, sa)).filter((x) => x != null), 0.5), c: css('--null')});
+  liggende($('#fig-plan'), rader, {aria: `Ledig areal til boligbebyggelse i kommuneplanen, ${n}.`});
+  settN('plan', 'Dekar. Areal satt av til boligbebyggelse i kommuneplanens arealdel som ikke er bygd ut. Metoden er endret etter 2022, og serien er så kort at endringer fra år til år bør leses varsomt.');
+  talltabell('plan', `Ledig areal til bolig, ${n}`, ['', 'Dekar'], rader.map((r) => [r.n, tall(r.v)]));
+  settSrc('plan', `${KILDE_AP} Median: egne beregninger.`);
+
+  settH('fare', `${n}: nye bygninger i fare- og aktsomhetsområder`);
+  legende('fare', [{c: css('--oker-f'), n: 'Aktsomhetsområder'}, {c: css('--marine-f'), n: 'Naturfareområder'}]);
+  const r2 = [];
+  for (const [kode, lab, c] of [['B5', 'Aktsomhet', css('--oker-f')], ['B10', 'Naturfare', css('--marine-f')]]) {
+    for (const a of D[kode].aar) { const v = verdi(kode, k, a); r2.push({n: `${lab} ${a}`, v, c, tekst: tilstand(kode, v)}); }
+  }
+  liggende($('#fig-fare'), r2, {aria: `Nye bygninger i aktsomhets- og naturfareområder, ${n}.`});
+  settN('fare', 'Bygninger satt i gang de siste fire årene. Aktsomhetsområder er grove kart over mulig fare for skred og flom. Naturfareområder er utredede faresoner. Derfor er tallene så ulike.');
+  talltabell('fare', `Fareområder, ${n}`, ['', 'Bygninger'], r2.map((r) => [r.n, r.v == null ? r.tekst : tall(r.v)]));
+  settSrc('fare', KILDE_AP);
+}
+
+// ---------- Søk ----------
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøå]+/g, ' ').trim();
+const SYN = DATA.synonymer.map(([ord, k, usikker]) => ({ord, k, usikker, n: norm(ord)}));
+const SOKBARE = kommuner.map((k) => ({k, n: norm(navnK(k)), deler: navnK(k).split(' - ').map(norm)}));
+function sok(q) {
+  const n = norm(q); if (!n) return [];
+  const treff = new Map();
+  const legg = (k, p, ord) => { const t = treff.get(k); if (!t || t.p < p) treff.set(k, {k, p, ord}); };
+  for (const s of SYN) {
+    if (s.n === n) s.k.forEach((k) => legg(k, 100, s.ord));
+    else if (n.length >= 3 && s.n.startsWith(n)) s.k.forEach((k) => legg(k, 70, s.ord));
+  }
+  for (const {k, n: navn, deler} of SOKBARE) {
+    if (navn === n || deler.includes(n)) legg(k, 99);
+    else if (navn.startsWith(n) || deler.some((d) => d.startsWith(n))) legg(k, 80);
+    else if ((' ' + navn).includes(' ' + n)) legg(k, 60);
+    else if (n.length >= 3 && navn.includes(n)) legg(k, 40);
+  }
+  return [...treff.values()].sort((a, b) => b.p - a.p || navnK(a.k).localeCompare(navnK(b.k), 'nb')).slice(0, 8);
+}
+const inp = $('#bf-sok'), liste = $('#bf-forslag'), tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+let forslag = [], aktiv = -1;
+function lukk() { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); }
+function visForslag() {
+  forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+  if (!inp.value.trim()) { lukk(); return; }
+  liste.innerHTML = forslag.length ? forslag.map((t, i) => {
+    const s = SYN.find((x) => x.ord === t.ord);
+    const syn = t.ord && t.p >= 70 ? `${s && s.usikker ? 'Sted i' : 'Tidligere kommune'} «${esc(t.ord)}» · ` : '';
+    return `<li role="option" id="fs-${i}" data-k="${esc(t.k)}" aria-selected="${i === aktiv}">${esc(navnK(t.k))}<span class="s">${syn}${esc(fylkenavn(O[t.k].fylke))} · sentralitetsklasse ${O[t.k].klasse}</span></li>`;
+  }).join('') : '<li class="tom" role="option" aria-disabled="true" data-alle>Ingen treff. Prøv begynnelsen av navnet, eller <button type="button" class="bf-lenke">se alle kommuner</button>.</li>';
+  liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+  if (aktiv >= 0) inp.setAttribute('aria-activedescendant', `fs-${aktiv}`);
+}
+function merk(i) {
+  aktiv = i;
+  liste.querySelectorAll('li[data-k]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i)));
+  inp.setAttribute('aria-activedescendant', `fs-${i}`);
+  const el = liste.querySelector(`#fs-${i}`); if (el) el.scrollIntoView({block: 'nearest'});
+}
+function velgForslag(i) {
+  const t = forslag[i]; if (!t) return;
+  lukk(); inp.value = navnK(t.k);
+  velg(t.k, {ord: t.ord, rull: true});
+}
+inp.addEventListener('input', visForslag);
+inp.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) visForslag(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+  else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) velgForslag(aktiv); }
+  else if (e.key === 'Escape') lukk();
+});
+liste.addEventListener('mousedown', (e) => {
+  if (e.target.closest('[data-alle] button')) { e.preventDefault(); lukk(); if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({behavior: 'smooth'}); return; }
+  const el = e.target.closest('li[data-k]'); if (el) { e.preventDefault(); velgForslag([...liste.querySelectorAll('li[data-k]')].indexOf(el)); }
+});
+inp.addEventListener('blur', () => setTimeout(lukk, 150));
+const EKS = ['Oslo', 'Lillehammer', 'Utsira', 'Skedsmo', 'Karasjok'];
+$('#bf-eksempler').innerHTML = EKS.map((n) => `<button type="button" class="bf-lenke" data-eks="${esc(n)}">${esc(n)}</button>`).join(', ');
+$('#bf-eksempler').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-eks]'); if (!b) return;
+  const t = sok(b.dataset.eks)[0]; if (!t) return;
+  inp.value = navnK(t.k); velg(t.k, {ord: t.ord, rull: true});
+});
+alleKnapp.addEventListener('click', () => {
+  const vis = tre.hidden;
+  if (vis && !tre.innerHTML) {
+    tre.innerHTML = `<p class="bf-note" style="margin-bottom:6px">Alle ${kommuner.length} kommuner etter fylke, med sentralitetsklasse (1 er mest sentral).</p>` +
+      Object.keys(DATA.fylker).sort((a, b) => fylkenavn(a).localeCompare(fylkenavn(b), 'nb')).map((f) => {
+        const ks = kommuner.filter((k) => O[k].fylke === f).sort((a, b) => navnK(a).localeCompare(navnK(b), 'nb'));
+        return `<h3>${esc(DATA.fylker[f])}</h3><ol>${ks.map((k) => `<li><button type="button" class="bf-lenke" data-k="${esc(k)}">${esc(navnK(k))}</button><span class="v">klasse ${O[k].klasse}</span></li>`).join('')}</ol>`;
+      }).join('');
+  }
+  tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', String(vis));
+});
+tre.addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) { tre.hidden = true; alleKnapp.setAttribute('aria-expanded', 'false'); inp.value = navnK(b.dataset.k); velg(b.dataset.k, {rull: true}); } });
+root.addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-sml]'); if (!b) return;
+  visning.sml = b.dataset.sml; tegnProfil(valgt());
+});
+root.addEventListener('pointerleave', skjulTips);
+$('[data-hentet]').textContent = dato(DATA.kilde.hentet);
+
+function tegnAlt() {
+  skjulTips();
+  const k = valgt();
+  document.title = fraAdresse() ? `${navnK(k)}: arealprofil` : 'Arealprofiler';
+  if (document.activeElement !== inp) inp.value = fraAdresse() ? navnK(k) : '';
+  tegnKort(k); tegnLes(k); tegnTopp(k); tegnProfil(k);
+  tegnTetthet(k); tegnNedbygging(k); tegnPlan(k);
+}
+ingress();
+tegnAlt();
+window.addEventListener('hashchange', () => { funnetMed = null; tegnAlt(); });
+let sisteBredde = root.clientWidth, venter = 0;
+new ResizeObserver(() => {
+  if (root.clientWidth === sisteBredde) return;
+  sisteBredde = root.clientWidth;
+  cancelAnimationFrame(venter); venter = requestAnimationFrame(tegnAlt);
+}).observe(root);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(tegnAlt);
+})();
+</script>
+</body>
+</html>

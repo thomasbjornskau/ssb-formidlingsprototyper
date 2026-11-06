@@ -1,0 +1,87 @@
+{
+ "statistikk": "Arealprofiler",
+ "kortnavn": "arealprofiler",
+ "versjon": "0.1",
+ "dato_valg": "2026-11-06",
+ "merknad": "Hoveddatagrunnlaget er fjorårets fil (Arealprofiler 2025, publisert 29.08.2025), valgt av Thomas 06.11.2026. Den ligger uendret i data/raw/ og hentes ikke av hent_data.py. Tabell 14478/14488 er ikke publisert eksternt per 06.11.2026; URL-ene står i 'framtidig' og tas i bruk når de er publisert. Klass og 11776 hentes direkte med hent_data.py. URL-ene bruker PxWebApi v2 med valueCodes[...].",
+ "valg": "Middels (valgt av Thomas 06.11.2026): alle år 2015–2025 for alle 35 indikatorer og 357 kommuner, sentralitet fra Klass og landstall for omdisponert jord fra tabell 11776.",
+ "datasett": [
+  {
+   "id": "arealprofiler",
+   "type": "fil",
+   "tabell": null,
+   "fil": "data/raw/arealprofiler2024_ettark.xlsx",
+   "svarer_paa": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "seksjon": "Alle: Min kommune, indikatorstripen og spørsmålsseksjonene",
+   "beskrivelse": "35 indikatorer for 357 kommuner (inndeling 2024), 2015–2025. Lang tabell: statistikkvariabel, kommunenr, kommune, år, verdi, klasse (bare B8). Samme fil som ligger bak Tableau-versjonen fra 2025.",
+   "omfang": "105 476 rader. Siste år 2023, 2024 eller 2025 avhengig av indikator.",
+   "framtidig": {
+    "tabeller": [
+     "14478",
+     "14488"
+    ],
+    "url_14478": "https://data.ssb.no/api/pxwebapi/v2/tables/14478/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+    "url_14488": "https://data.ssb.no/api/pxwebapi/v2/tables/14488/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+    "merknad": "Variabelkodene er ikke kjent før tabellene er publisert. Kontroller med metadata før bruk."
+   }
+  },
+  {
+   "id": "sentralitet",
+   "type": "klass",
+   "tabell": "Klass 128, korrespondanse 1417",
+   "url": "https://data.ssb.no/api/klass/v1/correspondencetables/1417",
+   "svarer_paa": [
+    1
+   ],
+   "seksjon": "Sammenligningsgruppe i indikatorstripen",
+   "beskrivelse": "Sentralitet 2020 (seks klasser) for kommuneinndelingen 2024. Lagres også som data/raw/sentralitet.csv.",
+   "omfang": "357 kommuner. Klasse 1: 5, 2: 21, 3: 54, 4: 65, 5: 104, 6: 108."
+  },
+  {
+   "id": "fylker",
+   "type": "klass",
+   "tabell": "Klass 104",
+   "url": "https://data.ssb.no/api/klass/v1/classifications/104/codesAt?date=2024-01-01",
+   "svarer_paa": [
+    1
+   ],
+   "seksjon": "Kortet for valgt kommune og listen over alle kommuner",
+   "beskrivelse": "Fylkesinndelingen 2024 (15 fylker), brukt til fylkesnavn ut fra de to første sifrene i kommunenummeret.",
+   "omfang": "16 koder, med 99 Uoppgitt."
+  },
+  {
+   "id": "kofola_land",
+   "type": "pxweb",
+   "tabell": "11776",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11776/data?lang=no&outputFormat=json-stat2&valueCodes%5BKOKarealtype0000%5D=dyrka,dyrkbar&valueCodes%5BKOKformaal0000%5D=total,omdispannetland&valueCodes%5BKOKkommuneregion0000%5D=EAK&valueCodes%5BKOKlovanvendelse0000%5D=total,jl,pb&valueCodes%5BContentsCode%5D=KOSarealomd0000&valueCodes%5BTid%5D=*",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Hva bygger vi ned: landstall mot jordvernmålet",
+   "beskrivelse": "Omdisponert dyrka og dyrkbar jord for landet, alle formål og andre formål enn landbruk, etter lov.",
+   "omfang": "2 arealtyper × 2 formål × 3 lover × 11 år (2015–2025) = 132 celler."
+  }
+ ],
+ "manglende_verdier": [
+  "Fila har ingen statussymboler. Manglende tall er rader som ikke finnes. Om det betyr «mangler», «null» eller «ikke aktuelt» må leses ut av indikatoren (se docs/03-kildekart.md, H2–H6).",
+  "Kommuner uten tettsted har 0 på A3 og mangler på A2, B6 og B7 (22–24 kommuner).",
+  "Kommuner uten sentrumssone har 0 på C6 (135 kommuner).",
+  "B2 og B3 gjelder bare 226 kystkommuner.",
+  "B4 mangler for 254 kommuner og B10 for 162. I tabell 14478 har B10 0 for disse; for B4 er det uavklart."
+ ],
+ "fallgruver": [
+  "C3/C4 er omdisponering til alle formål, også landbruksformål. Jordvernmålet og kofola bruker «andre formål enn landbruk» (11776, omdispannetland). Bruk 11776 for landstall mot målet.",
+  "Summer av kommunene for 2015–2019 mangler 4–13 kommuner og er ikke landstall.",
+  "10 indikatorer er rullerende summer for fire år. Ikke tegn dem som årlige endringer.",
+  "Verdier ligger som tekst med desimalkomma i 43 065 rader. Les dem som tall, ikke som tekst.",
+  "kommunenr er tekst for Oslo (0301) og tall ellers. Gjør alle om til fire tegn.",
+  "B8-klassene summerer til 93–101 prosent; 45 kommune-år avviker mer enn 1,5 prosentpoeng fra 100.",
+  "Landsmedian og persentiler regnes fra kommunene og er ikke vektet. De er ikke landstall."
+ ]
+}
