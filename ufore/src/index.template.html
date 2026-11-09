@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uføretrygdede – prototype</title>
+<meta name="description" content="Prototype: pedagogisk oversikt over SSBs statistikk om uføretrygdede, med aldersvelger og kommuner.">
+<style>
+/*__FONT__*/
+:root{
+  --tekst:#274246;--tekst2:#5e787a;--linje:#d9dfe0;--null:#a9b5b7;--bg:#f3f5f5;--kort:#ffffff;
+  --gronn:#00824d;--gronnlys:#ecfeed;--mork1:#f0f8f9;--mork2:#c3dcdc;--gra:#a9b5b7;--fokus:#1d9de2;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;background:var(--bg);color:var(--tekst);font:16px/1.55 "Open Sans","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
+a{color:#00824d}
+.bf-side{max-width:1180px;margin:0 auto;padding:0 16px 48px}
+.bf-prototype{background:#274247;color:#fff;font-size:14px;padding:8px 16px;text-align:center}
+.bf-hode{padding:28px 0 8px}
+.bf-hode h1{font-family:"Open Sans","Segoe UI",Arial,sans-serif;font-weight:700;font-size:44px;line-height:1.1;margin:0 0 10px}
+.bf-ingress{font-size:19px;max-width:780px;margin:0 0 20px}
+.bf-velgere{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:flex-end;background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:14px 16px}
+.bf-velger label,.bf-velger .bf-etikett{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+select,input[type=search]{font:inherit;font-size:16px;padding:7px 10px;border:1px solid #8a9ea0;border-radius:2px;background:#fff;color:var(--tekst);min-height:40px}
+.bf-knapper{display:inline-flex;border:1px solid #8a9ea0;border-radius:2px;overflow:hidden}
+.bf-knapper button{font:inherit;font-size:15px;border:0;background:#fff;color:var(--tekst);padding:8px 14px;cursor:pointer;min-height:40px}
+.bf-knapper button+button{border-left:1px solid #8a9ea0}
+.bf-knapper button[aria-pressed=true]{background:var(--gronn);color:#fff;font-weight:600}
+button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+.bf-valgt{margin:16px 0 0;background:var(--kort);border:1px solid var(--linje);border-left:5px solid var(--gronn);border-radius:2px;padding:14px 18px;display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:center}
+.bf-valgt p{margin:0}
+.bf-valgt .bf-stort{font-family:"Open Sans","Segoe UI",Arial,sans-serif;font-weight:700;font-size:34px;color:var(--gronn);line-height:1.1}
+h2{font-family:"Open Sans","Segoe UI",Arial,sans-serif;font-size:30px;line-height:1.15;margin:44px 0 6px}
+.bf-seksjonsingress{max-width:780px;margin:0 0 14px;color:var(--tekst)}
+.bf-les{background:var(--kort);border:1px solid var(--linje);border-top:5px solid var(--gronn);border-radius:2px;padding:16px 20px;margin-top:20px}
+.bf-les h2{margin-top:0;font-size:24px}
+.bf-les ol{margin:6px 0 10px;padding-left:22px;display:grid;grid-template-columns:1fr 1fr;gap:10px 32px}
+.bf-les li{padding-left:4px}
+.bf-les li b{display:block}
+details summary{cursor:pointer;font-weight:600;color:var(--gronn);padding:6px 0}
+.bf-konsept-smal{display:none}
+.bf-konsept-bred svg,.bf-konsept-smal svg{width:100%;height:auto;display:block}
+.bf-topp{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:20px 24px;margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:24px}
+.bf-topp .bf-etikett2{font-size:14px;font-weight:600;color:var(--tekst2);text-transform:uppercase;letter-spacing:.03em}
+.bf-topp .bf-tall{font-family:"Open Sans","Segoe UI",Arial,sans-serif;font-weight:700;font-size:64px;line-height:1;color:var(--gronn);margin:8px 0 6px}
+.bf-topp .bf-setning{font-size:20px;font-weight:600;margin:0 0 12px;max-width:520px}
+.bf-topp p{margin:0 0 8px}
+.bf-nokkel{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;grid-column:1/-1;border-top:1px solid var(--linje);padding-top:14px}
+.bf-nokkel div{font-size:14px;color:var(--tekst2)}
+.bf-nokkel b{display:block;font-size:24px;color:var(--tekst);font-family:"Open Sans","Segoe UI",Arial,sans-serif}
+.bf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.bf-kort{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:16px 18px;min-width:0}
+.bf-kort.bf-bred{grid-column:1/-1}
+.bf-kort h3{font-family:"Open Sans","Segoe UI",Arial,sans-serif;font-size:19px;line-height:1.25;margin:0 0 4px}
+.bf-note{font-size:14px;color:var(--tekst2);margin:0 0 10px}
+.bf-figur{width:100%;position:relative}
+.bf-figur svg{display:block;width:100%;height:auto;overflow:visible}
+.bf-kilde{font-size:12px;color:var(--tekst2);margin:8px 0 0}
+.bf-tabell{margin-top:6px}
+.bf-tabell summary{font-size:14px}
+.bf-tabell .bf-rull{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;font-size:14px;margin:6px 0}
+th,td{padding:4px 10px;border-bottom:1px solid var(--linje);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:600;border-bottom:1px solid var(--null)}
+.bf-tips{position:absolute;pointer-events:none;background:#fff;border:1px solid #c3cfd1;border-radius:2px;padding:6px 9px;font-size:13px;color:var(--tekst);box-shadow:none;white-space:nowrap;z-index:5}
+.bf-sok{position:relative;max-width:420px}
+.bf-sok input{width:100%}
+.bf-forslag{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:#fff;border:1px solid #8a9ea0;border-radius:2px;max-height:280px;overflow:auto;z-index:10}
+.bf-forslag li{padding:7px 10px;cursor:pointer;font-size:15px}
+.bf-forslag li[aria-selected=true],.bf-forslag li:hover{background:var(--mork1)}
+.bf-forslag li small{color:var(--tekst2)}
+.bf-kommunekort{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.bf-kommunekort div{background:var(--mork1);padding:10px 12px;border-radius:2px;font-size:14px;color:var(--tekst2)}
+.bf-kommunekort b{display:block;font-size:24px;color:var(--tekst);font-family:"Open Sans","Segoe UI",Arial,sans-serif}
+.bf-mangler{background:#f3f5f5;border:1px dashed #b9c5c6;padding:8px 12px;font-size:14px;color:var(--tekst2);border-radius:2px;margin:6px 0}
+.bf-bunn{margin-top:48px;border-top:1px solid var(--null);padding-top:16px;font-size:14px;color:var(--tekst2)}
+.bf-bunn h2{font-size:20px;margin:0 0 8px;color:var(--tekst)}
+.bf-bunn p{max-width:860px}
+@media (max-width:800px){
+  .bf-hode h1{font-size:34px}
+  .bf-ingress{font-size:17px}
+  .bf-valgt{grid-template-columns:1fr}
+  .bf-topp{grid-template-columns:1fr;padding:16px}
+  .bf-topp .bf-tall{font-size:52px}
+  .bf-nokkel{grid-template-columns:1fr 1fr}
+  .bf-grid{grid-template-columns:1fr}
+  .bf-les ol{grid-template-columns:1fr}
+  .bf-konsept-bred{display:none}
+  .bf-konsept-smal{display:block;max-width:390px;margin:0 auto}
+  .bf-kommunekort{grid-template-columns:1fr 1fr}
+  h2{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="bf-prototype" role="note">Prototype. Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</div>
+<main class="bf-side">
+
+<header class="bf-hode">
+  <h1>Uføretrygdede</h1>
+  <p class="bf-ingress" id="ingress"></p>
+  <div class="bf-velgere" role="group" aria-label="Velg alder og kjønn">
+    <div class="bf-velger">
+      <label for="velgAlder">Alder</label>
+      <select id="velgAlder"></select>
+    </div>
+    <div class="bf-velger">
+      <span class="bf-etikett" id="kjonnEtikett">Kjønn</span>
+      <div class="bf-knapper" role="group" aria-labelledby="kjonnEtikett" id="velgKjonn">
+        <button type="button" data-k="begge" aria-pressed="true">Begge</button>
+        <button type="button" data-k="kvinner" aria-pressed="false">Kvinner</button>
+        <button type="button" data-k="menn" aria-pressed="false">Menn</button>
+      </div>
+    </div>
+  </div>
+  <section class="bf-valgt" id="valgtKort" aria-live="polite">
+    <div><p class="bf-stort" id="valgtTall"></p><p id="valgtTekst"></p></div>
+    <div class="bf-figur" id="figValgtSpark"></div>
+  </section>
+</header>
+
+<section class="bf-les" aria-labelledby="lesTittel">
+  <h2 id="lesTittel">Slik leser du tallene</h2>
+  <ol id="lesPunkter"></ol>
+  <details>
+    <summary>Slik lages tallene</summary>
+    <div class="bf-konsept-bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+    <div class="bf-konsept-smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+  </details>
+</section>
+
+<section class="bf-topp" aria-labelledby="toppTittel">
+  <div>
+    <div class="bf-etikett2" id="toppTittel">Uføretrygdede · 2015–2025</div>
+    <div class="bf-tall" id="toppTall"></div>
+    <p class="bf-setning" id="toppSetning"></p>
+    <p id="toppL1"></p>
+    <p id="toppL2"></p>
+  </div>
+  <div>
+    <div class="bf-figur" id="figToppLinje"></div>
+    <div class="bf-figur" id="figToppDek" style="margin-top:10px"></div>
+    <p class="bf-kilde" id="kildeTopp"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabTopp"></div></details>
+  </div>
+  <div class="bf-nokkel" id="nokkeltall"></div>
+</section>
+
+<h2 id="s-alder">Hvem er uføretrygdet?</h2>
+<p class="bf-seksjonsingress" id="ingressAlder"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tAlderprofil"></h3>
+    <p class="bf-note">Andel uføretrygdede etter alder, 2015 og 2025. Velg alder i menyen øverst, klikk i figuren eller bruk piltastene når figuren har fokus.</p>
+    <div class="bf-figur" id="figAlderprofil"></div>
+    <p class="bf-kilde" id="kildeAlder"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabAlderprofil"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tAlderTid"></h3>
+    <p class="bf-note" id="nAlderTid"></p>
+    <div class="bf-figur" id="figAlderTid"></div>
+    <p class="bf-kilde" id="kildeAlderTid"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabAlderTid"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tNye"></h3>
+    <p class="bf-note" id="nNye"></p>
+    <div class="bf-figur" id="figNye"></div>
+    <p class="bf-kilde" id="kildeNye"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabNye"></div></details>
+  </article>
+</div>
+
+<h2 id="s-arbeid">Jobber uføre?</h2>
+<p class="bf-seksjonsingress" id="ingressArbeid"></p>
+<div class="bf-grid">
+  <article class="bf-kort">
+    <h3 id="tArbeid"></h3>
+    <p class="bf-note">Andel av månedene som uføretrygdet med lønnsarbeid samtidig, 2025. Måler måneder, ikke timer. Én time arbeid i en måned teller som en måned med arbeid. Selvstendig næringsdrivende er ikke med.</p>
+    <div class="bf-figur" id="figArbeid"></div>
+    <p class="bf-kilde" id="kildeArbeid"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabArbeid"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tGrad"></h3>
+    <p class="bf-note">Uføregrad er hvor mye inntektsevnen er varig nedsatt i vedtaket, ikke hvor mye personen jobber. Den høyeste graden i løpet av året er brukt. 2025.</p>
+    <div class="bf-figur" id="figGrad"></div>
+    <p class="bf-kilde" id="kildeGrad"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabGrad"></div></details>
+  </article>
+</div>
+
+<h2 id="s-utdanning">Hvilken rolle spiller utdanning?</h2>
+<p class="bf-seksjonsingress" id="ingressUtd"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tUtd"></h3>
+    <p class="bf-note">Høyeste fullførte utdanning per 1. oktober i statistikkåret. Utdanningen er målt etter at personen ble uføretrygdet, ikke før. Unge som blir syke, fullfører sjeldnere videre utdanning, så sammenhengen kan gå begge veier.</p>
+    <div class="bf-figur" id="figUtd"></div>
+    <p class="bf-kilde" id="kildeUtd"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabUtd"></div></details>
+  </article>
+</div>
+
+<h2 id="s-kommune">Min kommune</h2>
+<p class="bf-seksjonsingress">Andelen uføretrygdede varierer mye mellom kommunene. En del av forskjellen skyldes at noen kommuner har eldre befolkning. Den aldersjusterte indeksen viser hva som står igjen når alder og kjønn er tatt hensyn til. 100 er landsnivået.</p>
+<div class="bf-kort bf-bred">
+  <div class="bf-sok">
+    <label for="sokKommune" class="bf-etikett" style="display:block;font-weight:600;font-size:14px;margin-bottom:4px">Søk etter kommune eller fylke</label>
+    <input type="search" id="sokKommune" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="forslag" autocomplete="off" placeholder="For eksempel Hamar eller Agder">
+    <ul class="bf-forslag" id="forslag" role="listbox" hidden></ul>
+  </div>
+  <p class="bf-note" id="sokIngen" hidden></p>
+  <h3 id="tKommune" style="margin-top:14px"></h3>
+  <p id="kommuneTekst" style="margin:4px 0 0;max-width:860px"></p>
+  <div class="bf-kommunekort" id="kommuneTall"></div>
+  <div class="bf-mangler" id="kommuneMangler" hidden></div>
+  <div class="bf-grid">
+    <div>
+      <h3 id="tKommuneTid" style="font-size:17px"></h3>
+      <div class="bf-figur" id="figKommuneTid"></div>
+      <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabKommuneTid"></div></details>
+    </div>
+    <div>
+      <h3 style="font-size:17px">Alle kommuner: faktisk andel mot det alderen tilsier, 2025</h3>
+      <div class="bf-figur" id="figSpredning"></div>
+      <p class="bf-note" style="margin-top:6px">Hver prikk er en kommune. Over den skrå linjen er andelen høyere enn alder og kjønn tilsier. Små kommuner kan ligge langt fra linjen av tilfeldige grunner. Klikk på en prikk for å velge kommunen.</p>
+      <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabSpredning"></div></details>
+    </div>
+  </div>
+  <p class="bf-kilde" id="kildeKommune"></p>
+</div>
+<div class="bf-grid" style="margin-top:16px">
+  <article class="bf-kort bf-bred">
+    <h3>Fylkene: faktisk andel og andel ut fra alder, 2025</h3>
+    <p class="bf-note">Grønn prikk er faktisk andel. Grå ring er andelen fylket ville hatt med landets andeler i hver alder og hvert kjønn. Sortert etter aldersjustert indeks.</p>
+    <div class="bf-figur" id="figFylker"></div>
+    <p class="bf-kilde" id="kildeFylker"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabFylker"></div></details>
+  </article>
+</div>
+
+<footer class="bf-bunn">
+  <h2>Om tallene</h2>
+  <p>Tallene er fra SSBs statistikk <a href="https://www.ssb.no/ufore">Uføretrygdede</a>. Uføretrygdede er personer 18–67 år med vedtak om uføretrygd fra folketrygden minst én måned i løpet av året, bosatt i Norge ved årsslutt. Andelen er antall delt på bosatte i samme alder og kjønn per 1. januar året etter.</p>
+  <p><b>Egne beregninger i denne prototypen</b>, ikke publisert av SSB: (1) Dekomponeringen av økningen i antall i befolkningsvekst, aldring og høyere andel per alder. Den er et snitt av alle rekkefølgene beregningen kan gjøres i. (2) Kommuneseriene før 2024, omkodet til dagens kommuner gjennom SSBs klassifikasjonsdatabase (Klass). Kommuner som ble delt, har ikke tall før delingen. (3) Den aldersjusterte indeksen (indirekte standardisering etter alder og kjønn) og andelen ut fra alder.</p>
+  <p id="bunnKilder"></p>
+  <p>Prototype laget med KI-støtte i SSB, november 2026. Siden er ikke kvalitetssikret av fagseksjonen ennå.</p>
+</footer>
+</main>
+<div class="bf-tips" id="tips" hidden></div>
+
+<script>/*__D3__*/</script>
+<script>
+"use strict";
+const D = /*__INKLUDER:build/ufore.json__*/;
+const AR = D.ar, SISTE = AR.length - 1, ALDRE = d3.range(18, 68);
+const FARGE = {gronn: "#00824d", gra: "#a9b5b7", graT: "#5e787a", linje: "#d9dfe0", null: "#a9b5b7", tekst: "#274246"};
+const KJ = {begge: "begge kjønn", kvinner: "kvinner", menn: "menn"};
+const tilstand = {alder: "alle", kjonn: "begge", kommune: "0"};
+
+// ---------- formatering ----------
+const nb = (x, d = 0) => x == null ? "–" : x.toLocaleString("nb-NO", {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/−|-/g, "−");
+const pst = (x, d = 1) => nb(x, d) + " prosent";
+const rundTusen = x => nb(Math.round(x / 1000) * 1000);
+const kilde = (tab) => "Kilde: SSB, " + (tab.length > 1 ? "tabell " + tab.slice(0, -1).join(", ") + " og " + tab[tab.length - 1] : "tabell " + tab[0]) +
+  ". Sist oppdatert: " + tab.map(t => D.oppdatert[t]).filter((v, i, a) => v && a.indexOf(v) === i).join(" / ") + ".";
+
+// ---------- aldersgrupper ----------
+function gruppe(liste) {
+  if (tilstand.alder === "alle") return "18-67";
+  const a = +tilstand.alder;
+  return liste.find(g => g !== "18-67" && a >= +g.split("-")[0] && a <= +g.split("-")[1]);
+}
+const gNavn = g => g === "18-67" ? "18–67 år" : g.replace("-", "–") + " år";
+const ai = a => ALDRE.indexOf(+a);
+
+// ---------- hjelpere for figurer ----------
+const tips = d3.select("#tips");
+function visTips(ev, html) {
+  const r = document.body.getBoundingClientRect();
+  tips.attr("hidden", null).html(html);
+  const b = tips.node().getBoundingClientRect();
+  let x = ev.pageX + 14, y = ev.pageY - b.height - 10;
+  if (x + b.width > window.scrollX + document.documentElement.clientWidth - 8) x = ev.pageX - b.width - 14;
+  if (y < window.scrollY + 4) y = ev.pageY + 16;
+  tips.style("left", x + "px").style("top", y + "px");
+}
+const skjulTips = () => tips.attr("hidden", true);
+function svgFor(id, h, beskrivelse) {
+  const el = d3.select("#" + id); el.selectAll("*").remove();
+  const w = Math.max(280, el.node().clientWidth);
+  const svg = el.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("width", w).attr("height", h)
+    .attr("role", "img").attr("aria-label", beskrivelse);
+  return {svg, w, h};
+}
+function tekst(g, x, y, t, o = {}) {
+  return g.append("text").attr("x", x).attr("y", y).text(t).attr("font-size", o.str || 13)
+    .attr("fill", o.farge || FARGE.tekst).attr("text-anchor", o.anker || "start").attr("font-weight", o.vekt || 400);
+}
+function yAkse(g, y, x0, x1, verdier, fmt, tittel) {
+  verdier.forEach(v => {
+    g.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y(v)).attr("y2", y(v)).attr("stroke", v === 0 ? FARGE.null : FARGE.linje);
+    tekst(g, x0 - 6, y(v) + 4, fmt(v), {anker: "end", farge: FARGE.graT});
+  });
+  if (tittel) tekst(g, x0 - 6, y.range()[1] - 12, tittel, {farge: FARGE.graT, anker: "start"}).attr("x", 0);
+}
+function tabellHTML(id, hode, rader) {
+  document.getElementById(id).innerHTML = "<table><thead><tr>" + hode.map(h => `<th scope="col">${h}</th>`).join("") +
+    "</tr></thead><tbody>" + rader.map(r => "<tr>" + r.map((c, i) => i === 0 ? `<th scope="row">${c}</th>` : `<td>${c}</td>`).join("") + "</tr>").join("") + "</tbody></table>";
+}
+const settTekst = (id, t) => { document.getElementById(id).textContent = t; };
+
+// ---------- adresse ----------
+function lesAdresse() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  const a = p.get("alder"); if (a === "alle" || (a && +a >= 18 && +a <= 67)) tilstand.alder = a;
+  const k = p.get("kjonn"); if (KJ[k]) tilstand.kjonn = k;
+  const ko = p.get("kommune"); if (ko && (D.kommuner[ko] || D.fylker[ko] || ko === "0")) tilstand.kommune = ko;
+}
+function skrivAdresse() {
+  const p = new URLSearchParams({alder: tilstand.alder, kjonn: tilstand.kjonn, kommune: tilstand.kommune});
+  history.replaceState(null, "", "#" + p.toString());
+}
+
+// ---------- hode ----------
+function hode() {
+  const L = D.land.begge, a20 = L.andel.slice(5);
+  settTekst("ingress", `I ${AR[SISTE]} var ${nb(L.antall[SISTE])} personer i alderen 18–67 år uføretrygdet, ${pst(L.andel[SISTE])} av befolkningen. ` +
+    `Andelen har ligget mellom ${nb(d3.min(a20), 1)} og ${nb(d3.max(a20), 1)} prosent siden 2020, men bak det stabile tallet har unge og eldste gått hver sin vei.`);
+  const sel = document.getElementById("velgAlder");
+  sel.innerHTML = `<option value="alle">Alle, 18–67 år</option>` + ALDRE.map(a => `<option value="${a}">${a} år</option>`).join("");
+  sel.value = tilstand.alder;
+  sel.addEventListener("change", () => { tilstand.alder = sel.value; oppdater(); });
+  document.querySelectorAll("#velgKjonn button").forEach(b => b.addEventListener("click", () => { tilstand.kjonn = b.dataset.k; oppdater(); }));
+}
+function valgtKort() {
+  const k = tilstand.kjonn;
+  document.querySelectorAll("#velgKjonn button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k));
+  document.getElementById("velgAlder").value = tilstand.alder;
+  let serie, ant, navn;
+  if (tilstand.alder === "alle") { serie = D.land[k].andel; ant = D.land[k].antall[SISTE]; navn = "18–67 år"; }
+  else { const i = ai(tilstand.alder); serie = D.alder[k].andel[i]; ant = D.alder[k].antall[i][SISTE]; navn = tilstand.alder + " år"; }
+  const hvem = k === "begge" ? "" : " " + KJ[k];
+  settTekst("valgtTall", pst(serie[SISTE]));
+  const endr = serie[SISTE] - serie[0];
+  settTekst("valgtTekst", `av alle${hvem} ${navn} var uføretrygdet i ${AR[SISTE]}, ${nb(ant)} personer. ` +
+    `I ${AR[0]} var andelen ${pst(serie[0])}` + (Math.abs(endr) < 0.05 ? ", altså uendret." : `, ${endr > 0 ? "en økning" : "en nedgang"} på ${nb(Math.abs(endr), 1)} prosentpoeng.`));
+  // spark
+  const {svg, w, h} = svgFor("figValgtSpark", 90, `Utvikling i andel for ${navn} 2015–2025`);
+  const x = d3.scalePoint(AR, [8, w - 40]), y = d3.scaleLinear([0, d3.max(serie) * 1.15 || 1], [h - 18, 10]);
+  svg.append("line").attr("x1", 8).attr("x2", w - 40).attr("y1", y(0)).attr("y2", y(0)).attr("stroke", FARGE.null);
+  svg.append("path").attr("d", d3.line((d, i) => x(AR[i]), d => y(d))(serie)).attr("fill", "none").attr("stroke", FARGE.gronn).attr("stroke-width", 2.5);
+  [0, SISTE].forEach(i => { svg.append("circle").attr("cx", x(AR[i])).attr("cy", y(serie[i])).attr("r", 3.5).attr("fill", FARGE.gronn);
+    tekst(svg, x(AR[i]) + (i ? 6 : 0), y(serie[i]) - 8, nb(serie[i], 1), {anker: i ? "start" : "start", vekt: 600}); });
+  tekst(svg, 8, h - 2, AR[0], {farge: FARGE.graT, str: 12}); tekst(svg, w - 40, h - 2, AR[SISTE], {farge: FARGE.graT, str: 12, anker: "end"});
+}
+
+// ---------- lesehjelp ----------
+function lesehjelp() {
+  const L = D.land.begge, dek = D.dekomponering;
+  const p = [
+    ["SSB og NAV teller ulikt.", `SSB teller alle som hadde vedtak om uføretrygd i løpet av året (${nb(L.antall[SISTE])} i ${AR[SISTE]}). NAV teller dem som får utbetalt ved utgangen av året (${nb(D.nav_2025)}). Begge tallene er riktige.`],
+    ["Antall og andel er ikke det samme.", `Antallet har økt med ${nb(dek.endring)} siden ${dek.fra}. Litt over halvparten skyldes at befolkningen har vokst og blitt eldre. Andelen sier mer om utviklingen.`],
+    ["Uføregrad er ikke arbeidstid.", "Uføregraden viser hvor mye inntektsevnen er varig nedsatt i vedtaket. Den sier ikke hvor mye personen jobber."],
+    ["Arbeid måles i måneder.", "«Full» arbeidsintensitet betyr lønnsarbeid i alle månedene som uføretrygdet, ikke full stilling."],
+  ];
+  document.getElementById("lesPunkter").innerHTML = p.map(([t, x]) => `<li><b>${t}</b>${x}</li>`).join("");
+}
+
+// ---------- toppgrafikk A ----------
+function topp() {
+  const L = D.land.begge, dek = D.dekomponering;
+  settTekst("toppTall", rundTusen(L.antall[SISTE]));
+  settTekst("toppSetning", `personer 18–67 år var uføretrygdet i ${AR[SISTE]}. Andelen har stått nesten stille i fem år.`);
+  settTekst("toppL1", `Antallet har økt med ${rundTusen(dek.endring)} siden ${dek.fra}.`);
+  settTekst("toppL2", `Om lag ${rundTusen(dek.befolkningsvekst)} av økningen skyldes at befolkningen har vokst, og ${rundTusen(dek.aldring)} at den har blitt eldre. Resten, om lag ${rundTusen(dek.hoyere_andel)}, er at flere i hver alder er uføretrygdet.`);
+  // linje
+  let {svg, w, h} = svgFor("figToppLinje", 150, `Andel uføretrygdede 18–67 år 2015–2025, fra ${nb(L.andel[0], 1)} til ${nb(L.andel[SISTE], 1)} prosent`);
+  const m = {l: 34, r: 30, t: 24, b: 22};
+  const x = d3.scalePoint(AR, [m.l, w - m.r]), y = d3.scaleLinear([9, 11.5], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, [10, 11], v => nb(v), null);
+  tekst(svg, 0, 12, "prosent", {farge: FARGE.graT});
+  tekst(svg, w - m.r, 12, "Andel av befolkningen 18–67 år", {farge: FARGE.graT, anker: "end"});
+  svg.append("path").attr("d", d3.line((d, i) => x(AR[i]), d => y(d))(L.andel)).attr("fill", "none").attr("stroke", FARGE.gronn).attr("stroke-width", 2.5);
+  L.andel.forEach((v, i) => svg.append("circle").attr("cx", x(AR[i])).attr("cy", y(v)).attr("r", i === 0 || i === SISTE ? 4 : 0).attr("fill", FARGE.gronn));
+  tekst(svg, x(AR[0]) + 6, y(L.andel[0]) + 18, nb(L.andel[0], 1), {vekt: 600});
+  tekst(svg, x(AR[SISTE]), y(L.andel[SISTE]) - 10, nb(L.andel[SISTE], 1), {vekt: 600, anker: "end"});
+  [0, 5, SISTE].forEach(i => tekst(svg, x(AR[i]), h - 4, AR[i], {farge: FARGE.graT, anker: i === 0 ? "start" : i === SISTE ? "end" : "middle"}));
+  svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", w - m.l - m.r).attr("height", h - m.t - m.b).attr("fill", "transparent")
+    .on("mousemove", ev => { const [mx] = d3.pointer(ev); const i = Math.round((mx - m.l) / (w - m.l - m.r) * SISTE); if (i >= 0 && i <= SISTE) visTips(ev, `<b>${AR[i]}</b><br>${pst(L.andel[i])}<br>${nb(L.antall[i])} personer`); })
+    .on("mouseleave", skjulTips);
+  // dekomponering
+  ({svg, w, h} = svgFor("figToppDek", 106, "Dekomponering av økningen i antall uføretrygdede 2015–2025"));
+  tekst(svg, 0, 13, `Hva økningen på ${nb(dek.endring)} består av, ${dek.fra}–${dek.til}`, {farge: FARGE.graT});
+  if (w >= 520) tekst(svg, w, 13, "egen beregning", {farge: FARGE.graT, anker: "end"});
+  const deler = [["Befolkningsvekst", dek.befolkningsvekst, "#5763a6", "#fff"], ["Aldring", dek.aldring, "#d5a640", FARGE.tekst], ["Høyere andel i hver alder", dek.hoyere_andel, "#339b71", "#fff"]];
+  const xs = d3.scaleLinear([0, dek.endring], [0, w]);
+  let x0 = 0, forrigeSlutt = -1e9, forrigeLinje = 0;
+  deler.forEach(([n, v, f, tf], i) => {
+    const b = xs(v);
+    svg.append("rect").attr("x", x0).attr("y", 24).attr("width", Math.max(0, b - 2)).attr("height", 30).attr("fill", f)
+      .on("mousemove", ev => visTips(ev, `<b>${n}</b><br>om lag ${rundTusen(v)} personer`)).on("mouseleave", skjulTips);
+    if (b > 54) tekst(svg, x0 + 7, 44, "+" + rundTusen(v), {farge: tf, vekt: 600});
+    const linje = x0 < forrigeSlutt + 6 && forrigeLinje === 0 ? 1 : 0;
+    const t = tekst(svg, x0, 72 + linje * 16, n, {str: 12.5});
+    if (x0 + t.node().getComputedTextLength() > w) t.attr("x", w).attr("text-anchor", "end");
+    forrigeSlutt = x0 + t.node().getComputedTextLength(); forrigeLinje = linje;
+    x0 += b;
+  });
+  settTekst("kildeTopp", kilde(["11695", "11828", "07459"]) + " Dekomponeringen er egen beregning, avrundet til nærmeste tusen.");
+  tabellHTML("tabTopp", ["År", "Antall", "Andel (prosent)", "Befolkning 18–67"], AR.map((a, i) => [a, nb(L.antall[i]), nb(L.andel[i], 1), nb(D.befolkning[i])]).concat([
+    ["Dekomponering: befolkningsvekst", nb(dek.befolkningsvekst), "", ""], ["Dekomponering: aldring", nb(dek.aldring), "", ""], ["Dekomponering: høyere andel per alder", nb(dek.hoyere_andel), "", ""]]));
+  const nye = D.nye.begge["18-67"];
+  document.getElementById("nokkeltall").innerHTML = [
+    ["Andel 18–67 år", pst(L.andel[SISTE])], ["Kvinner", pst(D.land.kvinner.andel[SISTE])], ["Menn", pst(D.land.menn.andel[SISTE])], ["Nye uføretrygdede", nb(nye.antall[SISTE])]]
+    .map(([e, v]) => `<div><b>${v}</b>${e}, ${AR[SISTE]}</div>`).join("");
+}
+
+// ---------- alder ----------
+function alderprofil() {
+  const k = tilstand.kjonn, A = D.alder[k].andel;
+  const valgt = tilstand.alder === "alle" ? null : +tilstand.alder;
+  const u = A.map(r => r[SISTE]), f = A.map(r => r[0]);
+  settTekst("tAlderprofil", valgt ? `${valgt} år: ${pst(u[ai(valgt)])} i ${AR[SISTE]}, mot ${pst(f[ai(valgt)])} i ${AR[0]}`
+    : `Andelen er doblet blant unge voksne og har falt blant de eldste`);
+  const yng = ai(29), eld = ai(67);
+  settTekst("ingressAlder", `Sannsynligheten for å være uføretrygdet øker kraftig med alderen. Siden ${AR[0]} har andelen blant ${KJ[k] === "begge kjønn" ? "" : KJ[k] + " på "}29 år gått fra ${pst(f[yng])} til ${pst(u[yng])}, mens den blant 67-åringer har falt fra ${pst(f[eld])} til ${pst(u[eld])}.`);
+  const {svg, w, h} = svgFor("figAlderprofil", 300, "Andel uføretrygdede etter alder, 2015 og 2025");
+  const m = {l: 36, r: 46, t: 22, b: 30};
+  const x = d3.scaleLinear([18, 67], [m.l, w - m.r]), y = d3.scaleLinear([0, Math.ceil(d3.max(f.concat(u)) / 10) * 10], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, y.ticks(4), v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: FARGE.graT});
+  [18, 30, 40, 50, 60, 67].forEach(a => tekst(svg, x(a), h - 10, a, {anker: "middle", farge: FARGE.graT}));
+  tekst(svg, m.l - 6, h - 10, "alder", {anker: "end", farge: FARGE.graT});
+  const linje = d3.line((d, i) => x(ALDRE[i]), d => y(d));
+  svg.append("path").attr("d", linje(f)).attr("fill", "none").attr("stroke", FARGE.gra).attr("stroke-width", 2);
+  svg.append("path").attr("d", linje(u)).attr("fill", "none").attr("stroke", FARGE.gronn).attr("stroke-width", 2.5);
+  tekst(svg, x(67) + 6, y(f[eld]) + 4, AR[0], {farge: FARGE.graT, vekt: 600});
+  tekst(svg, x(67) + 6, y(u[eld]) + (Math.abs(y(u[eld]) - y(f[eld])) < 14 ? 16 : 4), AR[SISTE], {farge: FARGE.gronn, vekt: 600});
+  if (valgt) {
+    const i = ai(valgt);
+    svg.append("line").attr("x1", x(valgt)).attr("x2", x(valgt)).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", "#c3cfd1");
+    svg.append("circle").attr("cx", x(valgt)).attr("cy", y(f[i])).attr("r", 4.5).attr("fill", FARGE.gra);
+    svg.append("circle").attr("cx", x(valgt)).attr("cy", y(u[i])).attr("r", 5).attr("fill", FARGE.gronn);
+    const venstre = valgt > 52;
+    tekst(svg, x(valgt) + (venstre ? -8 : 8), m.t + 10, `${valgt} år: ${nb(f[i], 1)} → ${nb(u[i], 1)}`, {vekt: 600, anker: venstre ? "end" : "start"});
+  }
+  const flate = svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", w - m.l - m.r).attr("height", h - m.t - m.b)
+    .attr("fill", "transparent").style("cursor", "pointer")
+    .attr("tabindex", 0).attr("role", "slider").attr("aria-label", "Velg alder i figuren").attr("aria-valuemin", 18).attr("aria-valuemax", 67)
+    .attr("aria-valuenow", valgt || 18).attr("aria-valuetext", valgt ? valgt + " år" : "Alle aldre");
+  const aFra = ev => Math.max(18, Math.min(67, Math.round(x.invert(d3.pointer(ev)[0]))));
+  flate.on("mousemove", ev => { const a = aFra(ev), i = ai(a); visTips(ev, `<b>${a} år</b><br>${AR[0]}: ${pst(f[i])}<br>${AR[SISTE]}: ${pst(u[i])}`); })
+    .on("mouseleave", skjulTips)
+    .on("click", ev => { tilstand.alder = String(aFra(ev)); oppdater(); })
+    .on("keydown", ev => {
+      const n = {ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1, PageUp: 5, PageDown: -5}[ev.key];
+      if (n) { ev.preventDefault(); tilstand.alder = String(Math.max(18, Math.min(67, (valgt || 17) + n))); oppdater(); document.querySelector("#figAlderprofil rect[role=slider]").focus(); }
+      else if (ev.key === "Home" || ev.key === "End") { ev.preventDefault(); tilstand.alder = ev.key === "Home" ? "18" : "67"; oppdater(); document.querySelector("#figAlderprofil rect[role=slider]").focus(); }
+    });
+  settTekst("kildeAlder", kilde(["11828"]));
+  tabellHTML("tabAlderprofil", ["Alder", `${AR[0]} (prosent)`, `${AR[SISTE]} (prosent)`, `Antall ${AR[SISTE]}`], ALDRE.map((a, i) => [a + " år", nb(f[i], 1), nb(u[i], 1), nb(D.alder[k].antall[i][SISTE])]));
+}
+
+function alderTid() {
+  const k = tilstand.kjonn;
+  const alle = tilstand.alder === "alle";
+  const s = alle ? D.land[k].andel : D.alder[k].andel[ai(tilstand.alder)];
+  const sa = alle ? D.land[k].antall : D.alder[k].antall[ai(tilstand.alder)];
+  const ref = D.land[k].andel;
+  const navn = alle ? "18–67 år" : tilstand.alder + " år";
+  settTekst("tAlderTid", `Utviklingen for ${navn}${k === "begge" ? "" : ", " + KJ[k]}`);
+  settTekst("nAlderTid", alle ? "Andel uføretrygdede, 2015–2025." : "Andel uføretrygdede i valgt alder, med hele aldersgruppen 18–67 år som grå referanse.");
+  const {svg, w, h} = svgFor("figAlderTid", 220, `Andel uføretrygdede ${navn} 2015–2025`);
+  const m = {l: 34, r: 40, t: 22, b: 24};
+  const x = d3.scalePoint(AR, [m.l, w - m.r]), y = d3.scaleLinear([0, Math.max(d3.max(s), d3.max(ref)) * 1.15], [h - m.b, m.t]).nice();
+  yAkse(svg, y, m.l, w - m.r, y.ticks(4), v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: FARGE.graT});
+  [0, 5, SISTE].forEach(i => tekst(svg, x(AR[i]), h - 6, AR[i], {farge: FARGE.graT, anker: "middle"}));
+  const linje = d3.line((d, i) => x(AR[i]), d => y(d));
+  if (!alle) {
+    svg.append("path").attr("d", linje(ref)).attr("fill", "none").attr("stroke", FARGE.gra).attr("stroke-width", 2);
+    tekst(svg, x(AR[SISTE]) + 5, y(ref[SISTE]) + 4, "18–67", {farge: FARGE.graT, str: 12});
+  }
+  svg.append("path").attr("d", linje(s)).attr("fill", "none").attr("stroke", FARGE.gronn).attr("stroke-width", 2.5);
+  tekst(svg, x(AR[SISTE]) + 5, y(s[SISTE]) + (alle ? 4 : (y(s[SISTE]) > y(ref[SISTE]) ? 14 : -4)), nb(s[SISTE], 1), {vekt: 600, farge: FARGE.gronn});
+  s.forEach((v, i) => svg.append("circle").attr("cx", x(AR[i])).attr("cy", y(v)).attr("r", 7).attr("fill", "transparent")
+    .on("mousemove", ev => visTips(ev, `<b>${navn}, ${AR[i]}</b><br>${pst(v)}<br>${nb(sa[i])} personer`)).on("mouseleave", skjulTips));
+  settTekst("kildeAlderTid", kilde(alle ? ["11695"] : ["11828", "11695"]));
+  tabellHTML("tabAlderTid", ["År", `${navn} (prosent)`, `${navn} (antall)`, "18–67 år (prosent)"], AR.map((a, i) => [a, nb(s[i], 1), nb(sa[i]), nb(ref[i], 1)]));
+}
+
+function nyeFig() {
+  const k = tilstand.kjonn, g = gruppe(D.grupper8), N = D.nye[k][g];
+  settTekst("tNye", `Nye uføretrygdede, ${gNavn(g)}${k === "begge" ? "" : ", " + KJ[k]}`);
+  const min = d3.minIndex(N.antall);
+  settTekst("nNye", `Personer som fikk vedtak om uføretrygd og ikke hadde det måneden før. Tilgangen svinger med regler og saksbehandling for arbeidsavklaringspenger (AAP), som de fleste kommer fra. ${AR[min] === AR[SISTE] ? `${AR[SISTE]} er det laveste året i serien.` : ""}`);
+  const {svg, w, h} = svgFor("figNye", 220, `Nye uføretrygdede ${gNavn(g)} per år 2015–2025`);
+  const m = {l: 48, r: 8, t: 22, b: 24};
+  const x = d3.scaleBand(AR, [m.l, w - m.r]).padding(0.33), y = d3.scaleLinear([0, d3.max(N.antall)], [h - m.b, m.t]).nice();
+  yAkse(svg, y, m.l, w - m.r, y.ticks(4), v => nb(v));
+  tekst(svg, 0, 12, "antall personer", {farge: FARGE.graT});
+  N.antall.forEach((v, i) => {
+    svg.append("rect").attr("x", x(AR[i])).attr("y", y(v)).attr("width", x.bandwidth()).attr("height", y(0) - y(v)).attr("fill", FARGE.gronn)
+      .on("mousemove", ev => visTips(ev, `<b>${AR[i]}</b><br>${nb(v)} nye uføretrygdede<br>${pst(N.andel[i], 2)} av befolkningen`)).on("mouseleave", skjulTips);
+  });
+  [0, 5, SISTE].forEach(i => tekst(svg, x(AR[i]) + x.bandwidth() / 2, h - 6, AR[i], {farge: FARGE.graT, anker: "middle"}));
+  tekst(svg, x(AR[SISTE]) + x.bandwidth() / 2, y(N.antall[SISTE]) - 5, nb(N.antall[SISTE]), {anker: "end", vekt: 600, str: 12});
+  settTekst("kildeNye", kilde(["11736"]));
+  tabellHTML("tabNye", ["År", "Nye uføretrygdede", "Prosent av befolkningen"], AR.map((a, i) => [a, nb(N.antall[i]), nb(N.andel[i], 2)]));
+}
+
+// ---------- arbeid og uføregrad ----------
+function stablet(id, grupper, verdi, kat, farger, tfarger, valgtG, beskr) {
+  const rh = 30, gap = 10, top = 34;
+  const h = top + grupper.length * (rh + gap) + 4;
+  const {svg, w} = svgFor(id, h, beskr);
+  const m = {l: 84, r: 4};
+  const x = d3.scaleLinear([0, 100], [m.l, w - m.r]);
+  // tegnforklaring over
+  let lx = m.l;
+  kat.forEach((n, j) => { svg.append("rect").attr("x", lx).attr("y", 4).attr("width", 12).attr("height", 12).attr("fill", farger[j]).attr("stroke", j === 0 ? "#91cd9a" : "none");
+    const t = tekst(svg, lx + 16, 14, n, {str: 12.5}); lx += 16 + t.node().getComputedTextLength() + 14; });
+  grupper.forEach((g, r) => {
+    const y0 = top + r * (rh + gap); let x0 = m.l;
+    const valgt = g === valgtG;
+    tekst(svg, m.l - 8, y0 + rh / 2 + 5, gNavn(g).replace(" år", g === "18-67" ? " år" : ""), {anker: "end", vekt: valgt ? 700 : 400});
+    verdi(g).forEach((v, j) => {
+      const b = x(v) - m.l;
+      svg.append("rect").attr("x", x0).attr("y", y0).attr("width", Math.max(0, b - 1)).attr("height", rh).attr("fill", farger[j])
+        .attr("stroke", j === 0 && farger[j] === "#cff1d0" ? "#91cd9a" : "none")
+        .on("mousemove", ev => visTips(ev, `<b>${gNavn(g)}</b><br>${kat[j]}: ${pst(v)}`)).on("mouseleave", skjulTips);
+      if (b > 40) tekst(svg, x0 + b / 2, y0 + rh / 2 + 5, nb(v, 0), {anker: "middle", farge: tfarger[j], str: 12.5, vekt: 600});
+      x0 += b;
+    });
+    if (valgt) svg.append("rect").attr("x", m.l - 1).attr("y", y0 - 2).attr("width", x(100) - m.l + 1).attr("height", rh + 4).attr("fill", "none").attr("stroke", FARGE.tekst).attr("stroke-width", 2);
+  });
+}
+function arbeidFig() {
+  const k = tilstand.kjonn, g = gruppe(D.grupper7), A = D.arbeid[k];
+  const ingen = A["18-67"]["01"][SISTE], full = A["18-67"]["04"][SISTE], ingen0 = A["18-67"]["01"][0];
+  settTekst("ingressArbeid", `${pst(ingen)} av de uføretrygdede${k === "begge" ? "" : " " + KJ[k]} hadde ikke lønnsarbeid noen av månedene de var uføre i ${AR[SISTE]}. I ${AR[0]} var andelen ${pst(ingen0)}. Mønsteret har knapt endret seg siden uførereformen.`);
+  settTekst("tArbeid", g === "18-67" ? `Tre av fire hadde ikke lønnsarbeid` : `${gNavn(g)}: ${pst(A[g]["01"][SISTE])} uten lønnsarbeid, ${pst(A[g]["04"][SISTE])} med arbeid alle månedene`);
+  const kat = ["Ingen", "Lav", "Høy", "Full"], koder = ["01", "02", "03", "04"];
+  stablet("figArbeid", D.grupper7, gg => koder.map(c => A[gg][c][SISTE]), kat, ["#cff1d0", "#91cd9a", "#58a772", "#00824d"], [FARGE.tekst, FARGE.tekst, "#fff", "#fff"], g,
+    "Arbeidsintensitet blant uføretrygdede etter aldersgruppe, 2025");
+  settTekst("kildeArbeid", kilde(["11850"]) + " Lav: under halvparten av månedene. Høy: over halvparten, men ikke alle. Full: alle månedene.");
+  tabellHTML("tabArbeid", ["Aldersgruppe"].concat(kat.map(n => n + " " + AR[SISTE]), [`Ingen ${AR[0]}`, `Full ${AR[0]}`]),
+    D.grupper7.map(gg => [gNavn(gg)].concat(koder.map(c => nb(A[gg][c][SISTE], 1)), [nb(A[gg]["01"][0], 1), nb(A[gg]["04"][0], 1)])));
+}
+function gradFig() {
+  const k = tilstand.kjonn, g = gruppe(D.grupper6), G = D.grad[k];
+  settTekst("tGrad", `${pst(G[g]["03"][SISTE], 0)} av ${g === "18-67" ? "alle uføretrygdede" : "uføretrygdede " + gNavn(g)} har 100 prosent uføregrad`);
+  const kat = ["0–50 prosent", "51–99 prosent", "100 prosent"], koder = ["01", "02", "03"];
+  stablet("figGrad", D.grupper6, gg => koder.map(c => G[gg][c][SISTE]), kat, ["#94cff5", "#148ed7", "#06469e"], [FARGE.tekst, "#fff", "#fff"], g,
+    "Uføregrad etter aldersgruppe, 2025");
+  settTekst("kildeGrad", kilde(["11696"]));
+  tabellHTML("tabGrad", ["Aldersgruppe"].concat(kat.map(n => n + " " + AR[SISTE]), [`100 prosent ${AR[0]}`]),
+    D.grupper6.map(gg => [gNavn(gg)].concat(koder.map(c => nb(G[gg][c][SISTE], 1)), [nb(G[gg]["03"][0], 1)])));
+}
+
+// ---------- utdanning ----------
+function utdFig() {
+  const k = tilstand.kjonn, g = gruppe(D.grupper7), U = D.utdanning[k][g];
+  const niv = [["1-2", "Grunnskole"], ["3-5", "Videregående skole"], ["6-8", "Universitet og høgskole"], ["0_9", "Uoppgitt eller ingen"]];
+  const gs = U["1-2"];
+  settTekst("ingressUtd", `Blant ${g === "18-67" ? "alle 18–67 år" : gNavn(g)}${k === "begge" ? "" : " " + KJ[k]} med bare grunnskole var ${pst(gs.andel[SISTE])} uføretrygdet i ${AR[SISTE]}, mot ${pst(U["6-8"].andel[SISTE])} blant dem med universitets- eller høgskoleutdanning.`);
+  settTekst("tUtd", `Andelen med bare grunnskole gikk fra ${pst(gs.andel[0])} til ${pst(gs.andel[SISTE])}${g === "18-67" ? "" : ", " + gNavn(g)}`);
+  const {svg, w, h} = svgFor("figUtd", 226, `Andel uføretrygdede etter utdanningsnivå, ${gNavn(g)}, 2015 og 2025`);
+  const smal = w < 520;
+  const m = {l: smal ? 112 : 178, r: 50, t: 30, b: 42};
+  const x = d3.scaleLinear([0, Math.ceil(d3.max(niv, ([c]) => Math.max(U[c].andel[0], U[c].andel[SISTE])) / 5) * 5 || 5], [m.l, w - m.r]);
+  const y = d3.scaleBand(niv.map(n => n[0]), [m.t, h - m.b]).padding(0.3);
+  x.ticks(smal ? 3 : 5).forEach(v => { svg.append("line").attr("x1", x(v)).attr("x2", x(v)).attr("y1", m.t - 6).attr("y2", h - m.b).attr("stroke", v === 0 ? FARGE.null : FARGE.linje);
+    tekst(svg, x(v), h - m.b + 16, nb(v), {anker: "middle", farge: FARGE.graT}); });
+  tekst(svg, x.range()[1], h - 4, "prosent", {farge: FARGE.graT, anker: "end"});
+  [["#a9b5b7", AR[0]], [FARGE.gronn, AR[SISTE]]].forEach(([f, t], j) => { svg.append("circle").attr("cx", m.l + j * 64 + 6).attr("cy", 10).attr("r", 5).attr("fill", f); tekst(svg, m.l + j * 64 + 15, 14, t, {farge: FARGE.graT}); });
+  niv.forEach(([c, n]) => {
+    const yc = y(c) + y.bandwidth() / 2, a0 = U[c].andel[0], a1 = U[c].andel[SISTE];
+    tekst(svg, m.l - 10, yc + 4, smal ? n.replace("Universitet og høgskole", "Univ./høgskole").replace("Videregående skole", "Videregående").replace("Uoppgitt eller ingen", "Uoppgitt") : n, {anker: "end"});
+    svg.append("line").attr("x1", x(a0)).attr("x2", x(a1)).attr("y1", yc).attr("y2", yc).attr("stroke", "#c3cfd1").attr("stroke-width", 3);
+    svg.append("circle").attr("cx", x(a0)).attr("cy", yc).attr("r", 6).attr("fill", FARGE.gra);
+    svg.append("circle").attr("cx", x(a1)).attr("cy", yc).attr("r", 7).attr("fill", FARGE.gronn)
+      .on("mousemove", ev => visTips(ev, `<b>${n}</b><br>${AR[0]}: ${pst(a0)} (${nb(U[c].antall[0])})<br>${AR[SISTE]}: ${pst(a1)} (${nb(U[c].antall[SISTE])})`)).on("mouseleave", skjulTips);
+    tekst(svg, x(Math.max(a0, a1)) + 12, yc + 4, nb(a1, 1), {vekt: 600});
+  });
+  settTekst("kildeUtd", kilde(["11714"]) + " Antall uføretrygdede med bare grunnskole: " + nb(gs.antall[0]) + " i " + AR[0] + " og " + nb(gs.antall[SISTE]) + " i " + AR[SISTE] + ".");
+  tabellHTML("tabUtd", ["Utdanningsnivå", `Andel ${AR[0]}`, `Andel ${AR[SISTE]}`, `Antall ${AR[0]}`, `Antall ${AR[SISTE]}`],
+    niv.map(([c, n]) => [n, nb(U[c].andel[0], 1), nb(U[c].andel[SISTE], 1), nb(U[c].antall[0]), nb(U[c].antall[SISTE])]));
+}
+
+// ---------- kommuner ----------
+const LAND_REGION = {navn: "Hele landet", andel: D.land.begge.andel, antall: D.land.begge.antall, indeks: AR.map(() => 100), forventet: D.land.begge.andel, mangler: [], kvinner: D.land.kvinner.andel[SISTE], menn: D.land.menn.andel[SISTE]};
+const region = kode => kode === "0" ? LAND_REGION : (D.kommuner[kode] || D.fylker[kode]);
+const erFylke = kode => !!D.fylker[kode];
+const navnMedFylke = kode => kode === "0" ? "Hele landet" : erFylke(kode) ? D.fylker[kode].navn + " (fylke)" : D.kommuner[kode].navn;
+const alleRegioner = [["0", "Hele landet", 0]].concat(Object.entries(D.fylker).map(([k, v]) => [k, v.navn, 1]), Object.entries(D.kommuner).map(([k, v]) => [k, v.navn, 2]));
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
+
+function sok(q) {
+  const n = norm(q); if (!n) return [];
+  const rang = [];
+  alleRegioner.forEach(([k, navn, niv]) => {
+    const deler = navn.split(" - ").map(norm), hel = norm(navn);
+    let r = null;
+    if (deler.some(d => d === n) || k === q.trim()) r = 0;
+    else if (deler.some(d => d.startsWith(n))) r = 1;
+    else if (hel.split(/[ -]/).some(o => o.startsWith(n))) r = 2;
+    else if (hel.includes(n)) r = 3;
+    if (r !== null) rang.push([r, niv, navn, k]);
+  });
+  return rang.sort((a, b) => a[0] - b[0] || a[1] - b[1] || a[2].localeCompare(b[2], "nb")).slice(0, 12).map(r => r[3]);
+}
+function sokOppsett() {
+  const inp = document.getElementById("sokKommune"), ul = document.getElementById("forslag"), ingen = document.getElementById("sokIngen");
+  let treff = [], aktiv = -1;
+  const lukk = () => { ul.hidden = true; inp.setAttribute("aria-expanded", "false"); inp.removeAttribute("aria-activedescendant"); aktiv = -1; };
+  const velg = k => { tilstand.kommune = k; inp.value = ""; lukk(); ingen.hidden = true; oppdater(); document.getElementById("tKommune").scrollIntoView({block: "nearest"}); };
+  const tegn = () => {
+    ul.innerHTML = treff.map((k, i) => {
+      const r = region(k), f = !erFylke(k) && k !== "0" ? D.fylker[D.kommuner[k].fylke].navn.split(" - ")[0] : (k === "0" ? "" : "fylke");
+      return `<li role="option" id="fs${i}" data-k="${k}" aria-selected="${i === aktiv}">${r.navn} <small>${f}</small></li>`;
+    }).join("");
+    ul.hidden = !treff.length; inp.setAttribute("aria-expanded", treff.length ? "true" : "false");
+    if (aktiv >= 0) inp.setAttribute("aria-activedescendant", "fs" + aktiv);
+  };
+  inp.addEventListener("input", () => {
+    treff = sok(inp.value); aktiv = treff.length ? 0 : -1; tegn();
+    ingen.hidden = !(inp.value.trim() && !treff.length);
+    ingen.innerHTML = `Ingen kommune eller fylke heter «${inp.value.replace(/[<>&]/g, "")}». Prøv en del av navnet, eller <a href="#" id="visAlle">se alle kommunene i tabellen</a>.`;
+    const va = document.getElementById("visAlle"); if (va) va.addEventListener("click", e => { e.preventDefault(); const d = document.querySelector("#tabSpredning").closest("details"); d.open = true; d.scrollIntoView({block: "start"}); });
+  });
+  inp.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" && treff.length) { e.preventDefault(); aktiv = (aktiv + 1) % treff.length; tegn(); }
+    else if (e.key === "ArrowUp" && treff.length) { e.preventDefault(); aktiv = (aktiv - 1 + treff.length) % treff.length; tegn(); }
+    else if (e.key === "Enter" && aktiv >= 0) { e.preventDefault(); velg(treff[aktiv]); }
+    else if (e.key === "Escape") { lukk(); }
+  });
+  ul.addEventListener("mousedown", e => { const li = e.target.closest("li"); if (li) { e.preventDefault(); velg(li.dataset.k); } });
+  inp.addEventListener("blur", () => setTimeout(lukk, 120));
+}
+
+function kommune() {
+  const kode = tilstand.kommune, r = region(kode), i = SISTE;
+  const fylke = erFylke(kode), land = kode === "0";
+  settTekst("tKommune", navnMedFylke(kode));
+  const ind = r.indeks[i];
+  let t = `I ${r.navn} var ${pst(r.andel[i])} av befolkningen 18–67 år uføretrygdet i ${AR[i]}, ${nb(r.antall[i])} personer.`;
+  if (!land) {
+    t += ` Med landets andeler i hver alder og hvert kjønn ville vi ventet ${pst(r.forventet[i])}. `;
+    t += Math.abs(ind - 100) <= 3 ? "Når alder og kjønn er tatt hensyn til, ligger " + (fylke ? "fylket" : "kommunen") + " omtrent på landsnivå." :
+      `Når alder og kjønn er tatt hensyn til, er andelen ${nb(Math.abs(ind - 100))} prosent ${ind > 100 ? "høyere" : "lavere"} enn i landet som helhet (indeks ${ind}).`;
+    if (!fylke && r.antall[i] < 300) t += " Kommunen er liten, så tallene kan svinge mye fra år til år.";
+  } else t += " Velg en kommune eller et fylke for å sammenligne.";
+  settTekst("kommuneTekst", t);
+  document.getElementById("kommuneTall").innerHTML = [
+    [pst(r.andel[i]), `Andel uføretrygdet, ${AR[i]}`], [land ? "–" : pst(r.forventet[i]), "Andel ut fra alder og kjønn"],
+    [land ? "100" : String(ind), "Aldersjustert indeks (landet = 100)"], [`${nb(r.kvinner, 1)} / ${nb(r.menn, 1)}`, "Kvinner / menn, prosent"]]
+    .map(([v, e]) => `<div><b>${v}</b>${e}</div>`).join("");
+  const mangl = r.mangler || [];
+  const mel = document.getElementById("kommuneMangler");
+  if (mangl.length) {
+    const sist = mangl[mangl.length - 1];
+    const d = D.delinger.filter(x => x.til.includes(kode) && x.siste_ar === sist);
+    const liste = a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " og " + a[a.length - 1];
+    const deler = d.map(x => `${x.navn} ble delt mellom ${liste(x.til.map(t => D.kommuner[t].navn))} i ${+x.siste_ar + 1}`);
+    mel.hidden = false;
+    mel.textContent = `Ingen sammenlignbare tall for ${mangl[0] === sist ? sist : mangl[0] + "–" + sist}. ${deler.join(". ")}. Tallene fra før delingen kan ikke fordeles på de nye kommunene.`;
+  } else mel.hidden = true;
+  // tidsserie
+  settTekst("tKommuneTid", `Utvikling ${AR[0]}–${AR[SISTE]}`);
+  const {svg, w, h} = svgFor("figKommuneTid", 240, `Andel uføretrygdede i ${r.navn} 2015–2025`);
+  const m = {l: 34, r: 74, t: 26, b: 24};
+  const vis = [r.andel, land ? null : r.forventet, land ? null : D.land.begge.andel];
+  const maks = d3.max(vis.filter(Boolean).flat().filter(v => v != null));
+  const x = d3.scalePoint(AR, [m.l, w - m.r]), y = d3.scaleLinear([0, maks * 1.12], [h - m.b, m.t]).nice();
+  yAkse(svg, y, m.l, w - m.r, y.ticks(4), v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: FARGE.graT});
+  [0, 5, SISTE].forEach(j => tekst(svg, x(AR[j]), h - 6, AR[j], {farge: FARGE.graT, anker: "middle"}));
+  const linje = d3.line().defined(d => d[1] != null).x(d => x(d[0])).y(d => y(d[1]));
+  const etiketter = [];
+  const tegnS = (s, farge, bredde, stiplet, navn) => {
+    svg.append("path").attr("d", linje(AR.map((a, j) => [a, s[j]]))).attr("fill", "none").attr("stroke", farge).attr("stroke-width", bredde).attr("stroke-dasharray", stiplet ? "5 4" : null);
+    etiketter.push([y(s[SISTE]), navn, farge]);
+  };
+  if (!land) { tegnS(D.land.begge.andel, FARGE.gra, 2, false, "Landet"); tegnS(r.forventet, "#5e787a", 1.5, true, "Ut fra alder"); }
+  tegnS(r.andel, FARGE.gronn, 2.5, false, land ? "Landet" : r.navn.split(" - ")[0]);
+  // unngå overlappende etiketter
+  etiketter.sort((a, b) => a[0] - b[0]);
+  for (let j = 1; j < etiketter.length; j++) if (etiketter[j][0] - etiketter[j - 1][0] < 14) etiketter[j][0] = etiketter[j - 1][0] + 14;
+  etiketter.forEach(([yy, n, f]) => tekst(svg, w - m.r + 6, yy + 4, n.length > 12 ? n.slice(0, 11) + "…" : n, {farge: f === FARGE.gra ? FARGE.graT : f, str: 12, vekt: 600}));
+  if (mangl.length) {
+    const xe = x(AR[AR.indexOf(mangl[mangl.length - 1]) + 1]);
+    svg.append("line").attr("x1", xe).attr("x2", xe).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", FARGE.graT).attr("stroke-dasharray", "4 3");
+    tekst(svg, xe - 4, m.t + 10, "Ny inndeling", {anker: "end", farge: FARGE.graT, str: 12});
+  }
+  r.andel.forEach((v, j) => v != null && svg.append("circle").attr("cx", x(AR[j])).attr("cy", y(v)).attr("r", 7).attr("fill", "transparent")
+    .on("mousemove", ev => visTips(ev, `<b>${r.navn}, ${AR[j]}</b><br>${pst(v)} (${nb(r.antall[j])} personer)` + (land ? "" : `<br>Ut fra alder: ${pst(r.forventet[j])}<br>Indeks: ${r.indeks[j]}`))).on("mouseleave", skjulTips));
+  tabellHTML("tabKommuneTid", ["År", "Antall", "Andel", "Andel ut fra alder", "Indeks", "Landet"],
+    AR.map((a, j) => [a, r.antall[j] == null ? "mangler" : nb(r.antall[j]), r.andel[j] == null ? "mangler" : nb(r.andel[j], 1),
+      land || r.forventet[j] == null ? "–" : nb(r.forventet[j], 1), land || r.indeks[j] == null ? "–" : r.indeks[j], nb(D.land.begge.andel[j], 1)]));
+  spredning();
+  settTekst("kildeKommune", kilde(["11695", "11828", "07459"]) + " Kommuneinndeling 2025. Tall før 2024 omkodet med Klass, og andel ut fra alder og indeks er egne beregninger.");
+}
+
+let spredTegnet = null;
+function spredning() {
+  const kode = tilstand.kommune;
+  const K = Object.entries(D.kommuner);
+  const {svg, w, h} = svgFor("figSpredning", 300, "Faktisk andel uføretrygdede mot andel ut fra alder og kjønn, alle kommuner 2025");
+  const m = {l: 34, r: 12, t: 22, b: 34};
+  const x = d3.scaleLinear([d3.min(K, ([, v]) => v.forventet[SISTE]) - 0.5, d3.max(K, ([, v]) => v.forventet[SISTE]) + 0.5], [m.l, w - m.r]);
+  const y = d3.scaleLinear([0, Math.ceil(d3.max(K, ([, v]) => v.andel[SISTE]) / 5) * 5], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, y.ticks(5), v => nb(v));
+  tekst(svg, 0, 12, "faktisk andel, prosent", {farge: FARGE.graT});
+  x.ticks(5).forEach(v => tekst(svg, x(v), h - 18, nb(v), {anker: "middle", farge: FARGE.graT}));
+  tekst(svg, w - m.r, h - 2, "andel ut fra alder og kjønn, prosent", {anker: "end", farge: FARGE.graT});
+  const [d0, d1] = x.domain();
+  svg.append("line").attr("x1", x(d0)).attr("x2", x(d1)).attr("y1", y(d0)).attr("y2", y(d1)).attr("stroke", FARGE.graT).attr("stroke-dasharray", "5 4");
+  tekst(svg, x(d1) - 4, y(d1) - 6, "som landet", {anker: "end", farge: FARGE.graT, str: 12});
+  const g = svg.append("g");
+  K.forEach(([k, v]) => {
+    if (k === kode) return;
+    g.append("circle").attr("cx", x(v.forventet[SISTE])).attr("cy", y(v.andel[SISTE])).attr("r", 3.2).attr("fill", "#00824d").attr("fill-opacity", 0.35).style("cursor", "pointer")
+      .on("mousemove", ev => visTips(ev, `<b>${v.navn}</b><br>Faktisk: ${pst(v.andel[SISTE])}<br>Ut fra alder: ${pst(v.forventet[SISTE])}<br>Indeks ${v.indeks[SISTE]}`))
+      .on("mouseleave", skjulTips).on("click", () => { tilstand.kommune = k; skjulTips(); oppdater(); });
+  });
+  const v = D.kommuner[kode];
+  if (v) {
+    const cx = x(v.forventet[SISTE]), cy = y(v.andel[SISTE]);
+    svg.append("circle").attr("cx", cx).attr("cy", cy).attr("r", 6.5).attr("fill", "#00824d").attr("stroke", "#fff").attr("stroke-width", 2);
+    const venstre = cx > w * 0.6;
+    tekst(svg, cx + (venstre ? -10 : 10), cy + 4, v.navn, {vekt: 700, anker: venstre ? "end" : "start"});
+  }
+  if (spredTegnet !== "ok") {
+    tabellHTML("tabSpredning", ["Kommune", "Fylke", "Antall", "Andel", "Ut fra alder", "Indeks"],
+      K.slice().sort((a, b) => a[1].navn.localeCompare(b[1].navn, "nb")).map(([k, v]) => [v.navn, D.fylker[v.fylke].navn.split(" - ")[0], nb(v.antall[SISTE]), nb(v.andel[SISTE], 1), nb(v.forventet[SISTE], 1), v.indeks[SISTE]]));
+    spredTegnet = "ok";
+  }
+}
+
+function fylkerFig() {
+  const F = Object.entries(D.fylker).sort((a, b) => b[1].indeks[SISTE] - a[1].indeks[SISTE]);
+  const rh = 24, smal = document.getElementById("figFylker").clientWidth < 520;
+  const top = smal ? 52 : 34, h = top + F.length * rh + 44;
+  const {svg, w} = svgFor("figFylker", h, "Faktisk andel og andel ut fra alder og kjønn, fylkene 2025");
+  const m = {l: smal ? 118 : 150, r: smal ? 46 : 70};
+  const x = d3.scaleLinear([0, Math.ceil(d3.max(F, ([, v]) => Math.max(v.andel[SISTE], v.forventet[SISTE])) / 2) * 2], [m.l, w - m.r]);
+  x.ticks(smal ? 4 : 6).forEach(v => { svg.append("line").attr("x1", x(v)).attr("x2", x(v)).attr("y1", top - 6).attr("y2", h - 40).attr("stroke", v === 0 ? FARGE.null : FARGE.linje);
+    tekst(svg, x(v), h - 24, nb(v), {anker: "middle", farge: FARGE.graT}); });
+  tekst(svg, x.range()[1], h - 4, "prosent", {farge: FARGE.graT, anker: "end"});
+  const lx = smal ? 6 : m.l + 6, l2x = smal ? lx : lx + 120, l2y = smal ? 30 : 10;
+  svg.append("circle").attr("cx", lx).attr("cy", 10).attr("r", 5).attr("fill", FARGE.gronn); tekst(svg, lx + 9, 14, "Faktisk andel", {farge: FARGE.graT});
+  svg.append("circle").attr("cx", l2x).attr("cy", l2y).attr("r", 5).attr("fill", "#fff").attr("stroke", FARGE.graT).attr("stroke-width", 1.5);
+  tekst(svg, l2x + 9, l2y + 4, "Ut fra alder og kjønn", {farge: FARGE.graT});
+  tekst(svg, w - 4, top - 10, "Indeks", {anker: "end", farge: FARGE.graT, vekt: 600});
+  F.forEach(([k, v], r) => {
+    const yc = top + r * rh + rh / 2, valgt = k === tilstand.kommune;
+    const t = tekst(svg, m.l - 10, yc + 4, v.navn.split(" - ")[0], {anker: "end", vekt: valgt ? 700 : 400}).style("cursor", "pointer")
+      .attr("tabindex", 0).attr("role", "button").attr("aria-label", "Velg " + v.navn.split(" - ")[0]);
+    const velg = () => { tilstand.kommune = k; oppdater(); document.getElementById("tKommune").scrollIntoView({block: "nearest"}); };
+    t.on("click", velg).on("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); velg(); } });
+    svg.append("line").attr("x1", x(v.forventet[SISTE])).attr("x2", x(v.andel[SISTE])).attr("y1", yc).attr("y2", yc).attr("stroke", "#c3cfd1").attr("stroke-width", 3);
+    svg.append("circle").attr("cx", x(v.forventet[SISTE])).attr("cy", yc).attr("r", 5.5).attr("fill", "#fff").attr("stroke", FARGE.graT).attr("stroke-width", 1.5);
+    svg.append("circle").attr("cx", x(v.andel[SISTE])).attr("cy", yc).attr("r", 6).attr("fill", FARGE.gronn)
+      .on("mousemove", ev => visTips(ev, `<b>${v.navn}</b><br>Faktisk: ${pst(v.andel[SISTE])}<br>Ut fra alder: ${pst(v.forventet[SISTE])}<br>Indeks ${v.indeks[SISTE]}`)).on("mouseleave", skjulTips);
+    tekst(svg, w - 4, yc + 4, v.indeks[SISTE], {anker: "end", vekt: valgt ? 700 : 600});
+  });
+  settTekst("kildeFylker", kilde(["11695", "11828", "07459"]) + " Andel ut fra alder og indeks er egne beregninger.");
+  tabellHTML("tabFylker", ["Fylke", "Antall", "Andel", "Ut fra alder", "Indeks", `Andel ${AR[0]}`], F.map(([k, v]) => [v.navn, nb(v.antall[SISTE]), nb(v.andel[SISTE], 1), nb(v.forventet[SISTE], 1), v.indeks[SISTE], nb(v.andel[0], 1)]));
+}
+
+// ---------- samlet ----------
+function bunn() {
+  const t = Object.entries(D.oppdatert).filter(([k]) => /^\d{5}$/.test(k)).map(([k, v]) => `${k} (${v})`).join(", ");
+  document.getElementById("bunnKilder").innerHTML = `Tabeller i statistikkbanken, med dato for siste oppdatering: ${t}. Kommuneendringer fra Klass (klassifikasjon 131). ` +
+    `Tallene ble hentet fra data.ssb.no 9. november 2026. NAV-tallet for utgangen av 2025 er fra SSBs artikkel 23. juni 2026.`;
+}
+function oppdater() {
+  skrivAdresse();
+  valgtKort(); alderprofil(); alderTid(); nyeFig(); arbeidFig(); gradFig(); utdFig(); kommune(); fylkerFig();
+}
+lesAdresse(); hode(); lesehjelp(); topp(); sokOppsett(); bunn(); oppdater();
+window.addEventListener("hashchange", () => { lesAdresse(); oppdater(); });
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { topp(); oppdater(); }, 150); });
+</script>
+</body>
+</html>

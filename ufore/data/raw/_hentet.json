@@ -1,0 +1,110 @@
+{
+ "hentet": "2026-11-09T14:00:38",
+ "datasett": {
+  "land_kjonn": {
+   "tabell": "11695",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 66
+  },
+  "regioner": {
+   "tabell": "11695",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 64614
+  },
+  "bosetting": {
+   "tabell": "11824",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 33
+  },
+  "alder": {
+   "tabell": "11828",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 3366
+  },
+  "befolkning_land": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 1100
+  },
+  "arbeid": {
+   "tabell": "11850",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 2310
+  },
+  "uforegrad": {
+   "tabell": "11696",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 1584
+  },
+  "utdanning": {
+   "tabell": "11714",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 2310
+  },
+  "nye": {
+   "tabell": "11736",
+   "oppdatert": "2026-09-02T06:00:00Z",
+   "celler": 528
+  },
+  "befolkning_kommuner_2015": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 42800
+  },
+  "befolkning_kommuner_2016": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 42600
+  },
+  "befolkning_kommuner_2017": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 42200
+  },
+  "befolkning_kommuner_2018": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 42200
+  },
+  "befolkning_kommuner_2019": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35600
+  },
+  "befolkning_kommuner_2020": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35600
+  },
+  "befolkning_kommuner_2021": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35600
+  },
+  "befolkning_kommuner_2022": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35600
+  },
+  "befolkning_kommuner_2023": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35700
+  },
+  "befolkning_kommuner_2024": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35700
+  },
+  "befolkning_kommuner_2025": {
+   "tabell": "07459",
+   "oppdatert": "2026-02-25T07:00:00Z",
+   "celler": 35700
+  },
+  "klass_kommuneendringer": {
+   "tabell": "Klass 131",
+   "oppdatert": null,
+   "celler": null
+  }
+ }
+}
