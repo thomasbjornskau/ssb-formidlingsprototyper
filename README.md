@@ -21,6 +21,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Arealprofiler](arealprofiler/) | `arealprofiler` | Under arbeid, ikke faglig kontrollert. Alternativ til Tableau-appen | 06.11.2026 |
 | [Lønn i yrket ditt (dashbord på ett skjermbilde)](lonnyrke/) | `lonnyrke` | Under arbeid, eksempel i veileder E. Bygger på tall kontrollert i `lonnansatt` | 04.11.2026 |
 | [Lønnsforskjeller mellom kvinner og menn (utforskende dashbord)](lonnutforsk/) | `lonnutforsk` | Under arbeid, internt eksempel i veileder E | 04.11.2026 |
+| [Uføretrygdede](ufore/) | `ufore` | Under arbeid, ikke faglig kontrollert | 09.11.2026 |
 
 ## Arbeidsprosess
 
