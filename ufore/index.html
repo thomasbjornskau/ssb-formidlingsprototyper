@@ -251,7 +251,7 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
   <p>Tallene er fra SSBs statistikk <a href="https://www.ssb.no/ufore">Uføretrygdede</a>. Uføretrygdede er personer 18–67 år med vedtak om uføretrygd fra folketrygden minst én måned i løpet av året, bosatt i Norge ved årsslutt. Andelen er antall delt på bosatte i samme alder og kjønn per 1. januar året etter.</p>
   <p><b>Egne beregninger i denne prototypen</b>, ikke publisert av SSB: (1) Dekomponeringen av økningen i antall i befolkningsvekst, aldring og høyere andel per alder. Den er et snitt av alle rekkefølgene beregningen kan gjøres i. (2) Kommuneseriene før 2024, omkodet til dagens kommuner gjennom SSBs klassifikasjonsdatabase (Klass). Kommuner som ble delt, har ikke tall før delingen. (3) Den aldersjusterte indeksen (indirekte standardisering etter alder og kjønn) og andelen ut fra alder.</p>
   <p id="bunnKilder"></p>
-  <p>Prototype laget med KI-støtte i SSB, november 2026. Siden er ikke kvalitetssikret av fagseksjonen ennå.</p>
+  <p>Prototype laget med KI-støtte i SSB, november 2026. Sendt til faglig kontroll 9. november 2026, ikke kvalitetssikret av fagseksjonen ennå.</p>
 </footer>
 </main>
 <div class="bf-tips" id="tips" hidden></div>
@@ -434,7 +434,7 @@ function alderprofil() {
   settTekst("tAlderprofil", valgt ? `${valgt} år: ${pst(u[ai(valgt)])} i ${AR[SISTE]}, mot ${pst(f[ai(valgt)])} i ${AR[0]}`
     : `Andelen er doblet blant unge voksne og har falt blant de eldste`);
   const yng = ai(29), eld = ai(67);
-  settTekst("ingressAlder", `Sannsynligheten for å være uføretrygdet øker kraftig med alderen. Siden ${AR[0]} har andelen blant ${KJ[k] === "begge kjønn" ? "" : KJ[k] + " på "}29 år gått fra ${pst(f[yng])} til ${pst(u[yng])}, mens den blant 67-åringer har falt fra ${pst(f[eld])} til ${pst(u[eld])}.`);
+  settTekst("ingressAlder", `Andelen uføretrygdede øker kraftig med alderen. Siden ${AR[0]} har andelen blant ${KJ[k] === "begge kjønn" ? "" : KJ[k] + " på "}29 år gått fra ${pst(f[yng])} til ${pst(u[yng])}, mens den blant 67-åringer har falt fra ${pst(f[eld])} til ${pst(u[eld])}.`);
   const {svg, w, h} = svgFor("figAlderprofil", 300, "Andel uføretrygdede etter alder, 2015 og 2025");
   const m = {l: 36, r: 46, t: 22, b: 30};
   const x = d3.scaleLinear([18, 67], [m.l, w - m.r]), y = d3.scaleLinear([0, Math.ceil(d3.max(f.concat(u)) / 10) * 10], [h - m.b, m.t]);

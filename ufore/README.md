@@ -1,6 +1,6 @@
 # Uføretrygdede – formidlingsprototype
 
-> **Prototype.** Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering. Ikke kvalitetssikret av fagseksjonen ennå.
+> **Prototype.** Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering. Status: til faglig kontroll (sendt 09.11.2026).
 
 Side: https://thomasbjornskau.github.io/ssb-formidlingsprototyper/ufore/
 
@@ -20,6 +20,7 @@ Side: https://thomasbjornskau.github.io/ssb-formidlingsprototyper/ufore/
 | `docs/02-kvalitetssikring.md` | Konseptgrafikk og toppgrafikk: påstander og valg som må sjekkes |
 | `docs/03-kildekart.md` | Tabeller, struktur, metodetester, datamengde og valg av dataomfang |
 | `docs/04-byggenotat.md` | Hva som er bygget, kontrollene og nye valg til kvalitetssikring |
+| [`docs/05-kvalitetssikring.md`](docs/05-kvalitetssikring.md) | **Samlet kvalitetssikringsliste til fagkontroll.** Erstatter listene i 02 og 04 |
 | `docs/grafikk/` | Grafikkutkast fra steg 2 |
 
 ## Kilder
