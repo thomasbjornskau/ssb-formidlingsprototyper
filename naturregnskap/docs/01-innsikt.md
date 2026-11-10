@@ -1,4 +1,4 @@
-Steg 1 i formidlingsprototype for naturregnskap · versjon 0.2 · 05.11.2026 · Status: godkjent av Thomas (gjennomgående valg: økosystemtype; fagseksjonen har ikke svart)
+Steg 1 i formidlingsprototype for naturregnskap · versjon 0.3 · 10.11.2026 · Status: godkjent av Thomas, kommentert av fagseksjonen 10.11.2026
 
 # Innsikt: Naturregnskap
 
@@ -86,9 +86,9 @@ Skrevet uten tall. Eksemplene byttes ut med ekte verdier når tallene finnes.
 | H1 | Indeks 0,7 betyr at 70 prosent av naturen er intakt | Rapporten advarer eksplisitt mot dette [K2] | Vise skalaen med en forklaring ved første tilstandstall |
 | H2 | Endring i utbredelse viser all naturendring | Bare utbygging er med. Gjengroing, og myr som blir skog, er ikke med [K1, K2] | Kalle det «utbygd areal», ikke «endring i natur» |
 | H3 | Tjenestene kan summeres eller sammenlignes i størrelse | Hver tjeneste har sin egen enhet [K3] [T] | Aldri vise tjenestene på felles akse. Én tjeneste om gangen, eller andeler per økosystem |
-| H4 | Mer tjenester betyr bedre natur | Tilstand og tjenester kan trekke hver sin vei, for eksempel død ved mot tømmer [K2] | Ikke plassere tilstand og tjenester slik at de leses som årsak og virkning |
+| H4 | De tre delregnskapene kan leses i sammenheng, for eksempel at mer tjenester betyr bedre natur | Ulike kilder, metoder og år. Tilstand og tjenester kan trekke hver sin vei, for eksempel død ved mot tømmer [K2]. Fagseksjonen: kanskje den alvorligste misforståelsen [K6] | Si det ved alle steder der tallene står side om side. Ikke plassere tilstand og tjenester slik at de leses som årsak og virkning |
 | H5 | Alle økosystemer har en tilstandsindeks | Bare 5 av 11 har det. Hav og kyststrender har ingen indikatorer [K1] | Vise hull som hull, med «mangler data», ikke nuller |
-| H6 | Tallene gjelder min kommune | Bare utbredelse finnes per kommune [K1] | Ikke tilby kommunevalg for tilstand og tjenester |
+| H6 | Tallene gjelder min kommune | Bare utbredelse (EU-typer) finnes per kommune. Utbygging per kommune kommer 26.02.2027 [K6] | Ikke tilby kommunevalg for tilstand og tjenester (lavere prioritet etter februar 2027) |
 | H7 | Naturregnskapet viser naturens verdi i kroner | Monetære regnskap er ikke med i 2026 [K2] | Si det tidlig, i lesehjelpen |
 | H8 | Landsdel betyr SSBs vanlige landsdeler | Naturregnskapet bruker fem egne landsdeler [K1] | Vise landsdelene på kart med navn |
 | H9 | EU-tallene og de nasjonale tallene er de samme | Ulik inndeling og ulike indikatorer [K2] | Bruke de nasjonale tallene, og si det (lav prioritet) |
@@ -97,7 +97,7 @@ Skrevet uten tall. Eksemplene byttes ut med ekte verdier når tallene finnes.
 ## 5. Brukere og hva de trenger
 
 1. **Allmennheten og pressen.** Vil vite om naturen har det bra, hvor mye som bygges ned, og hva naturen gir oss. Trenger få tall, tydelige forbehold og enkelt språk.
-2. **Kommuner og lokalt engasjerte.** Vil se sin egen kommune. Kan få utbredelse, men må bli fortalt hvor grensen går (H6). Miljødirektoratets kommunale naturregnskap kommer tidlig i 2027 [K2].
+2. **Kommuner og lokalt engasjerte.** Vil se sin egen kommune. Kan få utbredelse, men må bli fortalt hvor grensen går (H6). Miljødirektoratets kommunale løsning kommer senere våren 2027 [K6].
 3. **Skoleelever og lærere.** Trenger at begrepene forklares, særlig skalaen og forskjellen på de tre delregnskapene.
 
 Prototypen skal ikke være et analyseverktøy for forvaltningen, og ikke en kopi av statistikkbanken med alle indikatorer.
@@ -130,6 +130,35 @@ Kriterier: (a) sentralt i SSBs egne budskap, (b) stor fare for misforståelse, (
 5. Er det greit at prototypen bruker hovedøkosystemer og ikke EU-typer?
 6. Kan vi få en testuttrekk eller dummyfil med riktige kodelister før 25.11?
 
+## 7b. Svar fra fagseksjonen (10.11.2026)
+
+- **Hypotesene:** H1, H2 og H7 er mest relevante. H4 utvides til at delregnskapene ikke kan leses i sammenheng, og er kanskje den alvorligste. H3, H5 og H8 er designspørsmål. H6 blir mindre aktuell etter februar 2027. Vurderingen er foreløpig.
+- **Tabeller:**
+
+  | Innhold | Tabell |
+  |---|---|
+  | Global klimaregulering, ikke fordelt på hovedøkosystemer | 14998 |
+  | Turisme, rekreasjon og alle tjenester aggregert per økosystemtype | 14967 |
+  | Utbredelse, EU-typologi med kommunal oppløsning | 15034 |
+  | Utbredelse, hovedøkosystemer, bare statustall | 15036 |
+  | Utbygging | ikke avklart |
+
+  Utbyggingstallene er foreløpige. Tall per kommune, basert på satellittdata, kommer 26.02.2027.
+- **Tilstand:** totalindeksen er en egen variabel (Indeks_skog, Indeks_fjell, Indeks_elv_bekk, Indeks_innsjo_vann, Indeks_kystvann). Egenskapene filtrerer indikatorene, men har ingen egne verdier.
+- **Hovedøkosystemer fungerer** for alt unntatt global klimaregulering.
+- **Kodelister i KLASS:**
+
+  | Nummer | Kodeliste |
+  |---|---|
+  | 988 | Økosystemtyper, med variant for hovedøkosystemer |
+  | 939 | Økosystemtjenester |
+  | 959 | Indikatorer |
+  | 966 | Egenskaper |
+  | 967 | Landsdeler |
+  | 992 | Anvendelse |
+
+  De er hentet 10.11.2026 og ligger i `data/klass/`.
+
 ## 8. Hull i grunnlaget
 
 - Ingen tall og ingen kodelister. Tabellstrukturen er utledet fra titler.
@@ -144,4 +173,5 @@ Kriterier: (a) sentralt i SSBs egne budskap, (b) stor fare for misforståelse, (
 - [K2] SSB: *Når naturen telles. Kvalitativ rapport til naturregnskapet*, utkast v1 (2026). Vedlegg fra Thomas.
 - [K3] Skjermbilde av mappen «Naturregnskap» i den interne statistikkbanken, 05.11.2026 (tabell 14852, 14967, 14968, 14994–14997, 14999, 15000, 15012–15016).
 - [K4] Miljødirektoratet: «Hva er et naturregnskap?», https://www.miljodirektoratet.no/ansvarsomrader/overvaking-arealplanlegging/naturregnskap/
+- [K6] Fagseksjonen, skriftlige svar på spørsmålene i dette notatet og på kvalitetssikringslistene, 10.11.2026.
 - [K5] Miljødirektoratet: «Kommunale naturregnskap – hva er status og hva skjer i 2026?», https://www.miljodirektoratet.no/aktuelt/fagmeldinger/2026/mars-2026/kommunale-naturregnskap--hva-er-status-og-hva-skjer-i-2026/

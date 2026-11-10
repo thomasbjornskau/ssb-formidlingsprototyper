@@ -1,12 +1,28 @@
 {
  "statistikk": "naturregnskap",
- "status": "DUMMY: kodene i url-ene er oppdiktet og må rettes mot de ekte kodelistene etter 25.11.2026",
+ "status": "DUMMY: kodelistene er ekte (KLASS), men dimensjons-id-ene i url-ene er gjettet og må rettes mot tabellene etter 25.11.2026",
+ "kodelister": {
+  "988": "Økosystemtyper (variant 3622: hovedøkosystemer)",
+  "939": "Økosystemtjenester",
+  "959": "Indikatorer og variabler i tilstandsregnskapet",
+  "966": "Tilstandsegenskaper",
+  "967": "Landsdeler for naturregnskap",
+  "992": "Anvendelse av økosystemtjenester"
+ },
  "datasett": [
   {
-   "id": "utbredelse",
-   "tabell": "UKJENT",
+   "id": "15036",
+   "tabell": "15036",
    "svarer_paa": "Hvor mye natur har vi?",
-   "beskrivelse": "Areal per økosystemtype 2024 og utbygd areal 2017–2024",
+   "beskrivelse": "Utbredelse per hovedøkosystem 2024 (bare statustall)",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15036/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[ContentsCode]=*",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "utbygging",
+   "tabell": null,
+   "svarer_paa": "Hvor mye er bygd ut?",
+   "beskrivelse": "Utbygd areal 2018–2024, foreløpige tall. Tabellnummer ikke avklart",
    "url": null,
    "omfang": "alle koder"
   },
@@ -14,55 +30,63 @@
    "id": "15012",
    "tabell": "15012",
    "svarer_paa": "Hvordan har naturen det? (skog)",
-   "beskrivelse": "Totalindeks og egenskaper, landsdel, 2019 og 2024",
-   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15012/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=2019,2024",
+   "beskrivelse": "Indikatorer og Indeks_skog, egenskap, landsdel, 2019 og 2024",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15012/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Indikator]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   },
   {
    "id": "15013",
    "tabell": "15013",
    "svarer_paa": "Hvordan har naturen det? (fjell)",
-   "beskrivelse": "Som 15012",
-   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15013/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=2019,2024",
+   "beskrivelse": "Indikatorer og Indeks_fjell",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15013/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Indikator]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   },
   {
    "id": "15014",
    "tabell": "15014",
    "svarer_paa": "Hvordan har naturen det? (åpent lavland, jordbruksmark)",
-   "beskrivelse": "Egenskaper uten totalindeks, 2024",
-   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15014/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=0&valueCodes[Tid]=2024",
+   "beskrivelse": "Indikatorer, ingen totalindeks",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15014/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Indikator]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   },
   {
    "id": "15015",
    "tabell": "15015",
    "svarer_paa": "Hvordan har naturen det? (våtmark)",
-   "beskrivelse": "Naturindeks per landsdel",
-   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15015/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=TOT&valueCodes[Region]=*&valueCodes[Tid]=2019,2024",
+   "beskrivelse": "Naturindeks_VM per landsdel (bare biologisk mangfold)",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15015/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Indikator]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   },
   {
    "id": "15016",
    "tabell": "15016",
    "svarer_paa": "Hvordan har naturen det? (vassdrag, kystvann)",
-   "beskrivelse": "Totalindeks og egenskaper, 2024",
-   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15016/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Egenskap]=*&valueCodes[Region]=0&valueCodes[Tid]=2024",
+   "beskrivelse": "Indikatorer og Indeks_elv_bekk, Indeks_innsjo_vann, Indeks_kystvann",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/15016/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Indikator]=*&valueCodes[Egenskap]=*&valueCodes[Region]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   },
   {
    "id": "14967",
    "tabell": "14967",
    "svarer_paa": "Hva gir naturen oss?",
-   "beskrivelse": "Tilgang per tjeneste og økosystemtype, 2024",
+   "beskrivelse": "Tilgang per tjeneste og hovedøkosystem (alle unntatt global klimaregulering)",
    "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14967/data?lang=no&outputFormat=json-stat2&valueCodes[Tjeneste]=*&valueCodes[Okosystem]=*",
+   "omfang": "alle koder"
+  },
+  {
+   "id": "14998",
+   "tabell": "14998",
+   "svarer_paa": "Endringer i karbonlager",
+   "beskrivelse": "Global klimaregulering per EU-økosystemtype: årlige endringer i karbonlager og karbonlager",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14998/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Tjeneste]=*",
    "omfang": "alle koder"
   },
   {
    "id": "14968",
    "tabell": "14968",
    "svarer_paa": "Hvem bruker tjenestene?",
-   "beskrivelse": "Anvendelse per tjeneste og økonomisk enhet, 2024",
+   "beskrivelse": "Anvendelse (KLASS 992)",
    "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14968/data?lang=no&outputFormat=json-stat2&valueCodes[Tjeneste]=*&valueCodes[Bruker]=*",
    "omfang": "alle koder"
   },
@@ -70,7 +94,7 @@
    "id": "14994",
    "tabell": "14994",
    "svarer_paa": "Avlinger over tid",
-   "beskrivelse": "Forsyning av avlinger 2010–2024",
+   "beskrivelse": "2010–2024",
    "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14994/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   },
@@ -78,20 +102,22 @@
    "id": "14996",
    "tabell": "14996",
    "svarer_paa": "Tømmer over tid",
-   "beskrivelse": "Forsyning av tømmer 2015–2024",
+   "beskrivelse": "2015–2024",
    "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14996/data?lang=no&outputFormat=json-stat2&valueCodes[Okosystem]=*&valueCodes[Tid]=*",
    "omfang": "alle koder"
   }
  ],
  "manglende_verdier": {
   "..": "tall mangler",
-  ".": "kan ikke forekomme (for eksempel utbygging av hav)",
+  ".": "kan ikke forekomme",
   ":": "undertrykt"
  },
  "fallgruver": [
   "Tjenestene har ulike enheter og kan ikke summeres",
-  "Totalindeks er publisert med to desimaler; kontroll mot snitt av egenskaper har toleranse 0,006",
-  "Andel av landarealet: nevneren er land og ferskvann (økosystem 01–09), ikke kystvann og hav – må bekreftes",
-  "Våtmark har Naturindeks, ikke totalindeks"
+  "Endringer i karbonlager kan være negative og er ikke fordelt på hovedøkosystemer",
+  "Egenskapene har ingen egne verdier; totalindeks er egen indikatorkode",
+  "Naturindeks måler bare biologisk mangfold og skal ikke sidestilles med totalindeks",
+  "Utbygging 2018–2024 er foreløpige tall",
+  "Andel av landarealet: nevneren er alle hovedøkosystemer unntatt kystvann og åpent hav – må bekreftes"
  ]
 }

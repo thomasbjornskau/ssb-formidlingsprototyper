@@ -3,9 +3,9 @@
  "class": "dataset",
  "label": "Forsyning av avlinger (1000 tonn) 2010–2024 (DUMMY)",
  "source": "Statistisk sentralbyrå",
- "updated": "2026-11-05T12:00:00Z",
+ "updated": "2026-11-10T12:00:00Z",
  "note": [
-  "DUMMYDATA: oppdiktede tall og koder for å bygge prototypen før publisering 25.11.2026. Erstattes av ekte data."
+  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
  ],
  "id": [
   "Okosystem",
@@ -17,13 +17,13 @@
  ],
  "dimension": {
   "Okosystem": {
-   "label": "økosystemtype",
+   "label": "hovedøkosystem",
    "category": {
     "index": {
-     "02": 0
+     "02-03": 0
     },
     "label": {
-     "02": "Jordbruksmark"
+     "02-03": "Jordbruksmark"
     }
    }
   },
@@ -85,6 +85,7 @@
   4200
  ],
  "extension": {
+  "tabell": "14994",
   "enhet": "1000 tonn"
  }
 }

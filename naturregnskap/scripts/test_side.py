@@ -9,16 +9,16 @@ async def main():
             errs = []
             pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
             pg.on("pageerror", lambda e: errs.append(str(e)))
-            for k in ["04", "05", "06", "02", "01", "11", "08"]:
+            for k in ["04", "05.1%2B06.1", "07", "02-03", "01", "12.2", "10%2B12.1", "05.2%2B06.2"]:
                 await pg.goto(f"file://{ROOT}/index.html#oko={k}")
                 await pg.wait_for_timeout(300)
                 sw = await pg.evaluate("document.documentElement.scrollWidth")
                 print(w, k, "scrollWidth", sw, "OK" if sw <= w else "FOR BRED")
-                if k in ("04", "06", "11"):
+                if k in ("04", "07", "05.2%2B06.2"):
                     await pg.screenshot(path=f"{ROOT}/docs/test/{w}-{k}.png", full_page=True)
             # klikk i figur
             await pg.goto(f"file://{ROOT}/index.html#oko=04")
-            await pg.click("#velg button[data-kode='05']")
+            await pg.click("#velg button[data-kode='09']")
             print(w, "hash etter klikk:", await pg.evaluate("location.hash"))
             print(w, "feil:", errs or "ingen")
         await b.close()

@@ -1,0 +1,89 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Utbygd areal 2018–2024, etter hovedøkosystem. Foreløpige tall (DUMMY)",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-10T12:00:00Z",
+ "note": [
+  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+ ],
+ "id": [
+  "Okosystem",
+  "ContentsCode"
+ ],
+ "size": [
+  12,
+  1
+ ],
+ "dimension": {
+  "Okosystem": {
+   "label": "hovedøkosystem",
+   "category": {
+    "index": {
+     "00": 0,
+     "01": 1,
+     "02-03": 2,
+     "04": 3,
+     "05.1+06.1": 4,
+     "05.2+06.2": 5,
+     "07": 6,
+     "08": 7,
+     "09": 8,
+     "10+12.1": 9,
+     "11": 10,
+     "12.2": 11
+    },
+    "label": {
+     "00": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02-03": "Jordbruksmark",
+     "04": "Skog",
+     "05.1+06.1": "Fastmark i fjellet",
+     "05.2+06.2": "Åpent lavland",
+     "07": "Våtmark",
+     "08": "Elver, bekker og kanaler",
+     "09": "Innsjøer og vannmagasiner",
+     "10+12.1": "Kystvann",
+     "11": "Kyststrender, svaberg og dyner",
+     "12.2": "Åpent hav"
+    }
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "Utbygd": 0
+    },
+    "label": {
+     "Utbygd": "Utbygd areal (hektar)"
+    }
+   }
+  }
+ },
+ "value": [
+  34000,
+  null,
+  6500,
+  18000,
+  3500,
+  4000,
+  2000,
+  0,
+  0,
+  null,
+  0,
+  null
+ ],
+ "extension": {
+  "tabell": "ikke avklart",
+  "enhet": "hektar",
+  "forelopig": true,
+  "periode": "2018–2024"
+ },
+ "status": {
+  "1": ".",
+  "9": ".",
+  "11": "."
+ }
+}

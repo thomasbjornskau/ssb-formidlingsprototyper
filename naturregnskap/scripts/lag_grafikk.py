@@ -27,7 +27,7 @@ STEPS = [("1", "Kartlegge naturen", "blue",
          ("2", "Måle tilstanden", "green",
           "Målinger som død ved og vannkvalitet sammenlignes med intakt natur og settes på en skala fra 0 til 1.", "Tilstand"),
          ("3", "Telle hva naturen gir", "orange",
-          "Ni tjenester, som tømmer, karbon og turer, måles hver i sin enhet og fordeles på naturtype og bruker.", "Økosystemtjenester"),
+          "Ni tjenester, som tømmer, flomdemping og turer, måles hver i sin enhet og fordeles på naturtype og bruker.", "Økosystemtjenester"),
          ("4", "Sette regnskapene side om side", None,
           "De tre delene vises per naturtype, men legges ikke sammen. De er målt på ulike måter og til dels i ulike år.", "Naturregnskapet")]
 IKKE = "Ikke med i 2026: naturens verdi i kroner, endringer utover utbygging, og det meste av havet."

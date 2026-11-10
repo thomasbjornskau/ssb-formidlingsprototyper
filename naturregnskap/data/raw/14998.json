@@ -1,0 +1,111 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "Global klimaregulering, etter EU-økosystemtype 2024 (DUMMY)",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-10T12:00:00Z",
+ "note": [
+  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+ ],
+ "id": [
+  "Okosystem",
+  "Tjeneste"
+ ],
+ "size": [
+  13,
+  2
+ ],
+ "dimension": {
+  "Okosystem": {
+   "label": "økosystemtype (EU)",
+   "category": {
+    "index": {
+     "00": 0,
+     "01": 1,
+     "02": 2,
+     "03": 3,
+     "04": 4,
+     "05": 5,
+     "06": 6,
+     "07": 7,
+     "08": 8,
+     "09": 9,
+     "10": 10,
+     "11": 11,
+     "12": 12
+    },
+    "label": {
+     "00": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02": "Dyrket mark",
+     "03": "Grasmark",
+     "04": "Skog",
+     "05": "Hei og buskmark",
+     "06": "Lite vegetert mark og isbreer",
+     "07": "Våtmark",
+     "08": "Elver, bekker og kanaler",
+     "09": "Innsjøer og vannmagasiner",
+     "10": "Kystinnløp og overgangsvann",
+     "11": "Kyststrender, svaberg og dyner",
+     "12": "Hav"
+    }
+   }
+  },
+  "Tjeneste": {
+   "label": "økosystemtjeneste",
+   "category": {
+    "index": {
+     "05.01": 0,
+     "05.02": 1
+    },
+    "label": {
+     "05.01": "Årlige endringer i karbonlager",
+     "05.02": "Karbonlager"
+    }
+   }
+  }
+ },
+ "value": [
+  6055,
+  2662,
+  -150,
+  30,
+  -80,
+  160,
+  10,
+  120,
+  6300,
+  1250,
+  40,
+  160,
+  5,
+  40,
+  -70,
+  900,
+  0,
+  null,
+  0,
+  null,
+  null,
+  null,
+  0,
+  2,
+  null,
+  null
+ ],
+ "extension": {
+  "tabell": "14998",
+  "enheter": {
+   "05.01": "1000 tonn karbon",
+   "05.02": "mill. tonn karbon"
+  }
+ },
+ "status": {
+  "17": ".",
+  "19": ".",
+  "20": ".",
+  "21": ".",
+  "24": ".",
+  "25": "."
+ }
+}
