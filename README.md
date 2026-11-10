@@ -22,6 +22,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Lønn i yrket ditt (dashbord på ett skjermbilde)](lonnyrke/) | `lonnyrke` | Under arbeid, eksempel i veileder E. Bygger på tall kontrollert i `lonnansatt` | 04.11.2026 |
 | [Lønnsforskjeller mellom kvinner og menn (utforskende dashbord)](lonnutforsk/) | `lonnutforsk` | Under arbeid, internt eksempel i veileder E | 04.11.2026 |
 | [Uføretrygdede](ufore/) | `ufore` | Til faglig kontroll | 09.11.2026 |
+| [Unge utenfor arbeid, utdanning og tiltak (NEET)](arbstatus-neet/) | `arbstatus-neet` | Under arbeid, ikke faglig kontrollert. Bygd fra tabell 12424 for en artikkel om varighet | 10.11.2026 |
 
 ## Arbeidsprosess
 
