@@ -1,0 +1,187 @@
+{
+ "kilde": "SSB, tabell 12424",
+ "sist_oppdatert": "2026-09-04",
+ "merknad": "Utkast til steg 2. Tall regnet fra data/raw/12424_bosatte.json; erstattes av kildekartet i steg 3. 2025 er foreløpige tall.",
+ "neet_definisjon": "A.09 + U.04-U.05 + U.90B (stemmer med NEET-koden i tabell 13556)",
+ "2025": {
+  "bosatte": 1047216,
+  "neet": 105314,
+  "AAP eller uføretrygd": 27621,
+  "Registrert ledige": 11839,
+  "Andre ordninger, ikke på tiltak": 9549,
+  "Ukjent status": 56305
+ },
+ "tidsserie": {
+  "2008": {
+   "neet": 85493,
+   "aap_ufore": 12462,
+   "bosatte": 915104
+  },
+  "2009": {
+   "neet": 96695,
+   "aap_ufore": 14303,
+   "bosatte": 932305
+  },
+  "2010": {
+   "neet": 103781,
+   "aap_ufore": 17103,
+   "bosatte": 954818
+  },
+  "2011": {
+   "neet": 104496,
+   "aap_ufore": 18144,
+   "bosatte": 976457
+  },
+  "2012": {
+   "neet": 106720,
+   "aap_ufore": 19065,
+   "bosatte": 995944
+  },
+  "2013": {
+   "neet": 112055,
+   "aap_ufore": 19429,
+   "bosatte": 1010805
+  },
+  "2014": {
+   "neet": 113516,
+   "aap_ufore": 19823,
+   "bosatte": 1023964
+  },
+  "2015": {
+   "neet": 124817,
+   "aap_ufore": 21339,
+   "bosatte": 1033174
+  },
+  "2016": {
+   "neet": 120998,
+   "aap_ufore": 22496,
+   "bosatte": 1036673
+  },
+  "2017": {
+   "neet": 113374,
+   "aap_ufore": 23533,
+   "bosatte": 1036263
+  },
+  "2018": {
+   "neet": 111105,
+   "aap_ufore": 23622,
+   "bosatte": 1034396
+  },
+  "2019": {
+   "neet": 108562,
+   "aap_ufore": 24723,
+   "bosatte": 1030619
+  },
+  "2020": {
+   "neet": 112417,
+   "aap_ufore": 26384,
+   "bosatte": 1022428
+  },
+  "2021": {
+   "neet": 96582,
+   "aap_ufore": 25856,
+   "bosatte": 1019908
+  },
+  "2022": {
+   "neet": 97160,
+   "aap_ufore": 26124,
+   "bosatte": 1026771
+  },
+  "2023": {
+   "neet": 102263,
+   "aap_ufore": 26738,
+   "bosatte": 1036597
+  },
+  "2024": {
+   "neet": 102971,
+   "aap_ufore": 27131,
+   "bosatte": 1044103
+  },
+  "2025": {
+   "neet": 105314,
+   "aap_ufore": 27621,
+   "bosatte": 1047216
+  }
+ },
+ "innvandring": {
+  "Innvandrere": {
+   "bosatte": 176373,
+   "neet": 41408,
+   "AAP eller uføretrygd": 2574,
+   "Registrert ledige": 4653,
+   "Andre ordninger, ikke på tiltak": 4073,
+   "Ukjent status": 30108
+  },
+  "Befolkningen ekskl. innvandrere": {
+   "bosatte": 870843,
+   "neet": 63906,
+   "AAP eller uføretrygd": 25047,
+   "Registrert ledige": 7186,
+   "Andre ordninger, ikke på tiltak": 5476,
+   "Ukjent status": 26197
+  }
+ },
+ "fare_25_29": [
+  {
+   "gruppe": "Ekskl. innvandrere",
+   "utdanning": "Grunnskole",
+   "neet": 13796,
+   "bosatte": 38866,
+   "aap_ufore": 10245
+  },
+  {
+   "gruppe": "Ekskl. innvandrere",
+   "utdanning": "Videregående",
+   "neet": 7568,
+   "bosatte": 92162,
+   "aap_ufore": 3491
+  },
+  {
+   "gruppe": "Ekskl. innvandrere",
+   "utdanning": "Universitet/høgskole",
+   "neet": 7575,
+   "bosatte": 159273,
+   "aap_ufore": 1117
+  },
+  {
+   "gruppe": "Ekskl. innvandrere",
+   "utdanning": "Uoppgitt/ingen",
+   "neet": 615,
+   "bosatte": 1187,
+   "aap_ufore": 113
+  },
+  {
+   "gruppe": "Innvandrere",
+   "utdanning": "Grunnskole",
+   "neet": 7211,
+   "bosatte": 19242,
+   "aap_ufore": 1119
+  },
+  {
+   "gruppe": "Innvandrere",
+   "utdanning": "Videregående",
+   "neet": 4550,
+   "bosatte": 20650,
+   "aap_ufore": 363
+  },
+  {
+   "gruppe": "Innvandrere",
+   "utdanning": "Universitet/høgskole",
+   "neet": 7861,
+   "bosatte": 34369,
+   "aap_ufore": 117
+  },
+  {
+   "gruppe": "Innvandrere",
+   "utdanning": "Uoppgitt/ingen",
+   "neet": 991,
+   "bosatte": 1718,
+   "aap_ufore": 6
+  }
+ ],
+ "fare_25_29_alle": {
+  "neet": 50167,
+  "bosatte": 367467,
+  "aap_ufore": 16571
+ }
+}

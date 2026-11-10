@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unge utenfor – prototype</title>
+<meta name="description" content="Prototype: unge 15–29 år utenfor arbeid, utdanning og arbeidsmarkedstiltak (NEET) – hvor mange, hvor lenge og hvem. Bygd på SSB-tabellene 12424, 12427, 14158 og 13347.">
+<style>
+/*__FONT__*/
+:root{
+  --tekst:#274246;--tekst2:#5e787a;--linje:#d9dfe0;--null:#a9b5b7;--bg:#f3f5f5;--kort:#ffffff;
+  --gronn:#00824d;--mork1:#f0f8f9;--mork2:#c3dcdc;--fokus:#1d9de2;--neet:#5763a6;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;background:var(--bg);color:var(--tekst);font:16px/1.55 "Open Sans","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
+a{color:#00824d}
+.bf-side{max-width:1180px;margin:0 auto;padding:0 16px 48px}
+.bf-prototype{background:#274247;color:#fff;font-size:14px;padding:8px 16px;text-align:center}
+.bf-hode{padding:28px 0 8px}
+.bf-hode h1{font-weight:700;font-size:44px;line-height:1.1;margin:0 0 10px}
+.bf-ingress{font-size:19px;max-width:820px;margin:0 0 20px}
+.bf-velgere{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:14px 16px}
+.bf-velger label,.bf-velger .bf-etikett{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+select{font:inherit;font-size:16px;padding:7px 10px;border:1px solid #8a9ea0;border-radius:2px;background:#fff;color:var(--tekst);min-height:40px;max-width:100%}
+.bf-knapper{display:inline-flex;border:1px solid #8a9ea0;border-radius:2px;overflow:hidden}
+.bf-knapper button{font:inherit;font-size:15px;border:0;background:#fff;color:var(--tekst);padding:8px 14px;cursor:pointer;min-height:40px}
+.bf-knapper button+button{border-left:1px solid #8a9ea0}
+.bf-knapper button[aria-pressed=true]{background:var(--gronn);color:#fff;font-weight:600}
+.bf-nullstill{font:inherit;font-size:15px;background:none;border:0;color:var(--gronn);text-decoration:underline;cursor:pointer;padding:8px 0;min-height:40px}
+button:focus-visible,select:focus-visible,[tabindex]:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+.bf-valgt{margin:16px 0 0;background:var(--kort);border:1px solid var(--linje);border-left:5px solid var(--neet);border-radius:2px;padding:14px 18px;display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:center}
+.bf-valgt p{margin:0}
+.bf-valgt .bf-stort{font-weight:700;font-size:34px;color:var(--neet);line-height:1.1}
+h2{font-size:30px;line-height:1.15;margin:44px 0 6px}
+.bf-seksjonsingress{max-width:820px;margin:0 0 14px}
+.bf-les{background:var(--kort);border:1px solid var(--linje);border-top:5px solid var(--gronn);border-radius:2px;padding:16px 20px;margin-top:20px}
+.bf-les h2{margin-top:0;font-size:24px}
+.bf-les ol{margin:6px 0 10px;padding-left:22px;display:grid;grid-template-columns:1fr 1fr;gap:10px 32px}
+.bf-les li b{display:block}
+details summary{cursor:pointer;font-weight:600;color:var(--gronn);padding:6px 0}
+.bf-konsept-smal{display:none}
+.bf-konsept-bred svg,.bf-konsept-smal svg{width:100%;height:auto;display:block}
+.bf-topp{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:20px 24px;margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px}
+.bf-topp .bf-etikett2{font-size:14px;font-weight:600;color:var(--tekst2);text-transform:uppercase;letter-spacing:.03em}
+.bf-topp .bf-tall{font-weight:700;font-size:56px;line-height:1.05;color:var(--gronn);margin:8px 0 6px}
+.bf-topp .bf-setning{font-size:20px;font-weight:600;margin:0 0 12px;max-width:520px}
+.bf-topp p{margin:0 0 8px}
+.bf-nokkel{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;grid-column:1/-1;border-top:1px solid var(--linje);padding-top:14px}
+.bf-nokkel div{font-size:14px;color:var(--tekst2)}
+.bf-nokkel b{display:block;font-size:24px;color:var(--tekst)}
+.bf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.bf-kort{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:16px 18px;min-width:0}
+.bf-kort.bf-bred{grid-column:1/-1}
+.bf-kort h3{font-size:19px;line-height:1.25;margin:0 0 4px}
+.bf-note{font-size:14px;color:var(--tekst2);margin:0 0 10px}
+.bf-figur{width:100%;position:relative}
+.bf-figur svg{display:block;width:100%;height:auto;overflow:visible}
+.bf-kilde{font-size:12px;color:var(--tekst2);margin:8px 0 0}
+.bf-tabell{margin-top:6px}
+.bf-tabell summary{font-size:14px}
+.bf-rull{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;font-size:14px;margin:6px 0}
+th,td{padding:4px 10px;border-bottom:1px solid var(--linje);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:600;border-bottom:1px solid var(--null)}
+.bf-tips{position:absolute;pointer-events:none;background:#fff;border:1px solid #c3cfd1;border-radius:2px;padding:6px 9px;font-size:13px;color:var(--tekst);white-space:nowrap;z-index:5}
+.bf-mangler{background:#f3f5f5;border:1px dashed #b9c5c6;padding:8px 12px;font-size:14px;color:var(--tekst2);border-radius:2px;margin:6px 0}
+.bf-fakta{background:var(--kort);border:1px solid var(--linje);border-left:5px solid #7e5ee8;border-radius:2px;padding:16px 18px;margin-top:16px}
+.bf-fakta .bf-merke{display:inline-block;font-size:12px;font-weight:600;color:#4b2fb0;background:#f2f0ff;border-radius:999px;padding:2px 10px;margin-bottom:6px}
+.bf-pastander{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.bf-pastand{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:14px 16px}
+.bf-pastand q{display:block;font-size:17px;font-weight:600;margin:6px 0}
+.bf-pastand p{margin:0;font-size:14.5px}
+.bf-dom{display:inline-block;font-size:13px;font-weight:700;border-radius:999px;padding:2px 10px}
+.bf-dom-ja{background:#ecfeed;color:#00602f;border:1px solid #91cd9a}
+.bf-dom-delvis{background:#fdf6e3;color:#6b4800;border:1px solid #d5a640}
+.bf-dom-nei{background:#fdeeea;color:#9c2500;border:1px solid #e9a28a}
+.bf-ikke{background:#f3f5f5;border:1px dashed #b9c5c6;border-radius:2px;padding:14px 18px}
+.bf-ikke ul{margin:6px 0 0;padding-left:20px}
+.bf-ikke li{margin:4px 0}
+.bf-bunn{margin-top:48px;border-top:1px solid var(--null);padding-top:16px;font-size:14px;color:var(--tekst2)}
+.bf-bunn h2{font-size:20px;margin:0 0 8px;color:var(--tekst)}
+.bf-bunn p{max-width:880px}
+@media (max-width:800px){
+  .bf-hode h1{font-size:32px}
+  .bf-ingress{font-size:17px}
+  .bf-valgt{grid-template-columns:1fr}
+  .bf-topp{grid-template-columns:1fr;padding:16px}
+  .bf-topp .bf-tall{font-size:44px}
+  .bf-nokkel{grid-template-columns:1fr 1fr}
+  .bf-grid,.bf-pastander{grid-template-columns:1fr}
+  .bf-les ol{grid-template-columns:1fr}
+  .bf-konsept-bred{display:none}
+  .bf-konsept-smal{display:block;max-width:390px;margin:0 auto}
+  h2{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="bf-prototype" role="note">Prototype. Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</div>
+<main class="bf-side">
+
+<header class="bf-hode">
+  <h1>Unge utenfor arbeid, utdanning og tiltak</h1>
+  <p class="bf-ingress" id="ingress"></p>
+  <div class="bf-velgere" role="group" aria-label="Velg en gruppe unge">
+    <div class="bf-velger">
+      <span class="bf-etikett" id="kjonnEtikett">Kjønn</span>
+      <div class="bf-knapper" role="group" aria-labelledby="kjonnEtikett" id="velgKjonn">
+        <button type="button" data-k="0" aria-pressed="true">Begge</button>
+        <button type="button" data-k="2" aria-pressed="false">Kvinner</button>
+        <button type="button" data-k="1" aria-pressed="false">Menn</button>
+      </div>
+    </div>
+    <div class="bf-velger"><label for="velgAlder">Alder</label><select id="velgAlder"></select></div>
+    <div class="bf-velger"><label for="velgInnv">Innvandringskategori</label><select id="velgInnv"></select></div>
+    <div class="bf-velger"><label for="velgUtd">Høyeste fullførte utdanning</label><select id="velgUtd"></select></div>
+    <button type="button" class="bf-nullstill" id="nullstill">Alle unge</button>
+  </div>
+  <section class="bf-valgt" id="valgtKort" aria-live="polite">
+    <div><p class="bf-stort" id="valgtTall"></p><p id="valgtTekst"></p><p class="bf-mangler" id="valgtLiten" hidden></p></div>
+    <div class="bf-figur" id="figValgtSpark"></div>
+  </section>
+</header>
+
+<section class="bf-les" aria-labelledby="lesTittel">
+  <h2 id="lesTittel">Slik leser du tallene</h2>
+  <ol id="lesPunkter"></ol>
+  <details>
+    <summary>Slik lages tallene</summary>
+    <div class="bf-konsept-bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+    <div class="bf-konsept-smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+  </details>
+</section>
+
+<section class="bf-topp" aria-labelledby="toppTittel">
+  <div>
+    <div class="bf-etikett2" id="toppTittel"></div>
+    <div class="bf-tall" id="toppTall"></div>
+    <p class="bf-setning" id="toppSetning"></p>
+    <p id="toppL1"></p>
+    <p id="toppL2"></p>
+  </div>
+  <div>
+    <div class="bf-figur" id="figTopp"></div>
+    <p class="bf-kilde" id="kildeTopp"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabTopp"></div></details>
+  </div>
+  <div class="bf-nokkel" id="nokkeltall"></div>
+</section>
+
+<h2 id="s-utenfor">Hva betyr det å være utenfor?</h2>
+<p class="bf-seksjonsingress" id="ingressUtenfor"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tSammensetning"></h3>
+    <p class="bf-note">De som er utenfor arbeid, utdanning og arbeidsmarkedstiltak (NEET), fordelt på de fire statusene de har i registrene. Valgt gruppe mot alle unge 15–29 år, november <span class="bf-siste"></span>.</p>
+    <div class="bf-figur" id="figSammensetning"></div>
+    <p class="bf-kilde" id="kildeSammensetning"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabSammensetning"></div></details>
+  </article>
+  <article class="bf-kort bf-bred">
+    <h3 id="tAndelTid"></h3>
+    <p class="bf-note" id="nAndelTid"></p>
+    <div class="bf-figur" id="figAndelTid"></div>
+    <p class="bf-kilde" id="kildeAndelTid"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabAndelTid"></div></details>
+  </article>
+</div>
+
+<h2 id="s-nye">Hvor mange blir nye i gruppen?</h2>
+<p class="bf-seksjonsingress" id="ingressNye"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tStrom"></h3>
+    <p class="bf-note" id="nStrom"></p>
+    <div class="bf-figur" id="figStrom"></div>
+    <p class="bf-kilde" id="kildeStrom"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabStrom"></div></details>
+  </article>
+</div>
+
+<h2 id="s-varighet">Hvor lenge er de utenfor – og er det lenger enn før?</h2>
+<p class="bf-seksjonsingress" id="ingressVarighet"></p>
+<div class="bf-grid">
+  <article class="bf-kort">
+    <h3 id="tEttAar"></h3>
+    <p class="bf-note" id="nEttAar"></p>
+    <div class="bf-figur" id="figEttAar"></div>
+    <p class="bf-kilde" id="kildeEttAar"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabEttAar"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tKull"></h3>
+    <p class="bf-note" id="nKull"></p>
+    <div class="bf-figur" id="figKull"></div>
+    <p class="bf-kilde" id="kildeKull"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabKull"></div></details>
+  </article>
+  <article class="bf-kort bf-bred">
+    <h3 id="tAap"></h3>
+    <p class="bf-note" id="nAap"></p>
+    <div class="bf-figur" id="figAap"></div>
+    <p class="bf-kilde" id="kildeAap"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabAap"></div></details>
+  </article>
+</div>
+
+<h2 id="s-innv">Innvandrere og befolkningen ellers</h2>
+<p class="bf-seksjonsingress" id="ingressInnv"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tInnvSamm"></h3>
+    <p class="bf-note">Fordeling av dem som er utenfor, etter status i registrene. Bredden er 100 prosent i begge rader.</p>
+    <div class="bf-figur" id="figInnvSamm"></div>
+    <p class="bf-kilde" id="kildeInnvSamm"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabInnvSamm"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tFemAar"></h3>
+    <p class="bf-note" id="nFemAar"></p>
+    <div class="bf-figur" id="figFemAar"></div>
+    <p class="bf-kilde" id="kildeFemAar"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabFemAar"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tInnvTid"></h3>
+    <p class="bf-note" id="nInnvTid"></p>
+    <div class="bf-figur" id="figInnvTid"></div>
+    <p class="bf-kilde" id="kildeInnvTid"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabInnvTid"></div></details>
+  </article>
+</div>
+
+<h2 id="s-fare">Hvem er i størst fare?</h2>
+<p class="bf-seksjonsingress" id="ingressFare"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tBobler"></h3>
+    <p class="bf-note" id="nBobler"></p>
+    <div class="bf-figur" id="figBobler"></div>
+    <p class="bf-kilde" id="kildeBobler"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabBobler"></div></details>
+  </article>
+  <article class="bf-kort bf-bred">
+    <h3 id="tUtd"></h3>
+    <p class="bf-note" id="nUtd"></p>
+    <div class="bf-knapper" role="group" aria-label="Aldersgruppe i figuren" id="velgUtdAlder" style="margin-bottom:10px">
+      <button type="button" data-a="20-24" aria-pressed="false">20–24 år</button>
+      <button type="button" data-a="25-29" aria-pressed="true">25–29 år</button>
+    </div>
+    <div class="bf-figur" id="figUtd"></div>
+    <p class="bf-kilde" id="kildeUtd"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabUtd"></div></details>
+  </article>
+</div>
+<aside class="bf-fakta" aria-labelledby="tBv">
+  <span class="bf-merke">Faktaboks · annen populasjon</span>
+  <h3 id="tBv" style="margin:0 0 4px;font-size:19px"></h3>
+  <p class="bf-note" id="nBv"></p>
+  <div class="bf-figur" id="figBv"></div>
+  <p class="bf-kilde" id="kildeBv"></p>
+  <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabBv"></div></details>
+</aside>
+
+<h2 id="s-pastander">Påstandsprøven</h2>
+<p class="bf-seksjonsingress">Påstander som ofte dukker opp i omtale av unge utenfor, prøvd mot tallene i denne prototypen. «Støttet» betyr at tallene viser det direkte. «Med forbehold» betyr at tallene viser det, men at en viktig presisering må med.</p>
+<div class="bf-pastander" id="pastander"></div>
+
+<h2 id="s-ikke">Dette kan tallene ikke si</h2>
+<div class="bf-ikke">
+  <ul>
+    <li><b>Om noen har vært utenfor sammenhengende.</b> Status måles én gang i året, i november. «Fortsatt utenfor etter fem år» betyr utenfor det året, ikke hele tiden.</li>
+    <li><b>Alle som blir nye i gruppen.</b> Strømmen inn gjelder dem som var 15–29 år og bosatt året før. Den som går inn og ut i løpet av samme år, synes ikke, og nye 15-åringer og nyankomne innvandrere er ikke med. Tallet er derfor en nedre grense.</li>
+    <li><b>Hvorfor folk er utenfor.</b> Tabellene viser status, ikke årsak. Ukjent status kan være friår, overgang mellom skole og jobb, utvandring som ikke er meldt, eller ordninger som ikke er med i registrene.</li>
+    <li><b>Forløp for alle gruppene i velgeren.</b> Varighet og strøm finnes for alle unge og etter innvandringskategori (tabell 12427), og etter utdanning og alder (tabell 14158), men ikke for alle kombinasjoner av kjønn, alder, utdanning og innvandringskategori.</li>
+    <li><b>Sammenligning med andre land.</b> EU-landenes NEET-tall bygger på arbeidskraftundersøkelser og gir lavere tall for Norge enn registrene. De to kan ikke blandes.</li>
+  </ul>
+</div>
+
+<footer class="bf-bunn">
+  <h2>Om tallene</h2>
+  <p>Tallene er fra SSBs statistikk <a href="https://www.ssb.no/arbstatus">Tilknytning til arbeid, utdanning og velferdsordninger</a>. Hver person får én status, etter en fast prioritering: arbeid går foran ledighet, tiltak, utdanning og ytelser. Unge utenfor (NEET) er bosatte 15–29 år som verken er sysselsatt, under ordinær utdanning eller på arbeidsmarkedstiltak, inkludert introduksjonsprogrammet. Status gjelder 4. kvartal. Tallene for <span class="bf-siste"></span> er foreløpige.</p>
+  <p><b>Egne beregninger i denne prototypen</b>, ikke publisert av SSB: (1) NEET er summert fra statusene registrerte ledige, mottakere av AAP eller uføretrygd og «andre, ikke på tiltak». Summen er kontrollert mot SSBs NEET-tall i tabell 13556. (2) Strøm inn og ut og varighet er regnet fra tabellene 12427 og 14158, som følger de samme personene fra et startår. (3) Andeler for grupper i velgeren er regnet fra antall.</p>
+  <p>Faktaboksen om barnevern bygger på tabell 13347, som gjelder elever seks år etter avsluttet grunnskole, ikke alle unge 15–29 år. Statusene der er ikke de samme som NEET.</p>
+  <p id="bunnKilder"></p>
+  <p>Prototype laget med KI-støtte i SSB, november 2026. Ikke kvalitetssikret av fagseksjonen ennå.</p>
+</footer>
+</main>
+<div class="bf-tips" id="tips" hidden></div>
+
+<script>/*__D3__*/</script>
+<script>
+"use strict";
+const D = /*__INKLUDER:build/arbstatus-neet.json__*/;
+const AR = D.ar, SISTE = AR.length - 1, SA = D.startar;
+const F = {gronn: "#00824d", gronnF: "#339b71", bla: "#3face6", oker: "#d5a640", gra: "#b9c5c6", graT: "#5e787a", linje: "#d9dfe0", null: "#a9b5b7",
+  tekst: "#274246", neet: "#5763a6", neetS: "#0f2080", arb: "#cd83b0", arbS: "#c775a7", innv: "#a3136c", ekskl: "#274246"};
+const DELER = [["AAP eller uføretrygd", ["U.04.00", "U.05.00"], F.gronnF, "#fff"], ["Registrert ledige", ["A.09"], F.bla, F.tekst],
+  ["Andre ordninger", ["U.90B.00"], F.oker, F.tekst], ["Ukjent status", ["UX.00"], F.gra, F.tekst]];
+const KJ = {"0": "begge kjønn", "2": "kvinner", "1": "menn"};
+const ALD = {"15-29": "15–29 år", "15-19": "15–19 år", "20-24": "20–24 år", "25-29": "25–29 år"};
+const INNV = {"A-G": "Alle", "A_C-G": "Befolkningen utenom innvandrere", "B": "Innvandrere"};
+const UTD = {"TOT": "Alle nivåer", "1-2": "Grunnskole", "3-5": "Videregående", "6-8": "Universitet og høgskole", "0_9": "Uoppgitt eller ingen"};
+const tilstand = {k: "0", a: "15-29", i: "A-G", u: "TOT", utdAlder: "25-29"};
+
+// ---------- formatering ----------
+const nb = (x, d = 0) => x == null ? "–" : x.toLocaleString("nb-NO", {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/−|-/g, "−");
+const pst = (x, d = 1) => x == null ? "–" : nb(x, d) + " prosent";
+const rundTusen = x => nb(Math.round(x / 1000) * 1000);
+const kilde = tab => "Kilde: SSB, " + (tab.length > 1 ? "tabell " + tab.slice(0, -1).join(", ") + " og " + tab[tab.length - 1] : "tabell " + tab[0]) +
+  ". Sist oppdatert: " + tab.map(t => D.oppdatert[t]).filter((v, i, a) => v && a.indexOf(v) === i).join(" / ") + ".";
+const forstor = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+// ---------- data ----------
+const SI = Object.fromEntries(D.status.map((s, i) => [s, i]));
+function grp(k = tilstand.k, a = tilstand.a, u = tilstand.u, i = tilstand.i) { return D.grupper[`${k}|${a}|${u}|${i}`]; }
+const sumS = (G, koder, t) => koder.reduce((s, c) => s + G[SI[c]][t], 0);
+const neetAnt = (G, t) => sumS(G, ["A.09", "U.04.00", "U.05.00", "U.90B.00", "UX.00"], t);
+const neetPst = (G, t) => G[SI.TOT][t] ? 100 * neetAnt(G, t) / G[SI.TOT][t] : null;
+const ALLE = () => grp("0", "15-29", "TOT", "A-G");
+const erAlle = () => tilstand.k === "0" && tilstand.a === "15-29" && tilstand.u === "TOT" && tilstand.i === "A-G";
+function gruppenavn() {
+  let n = (tilstand.k === "2" ? "kvinner" : tilstand.k === "1" ? "menn" : "unge") + " " + ALD[tilstand.a];
+  if (tilstand.i === "B") n += " som er innvandrere"; else if (tilstand.i === "A_C-G") n += " utenom innvandrere";
+  if (tilstand.u === "0_9") n += ", uten oppgitt fullført utdanning";
+  else if (tilstand.u !== "TOT") n += ", med " + {"1-2": "grunnskole", "3-5": "videregående", "6-8": "universitet eller høgskole"}[tilstand.u] + " som høyeste utdanning";
+  return n;
+}
+// 12427: andel fortsatt NEET k år etter startåret
+const varig = (i, sa, k) => { const r = D.forlop[i].varighet[sa]; return r && r[k] ? 100 * r[k][0] / r[0][0] : null; };
+
+// ---------- hjelpere for figurer ----------
+const tips = d3.select("#tips");
+function visTips(ev, html) {
+  tips.attr("hidden", null).html(html);
+  const b = tips.node().getBoundingClientRect();
+  let x = ev.pageX + 14, y = ev.pageY - b.height - 10;
+  if (x + b.width > window.scrollX + document.documentElement.clientWidth - 8) x = ev.pageX - b.width - 14;
+  if (y < window.scrollY + 4) y = ev.pageY + 16;
+  tips.style("left", x + "px").style("top", y + "px");
+}
+const skjulTips = () => tips.attr("hidden", true);
+function svgFor(id, h, beskrivelse) {
+  const el = d3.select("#" + id); el.selectAll("*").remove();
+  const w = Math.max(280, el.node().clientWidth);
+  const svg = el.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("width", w).attr("height", h).attr("role", "img").attr("aria-label", beskrivelse);
+  return {svg, w, h};
+}
+function tekst(g, x, y, t, o = {}) {
+  return g.append("text").attr("x", x).attr("y", y).text(t).attr("font-size", o.str || 13)
+    .attr("fill", o.farge || F.tekst).attr("text-anchor", o.anker || "start").attr("font-weight", o.vekt || 400);
+}
+function yAkse(g, y, x0, x1, verdier, fmt) {
+  verdier.forEach(v => {
+    g.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y(v)).attr("y2", y(v)).attr("stroke", v === 0 ? F.null : F.linje);
+    tekst(g, x0 - 6, y(v) + 4, fmt(v), {anker: "end", farge: F.graT});
+  });
+}
+function tabellHTML(id, hode, rader) {
+  document.getElementById(id).innerHTML = "<table><thead><tr>" + hode.map(h => `<th scope="col">${h}</th>`).join("") +
+    "</tr></thead><tbody>" + rader.map(r => "<tr>" + r.map((c, i) => i === 0 ? `<th scope="row">${c}</th>` : `<td>${c}</td>`).join("") + "</tr>").join("") + "</tbody></table>";
+}
+const settTekst = (id, t) => { document.getElementById(id).textContent = t; };
+// Bredden er anslått (7 px per tegn), slik at høyden kan regnes ut før figuren tegnes.
+function tfLinjer(poster, x, maksB) {
+  let lx = x, linjer = 1;
+  poster.forEach(([n]) => { const b = 17 + n.length * 7 + 14; if (lx + b > maksB && lx > x) { lx = x; linjer++; } lx += b; });
+  return linjer;
+}
+function tegnforklaring(svg, x, y, poster, maksB) {
+  let lx = x, ly = y;
+  poster.forEach(([n, f]) => {
+    const b = 17 + n.length * 7 + 14;
+    if (lx + b > maksB && lx > x) { lx = x; ly += 18; }
+    svg.append("rect").attr("x", lx).attr("y", ly - 10).attr("width", 12).attr("height", 12).attr("fill", f);
+    tekst(svg, lx + 17, ly, n, {str: 12.5});
+    lx += b;
+  });
+  return ly;
+}
+// Stablet 100-prosentstolpe: rader = [{navn, verdier, tekst}], kat = [[navn, farge, tekstfarge]]
+function stablet(id, rader, kat, beskr, o = {}) {
+  const el = document.getElementById(id);
+  const smal = el.clientWidth < 560;
+  const rh = 30, gap = smal ? 34 : 14, ml = smal ? 0 : (o.ml || 200);
+  const top = 14 + 18 * (tfLinjer(kat, ml, Math.max(280, el.clientWidth)) - 1) + (smal ? 22 : 20);
+  const h = top + rader.length * (rh + gap) + (smal ? 0 : 6);
+  const {svg, w} = svgFor(id, h, beskr);
+  const x = d3.scaleLinear([0, 100], [ml, w - 2]);
+  tegnforklaring(svg, ml, 14, kat.map(k => [k[0], k[1]]), w);
+  rader.forEach((r, ri) => {
+    const y0 = top + ri * (rh + gap) + (smal ? 18 : 0);
+    if (smal) tekst(svg, 0, y0 - 6, r.navn + (r.tekst ? " · " + r.tekst : ""), {vekt: r.uthev ? 700 : 600, str: 13});
+    else { tekst(svg, ml - 10, y0 + rh / 2 + 1, r.navn, {anker: "end", vekt: r.uthev ? 700 : 600});
+      if (r.tekst) tekst(svg, ml - 10, y0 + rh / 2 + 16, r.tekst, {anker: "end", farge: F.graT, str: 12}); }
+    let x0 = ml; const sum = d3.sum(r.verdier);
+    r.verdier.forEach((v, j) => {
+      const p = 100 * v / sum, b = x(p) - ml;
+      svg.append("rect").attr("x", x0).attr("y", y0).attr("width", Math.max(0, b - 1)).attr("height", rh).attr("fill", kat[j][1])
+        .on("mousemove", ev => visTips(ev, `<b>${r.navn}</b><br>${kat[j][0]}: ${pst(p)}<br>${nb(v)} personer`)).on("mouseleave", skjulTips);
+      if (b > 40) tekst(svg, x0 + b / 2, y0 + rh / 2 + 5, nb(p, 0) + " %", {anker: "middle", farge: kat[j][2], str: 12.5, vekt: 600});
+      x0 += b;
+    });
+  });
+}
+
+// ---------- adresse ----------
+function lesAdresse() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  if (KJ[p.get("kjonn")]) tilstand.k = p.get("kjonn");
+  if (ALD[p.get("alder")]) tilstand.a = p.get("alder");
+  if (INNV[p.get("innv")]) tilstand.i = p.get("innv");
+  if (UTD[p.get("utd")]) tilstand.u = p.get("utd");
+}
+function skrivAdresse() {
+  const p = new URLSearchParams({kjonn: tilstand.k, alder: tilstand.a, innv: tilstand.i, utd: tilstand.u});
+  history.replaceState(null, "", "#" + p.toString());
+}
+
+// ---------- hode og valgt gruppe ----------
+function hode() {
+  const G = ALLE(), V = D.forlop["A-G"].varighet, f = SA[0], l = SA[SA.length - 2];
+  settTekst("ingress", `I ${AR[SISTE]} var ${nb(neetAnt(G, SISTE))} unge 15–29 år verken i arbeid, utdanning eller arbeidsmarkedstiltak, ` +
+    `${pst(neetPst(G, SISTE))} av aldersgruppen. Andelen er ikke høyere enn før, men flere blir værende: ${pst(varig("A-G", l, 1), 0)} av dem som var utenfor i ${l}, ` +
+    `var det fortsatt et år senere. For dem som var utenfor i ${f}, var andelen ${pst(varig("A-G", f, 1), 0)}.`);
+  const fyll = (id, obj) => { const s = document.getElementById(id); s.innerHTML = Object.entries(obj).map(([k, v]) => `<option value="${k}">${v}</option>`).join(""); };
+  fyll("velgAlder", ALD); fyll("velgInnv", INNV); fyll("velgUtd", UTD);
+  ["velgAlder", "velgInnv", "velgUtd"].forEach((id, n) => document.getElementById(id).addEventListener("change", ev => { tilstand[["a", "i", "u"][n]] = ev.target.value; oppdater(); }));
+  document.querySelectorAll("#velgKjonn button").forEach(b => b.addEventListener("click", () => { tilstand.k = b.dataset.k; oppdater(); }));
+  document.getElementById("nullstill").addEventListener("click", () => { Object.assign(tilstand, {k: "0", a: "15-29", i: "A-G", u: "TOT"}); oppdater(); });
+  document.querySelectorAll(".bf-siste").forEach(e => e.textContent = AR[SISTE]);
+}
+function valgtKort() {
+  document.querySelectorAll("#velgKjonn button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === tilstand.k));
+  document.getElementById("velgAlder").value = tilstand.a; document.getElementById("velgInnv").value = tilstand.i; document.getElementById("velgUtd").value = tilstand.u;
+  document.getElementById("nullstill").hidden = erAlle();
+  const G = grp(), A = ALLE(), serie = AR.map((_, t) => neetPst(G, t)), ref = AR.map((_, t) => neetPst(A, t));
+  const n = neetAnt(G, SISTE), bos = G[SI.TOT][SISTE];
+  settTekst("valgtTall", pst(serie[SISTE]));
+  const forskjell = serie[SISTE] / ref[SISTE];
+  let sml = erAlle() ? "" : Math.abs(forskjell - 1) < 0.1 ? " Det er omtrent som for alle unge." :
+    forskjell > 1 ? ` Det er ${forskjell >= 1.95 ? nb(forskjell, 1) + " ganger så høyt" : "høyere"} enn for alle unge (${pst(ref[SISTE])}).` : ` Det er lavere enn for alle unge (${pst(ref[SISTE])}).`;
+  const ukj = 100 * G[SI["UX.00"]][SISTE] / (n || 1), tung = 100 * (G[SI["U.04.00"]][SISTE] + G[SI["U.05.00"]][SISTE]) / (n || 1);
+  settTekst("valgtTekst", `av ${gruppenavn()} var utenfor arbeid, utdanning og tiltak i ${AR[SISTE]}, ${nb(n)} av ${nb(bos)} personer.${sml} ` +
+    (n >= 100 ? `${forstor(nb(tung, 0))} prosent av dem var på AAP eller uføretrygd, ${nb(ukj, 0)} prosent hadde ukjent status.` : ""));
+  const liten = bos < 1000 || n < 100;
+  const lp = document.getElementById("valgtLiten"); lp.hidden = !liten;
+  if (liten) lp.textContent = `Liten gruppe: ${nb(bos)} bosatte og ${nb(n)} utenfor. SSB avrunder små tall, så andelene kan svinge mye fra år til år.`;
+  const {svg, w, h} = svgFor("figValgtSpark", 96, `Andel utenfor for valgt gruppe ${AR[0]}–${AR[SISTE]}`);
+  const x = d3.scalePoint(AR, [8, w - 44]), y = d3.scaleLinear([0, d3.max(serie.concat(ref)) * 1.15 || 1], [h - 18, 10]);
+  svg.append("line").attr("x1", 8).attr("x2", w - 44).attr("y1", y(0)).attr("y2", y(0)).attr("stroke", F.null);
+  const l = d3.line((d, i) => x(AR[i]), d => y(d)).defined(d => d != null);
+  if (!erAlle()) { svg.append("path").attr("d", l(ref)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 2);
+    tekst(svg, w - 40, y(ref[SISTE]) + (Math.abs(y(ref[SISTE]) - y(serie[SISTE])) < 14 ? (ref[SISTE] > serie[SISTE] ? -6 : 14) : 4), "alle", {farge: F.graT, str: 12}); }
+  svg.append("path").attr("d", l(serie)).attr("fill", "none").attr("stroke", F.neet).attr("stroke-width", 2.5);
+  [0, SISTE].forEach(i => { svg.append("circle").attr("cx", x(AR[i])).attr("cy", y(serie[i])).attr("r", 3.5).attr("fill", F.neet);
+    tekst(svg, x(AR[i]) + (i ? 6 : 0), y(serie[i]) - 8, nb(serie[i], 1), {vekt: 600}); });
+  tekst(svg, 8, h - 2, AR[0], {farge: F.graT, str: 12}); tekst(svg, w - 44, h - 2, AR[SISTE], {farge: F.graT, str: 12, anker: "end"});
+}
+
+// ---------- lesehjelp ----------
+function lesehjelp() {
+  const G = ALLE(), n = neetAnt(G, SISTE);
+  const p = [
+    ["«Utenfor» er fire ulike grupper.", `Av de ${nb(n)} som var utenfor i ${AR[SISTE]}, var ${nb(G[SI["UX.00"]][SISTE])} ikke å finne i registrene over arbeid, utdanning, tiltak eller ytelser. ${nb(G[SI["U.04.00"]][SISTE] + G[SI["U.05.00"]][SISTE])} var på AAP eller uføretrygd.`],
+    ["Ett bilde i året – og en egen tabell som følger personene.", "Antall og andel gjelder november hvert år. Hvor mange som er nye, og hvor lenge de blir, kommer fra tabeller som følger de samme personene fra år til år."],
+    ["Én status per person.", "Den som både studerer og har uføretrygd, telles som student. Arbeid går foran alt annet."],
+    ["Ikke de samme tallene som i EU-statistikken.", "Registrene gir høyere NEET-andel for Norge enn arbeidskraftundersøkelsen som brukes i EU-sammenligninger. Begge er riktige, men de kan ikke blandes."],
+  ];
+  document.getElementById("lesPunkter").innerHTML = p.map(([t, x]) => `<li><b>${t}</b>${x}</li>`).join("");
+}
+
+// ---------- toppgrafikk B ----------
+function topp() {
+  const G = ALLE();
+  const aap = AR.map((_, t) => G[SI["U.04.00"]][t] + G[SI["U.05.00"]][t]), alle = AR.map((_, t) => neetAnt(G, t));
+  const ratio = aap[SISTE] / aap[0];
+  settTekst("toppTittel", `Unge utenfor · 15–29 år · ${AR[0]}–${AR[SISTE]}`);
+  settTekst("toppTall", ratio >= 1.9 && ratio < 2.5 ? "Dobbelt så mange" : nb(ratio, 1) + " ganger så mange");
+  document.getElementById("toppTall").title = `Nøyaktig: ${nb(ratio, 2)} ganger (${nb(aap[0])} → ${nb(aap[SISTE])})`;
+  settTekst("toppSetning", `unge utenfor er på AAP eller uføretrygd som i ${AR[0]}.`);
+  settTekst("toppL1", `Andelen unge utenfor er omtrent den samme: ${pst(neetPst(G, 0))} i ${AR[0]} og ${pst(neetPst(G, SISTE))} i ${AR[SISTE]}. Men gruppen på AAP eller uføretrygd har økt fra ${nb(aap[0])} til ${nb(aap[SISTE])}.`);
+  const i2019 = AR.indexOf("2019");
+  settTekst("toppL2", `Økningen kom fram til ${AR[i2019]}. Siden har tallet ligget nokså flatt, mellom ${nb(d3.min(aap.slice(i2019)))} og ${nb(d3.max(aap.slice(i2019)))}.`);
+  const {svg, w, h} = svgFor("figTopp", 250, `Unge utenfor ${AR[0]}–${AR[SISTE]}, delt i AAP eller uføretrygd og andre utenfor`);
+  const smal = w < 520, m = {l: 50, r: smal ? 8 : 96, t: 26, b: 24};
+  const x = d3.scaleBand(AR, [m.l, w - m.r]).padding(0.33), y = d3.scaleLinear([0, 140000], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, [0, 40000, 80000, 120000], v => nb(v));
+  tekst(svg, 0, 12, "antall personer", {farge: F.graT});
+  AR.forEach((a, t) => {
+    const r = alle[t] - aap[t];
+    svg.append("rect").attr("x", x(a)).attr("y", y(aap[t])).attr("width", x.bandwidth()).attr("height", y(0) - y(aap[t])).attr("fill", F.gronn);
+    svg.append("rect").attr("x", x(a)).attr("y", y(alle[t])).attr("width", x.bandwidth()).attr("height", y(aap[t]) - y(alle[t])).attr("fill", F.gra);
+    svg.append("rect").attr("x", x(a) - 3).attr("y", m.t).attr("width", x.bandwidth() + 6).attr("height", h - m.t - m.b).attr("fill", "transparent")
+      .on("mousemove", ev => visTips(ev, `<b>${a}</b><br>Utenfor i alt: ${nb(alle[t])} (${pst(neetPst(G, t))})<br>AAP eller uføretrygd: ${nb(aap[t])}<br>Andre utenfor: ${nb(r)}`)).on("mouseleave", skjulTips);
+  });
+  [0, AR.indexOf("2015"), SISTE].forEach(t => tekst(svg, x(AR[t]) + x.bandwidth() / 2, h - 6, AR[t], {farge: F.graT, anker: "middle"}));
+  tekst(svg, x(AR[0]) + x.bandwidth() / 2, y(aap[0]) - 8, nb(aap[0]), {anker: "start", vekt: 600, str: 12.5});
+  const xs = x(AR[SISTE]) + x.bandwidth();
+  if (smal) {
+    tekst(svg, xs, y(aap[SISTE]) - 8, nb(aap[SISTE]), {anker: "end", vekt: 600, str: 12.5});
+    tegnforklaring(svg, m.l + 60, 12, [["AAP eller uføretrygd", F.gronn], ["Andre utenfor", F.gra]], w);
+  } else {
+    const ya = Math.min(y(aap[SISTE] / 2) - 4, y(0) - 34);
+    tekst(svg, xs + 8, ya, "AAP eller", {vekt: 600}); tekst(svg, xs + 8, ya + 15, "uføretrygd", {vekt: 600});
+    tekst(svg, xs + 8, ya + 31, nb(aap[SISTE]));
+    const r = alle[SISTE] - aap[SISTE];
+    tekst(svg, xs + 8, y(aap[SISTE] + r / 2) - 4, "Andre", {vekt: 600, farge: F.graT}); tekst(svg, xs + 8, y(aap[SISTE] + r / 2) + 11, "utenfor", {vekt: 600, farge: F.graT});
+    tekst(svg, xs + 8, y(aap[SISTE] + r / 2) + 27, nb(r), {farge: F.graT});
+  }
+  settTekst("kildeTopp", kilde(["12424"]) + ` Tallene for ${AR[SISTE]} er foreløpige.`);
+  tabellHTML("tabTopp", ["År", "Utenfor i alt", "Andel (prosent)", "AAP eller uføretrygd", "Andre utenfor"], AR.map((a, t) => [a, nb(alle[t]), nb(neetPst(G, t), 1), nb(aap[t]), nb(alle[t] - aap[t])]));
+  const fA = D.forlop["A-G"], inn = fA.tilgang[AR[SISTE]], l = SA[SA.length - 2];
+  document.getElementById("nokkeltall").innerHTML = [
+    [nb(neetAnt(G, SISTE)), `utenfor i ${AR[SISTE]}`], [pst(neetPst(G, SISTE)), `av alle 15–29 år`],
+    [nb(inn[0]), `gikk fra arbeid, utdanning eller tiltak til utenfor i løpet av ${AR[SISTE - 1]}–${AR[SISTE]}`], [pst(varig("A-G", l, 1), 0), `av dem som var utenfor i ${l}, var det fortsatt et år senere`]]
+    .map(([v, e]) => `<div><b>${v}</b>${e}</div>`).join("");
+}
+
+// ---------- seksjon: hva betyr utenfor ----------
+function sammensetning() {
+  const G = grp(), A = ALLE();
+  const ver = H => DELER.map(d => sumS(H, d[1], SISTE));
+  const ukj = 100 * G[SI["UX.00"]][SISTE] / neetAnt(G, SISTE), tung = 100 * (G[SI["U.04.00"]][SISTE] + G[SI["U.05.00"]][SISTE]) / neetAnt(G, SISTE);
+  settTekst("ingressUtenfor", `Ordet «utenfor» samler svært ulike situasjoner. Noen er registrert ledige og på vei inn i jobb. Andre er på arbeidsavklaringspenger eller uføretrygd. Den største gruppen finnes ikke i registrene i det hele tatt.`);
+  settTekst("tSammensetning", erAlle() ? `Over halvparten av dem som er utenfor, har ukjent status` :
+    `${forstor(gruppenavn())}: ${nb(tung, 0)} prosent på AAP eller uføretrygd, ${nb(ukj, 0)} prosent med ukjent status`);
+  const rader = [{navn: erAlle() ? "Alle unge 15–29 år" : "Valgt gruppe", verdier: ver(G), tekst: nb(neetAnt(G, SISTE)) + " utenfor", uthev: true}];
+  if (!erAlle()) rader.push({navn: "Alle unge 15–29 år", verdier: ver(A), tekst: nb(neetAnt(A, SISTE)) + " utenfor"});
+  stablet("figSammensetning", rader, DELER.map(d => [d[0], d[2], d[3]]), "Fordeling av unge utenfor etter status");
+  settTekst("kildeSammensetning", kilde(["12424"]));
+  tabellHTML("tabSammensetning", ["Status", "Valgt gruppe (antall)", "Valgt gruppe (prosent)", "Alle unge (antall)", "Alle unge (prosent)"],
+    DELER.map(d => [d[0], nb(sumS(G, d[1], SISTE)), nb(100 * sumS(G, d[1], SISTE) / neetAnt(G, SISTE), 1), nb(sumS(A, d[1], SISTE)), nb(100 * sumS(A, d[1], SISTE) / neetAnt(A, SISTE), 1)]));
+  // andel over tid
+  const s = AR.map((_, t) => neetPst(G, t)), r = AR.map((_, t) => neetPst(A, t));
+  const tmax = d3.maxIndex(s), tmin = d3.minIndex(s);
+  settTekst("tAndelTid", erAlle() ? `Andelen var høyest i ${AR[tmax]} og lavest i ${AR[tmin]}` : `Andel utenfor: ${gruppenavn()}`);
+  settTekst("nAndelTid", `Andel av alle i gruppen som var utenfor arbeid, utdanning og tiltak i november hvert år.${erAlle() ? "" : " Grå linje er alle unge 15–29 år."} Oljeprisfallet ga en topp i 2015, koronapandemien en topp i 2020.`);
+  const {svg, w, h} = svgFor("figAndelTid", 240, `Andel utenfor ${AR[0]}–${AR[SISTE]}`);
+  const m = {l: 34, r: 44, t: 22, b: 24};
+  const x = d3.scalePoint(AR, [m.l, w - m.r]), y = d3.scaleLinear([0, d3.max(s.concat(r)) * 1.12], [h - m.b, m.t]).nice();
+  yAkse(svg, y, m.l, w - m.r, y.ticks(4), v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  [0, AR.indexOf("2015"), AR.indexOf("2020"), SISTE].forEach(t => tekst(svg, x(AR[t]), h - 6, AR[t], {farge: F.graT, anker: "middle"}));
+  const l = d3.line((d, i) => x(AR[i]), d => y(d));
+  if (!erAlle()) { svg.append("path").attr("d", l(r)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 2);
+    tekst(svg, x(AR[SISTE]) + 6, y(r[SISTE]) + (Math.abs(y(r[SISTE]) - y(s[SISTE])) < 14 ? (r[SISTE] > s[SISTE] ? -4 : 16) : 4), "alle", {farge: F.graT, str: 12}); }
+  svg.append("path").attr("d", l(s)).attr("fill", "none").attr("stroke", F.neet).attr("stroke-width", 2.5);
+  tekst(svg, x(AR[SISTE]) + 6, y(s[SISTE]) + 4, nb(s[SISTE], 1), {vekt: 600, farge: F.neet});
+  s.forEach((v, t) => svg.append("circle").attr("cx", x(AR[t])).attr("cy", y(v)).attr("r", 7).attr("fill", "transparent")
+    .on("mousemove", ev => visTips(ev, `<b>${AR[t]}</b><br>${pst(v)}<br>${nb(neetAnt(G, t))} personer`)).on("mouseleave", skjulTips));
+  settTekst("kildeAndelTid", kilde(["12424"]));
+  tabellHTML("tabAndelTid", ["År", "Valgt gruppe (prosent)", "Valgt gruppe (antall)", "Alle unge (prosent)"], AR.map((a, t) => [a, nb(s[t], 1), nb(neetAnt(G, t)), nb(r[t], 1)]));
+}
+
+// ---------- seksjon: strøm inn og ut ----------
+function fGruppe() { return tilstand.i; }
+function forlopsMerknad() {
+  const andre = [];
+  if (tilstand.k !== "0") andre.push("kjønn"); if (tilstand.a !== "15-29") andre.push("alder"); if (tilstand.u !== "TOT") andre.push("utdanning");
+  return andre.length ? ` Tabellen som følger personene, har ikke tall etter ${andre.join(" og ")}, så figuren viser ${INNV[tilstand.i] === "Alle" ? "alle unge 15–29 år" : INNV[tilstand.i].toLowerCase() + " 15–29 år"}.` : "";
+}
+function strom() {
+  const i = fGruppe(), T = D.forlop[i].tilgang, aar = Object.keys(T);
+  const inn = aar.map(a => T[a][0]), ut = aar.map(a => T[a][1]);
+  const sist = aar.length - 1, netto = neetAnt(grp("0", "15-29", "TOT", i), SISTE) - neetAnt(grp("0", "15-29", "TOT", i), SISTE - 1);
+  const navn = i === "A-G" ? "unge" : i === "B" ? "innvandrere" : "unge utenom innvandrere";
+  settTekst("ingressNye", `Antallet utenfor endrer seg lite fra år til år, men det er ikke de samme personene. Hvert år går titusener inn i gruppen og titusener ut. Det er strømmene, ikke nettoen, som viser hvor mange som faktisk faller ut.`);
+  settTekst("tStrom", `${forstor(nb(inn[sist]))} ${navn} gikk fra arbeid, utdanning eller tiltak til utenfor fra ${aar[sist - 0] - 1} til ${aar[sist]}`);
+  settTekst("nStrom", `Personer 15–29 år i november ett år, etter status året etter. Inn: var i arbeid, utdanning eller tiltak, ble utenfor. Ut: var utenfor, kom i arbeid, utdanning eller tiltak. ` +
+    `Netto endring i antall utenfor fra ${AR[SISTE - 1]} til ${AR[SISTE]} var ${netto > 0 ? "+" : ""}${nb(netto)}. Nettoen inkluderer også nye 15-åringer, innvandring og dem som fyller 30, så den er ikke inn minus ut.` + forlopsMerknad());
+  const {svg, w, h} = svgFor("figStrom", 250, `Strøm inn i og ut av gruppen utenfor ${aar[0]}–${aar[sist]}`);
+  const m = {l: 50, r: w < 520 ? 46 : 150, t: 26, b: 24};
+  const x = d3.scalePoint(aar, [m.l, w - m.r]), y = d3.scaleLinear([0, d3.max(inn.concat(ut)) * 1.1], [h - m.b, m.t]).nice();
+  const k0 = x("2020"), k1 = x("2021");
+  svg.append("rect").attr("x", k0 - 6).attr("y", m.t).attr("width", k1 - k0 + 12).attr("height", h - m.t - m.b).attr("fill", "#f3f5f5");
+  tekst(svg, (k0 + k1) / 2, m.t + 12, "korona", {anker: "middle", farge: F.graT, str: 12});
+  yAkse(svg, y, m.l, w - m.r, y.ticks(4), v => nb(v));
+  tekst(svg, 0, 12, "antall personer", {farge: F.graT});
+  [0, aar.indexOf("2015"), sist].forEach(t => tekst(svg, x(aar[t]), h - 6, aar[t], {farge: F.graT, anker: "middle"}));
+  const l = d3.line((d, t) => x(aar[t]), d => y(d));
+  [[inn, F.neetS, "Inn i gruppen"], [ut, F.arbS, "Ut til arbeid, utdanning, tiltak"]].forEach(([s, f, n], j) => {
+    svg.append("path").attr("d", l(s)).attr("fill", "none").attr("stroke", f).attr("stroke-width", 2.5);
+    const yy = y(s[sist]) + (j === 0 ? (s[sist] > ut[sist] ? -6 : 14) : (s[sist] > inn[sist] ? -6 : 14));
+    if (w < 520) tekst(svg, x(aar[sist]) + 6, yy, nb(s[sist]), {farge: f, vekt: 600, str: 12});
+    else { tekst(svg, x(aar[sist]) + 8, yy - 7, n.length > 16 && j ? "Ut til arbeid," : n, {farge: f, vekt: 600, str: 12.5});
+      tekst(svg, x(aar[sist]) + 8, yy + 8, j ? "utdanning, tiltak: " + nb(s[sist]) : nb(s[sist]), {farge: f, str: 12.5}); }
+  });
+  if (w < 520) tegnforklaring(svg, m.l + 90, 12, [["Inn", F.neetS], ["Ut til arbeid, utdanning, tiltak", F.arbS]], w);
+  aar.forEach((a, t) => svg.append("rect").attr("x", x(a) - 8).attr("y", m.t).attr("width", 16).attr("height", h - m.t - m.b).attr("fill", "transparent")
+    .on("mousemove", ev => visTips(ev, `<b>${+a - 1}–${a}</b><br>Inn: ${nb(inn[t])}<br>Ut til arbeid, utdanning, tiltak: ${nb(ut[t])}<br>Ut av befolkningen: ${nb(T[a][2])}`)).on("mouseleave", skjulTips));
+  settTekst("kildeStrom", kilde(["12427", "12424"]) + " Egen beregning av strømmene.");
+  tabellHTML("tabStrom", ["Fra–til", "Inn i gruppen", "Ut til arbeid, utdanning, tiltak", "Ut av befolkningen (utvandret, død)"], aar.map((a, t) => [`${+a - 1}–${a}`, nb(inn[t]), nb(ut[t]), nb(T[a][2])]));
+}
+
+// ---------- seksjon: varighet ----------
+function varighet() {
+  const i = fGruppe(), V = D.forlop[i].varighet;
+  const kull = SA.slice(0, -1), ett = kull.map(sa => varig(i, sa, 1));
+  const l = kull.length - 1, f5 = SA.filter(sa => V[sa].length > 5), s5 = f5[f5.length - 1];
+  settTekst("ingressVarighet", `Om lag halvparten av dem som er utenfor, er tilbake i arbeid, utdanning eller tiltak, eller har flyttet fra landet, innen et år. Men andelen som blir værende, har økt. ` +
+    `Av dem som var utenfor i ${s5}, var ${pst(varig(i, s5, 5), 0)} fortsatt utenfor fem år senere, mot ${pst(varig(i, f5[0], 5), 0)} for dem som var utenfor i ${f5[0]}.`);
+  settTekst("tEttAar", `${forstor(pst(ett[l], 0))} var fortsatt utenfor et år senere – mot ${pst(ett[0], 0)} i ${kull[0]}`);
+  settTekst("nEttAar", `Andel av dem som var utenfor i november i startåret, som også var utenfor i november året etter.` + forlopsMerknad());
+  let {svg, w, h} = svgFor("figEttAar", 230, `Andel fortsatt utenfor ett år senere, etter startår ${kull[0]}–${kull[l]}`);
+  let m = {l: 34, r: 8, t: 22, b: 24};
+  let x = d3.scaleBand(kull, [m.l, w - m.r]).padding(0.33), y = d3.scaleLinear([0, 70], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, [0, 20, 40, 60], v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  ett.forEach((v, t) => svg.append("rect").attr("x", x(kull[t])).attr("y", y(v)).attr("width", x.bandwidth()).attr("height", y(0) - y(v)).attr("fill", F.neet)
+    .on("mousemove", ev => visTips(ev, `<b>Utenfor i ${kull[t]}</b><br>${pst(v)} fortsatt utenfor i ${+kull[t] + 1}<br>av ${nb(V[kull[t]][0][0])} personer`)).on("mouseleave", skjulTips));
+  [0, kull.indexOf("2015"), l].forEach(t => tekst(svg, x(kull[t]) + x.bandwidth() / 2, h - 6, kull[t], {farge: F.graT, anker: "middle"}));
+  tekst(svg, x(kull[l]) + x.bandwidth(), y(ett[l]) - 6, nb(ett[l], 1), {anker: "end", vekt: 600, str: 12});
+  tekst(svg, x(kull[0]), y(ett[0]) - 6, nb(ett[0], 1), {anker: "start", vekt: 600, str: 12});
+  settTekst("kildeEttAar", kilde(["12427"]) + " Egen beregning.");
+  tabellHTML("tabEttAar", ["Utenfor i", "Antall", "Fortsatt utenfor året etter (prosent)"], kull.map((sa, t) => [sa, nb(V[sa][0][0]), nb(ett[t], 1)]));
+  // kullkurver
+  const VIS = ["2008", "2012", "2016", "2020", "2024"].filter(sa => V[sa]);
+  const farger = ["#9ed7a5", "#75ba86", "#499e69", "#00824d", "#014235"].map((_, j, a) => ["#c9cfee", "#a4ade0", "#7c87c8", "#5763a6", "#0f2080"][j]);
+  settTekst("tKull", `Jo nyere kullet, jo flere blir værende`);
+  settTekst("nKull", `Andel som fortsatt var utenfor, år for år etter at de var utenfor første gang vi måler. Hver linje er dem som var utenfor i ett startår.`);
+  ({svg, w, h} = svgFor("figKull", 250, `Andel fortsatt utenfor etter antall år, for startår ${VIS.join(", ")}`));
+  m = {l: 34, r: 46, t: 22, b: 30};
+  const xk = d3.scaleLinear([1, 10], [m.l, w - m.r]); y = d3.scaleLinear([0, 70], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, [0, 20, 40, 60], v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  [1, 3, 5, 10].forEach(k => tekst(svg, xk(k), h - 14, k, {farge: F.graT, anker: "middle"}));
+  tekst(svg, w - m.r, h - 1, "år etter startåret", {farge: F.graT, anker: "end", str: 12});
+  const ender = [];
+  VIS.forEach((sa, j) => {
+    const rad = V[sa].slice(1, 11).map(r => 100 * r[0] / V[sa][0][0]);
+    if (rad.length > 1) svg.append("path").attr("d", d3.line((d, k) => xk(k + 1), d => y(d))(rad)).attr("fill", "none").attr("stroke", farger[j]).attr("stroke-width", j === VIS.length - 1 ? 3 : 2);
+    rad.forEach((v, k) => { svg.append("circle").attr("cx", xk(k + 1)).attr("cy", y(v)).attr("r", k === rad.length - 1 ? 3.5 : 0).attr("fill", farger[j]);
+      svg.append("circle").attr("cx", xk(k + 1)).attr("cy", y(v)).attr("r", 6).attr("fill", "transparent")
+        .on("mousemove", ev => visTips(ev, `<b>Utenfor i ${sa}</b><br>${k + 1} år etter: ${pst(v)} fortsatt utenfor`)).on("mouseleave", skjulTips); });
+    ender.push({sa, j, x: xk(rad.length), y: y(rad[rad.length - 1]) + 4});
+  });
+  // Etiketter ved linjeslutt; skyves fra hverandre når de ligger tett
+  ender.sort((a, b) => a.y - b.y).forEach((e, n, a) => { if (n && e.y - a[n - 1].y < 13 && Math.abs(e.x - a[n - 1].x) < 40) e.y = a[n - 1].y + 13; });
+  ender.forEach(e => tekst(svg, e.x + 6, e.y, e.sa, {farge: e.j < 2 ? F.graT : farger[e.j], vekt: 600, str: 12}));
+  settTekst("kildeKull", kilde(["12427"]) + " Egen beregning.");
+  tabellHTML("tabKull", ["Utenfor i", "Antall"].concat(d3.range(1, 11).map(k => `${k} år etter`)),
+    SA.slice(0, -1).map(sa => [sa, nb(V[sa][0][0])].concat(d3.range(1, 11).map(k => V[sa][k] ? nb(100 * V[sa][k][0] / V[sa][0][0], 1) : ""))));
+  // AAP / uføre
+  const Aa = D.forlop[i].aap, ak = SA.filter(sa => Aa[sa].length > 5), a5 = ak.map(sa => 100 * Aa[sa][5] / Aa[sa][0]);
+  settTekst("tAap", `${forstor(pst(a5[a5.length - 1], 0))} av unge på AAP eller uføretrygd var det fortsatt fem år senere`);
+  settTekst("nAap", `Andel av dem som var på arbeidsavklaringspenger (AAP) eller uføretrygd i startåret, som også var det fem år senere. Arbeidsavklaringspenger kom i 2010 og erstattet tre tidligere ytelser. Tallene før og etter er ikke sikkert sammenlignbare.` + forlopsMerknad());
+  ({svg, w, h} = svgFor("figAap", 200, `Andel fortsatt på AAP eller uføretrygd fem år senere, startår ${ak[0]}–${ak[ak.length - 1]}`));
+  m = {l: 34, r: 44, t: 22, b: 24};
+  x = d3.scalePoint(ak, [m.l, w - m.r]); y = d3.scaleLinear([0, 100], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, [0, 25, 50, 75, 100], v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  const x10 = x("2010");
+  svg.append("line").attr("x1", x10).attr("x2", x10).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", F.graT).attr("stroke-dasharray", "4 4");
+  tekst(svg, x10 + 5, m.t + 10, "AAP innført", {farge: F.graT, str: 12});
+  svg.append("path").attr("d", d3.line((d, t) => x(ak[t]), d => y(d))(a5)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+  a5.forEach((v, t) => svg.append("circle").attr("cx", x(ak[t])).attr("cy", y(v)).attr("r", 3).attr("fill", F.gronn)
+    .on("mousemove", ev => visTips(ev, `<b>På AAP eller uføretrygd i ${ak[t]}</b><br>${pst(v)} fortsatt det i ${+ak[t] + 5}<br>av ${nb(Aa[ak[t]][0])} personer`)).on("mouseleave", skjulTips));
+  tekst(svg, x(ak[ak.length - 1]) + 6, y(a5[a5.length - 1]) + 4, nb(a5[a5.length - 1], 1), {vekt: 600, farge: F.gronn});
+  [0, ak.indexOf("2010"), ak.indexOf("2015"), ak.length - 1].filter(t => t >= 0).forEach(t => tekst(svg, x(ak[t]), h - 6, ak[t], {farge: F.graT, anker: "middle"}));
+  settTekst("kildeAap", kilde(["12427"]) + " Egen beregning.");
+  tabellHTML("tabAap", ["På AAP eller uføretrygd i", "Antall", "Fortsatt det fem år senere (prosent)"], ak.map((sa, t) => [sa, nb(Aa[sa][0]), nb(a5[t], 1)]));
+}
+
+// ---------- seksjon: innvandrere ----------
+function innvandrere() {
+  const B = grp("0", "15-29", "TOT", "B"), E = grp("0", "15-29", "TOT", "A_C-G");
+  const pI = neetPst(B, SISTE), pE = neetPst(E, SISTE);
+  const ukI = 100 * B[SI["UX.00"]][SISTE] / neetAnt(B, SISTE), ukE = 100 * E[SI["UX.00"]][SISTE] / neetAnt(E, SISTE);
+  const f5 = SA.filter(sa => D.forlop.B.varighet[sa].length > 5), s5 = f5[f5.length - 1];
+  const r5 = j => { const V = D.forlop[j].varighet[s5]; return [V[5][0], V[5][1], V[5][2]].map(v => 100 * v / V[0][0]); };
+  settTekst("ingressInnv", `Innvandrere er langt oftere utenfor (${pst(pI)}) enn unge ellers (${pst(pE)}). Men det betyr noe annet: de fleste innvandrere som er utenfor, finnes ikke i registrene, og mange flytter fra landet. ` +
+    `Lavere varighet blant innvandrere er derfor ikke det samme som bedre utfall.`);
+  settTekst("tInnvSamm", `${forstor(nb(ukI, 0))} prosent av innvandrere som er utenfor, har ukjent status – mot ${nb(ukE, 0)} prosent ellers`);
+  stablet("figInnvSamm", [
+    {navn: "Innvandrere", verdier: DELER.map(d => sumS(B, d[1], SISTE)), tekst: `${nb(neetAnt(B, SISTE))} · ${nb(pI, 1)} % av alle`},
+    {navn: "Utenom innvandrere", verdier: DELER.map(d => sumS(E, d[1], SISTE)), tekst: `${nb(neetAnt(E, SISTE))} · ${nb(pE, 1)} % av alle`}],
+    DELER.map(d => [d[0], d[2], d[3]]), "Fordeling av unge utenfor etter status, innvandrere og befolkningen ellers");
+  settTekst("kildeInnvSamm", kilde(["12424"]));
+  tabellHTML("tabInnvSamm", ["Status", "Innvandrere (antall)", "Innvandrere (prosent)", "Utenom innvandrere (antall)", "Utenom innvandrere (prosent)"],
+    DELER.map(d => [d[0], nb(sumS(B, d[1], SISTE)), nb(100 * sumS(B, d[1], SISTE) / neetAnt(B, SISTE), 1), nb(sumS(E, d[1], SISTE)), nb(100 * sumS(E, d[1], SISTE) / neetAnt(E, SISTE), 1)]));
+  // fem år etter
+  const DEST = [["Fortsatt utenfor", F.neet, "#fff"], ["I arbeid, utdanning, tiltak", F.arb, F.tekst], ["Ute av befolkningen", F.gra, F.tekst]];
+  const rI = r5("B"), rE = r5("A_C-G");
+  settTekst("tFemAar", `${forstor(nb(rI[2], 0))} prosent av innvandrerne var ute av befolkningen fem år senere`);
+  settTekst("nFemAar", `Status i ${+s5 + 5} for dem som var utenfor i ${s5}. «Ute av befolkningen» er utvandret eller død.`);
+  stablet("figFemAar", [{navn: "Innvandrere", verdier: rI, tekst: nb(D.forlop.B.varighet[s5][0][0]) + " personer"},
+    {navn: "Utenom innvandrere", verdier: rE, tekst: nb(D.forlop["A_C-G"].varighet[s5][0][0]) + " personer"}],
+    DEST, `Status fem år etter for dem som var utenfor i ${s5}`, {ml: 150});
+  settTekst("kildeFemAar", kilde(["12427"]) + " Egen beregning.");
+  tabellHTML("tabFemAar", ["Gruppe"].concat(DEST.map(d => d[0] + " (prosent)")), [["Innvandrere"].concat(rI.map(v => nb(v, 1))), ["Utenom innvandrere"].concat(rE.map(v => nb(v, 1)))]);
+  // andel over tid
+  const sI = AR.map((_, t) => neetPst(B, t)), sE = AR.map((_, t) => neetPst(E, t)), sA = AR.map((_, t) => neetPst(ALLE(), t));
+  const i15 = AR.indexOf("2015");
+  settTekst("tInnvTid", `Utenom innvandrere har andelen falt fra ${nb(sE[i15], 1)} til ${nb(sE[SISTE], 1)} prosent siden 2015`);
+  settTekst("nInnvTid", `Andel utenfor i hver gruppe. Totalen holder seg fordi det har blitt flere unge innvandrere: ${nb(B[SI.TOT][0])} i ${AR[0]}, ${nb(B[SI.TOT][SISTE])} i ${AR[SISTE]}.`);
+  const {svg, w, h} = svgFor("figInnvTid", 230, "Andel utenfor for innvandrere, befolkningen ellers og alle");
+  const m = {l: 34, r: 74, t: 22, b: 24};
+  const x = d3.scalePoint(AR, [m.l, w - m.r]), y = d3.scaleLinear([0, 30], [h - m.b, m.t]);
+  yAkse(svg, y, m.l, w - m.r, [0, 10, 20, 30], v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  [0, i15, SISTE].forEach(t => tekst(svg, x(AR[t]), h - 6, AR[t], {farge: F.graT, anker: "middle"}));
+  const l = d3.line((d, t) => x(AR[t]), d => y(d));
+  [[sA, F.gra, "Alle", 2], [sI, F.innv, "Innvandrere", 2.5], [sE, F.ekskl, "Utenom innv.", 2.5]].forEach(([s, f, n, sw]) => {
+    svg.append("path").attr("d", l(s)).attr("fill", "none").attr("stroke", f).attr("stroke-width", sw);
+    tekst(svg, x(AR[SISTE]) + 6, y(s[SISTE]) + (n === "Alle" ? -4 : n === "Utenom innv." ? 12 : 4), n, {farge: f === F.gra ? F.graT : f, vekt: 600, str: 12});
+  });
+  AR.forEach((a, t) => svg.append("rect").attr("x", x(a) - 6).attr("y", m.t).attr("width", 12).attr("height", h - m.t - m.b).attr("fill", "transparent")
+    .on("mousemove", ev => visTips(ev, `<b>${a}</b><br>Innvandrere: ${pst(sI[t])}<br>Utenom innvandrere: ${pst(sE[t])}<br>Alle: ${pst(sA[t])}`)).on("mouseleave", skjulTips));
+  settTekst("kildeInnvTid", kilde(["12424"]));
+  tabellHTML("tabInnvTid", ["År", "Innvandrere (prosent)", "Utenom innvandrere (prosent)", "Alle (prosent)", "Innvandrere 15–29 (antall)"], AR.map((a, t) => [a, nb(sI[t], 1), nb(sE[t], 1), nb(sA[t], 1), nb(B[SI.TOT][t])]));
+}
+
+// ---------- seksjon: hvem er i fare ----------
+function fare() {
+  const UTDV = [["1-2", "Grunnskole"], ["3-5", "Videregående"], ["6-8", "Universitet/høgskole"], ["0_9", "Uoppgitt/ingen"]];
+  const a = tilstand.a === "15-29" || tilstand.a === "15-19" ? "25-29" : tilstand.a, k = tilstand.k;
+  const pts = [];
+  [["A_C-G", "Utenom innvandrere", F.ekskl], ["B", "Innvandrere", F.innv]].forEach(([i, gn, f]) => UTDV.forEach(([u, un]) => {
+    const G = grp(k, a, u, i), n = neetAnt(G, SISTE);
+    pts.push({gn, un, f, n, bos: G[SI.TOT][SISTE], x: neetPst(G, SISTE), y: n ? 100 * (G[SI["U.04.00"]][SISTE] + G[SI["U.05.00"]][SISTE]) / n : 0, valgt: tilstand.i === i && tilstand.u === u});
+  }));
+  const A = grp(k, a, "TOT", "A-G"), ra = neetPst(A, SISTE), rb = 100 * (A[SI["U.04.00"]][SISTE] + A[SI["U.05.00"]][SISTE]) / neetAnt(A, SISTE);
+  const topp = pts.reduce((p, q) => q.n > 500 && q.x * q.y > p.x * p.y ? q : p);
+  settTekst("ingressFare", `Bekymring handler om to ting: hvor mange i en gruppe som er utenfor, og hvor fastlåst situasjonen er. Den tyngste kjernen er unge uten fullført videregående som står på AAP eller uføretrygd. ` +
+    `Men de som har studieforberedende uten å gå videre, blir også lenger utenfor enn dem med yrkesfag.`);
+  settTekst("tBobler", `${topp.un}, ${topp.gn.toLowerCase()}: ${pst(topp.x, 0)} er utenfor, og ${nb(topp.y, 0)} prosent av dem er på AAP eller uføretrygd`);
+  settTekst("nBobler", `${ALD[a]}${k === "0" ? "" : ", " + KJ[k]}, ${AR[SISTE]}. Hver sirkel er en gruppe etter innvandringskategori og høyeste utdanning. Arealet viser hvor mange som er utenfor. Den loddrette aksen sier hva slags utenforskap det er, ikke hvor lenge det varer.` +
+    (tilstand.a === "15-29" || tilstand.a === "15-19" ? " Velg 20–24 år i velgeren øverst for å se den yngre gruppen; for 15–19 år gir utdanning lite mening fordi de fleste går på skole." : ""));
+  const {svg, w, h} = svgFor("figBobler", document.getElementById("figBobler").clientWidth < 560 ? 430 : 380, "Grupper etter andel utenfor og andel på AAP eller uføretrygd");
+  const smal = w < 560, m = {l: 40, r: smal ? 10 : 170, t: smal ? 70 : 30, b: 44};
+  const x = d3.scaleLinear([0, 60], [m.l, w - m.r]), y = d3.scaleLinear([0, 80], [h - m.b, m.t]);
+  d3.range(0, 61, 10).forEach(v => { svg.append("line").attr("x1", x(v)).attr("x2", x(v)).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", v ? F.linje : F.null);
+    tekst(svg, x(v), h - m.b + 16, nb(v), {anker: "middle", farge: F.graT}); });
+  yAkse(svg, y, m.l, w - m.r, [0, 20, 40, 60, 80], v => nb(v));
+  tekst(svg, 0, smal ? 12 : 14, smal ? "Andel av de utenfor på AAP/uføretrygd, prosent" : "Andel av de utenfor som er på AAP eller uføretrygd, prosent", {farge: F.graT, str: 12});
+  tekst(svg, w - m.r, h - 4, "Andel av gruppen som er utenfor, prosent", {farge: F.graT, anker: "end", str: 12});
+  svg.append("line").attr("x1", x(ra)).attr("x2", x(ra)).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", F.graT).attr("stroke-dasharray", "4 4");
+  svg.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y(rb)).attr("y2", y(rb)).attr("stroke", F.graT).attr("stroke-dasharray", "4 4");
+  tekst(svg, x(ra) + 5, m.t + 10, `Alle: ${nb(ra, 1)}`, {farge: F.graT, str: 12});
+  tekst(svg, w - m.r - 4, y(rb) - 6, `Alle: ${nb(rb, 1)}`, {farge: F.graT, str: 12, anker: "end"});
+  const maks = d3.max(pts, p => p.n) || 1;
+  pts.slice().sort((p, q) => q.n - p.n).forEach(p => {
+    const r = 5 + 24 * Math.sqrt(p.n / maks);
+    svg.append("circle").attr("cx", x(p.x)).attr("cy", y(p.y)).attr("r", r).attr("fill", p.f).attr("fill-opacity", p.f === F.ekskl ? 0.75 : 0.85)
+      .attr("stroke", p.valgt ? F.tekst : "#fff").attr("stroke-width", p.valgt ? 3 : 1.5)
+      .on("mousemove", ev => visTips(ev, `<b>${p.gn}, ${p.un.toLowerCase()}</b><br>${pst(p.x)} utenfor (${nb(p.n)} av ${nb(p.bos)})<br>${pst(p.y)} av dem på AAP eller uføretrygd`)).on("mouseleave", skjulTips);
+    p.r = r;
+  });
+  // Etiketter: prøv høyre, venstre, over og under; velg første plass som ikke treffer sirkler, andre etiketter eller kanten.
+  const bokser = [], hoyre = smal ? w : w - m.r;
+  const treff = (bx) => bx.x0 < 0 || bx.x1 > hoyre || bx.y0 < m.t - 4 || bx.y1 > h - m.b + 2 ||
+    bokser.some(b => bx.x0 < b.x1 && bx.x1 > b.x0 && bx.y0 < b.y1 && bx.y1 > b.y0) ||
+    pts.some(q => { const cx = x(q.x), cy = y(q.y), nx = Math.max(bx.x0, Math.min(cx, bx.x1)), ny = Math.max(bx.y0, Math.min(cy, bx.y1)); return (cx - nx) ** 2 + (cy - ny) ** 2 < q.r ** 2; });
+  pts.slice().sort((p, q) => q.n - p.n).forEach(p => {
+    const kort = {"Grunnskole": "Grunnskole", "Videregående": "Vgs", "Universitet/høgskole": "Høyere", "Uoppgitt/ingen": "Uoppgitt"};
+    const t = (smal ? kort[p.un] : p.un) + (p.n < 1000 ? "*" : ""), tb = t.length * 6.6, cx = x(p.x), cy = y(p.y), d = p.r * 0.72;
+    const kand = [[cx + p.r + 4, cy + 4, "start"], [cx - p.r - 4, cy + 4, "end"], [cx, cy - p.r - 5, "middle"], [cx, cy + p.r + 14, "middle"],
+      [cx + d + 3, cy - d - 2, "start"], [cx - d - 3, cy - d - 2, "end"], [cx + d + 3, cy + d + 12, "start"], [cx - d - 3, cy + d + 12, "end"]];
+    let valg = kand.find(([lx, ly, an]) => { const x0 = an === "start" ? lx : an === "end" ? lx - tb : lx - tb / 2; return !treff({x0, x1: x0 + tb, y0: ly - 11, y1: ly + 3}); });
+    if (!valg) { if (smal) return; valg = kand[0]; }
+    let [lx, ly, an] = valg; let x0 = an === "start" ? lx : an === "end" ? lx - tb : lx - tb / 2;
+    if (x0 + tb > hoyre) { lx = hoyre; an = "end"; x0 = hoyre - tb; } if (x0 < 0) { lx = 0; an = "start"; x0 = 0; }
+    bokser.push({x0, x1: x0 + tb, y0: ly - 11, y1: ly + 3});
+    tekst(svg, lx, ly, t, {str: 12, vekt: p.valgt ? 700 : 400, anker: an});
+  });
+  const forkl = [["Utenom innvandrere", F.ekskl], ["Innvandrere", F.innv]];
+  if (!smal) { let ly = m.t + 20;
+    forkl.forEach(([n, f]) => { svg.append("circle").attr("cx", w - m.r + 24).attr("cy", ly - 4).attr("r", 7).attr("fill", f); tekst(svg, w - m.r + 36, ly, n, {str: 13}); ly += 22; });
+    tekst(svg, w - m.r + 16, ly + 10, "* under 1 000 utenfor", {farge: F.graT, str: 12}); }
+  else { let lx = 0; forkl.forEach(([n, f]) => { svg.append("circle").attr("cx", lx + 6).attr("cy", 30).attr("r", 6).attr("fill", f); tekst(svg, lx + 16, 34, n, {str: 12}); lx += 30 + n.length * 6.6; });
+    tekst(svg, 0, 50, "* under 1 000 utenfor", {farge: F.graT, str: 12}); }
+  settTekst("kildeBobler", kilde(["12424"]));
+  tabellHTML("tabBobler", ["Gruppe", "Utdanning", "Bosatte", "Utenfor", "Andel utenfor (prosent)", "Av dem på AAP eller uføretrygd (prosent)"],
+    pts.map(p => [p.gn, p.un, nb(p.bos), nb(p.n), nb(p.x, 1), nb(p.y, 1)]));
+  utdVarighet();
+  barnevern();
+}
+function utdVarighet() {
+  const a = tilstand.utdAlder;
+  document.querySelectorAll("#velgUtdAlder button").forEach(b => b.setAttribute("aria-pressed", b.dataset.a === a));
+  const S = D.startar_utd, f = S[0], l = S[S.length - 2], f5 = S.filter(s => D.utdanning[`${a}|0|${s}`].length > 7), s5 = f5[f5.length - 1];
+  const UD = [["1-2", "Grunnskole"], ["3-4a", "Studieforberedende vgs"], ["3-4b", "Yrkesfaglig vgs"], ["6-8", "Universitet/høgskole"], ["0", "Alle"]];
+  const rad = (u, s, k) => { const r = D.utdanning[`${a}|${u}|${s}`]; return r && r[1 + k] != null && r[1] ? 100 * r[1 + k] / r[1] : null; };
+  const andel = (u, s) => { const r = D.utdanning[`${a}|${u}|${s}`]; return 100 * r[1] / r[0]; };
+  const data = UD.map(([u, n]) => ({u, n, ff: rad(u, f, 1), ll: rad(u, l, 1), fem: rad(u, s5, 5), andel: andel(u, s5)}));
+  const sf = data.find(d => d.u === "3-4a"), yf = data.find(d => d.u === "3-4b");
+  const gs = data.find(d => d.u === "1-2"), forhold = sf.andel / yf.andel;
+  settTekst("tUtd", forhold >= 1.3
+    ? `${ALD[a]}: studieforberedende uten mer utdanning er ${forhold >= 1.95 ? nb(forhold, 1).replace(",0", "") + " ganger så ofte" : "oftere"} utenfor enn yrkesfaglig` + (sf.ll > yf.ll ? ", og blir lenger" : "")
+    : `${ALD[a]}: ${pst(gs.andel, 0)} med bare grunnskole er utenfor, og ${pst(gs.ll, 0)} av dem var det fortsatt et år senere`);
+  settTekst("nUtd", `Andel av dem som var utenfor i startåret, som fortsatt var utenfor ett år senere. Grå: utenfor i ${f}. Farget: utenfor i ${l}. Høyeste fullførte utdanning i startåret. Tallet til høyre er andelen av hele gruppen som var utenfor i ${s5}.`);
+  const radH = document.getElementById("figUtd").clientWidth < 560 ? 50 : 40;
+  const {svg, w, h} = svgFor("figUtd", 40 + UD.length * radH, `Andel fortsatt utenfor ett år senere etter utdanning, ${ALD[a]}`);
+  const smal = w < 560, m = {l: smal ? 8 : 190, r: smal ? 84 : 150, t: 30};
+  const x = d3.scaleLinear([0, 100], [m.l, w - m.r]);
+  [0, 25, 50, 75, 100].forEach(v => { svg.append("line").attr("x1", x(v)).attr("x2", x(v)).attr("y1", m.t - 6).attr("y2", h - 6).attr("stroke", v ? F.linje : F.null);
+    tekst(svg, x(v), m.t - 12, nb(v), {anker: "middle", farge: F.graT, str: 12}); });
+  tekst(svg, w - m.r + 22, m.t - 12, `Utenfor ${s5}`, {farge: F.graT, str: 12});
+  data.forEach((d, j) => {
+    const yy = m.t + (smal ? 28 : 18) + j * radH;
+    if (smal) tekst(svg, m.l, yy - 13, d.n, {vekt: d.u === "0" ? 400 : 600, str: 12.5});
+    else tekst(svg, m.l - 12, yy + 4, d.n, {anker: "end", vekt: d.u === "0" ? 400 : 600});
+    svg.append("line").attr("x1", x(d.ff)).attr("x2", x(d.ll)).attr("y1", yy).attr("y2", yy).attr("stroke", "#c3cfd1").attr("stroke-width", 3);
+    svg.append("circle").attr("cx", x(d.ff)).attr("cy", yy).attr("r", 6).attr("fill", F.gra);
+    svg.append("circle").attr("cx", x(d.ll)).attr("cy", yy).attr("r", 7).attr("fill", d.u === "0" ? F.graT : F.neet)
+      .on("mousemove", ev => visTips(ev, `<b>${d.n}, ${ALD[a]}</b><br>Fortsatt utenfor året etter: ${f}: ${pst(d.ff)} · ${l}: ${pst(d.ll)}<br>Fortsatt utenfor fem år etter (${s5}): ${pst(d.fem)}`)).on("mouseleave", skjulTips);
+    tekst(svg, x(d.ll) + (d.ll >= d.ff ? 10 : -10), yy + 4, nb(d.ll, 0), {anker: d.ll >= d.ff ? "start" : "end", vekt: 600, str: 12});
+    tekst(svg, w - m.r + 22, yy + 4, smal ? nb(d.andel, 1) + " %" : pst(d.andel), {farge: F.graT, str: 12.5});
+  });
+  settTekst("kildeUtd", kilde(["14158"]) + " Egen beregning.");
+  tabellHTML("tabUtd", ["Utdanning", `Utenfor ${s5} (prosent av gruppen)`, `Fortsatt utenfor året etter, ${f}`, `Fortsatt utenfor året etter, ${l}`, `Fortsatt utenfor fem år etter, ${s5}`],
+    data.map(d => [d.n, nb(d.andel, 1), nb(d.ff, 1), nb(d.ll, 1), nb(d.fem, 1)]));
+}
+function barnevern() {
+  const T = D.ar_bv, sist = T[T.length - 1], forst = T[0];
+  const GR = [["1", "Uten barnevernstiltak"], ["3", "Bare hjelpetiltak"], ["4", "Omsorgstiltak"]];
+  const v = (bv, t) => D.barnevern[`${bv}|${t}`];
+  const helse = (bv, t) => v(bv, t).prosent[3];
+  const o = helse("4", sist), u = helse("1", sist);
+  settTekst("tBv", `Unge som har hatt omsorgstiltak i barnevernet, er ${nb(o / u, 1)} ganger så ofte på helserelaterte ytelser`);
+  settTekst("nBv", `Andre tall enn resten av siden: elever som avsluttet grunnskolen seks år tidligere (om lag 22 år gamle), ikke alle unge 15–29 år. Statusene er ikke de samme som «utenfor»; helserelaterte ytelser ligger nærmest AAP og uføretrygd. Status ${sist}, grå strek viser ${forst}.`);
+  const bvH = document.getElementById("figBv").clientWidth < 560 ? 52 : 44;
+  const {svg, w, h} = svgFor("figBv", 40 + GR.length * bvH, `Andel på helserelaterte ytelser seks år etter grunnskolen, etter barnevernstiltak, ${sist}`);
+  const smal = w < 560, m = {l: smal ? 8 : 190, r: 76, t: 28};
+  const x = d3.scaleLinear([0, 30], [m.l, w - m.r]);
+  [0, 10, 20, 30].forEach(t => { svg.append("line").attr("x1", x(t)).attr("x2", x(t)).attr("y1", m.t - 6).attr("y2", h - 4).attr("stroke", t ? F.linje : F.null);
+    tekst(svg, x(t), m.t - 12, nb(t), {anker: "middle", farge: F.graT, str: 12}); });
+  tekst(svg, x(30) + 16, m.t - 12, "prosent", {farge: F.graT, str: 12});
+  GR.forEach(([bv, n], j) => {
+    const yy = m.t + (smal ? 16 : 6) + j * bvH, val = helse(bv, sist), f0 = helse(bv, forst);
+    if (smal) tekst(svg, m.l, yy - 4, `${n} (${nb(v(bv, sist).elever)})`, {vekt: 600, str: 12.5});
+    else { tekst(svg, m.l - 12, yy + 15, n, {anker: "end", vekt: 600}); tekst(svg, m.l - 12, yy + 30, nb(v(bv, sist).elever) + " elever", {anker: "end", farge: F.graT, str: 12}); }
+    const yb = smal ? yy + 2 : yy + 4;
+    svg.append("rect").attr("x", m.l).attr("y", yb).attr("width", x(val) - m.l).attr("height", 22).attr("fill", F.gronn)
+      .on("mousemove", ev => visTips(ev, `<b>${n}</b><br>${sist}: ${pst(val)}<br>${forst}: ${pst(f0)}`)).on("mouseleave", skjulTips);
+    svg.append("line").attr("x1", x(f0)).attr("x2", x(f0)).attr("y1", yb - 3).attr("y2", yb + 25).attr("stroke", F.tekst).attr("stroke-width", 2);
+    tekst(svg, Math.max(x(val), x(f0)) + 6, yb + 16, nb(val, 1), {vekt: 600});
+  });
+  settTekst("kildeBv", kilde(["13347"]) + ` Fra 2023 er død og utvandret slått sammen med «annet» i tabellen.`);
+  tabellHTML("tabBv", ["Barnevern", "År", "Elever"].concat(D.bv_status.map(s => s + " (prosent)")),
+    [["0", "Alle"]].concat(GR).flatMap(([bv, n]) => [forst, sist].map(t => [n, t, nb(v(bv, t).elever)].concat(v(bv, t).prosent.map(p => p == null ? ".." : nb(p, 1))))));
+}
+
+// ---------- påstandsprøven ----------
+function pastander() {
+  const G = ALLE(), V = D.forlop["A-G"].varighet, l = SA[SA.length - 2], f = SA[0];
+  const f5 = SA.filter(sa => V[sa].length > 5), s5 = f5[f5.length - 1];
+  const B = grp("0", "15-29", "TOT", "B"), E = grp("0", "15-29", "TOT", "A_C-G"), i15 = AR.indexOf("2015");
+  const aap = t => G[SI["U.04.00"]][t] + G[SI["U.05.00"]][t], i19 = AR.indexOf("2019");
+  const rI5 = 100 * D.forlop.B.varighet[s5][5][2] / D.forlop.B.varighet[s5][0][0];
+  const inn = D.forlop["A-G"].tilgang[AR[SISTE]][0];
+  const bvO = D.barnevern[`4|${D.ar_bv[D.ar_bv.length - 1]}`].prosent[3], bvU = D.barnevern[`1|${D.ar_bv[D.ar_bv.length - 1]}`].prosent[3];
+  const P = [
+    ["ja", "Én av ti unge er utenfor arbeid, utdanning og tiltak.", `${pst(neetPst(G, SISTE))} i ${AR[SISTE]}, ${nb(neetAnt(G, SISTE))} personer. Tabell 12424.`],
+    ["nei", "Over 100 000 unge sitter fast utenfor.", `Tallet stemmer, men ikke «sitter fast». ${pst(100 - varig("A-G", l, 1), 0)} av dem som var utenfor i ${l}, var ikke det et år senere. Og over halvparten har ukjent status. Tabell 12424 og 12427.`],
+    ["ja", "Utenforskapet varer lenger enn før.", `${pst(varig("A-G", l, 1), 0)} av dem som var utenfor i ${l}, var det fortsatt et år senere, mot ${pst(varig("A-G", f, 1), 0)} i ${f}. Fem år etter: ${pst(varig("A-G", s5, 5), 0)} for ${s5}-kullet, mot ${pst(varig("A-G", f5[0], 5), 0)} for ${f5[0]}-kullet. Tabell 12427.`],
+    ["delvis", `Rundt ${rundTusen(inn)} unge faller ut hvert år.`, `${nb(inn)} gikk fra arbeid, utdanning eller tiltak til utenfor fra ${AR[SISTE - 1]} til ${AR[SISTE]}. Det er en nedre grense: korte opphold innenfor samme år og nye 15-åringer er ikke med. Tabell 12427.`],
+    ["nei", "Utenforskapet blant unge øker.", `Andelen var ${pst(neetPst(G, SISTE))} i ${AR[SISTE]}, mot ${pst(neetPst(G, i15))} i 2015. Blant unge utenom innvandrere har den falt fra ${pst(neetPst(E, i15))} til ${pst(neetPst(E, SISTE))}. Det som øker, er hvor lenge folk blir. Tabell 12424.`],
+    ["delvis", "Innvandrere er tre ganger så ofte utenfor.", `Stemmer for andelen (${pst(neetPst(B, SISTE))} mot ${pst(neetPst(E, SISTE))}). Men ${nb(100 * B[SI["UX.00"]][SISTE] / neetAnt(B, SISTE), 0)} prosent av dem har ukjent status, og ${nb(rI5, 0)} prosent av dem som var utenfor i ${s5}, hadde flyttet ut eller dødd fem år senere. Tabell 12424 og 12427.`],
+    ["delvis", "Flere unge blir uføre.", `Unge utenfor på AAP eller uføretrygd økte fra ${nb(aap(0))} i ${AR[0]} til ${nb(aap(i19))} i 2019. Siden har tallet ligget flatt (${nb(aap(SISTE))} i ${AR[SISTE]}). Tabell 12424.`],
+    ["delvis", "Unge med barnevernsbakgrunn er i størst fare.", `Blant dem som har hatt omsorgstiltak, var ${pst(bvO)} på helserelaterte ytelser seks år etter grunnskolen, mot ${pst(bvU)} blant dem uten tiltak. Men tallene gjelder et grunnskolekull, ikke alle unge, og statusene er ikke NEET. Tabell 13347.`],
+  ];
+  const DOM = {ja: ["Støttet", "bf-dom-ja"], delvis: ["Med forbehold", "bf-dom-delvis"], nei: ["Ikke støttet", "bf-dom-nei"]};
+  document.getElementById("pastander").innerHTML = P.map(([d, p, t]) => `<article class="bf-pastand"><span class="bf-dom ${DOM[d][1]}">${DOM[d][0]}</span><q>${p}</q><p>${t}</p></article>`).join("");
+}
+
+// ---------- bunn ----------
+function bunn() {
+  settTekst("bunnKilder", "Tabeller: " + ["12424", "12427", "14158", "13347", "13556"].map(t => `${t} (sist oppdatert ${D.oppdatert[t]})`).join(", ") +
+    ". Tabell 13556 er bare brukt til å kontrollere NEET-tallene.");
+}
+
+function oppdater() {
+  skrivAdresse(); valgtKort(); sammensetning(); strom(); varighet(); fare();
+}
+lesAdresse(); hode(); lesehjelp(); topp(); innvandrere(); pastander(); bunn(); oppdater();
+document.querySelectorAll("#velgUtdAlder button").forEach(b => b.addEventListener("click", () => { tilstand.utdAlder = b.dataset.a; utdVarighet(); }));
+window.addEventListener("hashchange", () => { lesAdresse(); oppdater(); });
+let rTimer; window.addEventListener("resize", () => { clearTimeout(rTimer); rTimer = setTimeout(() => { topp(); innvandrere(); oppdater(); }, 150); });
+</script>
+</body>
+</html>

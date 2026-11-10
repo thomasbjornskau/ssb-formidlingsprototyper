@@ -1,0 +1,35 @@
+{
+ "hentet": "2026-11-10T11:46:05+01:00",
+ "datasett": {
+  "tverrsnitt": {
+   "tabell": "12424",
+   "oppdatert": "2026-09-04T06:00:00Z",
+   "celler": 35640,
+   "statussymboler": 0
+  },
+  "forlop": {
+   "tabell": "12427",
+   "oppdatert": "2026-09-04T06:00:00Z",
+   "celler": 69984,
+   "statussymboler": 0
+  },
+  "forlop_utdanning": {
+   "tabell": "14158",
+   "oppdatert": "2026-09-04T06:00:00Z",
+   "celler": 194400,
+   "statussymboler": 0
+  },
+  "barnevern": {
+   "tabell": "13347",
+   "oppdatert": "2026-03-23T07:00:00Z",
+   "celler": 10080,
+   "statussymboler": 120
+  },
+  "kontroll_neet": {
+   "tabell": "13556",
+   "oppdatert": "2026-09-04T06:00:00Z",
+   "celler": 864,
+   "statussymboler": 0
+  }
+ }
+}

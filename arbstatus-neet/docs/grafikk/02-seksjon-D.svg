@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+<title>Seksjonsforslag D: hvem er i størst fare</title>
+<rect x="0" y="0" width="1200" height="560" fill="#ffffff"/>
+<text x="40" y="46" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" fill="#5e787a">Unge utenfor · 25–29 år · 2025</text>
+<text x="40" y="86" font-family="Roboto Condensed, Arial Narrow, Arial, sans-serif" font-size="24" font-weight="bold" fill="#274246">Blant unge med bare grunnskole er mange utenfor – og de fleste av dem er på AAP eller uføretrygd</text>
+<text x="40" y="114" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">Hver sirkel er en gruppe. Arealet viser hvor mange som er utenfor.</text>
+<line x1="110.0" y1="160" x2="110.0" y2="490" stroke="#a9b5b7" stroke-width="1"/>
+<text x="110.0" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">0</text>
+<line x1="241.67" y1="160" x2="241.67" y2="490" stroke="#d9dfe0" stroke-width="1"/>
+<text x="241.67" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">10</text>
+<line x1="373.33" y1="160" x2="373.33" y2="490" stroke="#d9dfe0" stroke-width="1"/>
+<text x="373.33" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">20</text>
+<line x1="505.0" y1="160" x2="505.0" y2="490" stroke="#d9dfe0" stroke-width="1"/>
+<text x="505.0" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">30</text>
+<line x1="636.67" y1="160" x2="636.67" y2="490" stroke="#d9dfe0" stroke-width="1"/>
+<text x="636.67" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">40</text>
+<line x1="768.33" y1="160" x2="768.33" y2="490" stroke="#d9dfe0" stroke-width="1"/>
+<text x="768.33" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">50</text>
+<line x1="900.0" y1="160" x2="900.0" y2="490" stroke="#d9dfe0" stroke-width="1"/>
+<text x="900.0" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="middle">60</text>
+<line x1="110" y1="490.0" x2="900" y2="490.0" stroke="#a9b5b7" stroke-width="1"/>
+<text x="102" y="495.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">0</text>
+<line x1="110" y1="407.5" x2="900" y2="407.5" stroke="#d9dfe0" stroke-width="1"/>
+<text x="102" y="412.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">20</text>
+<line x1="110" y1="325.0" x2="900" y2="325.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="102" y="330.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">40</text>
+<line x1="110" y1="242.5" x2="900" y2="242.5" stroke="#d9dfe0" stroke-width="1"/>
+<text x="102" y="247.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">60</text>
+<line x1="110" y1="160.0" x2="900" y2="160.0" stroke="#d9dfe0" stroke-width="1"/>
+<text x="102" y="165.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">80</text>
+<text x="900" y="532" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">Andel av gruppen som er utenfor, prosent</text>
+<text x="50" y="142" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Andel av de utenfor som er på AAP eller uføretrygd, prosent</text>
+<line x1="289.75" y1="160" x2="289.75" y2="490" stroke="#5e787a" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="110" y1="353.74" x2="900" y2="353.74" stroke="#5e787a" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="295.75" y="174" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Alle 25–29 år: 13,7 prosent</text>
+<text x="896" y="347.74" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a" text-anchor="end">Alle 25–29 år: 33,0 prosent</text>
+<circle cx="577.37" cy="183.67" r="32.0" fill="#00824d" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="411.15" cy="483.86" r="25.63" fill="#1d9de2" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="172.62" cy="429.17" r="25.27" fill="#00824d" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="218.12" cy="299.72" r="25.26" fill="#00824d" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="603.42" cy="425.99" r="24.8" fill="#1d9de2" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="400.11" cy="457.09" r="20.93" fill="#1d9de2" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="869.5" cy="487.5" r="12.97" fill="#1d9de2" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="792.18" cy="414.21" r="11.49" fill="#00824d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="613.37" y="183.67" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Grunnskole (13 796)</text>
+<text x="250.12" y="293.72" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Videregående (7 568)</text>
+<text x="198.62" y="405.17" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Universitet/høgskole (7 575)</text>
+<text x="806.18" y="418.21" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Uoppgitt/ingen (615)</text>
+<text x="635.42" y="429.99" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Grunnskole (7 211)</text>
+<text x="378.11" y="447.09" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">Videregående (4 550)</text>
+<text x="441.15" y="489.86" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Universitet/høgskole (7 861)</text>
+<text x="883.5" y="475.5" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Uoppgitt/ingen (991)</text>
+<text x="940" y="180" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">Befolkningsgruppe</text>
+<circle cx="948" cy="206" r="7" fill="#00824d"/>
+<text x="962" y="211" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#274246">Ekskl. innvandrere</text>
+<circle cx="948" cy="232" r="7" fill="#1d9de2"/>
+<text x="962" y="237" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#274246">Innvandrere</text>
+<text x="940" y="280" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Tall i parentes: antall</text>
+<text x="940" y="299" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">utenfor. Gruppene</text>
+<text x="940" y="318" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">uoppgitt/ingen utdanning er</text>
+<text x="940" y="337" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">små.</text>
+<text x="940" y="376" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Forslag til seksjon. Kan</text>
+<text x="940" y="395" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">styres av gruppevelgeren</text>
+<text x="940" y="414" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">(alder, kjønn).</text>
+<text x="40" y="540" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Kilde: SSB, tabell 12424. Sist oppdatert: 04.09.2026. Tallene for 2025 er foreløpige.</text>
+</svg>

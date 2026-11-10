@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1020" viewBox="0 0 390 1020">
+<title>Slik lages tallene for unge utenfor</title>
+<rect x="0" y="0" width="390" height="1020" fill="#ffffff"/>
+<rect x="16" y="16" width="358" height="114" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1" rx="2"/>
+<rect x="16" y="16" width="5" height="114" fill="#00824d"/>
+<circle cx="50" cy="48" r="15" fill="#274247"/>
+<text x="50" y="54" font-family="Roboto, Arial, sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">1</text>
+<text x="76" y="54" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="bold" fill="#274246">Alle unge som bor i Norge</text>
+<text x="36" y="90" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">1 047 216 personer 15–29 år var</text>
+<text x="36" y="112" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">registrert bosatt i november 2025.</text>
+<line x1="195.0" y1="134" x2="195.0" y2="146" stroke="#274247" stroke-width="2"/>
+<polygon points="195.0,156 189.0,146 201.0,146" fill="#274247"/>
+<rect x="16" y="160" width="358" height="180" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1" rx="2"/>
+<rect x="16" y="160" width="5" height="180" fill="#00824d"/>
+<circle cx="50" cy="192" r="15" fill="#274247"/>
+<text x="50" y="198" font-family="Roboto, Arial, sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">2</text>
+<text x="76" y="198" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="bold" fill="#274246">Én status per person</text>
+<text x="36" y="234" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">Registre over arbeid, utdanning,</text>
+<text x="36" y="256" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">tiltak og ytelser kobles. Har noen</text>
+<text x="36" y="278" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">flere statuser, teller den høyest</text>
+<text x="36" y="300" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">prioriterte. Studerer du og har</text>
+<text x="36" y="322" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">uføretrygd, telles du som student.</text>
+<line x1="195.0" y1="344" x2="195.0" y2="356" stroke="#274247" stroke-width="2"/>
+<polygon points="195.0,366 189.0,356 201.0,356" fill="#274247"/>
+<rect x="16" y="370" width="358" height="288" fill="#ecfeed" stroke="#c3dcdc" stroke-width="1" rx="2"/>
+<rect x="16" y="370" width="5" height="288" fill="#00824d"/>
+<circle cx="50" cy="402" r="15" fill="#274247"/>
+<text x="50" y="408" font-family="Roboto, Arial, sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">3</text>
+<text x="76" y="408" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="bold" fill="#274246">Utenfor = NEET</text>
+<text x="36" y="444" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">Den som verken er i arbeid, utdanning</text>
+<text x="36" y="466" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">eller arbeidsmarkedstiltak, er</text>
+<text x="36" y="488" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">utenfor: 105 314 personer. De fordeler</text>
+<text x="36" y="510" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">seg på fire statuser.</text>
+<rect x="36" y="532" width="83.4" height="22" fill="#339b71"/>
+<rect x="119.4" y="532" width="35.75" height="22" fill="#3face6"/>
+<rect x="155.15" y="532" width="28.83" height="22" fill="#d5a640"/>
+<rect x="183.98" y="532" width="170.02" height="22" fill="#b9c5c6"/>
+<rect x="36" y="565" width="11" height="11" fill="#339b71"/>
+<text x="54" y="576" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#274246" style="font-variant-numeric:tabular-nums">AAP eller uføretrygd: 27 621</text>
+<rect x="36" y="586" width="11" height="11" fill="#3face6"/>
+<text x="54" y="597" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#274246" style="font-variant-numeric:tabular-nums">Registrert ledige: 11 839</text>
+<rect x="36" y="607" width="11" height="11" fill="#d5a640"/>
+<text x="54" y="618" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#274246" style="font-variant-numeric:tabular-nums">Andre ordninger: 9 549</text>
+<rect x="36" y="628" width="11" height="11" fill="#b9c5c6"/>
+<text x="54" y="639" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#274246" style="font-variant-numeric:tabular-nums">Ukjent status: 56 305</text>
+<line x1="195.0" y1="662" x2="195.0" y2="674" stroke="#274247" stroke-width="2"/>
+<polygon points="195.0,684 189.0,674 201.0,674" fill="#274247"/>
+<rect x="16" y="688" width="358" height="180" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1" rx="2"/>
+<rect x="16" y="688" width="5" height="180" fill="#00824d"/>
+<circle cx="50" cy="720" r="15" fill="#274247"/>
+<text x="50" y="726" font-family="Roboto, Arial, sans-serif" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+<text x="76" y="726" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="bold" fill="#274246">Fordelt på grupper</text>
+<text x="36" y="762" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">Tallene fordeles på kjønn, alder</text>
+<text x="36" y="784" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">(15–19, 20–24 og 25–29 år),</text>
+<text x="36" y="806" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">utdanningsnivå og innvandrere og</text>
+<text x="36" y="828" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">befolkningen ellers. Små celler</text>
+<text x="36" y="850" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#274246">avrundes.</text>
+<rect x="16" y="884" width="358" height="118" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" rx="2" stroke-dasharray="6 4"/>
+<text x="32" y="912" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">Ikke med: hvem som er nye, og hvor lenge</text>
+<text x="32" y="934" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">hver person har vært utenfor. Tabellen</text>
+<text x="32" y="956" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">tar et bilde i november hvert år og</text>
+<text x="32" y="978" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">følger ikke de samme personene.</text>
+</svg>
