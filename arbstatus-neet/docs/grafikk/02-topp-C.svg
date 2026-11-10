@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<title>Toppgrafikk C: innvandrere og befolkningen ellers</title>
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40" y="46" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" fill="#5e787a">Unge utenfor · 15–29 år · 2025</text>
+<text x="40" y="122" font-family="Roboto Condensed, Arial Narrow, Arial, sans-serif" font-size="64" font-weight="bold" fill="#274246">Nær 3 av 4</text>
+<text x="40" y="164" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="21" font-weight="600" fill="#274246">innvandrere som er utenfor, har ukjent</text>
+<text x="40" y="192" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="21" font-weight="600" fill="#274246">status. Ellers gjelder det 4 av 10.</text>
+<text x="40" y="228" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">Innvandrere er oftere utenfor (23,5 prosent) enn befolkningen</text>
+<text x="40" y="249" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">ellers (7,3 prosent). Men de er sjeldnere på AAP eller</text>
+<text x="40" y="270" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">uføretrygd.</text>
+<text x="40" y="314" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Kilde: SSB, tabell 12424. Sist oppdatert: 04.09.2026. Tallene for 2025 er foreløpige.</text>
+<rect x="620" y="33" width="12" height="12" fill="#339b71"/>
+<text x="638" y="44" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246">AAP eller uføretrygd</text>
+<rect x="792.0" y="33" width="12" height="12" fill="#3face6"/>
+<text x="810.0" y="44" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246">Registrert ledige</text>
+<rect x="942.4" y="33" width="12" height="12" fill="#d5a640"/>
+<text x="960.4" y="44" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246">Andre ordninger</text>
+<rect x="1078.4" y="33" width="12" height="12" fill="#b9c5c6"/>
+<text x="1096.4" y="44" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#274246">Ukjent status</text>
+<text x="620" y="92" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="bold" fill="#274246">Innvandrere</text>
+<text x="1160" y="92" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">41 408 utenfor · 23,5 prosent av alle</text>
+<rect x="620" y="102" width="33.57" height="44" fill="#339b71"/>
+<text x="636.78" y="164" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">6 %</text>
+<rect x="653.57" y="102" width="60.68" height="44" fill="#3face6"/>
+<line x1="653.57" y1="102" x2="653.57" y2="146" stroke="#ffffff" stroke-width="2"/>
+<text x="683.91" y="130" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">11 %</text>
+<rect x="714.25" y="102" width="53.12" height="44" fill="#d5a640"/>
+<line x1="714.25" y1="102" x2="714.25" y2="146" stroke="#ffffff" stroke-width="2"/>
+<text x="740.8" y="130" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">10 %</text>
+<rect x="767.36" y="102" width="392.64" height="44" fill="#b9c5c6"/>
+<line x1="767.36" y1="102" x2="767.36" y2="146" stroke="#ffffff" stroke-width="2"/>
+<text x="963.68" y="130" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">73 %</text>
+<text x="620" y="192" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="bold" fill="#274246">Befolkningen ekskl. innvandrere</text>
+<text x="1160" y="192" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#5e787a" text-anchor="end" style="font-variant-numeric:tabular-nums">63 906 utenfor · 7,3 prosent av alle</text>
+<rect x="620" y="202" width="211.64" height="44" fill="#339b71"/>
+<text x="725.82" y="230" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">39 %</text>
+<rect x="831.64" y="202" width="60.72" height="44" fill="#3face6"/>
+<line x1="831.64" y1="202" x2="831.64" y2="246" stroke="#ffffff" stroke-width="2"/>
+<text x="862.01" y="230" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">11 %</text>
+<rect x="892.37" y="202" width="46.27" height="44" fill="#d5a640"/>
+<line x1="892.37" y1="202" x2="892.37" y2="246" stroke="#ffffff" stroke-width="2"/>
+<text x="915.5" y="230" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">9 %</text>
+<rect x="938.64" y="202" width="221.36" height="44" fill="#b9c5c6"/>
+<line x1="938.64" y1="202" x2="938.64" y2="246" stroke="#ffffff" stroke-width="2"/>
+<text x="1049.32" y="230" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">41 %</text>
+<text x="620" y="300" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Fordeling av de som er utenfor, prosent</text>
+</svg>

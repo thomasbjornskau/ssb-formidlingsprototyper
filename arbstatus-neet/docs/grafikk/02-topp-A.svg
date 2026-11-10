@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="330" viewBox="0 0 1200 330">
+<title>Toppgrafikk A: hva betyr utenfor</title>
+<rect x="0" y="0" width="1200" height="330" fill="#ffffff"/>
+<text x="40" y="46" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" fill="#5e787a">Unge utenfor · 15–29 år · 2025</text>
+<text x="40" y="122" font-family="Roboto Condensed, Arial Narrow, Arial, sans-serif" font-size="64" font-weight="bold" fill="#274246">1 av 10</text>
+<text x="40" y="164" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="21" font-weight="600" fill="#274246">unge er verken i arbeid, utdanning eller</text>
+<text x="40" y="192" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="21" font-weight="600" fill="#274246">arbeidsmarkedstiltak.</text>
+<text x="40" y="228" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">105 314 personer i november 2025. Over halvparten av dem har</text>
+<text x="40" y="249" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">ukjent status: de bor i Norge, men finnes ikke i registrene</text>
+<text x="40" y="270" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" fill="#5e787a">over arbeid, utdanning, tiltak eller ytelser.</text>
+<text x="40" y="314" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" fill="#5e787a">Kilde: SSB, tabell 12424. Sist oppdatert: 04.09.2026. Tallene for 2025 er foreløpige.</text>
+<text x="620" y="62" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" fill="#274246">105 314 unge utenfor, fordelt etter status</text>
+<rect x="620" y="78" width="141.63" height="50" fill="#339b71"/>
+<polyline points="690.81,132 690.81,142 622,158 622,166" fill="none" stroke="#a9b5b7" stroke-width="1" stroke-linejoin="round"/>
+<text x="620" y="186" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">AAP eller</text>
+<text x="620" y="205" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">uføretrygd</text>
+<text x="620" y="228" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold" fill="#274246" style="font-variant-numeric:tabular-nums">27 621</text>
+<text x="620" y="250" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#5e787a" style="font-variant-numeric:tabular-nums">26 prosent</text>
+<rect x="761.63" y="78" width="60.7" height="50" fill="#3face6"/>
+<line x1="761.63" y1="78" x2="761.63" y2="128" stroke="#ffffff" stroke-width="2"/>
+<polyline points="791.98,132 791.98,142 760,158 760,166" fill="none" stroke="#a9b5b7" stroke-width="1" stroke-linejoin="round"/>
+<text x="758" y="186" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">Registrert ledige</text>
+<text x="758" y="209" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold" fill="#274246" style="font-variant-numeric:tabular-nums">11 839</text>
+<text x="758" y="231" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#5e787a" style="font-variant-numeric:tabular-nums">11 prosent</text>
+<rect x="822.33" y="78" width="48.96" height="50" fill="#d5a640"/>
+<line x1="822.33" y1="78" x2="822.33" y2="128" stroke="#ffffff" stroke-width="2"/>
+<polyline points="846.81,132 846.81,142 898,158 898,166" fill="none" stroke="#a9b5b7" stroke-width="1" stroke-linejoin="round"/>
+<text x="896" y="186" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">Andre ordninger,</text>
+<text x="896" y="205" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">ikke på tiltak</text>
+<text x="896" y="228" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold" fill="#274246" style="font-variant-numeric:tabular-nums">9 549</text>
+<text x="896" y="250" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#5e787a" style="font-variant-numeric:tabular-nums">9 prosent</text>
+<rect x="871.29" y="78" width="288.71" height="50" fill="#b9c5c6"/>
+<line x1="871.29" y1="78" x2="871.29" y2="128" stroke="#ffffff" stroke-width="2"/>
+<polyline points="1015.65,132 1015.65,142 1036,158 1036,166" fill="none" stroke="#a9b5b7" stroke-width="1" stroke-linejoin="round"/>
+<text x="1034" y="186" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="bold" fill="#274246">Ukjent status</text>
+<text x="1034" y="209" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="20" font-weight="bold" fill="#274246" style="font-variant-numeric:tabular-nums">56 305</text>
+<text x="1034" y="231" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" fill="#5e787a" style="font-variant-numeric:tabular-nums">53 prosent</text>
+</svg>

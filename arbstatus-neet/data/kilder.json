@@ -1,0 +1,78 @@
+{
+  "prototype": "arbstatus-neet",
+  "valgt_omfang": "Alternativ 2, valgt av Thomas 10.11.2026: 12424 (tverrsnitt, alle dimensjoner) + 12427 (forløp for 15–29 år, i alt og etter innvandringskategori). 13556 brukes bare til kontroll. Utvidet samme dag etter valg fra Thomas: 14158 (forløp etter todelt videregående og aldersgruppe) og 13347 (barnevern og foreldrenes utdanning, egen faktaboks).",
+  "datasett": [
+    {
+      "id": "tverrsnitt",
+      "tabell": "12424",
+      "svarer_paa": [
+        "P1 Hva betyr utenfor",
+        "P2 Tyngre enn før (toppgrafikk B)",
+        "P3 Innvandrere (seksjon C)",
+        "P4 Kjønn, alder, utdanning",
+        "P5 Hvem er i fare (seksjon D)",
+        "Gruppevelger"
+      ],
+      "beskrivelse": "Bosatte 15–29 år etter prioritert arbeidsstyrkestatus, kjønn, alder, utdanningsnivå og innvandringskategori, 4. kvartal 2008–2025.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12424/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Alder]=*&valueCodes[UtdNivaa]=*&valueCodes[InnvandrKat]=*&valueCodes[HovArbStyrkStatus]=TOT,A.01,A.09,U.01,U.03,U.04-U.05,U.04.00,U.05.00,U.90B,U.90B.00,UX.00&valueCodes[ContentsCode]=Bosatte&valueCodes[Tid]=*",
+      "omfang": "3 kjønn × 4 alder × 5 utdanning × 3 innvandringskategori × 11 statuser × 18 år = 35 640 celler"
+    },
+    {
+      "id": "forlop",
+      "tabell": "12427",
+      "svarer_paa": [
+        "Hvor mange er nye i NEET",
+        "Hvor lenge er folk utenfor",
+        "Er utenforskapet lengre enn før",
+        "Forløp for innvandrere og befolkningen ellers"
+      ],
+      "beskrivelse": "Personer 15–29 år i startåret, fulgt år for år: status i startåret × status i tidsserien, 2008–2025. I alt og etter innvandringskategori.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12427/data?lang=no&outputFormat=json-stat2&valueCodes[Startaar]=*&valueCodes[Kjonn]=0&valueCodes[AlderStartAar]=15-29&valueCodes[UtdNivaaStartAar]=TOT&valueCodes[InnvandrKat]=*&valueCodes[HovArbStyrkStatus1]=*&valueCodes[HovArbStyrkStatus2]=*&valueCodes[ContentsCode]=Bosatte&valueCodes[Tid]=*",
+      "omfang": "18 startår × 3 innvandringskategori × 8 startstatuser × 9 statuser i tidsserien × 18 år = 69 984 celler, hvorav halvparten er år før startåret"
+    },
+    {
+      "id": "forlop_utdanning",
+      "tabell": "14158",
+      "svarer_paa": [
+        "Hvor bør tiltakene settes inn: varighet etter utdanning (grunnskole, studieforberedende, yrkesfag, høyere) og aldersgruppe",
+        "Seksjon D"
+      ],
+      "beskrivelse": "Personer i startåret, fulgt år for år, etter utdanningsnivå med todelt videregående og alder i startåret (15–19, 20–24, 25–29), 2016–2025. I alt, alle fagfelt.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14158/data?lang=no&outputFormat=json-stat2&valueCodes[Startaar]=*&valueCodes[HovArbStyrkStatus1]=*&valueCodes[HovArbStyrkStatus2]=*&valueCodes[UtdNivaaStartAar]=*&valueCodes[FagfeltHoyUtdNiv]=00&valueCodes[AlderStartAar]=15-19,20-24,25-29&valueCodes[Kjonn]=0&valueCodes[InnvandrKat]=A-G&valueCodes[ContentsCode]=Bosatte&valueCodes[Tid]=*",
+      "omfang": "10 startår × 8 × 9 statuser × 9 utdanningsnivåer × 3 aldersgrupper × 10 år = 194 400 celler"
+    },
+    {
+      "id": "barnevern",
+      "tabell": "13347",
+      "svarer_paa": [
+        "Hvem er i størst fare: barnevernstiltak og foreldrenes utdanning (faktaboks under seksjon D)"
+      ],
+      "beskrivelse": "Elever seks år etter avsluttet grunnskole etter status, kjønn, foreldrenes utdanningsnivå og barnevernstiltak, 2018–2024. Annen populasjon og andre statuser enn NEET.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13347/data?lang=no&outputFormat=json-stat2&valueCodes[StatusUtd]=*&valueCodes[Kjonn]=*&valueCodes[ForeldrUtd]=*&valueCodes[BarnevernTiltak4]=*&valueCodes[ContentsCode]=Elever,EleverProsent&valueCodes[Tid]=*",
+      "omfang": "8 statuser × 3 kjønn × 6 foreldreutdanning × 5 barnevernsgrupper × 2 statistikkvariabler × 7 år = 10 080 celler"
+    },
+    {
+      "id": "kontroll_neet",
+      "tabell": "13556",
+      "svarer_paa": [
+        "Kontroll: NEET-summen og NEET-andelen regnet fra 12424"
+      ],
+      "beskrivelse": "Publisert NEET-antall og -andel for hele landet etter kjønn og alder. Brukes bare i kontrollene, ikke i prototypen.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13556/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0&valueCodes[Kjonn]=*&valueCodes[Alder]=*&valueCodes[HovArbStyrkStatus]=NEET,TOT&valueCodes[ContentsCode]=Bosatte,BosatteProsent&valueCodes[Tid]=*",
+      "omfang": "3 kjønn × 4 alder × 2 statuser × 2 statistikkvariabler × 18 år = 864 celler"
+    }
+  ],
+  "manglende_verdier": "Ingen statussymboler i 12424, 12427, 14158 og 13556 (hentet 10.11.2026). 13347 har 120 celler med «..» (tallgrunnlag mangler), alle små celler, mest død/utvandret og annet. Tegn dem som manglende, aldri som 0. I 12427 er år før startåret fylt med 0, ikke med «.». De er strukturelt tomme og skal ikke tegnes.",
+  "fallgruver": [
+    "NEET finnes ikke som kode i 12424 eller 12427. 12424: A.09 + U.04-U.05 + U.90B. 12427 i startåret: A.09 + U.04-U.05 + U.90A. 12427 i tidsserien: A.09 + U.04-U.05 + U.90E.",
+    "NEET-andeler regnes fra antall. Ikke summer publiserte prosenter per status; de er avrundet hver for seg og kan avvike med 0,1.",
+    "12427 viser status i november hvert år. «Fortsatt NEET etter fem år» betyr NEET det året, ikke sammenhengende utenfor hele perioden.",
+    "UT.01 «Ut av populasjonen» (utvandret eller død) skal vises som egen kategori, ikke slås sammen med NEET eller holdes skjult i nevneren.",
+    "Tilgang til NEET fra 12427 gjelder personer som var 15–29 år og bosatt i fjor. Nye 15-åringer og nyankomne innvandrere er ikke med.",
+    "Avrunding: celler med 1 eller 2 er avrundet til 0 eller 3. Tabellene kan avvike med noen få personer seg imellom.",
+    "Tallene for 2025 er foreløpige. Endelige tall 19.01.2027.",
+    "14158 har aldersgruppene 15–19, 20–24 og 25–29 hver for seg; 15–29 i alt finnes ikke. Utdanning for 15–19 år er nesten bare grunnskole fordi de fleste går på skole.",
+    "13347 gjelder et avgangskull fra grunnskolen seks år etter (om lag 22 år), ikke 15–29-åringer. Statusene (helserelaterte ytelser, andre ytelser, «anna») er ikke NEET. Tallene skal stå adskilt og aldri summeres med NEET-tallene.",
+    "13347: bruk publiserte prosenter (EleverProsent) for andeler."
+  ]
+}
