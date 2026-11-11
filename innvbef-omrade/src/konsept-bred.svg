@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+<rect x="0" y="0" width="1200" height="600" fill="#ffffff"/>
+<text x="40.0" y="46.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="26" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Slik lages tallene</text>
+<text x="40.0" y="72.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Fra en person i folkeregisteret til en kategori og en landbakgrunn</text>
+<line x1="40.0" y1="88.0" x2="1160.0" y2="88.0" stroke="#cdd3d4" stroke-width="1"/>
+<circle cx="53.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="53.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">1</text>
+<text x="74.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Bosatt</text>
+<text x="40.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Bare de som er registrert</text>
+<text x="40.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">bosatt i Folkeregisteret,</text>
+<text x="40.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">telles.</text>
+<rect x="40.0" y="220.0" width="208.0" height="34.0" rx="0" fill="#eff8fa" stroke="#c4dddb" stroke-width="1"/>
+<text x="144.0" y="242.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#274246" text-anchor="middle" style="font-variant-numeric:tabular-nums">Folkeregisteret</text>
+<line x1="144.0" y1="256.0" x2="144.0" y2="269.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="139.0,268.0 149.0,268.0 144.0,276.0" fill="#5e787a"/>
+<rect x="40.0" y="280.0" width="208.0" height="40.0" rx="0" fill="#ecfeed" stroke="#00824d" stroke-width="1"/>
+<text x="48.0" y="296.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">Bosatt: lovlig opphold,</text>
+<text x="48.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">skal bo her minst 6 mnd</text>
+<rect x="40.0" y="330.0" width="208.0" height="40.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="48.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Ikke med: asylsøkere og</text>
+<text x="48.0" y="362.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">korte opphold</text>
+<line x1="251.0" y1="118.0" x2="258.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="257.0,113.0 257.0,123.0 265.0,118.0" fill="#5e787a"/>
+<circle cx="281.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="281.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">2</text>
+<text x="302.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Hvor er du født?</text>
+<text x="268.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Fødeland for deg, foreldrene og</text>
+<text x="268.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">besteforeldrene avgjør</text>
+<text x="268.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">kategorien.</text>
+<line x1="287.0" y1="235.0" x2="297.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="307.0" y1="235.0" x2="297.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="333.0" y1="235.0" x2="343.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="353.0" y1="235.0" x2="343.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="297.0" y1="267.0" x2="320.0" y2="285.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="343.0" y1="267.0" x2="320.0" y2="285.0" stroke="#cdd3d4" stroke-width="1"/>
+<circle cx="287.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="307.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="333.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="353.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="297.0" cy="260.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="343.0" cy="260.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="320.0" cy="292.0" r="9" fill="#7d5fea" stroke="#7d5fea" stroke-width="2"/>
+<text x="320.0" y="320.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">Innvandrer</text>
+<line x1="391.0" y1="235.0" x2="401.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="411.0" y1="235.0" x2="401.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="437.0" y1="235.0" x2="447.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="457.0" y1="235.0" x2="447.0" y2="253.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="401.0" y1="267.0" x2="424.0" y2="285.0" stroke="#cdd3d4" stroke-width="1"/>
+<line x1="447.0" y1="267.0" x2="424.0" y2="285.0" stroke="#cdd3d4" stroke-width="1"/>
+<circle cx="391.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="411.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="437.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="457.0" cy="228.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="401.0" cy="260.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="447.0" cy="260.0" r="7" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<circle cx="424.0" cy="292.0" r="9" fill="#ffffff" stroke="#7d5fea" stroke-width="2"/>
+<text x="424.0" y="320.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">Norskfødt med</text>
+<text x="424.0" y="336.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">innvandrer-</text>
+<text x="424.0" y="352.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#4b2fb0" text-anchor="middle" style="font-variant-numeric:tabular-nums">foreldre</text>
+<circle cx="274.0" cy="380.0" r="6" fill="#7d5fea" stroke="#7d5fea" stroke-width="1"/>
+<text x="286.0" y="384.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">født i utlandet</text>
+<circle cx="274.0" cy="400.0" r="6" fill="#ffffff" stroke="#7d5fea" stroke-width="2"/>
+<text x="286.0" y="404.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">født i Norge</text>
+<line x1="479.0" y1="118.0" x2="486.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="485.0,113.0 485.0,123.0 493.0,118.0" fill="#5e787a"/>
+<circle cx="509.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="509.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">3</text>
+<text x="530.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Seks kategorier</text>
+<text x="496.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Hele befolkningen deles i seks.</text>
+<text x="496.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">To av dem er med i denne</text>
+<text x="496.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">statistikken.</text>
+<text x="496.0" y="232.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Innvandrere</text>
+<rect x="496.0" y="238.0" width="38.4" height="13.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="539.4" y="249.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">17,5</text>
+<text x="496.0" y="272.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Norskfødte m. innvandrerforeldre</text>
+<rect x="496.0" y="278.0" width="9.3" height="13.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="510.3" y="289.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">4,2</text>
+<text x="496.0" y="312.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Tre andre kategorier</text>
+<rect x="496.0" y="318.0" width="15.5" height="13.0" rx="0" fill="#b9c5c6" stroke="none" stroke-width="1"/>
+<text x="516.5" y="329.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">7,1</text>
+<text x="496.0" y="352.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Født i Norge av norskfødte</text>
+<rect x="496.0" y="358.0" width="155.6" height="13.0" rx="0" fill="#b9c5c6" stroke="none" stroke-width="1"/>
+<text x="656.6" y="369.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">71,1</text>
+<text x="496.0" y="386.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Prosent av befolkningen 1.1.2026.</text>
+<text x="496.0" y="402.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Grønt er med i statistikken.</text>
+<line x1="707.0" y1="118.0" x2="714.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="713.0,113.0 713.0,123.0 721.0,118.0" fill="#5e787a"/>
+<circle cx="737.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="737.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">4</text>
+<text x="758.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Landbakgrunn</text>
+<text x="724.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Eget fødeland for innvandrere,</text>
+<text x="724.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">foreldrenes for norskfødte.</text>
+<rect x="724.0" y="220.0" width="208.0" height="40.0" rx="0" fill="#f1f1fe" stroke="#c3baff" stroke-width="1"/>
+<text x="732.0" y="236.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">Født i Polen → Polen</text>
+<rect x="724.0" y="268.0" width="208.0" height="40.0" rx="0" fill="#f1f1fe" stroke="#c3baff" stroke-width="1"/>
+<text x="732.0" y="284.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">Født i Norge, foreldre</text>
+<text x="732.0" y="300.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">fra Pakistan → Pakistan</text>
+<rect x="724.0" y="316.0" width="208.0" height="40.0" rx="0" fill="#f1f1fe" stroke="#c3baff" stroke-width="1"/>
+<text x="732.0" y="332.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">Foreldre fra to land</text>
+<text x="732.0" y="348.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#4b2fb0" text-anchor="start" style="font-variant-numeric:tabular-nums">→ morens fødeland</text>
+<text x="724.0" y="372.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Eksempler. Landbakgrunn er</text>
+<text x="724.0" y="388.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">fødeland, ikke statsborgerskap.</text>
+<line x1="935.0" y1="118.0" x2="942.0" y2="118.0" stroke="#5e787a" stroke-width="1.5"/>
+<polygon points="941.0,113.0 941.0,123.0 949.0,118.0" fill="#5e787a"/>
+<circle cx="965.0" cy="118.0" r="13" fill="#274246" stroke="none" stroke-width="1"/>
+<text x="965.0" y="123.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle" style="font-variant-numeric:tabular-nums">5</text>
+<text x="986.0" y="124.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Telles 1. januar</text>
+<text x="952.0" y="154.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Tallet er en beholdning.</text>
+<text x="952.0" y="172.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Endringen fra året før er et</text>
+<text x="952.0" y="190.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">regnskap.</text>
+<text x="952.0" y="232.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums"></text>
+<text x="966.0" y="232.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Innvandrere 1.1.2025</text>
+<text x="1160.0" y="232.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">965 113</text>
+<text x="952.0" y="253.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
+<text x="966.0" y="253.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">flyttet til Norge</text>
+<text x="1160.0" y="253.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">49 179</text>
+<text x="952.0" y="274.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">−</text>
+<text x="966.0" y="274.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">flyttet fra Norge</text>
+<text x="1160.0" y="274.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">24 407</text>
+<text x="952.0" y="295.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">−</text>
+<text x="966.0" y="295.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">døde</text>
+<text x="1160.0" y="295.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">2 860</text>
+<text x="952.0" y="316.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">+</text>
+<text x="966.0" y="316.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">andre endringer</text>
+<text x="1160.0" y="316.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="end" style="font-variant-numeric:tabular-nums">95</text>
+<line x1="952.0" y1="324.0" x2="1160.0" y2="324.0" stroke="#274246" stroke-width="1"/>
+<rect x="948.0" y="328.0" width="216.0" height="26.0" rx="0" fill="#ecfeed" stroke="#00824d" stroke-width="1"/>
+<text x="966.0" y="345.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="start" style="font-variant-numeric:tabular-nums">= 1.1.2026</text>
+<text x="1160.0" y="345.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#00824d" text-anchor="end" style="font-variant-numeric:tabular-nums">987 120</text>
+<text x="952.0" y="377.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Barn født i Norge blir</text>
+<text x="952.0" y="393.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">norskfødte, ikke innvandrere.</text>
+<rect x="40.0" y="464.0" width="1120.0" height="90.0" rx="0" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1" stroke-dasharray="6 4"/>
+<text x="56.0" y="488.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Det tallene ikke fanger</text>
+<text x="56.0" y="512.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Ikke med: asylsøkere, opphold under seks måneder og personer uten</text>
+<text x="56.0" y="530.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">lovlig opphold.</text>
+<text x="620.0" y="512.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">Med, men bor ikke her: innvandrere som har flyttet ut uten å melde</text>
+<text x="620.0" y="530.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="13" font-weight="400" fill="#274246" text-anchor="start" style="font-variant-numeric:tabular-nums">fra. SSB anslo dem til 2,3 prosent av innvandrerne.</text>
+<text x="40.0" y="580.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="12" font-weight="400" fill="#5e787a" text-anchor="start" style="font-variant-numeric:tabular-nums">Kilde: SSB, tabell 05182 (sist oppdatert 05.03.2026) og 10516 (17.04.2026). Overdekning: SSB Notater 2024/3.</text>
+</svg>

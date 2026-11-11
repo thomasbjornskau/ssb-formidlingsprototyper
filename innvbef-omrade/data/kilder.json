@@ -1,0 +1,140 @@
+{
+ "statistikk": "Innvandrere og norskfødte med innvandrerforeldre, med kommune og fylke som hovedvalg",
+ "kortnavn": "innvbef-omrade",
+ "versjon": "0.1",
+ "dato_valg": "2026-11-11",
+ "merknad": "Variant av innvbef. URL-ene bruker PxWebApi v2 med valueCodes[...], codelist[...] og outputValues[...]. Hentet direkte med scripts/hent_data.py.",
+ "valg": "Kommune eller fylke er hovedvalget, og landbakgrunn er et valg for kartet (Thomas 11.11.2026).",
+ "manglende_verdier": {},
+ "fallgruver": [],
+ "datasett": [
+  {
+   "id": "landet_tid",
+   "tabell": "05182",
+   "svarer_paa": [
+    1
+   ],
+   "seksjon": "Toppgrafikk for hele landet",
+   "beskrivelse": "Hele landet per 1. januar, fem innvandringskategorier. Kjønn summert.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/05182/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BInnvandrKat%5D=*&valueCodes%5BContentsCode%5D=Person&valueCodes%5BTid%5D=*",
+   "omfang": "5 kategorier × 43 år"
+  },
+  {
+   "id": "landet_bef",
+   "tabell": "05803",
+   "svarer_paa": [
+    1
+   ],
+   "seksjon": "Toppgrafikk, andel for hele landet",
+   "beskrivelse": "Befolkning 1. januar, hele landet.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/05803/data?lang=no&outputFormat=json-stat2&valueCodes%5BContentsCode%5D=Personer&valueCodes%5BTid%5D=from(1970)",
+   "omfang": "57 år"
+  },
+  {
+   "id": "komm_tid",
+   "tabell": "07108",
+   "svarer_paa": [
+    1,
+    3
+   ],
+   "seksjon": "Toppgrafikk og verdensdeler for kommunen",
+   "beskrivelse": "Innvandrere og norskfødte med innvandrerforeldre samlet, etter verdensdel, kommuner 2024 med sammenslåtte tidsserier. Kjønn summert.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07108/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommSummer&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=Personer&valueCodes%5BTid%5D=*",
+   "omfang": "357 kommuner × 8 verdensdeler × 43 år (1970, 1980, 1986–2026)"
+  },
+  {
+   "id": "fylke_tid",
+   "tabell": "07108",
+   "svarer_paa": [
+    1,
+    3
+   ],
+   "seksjon": "Toppgrafikk og verdensdeler for fylket",
+   "beskrivelse": "Som komm_tid, fylker 2024 med sammenslåtte tidsserier.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07108/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommFylker&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=Personer&valueCodes%5BTid%5D=*",
+   "omfang": "18 fylker og restkoder × 8 × 43 år"
+  },
+  {
+   "id": "komm_bef",
+   "tabell": "07459",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Andeler for kommunen",
+   "beskrivelse": "Folkemengde 1. januar, kommuner 2024 med sammenslåtte tidsserier. Alder og kjønn summert.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07459/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommSummer&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=*",
+   "omfang": "357 kommuner × 41 år (1986–2026)"
+  },
+  {
+   "id": "fylke_bef",
+   "tabell": "07459",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Andeler for fylket",
+   "beskrivelse": "Folkemengde 1. januar, fylker 2024 med sammenslåtte tidsserier.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/07459/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommFylker&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=*",
+   "omfang": "fylker × 41 år"
+  },
+  {
+   "id": "komm_delt",
+   "tabell": "09817",
+   "svarer_paa": [
+    2
+   ],
+   "seksjon": "Hvem bor her: innvandrere og norskfødte hver for seg",
+   "beskrivelse": "Innvandrere og norskfødte med innvandrerforeldre hver for seg, kommuner 2024–, antall og publisert andel. Ikke sammenslåtte serier: 0 før dagens kommunekode fantes.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B-C,B,C&valueCodes%5BLandbakgrunn%5D=999&valueCodes%5BContentsCode%5D=Personer1,AndelBefolkning&valueCodes%5BTid%5D=*",
+   "omfang": "357 kommuner × 3 × 2 × 17 år"
+  },
+  {
+   "id": "fylke_delt",
+   "tabell": "09817",
+   "svarer_paa": [
+    2
+   ],
+   "seksjon": "Hvem bor her, fylker",
+   "beskrivelse": "Som komm_delt, fylker 2024–.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_FylkerGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B-C,B,C&valueCodes%5BLandbakgrunn%5D=999&valueCodes%5BContentsCode%5D=Personer1,AndelBefolkning&valueCodes%5BTid%5D=*",
+   "omfang": "15 fylker × 3 × 2 × 17 år"
+  },
+  {
+   "id": "komm_land",
+   "tabell": "09817",
+   "svarer_paa": [
+    3,
+    4
+   ],
+   "seksjon": "Landbakgrunner i kommunen og kartet for valgt land",
+   "beskrivelse": "Innvandrere og norskfødte per kommune og landbakgrunn, 1. januar 2026.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_KommGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B,C&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=2026",
+   "omfang": "358 × 2 × 250 × 1"
+  },
+  {
+   "id": "fylke_land",
+   "tabell": "09817",
+   "svarer_paa": [
+    3
+   ],
+   "seksjon": "Landbakgrunner i fylket",
+   "beskrivelse": "Innvandrere og norskfødte per fylke og landbakgrunn, 1. januar 2026.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_FylkerGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B,C&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=2026",
+   "omfang": "15 × 2 × 250 × 1"
+  }
+ ],
+ "kodelister": [
+  {
+   "id": "verdensdel",
+   "kodeliste": "agg_Landkoder101Vd1",
+   "beskrivelse": "Verdensinndeling nivå 1, brukt til å gruppere landene i land-valget.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/codelists/agg_Landkoder101Vd1?lang=no"
+  }
+ ],
+ "kart": {
+  "fil": "data/raw/kommuner2024-S.geojson",
+  "kilde_url": "https://github.com/robhop/fylker-og-kommuner (gren 2024, Kommuner-S.geojson, commit 8d178fa)",
+  "beskrivelse": "Kommunegrenser 2024 fra Kartverket, forenklet av robhop. Kopiert fra arealprofiler. lag_data.py projiserer og forenkler til SVG-stier."
+ }
+}
