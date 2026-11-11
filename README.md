@@ -16,6 +16,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Nasjonalregnskap](knr/) | `knr` | Til faglig kontroll | 21.10.2026 |
 | [Navn](navn/) | `navn` | Til faglig kontroll | 23.10.2026 |
 | [Innvandrere og norskfødte med innvandrerforeldre](innvbef/) | `innvbef` | Under arbeid, ikke faglig kontrollert | 26.10.2026 |
+| [Innvandrere og norskfødte med innvandrerforeldre i kommunene (med kart)](innvbef-omrade/) | `innvbef-omrade` | Under arbeid, ikke faglig kontrollert. Variant av `innvbef` med kommune og fylke som hovedvalg | 11.11.2026 |
 | [Antall arbeidsforhold og lønn](arblonn/) | `arblonn` | Til faglig kontroll | 02.11.2026 |
 | [Pasienter i spesialisthelsetjenesten](pasient/) | `pasient` | Under arbeid, ikke faglig kontrollert | 02.11.2026 |
 | [Arealprofiler](arealprofiler/) | `arealprofiler` | Under arbeid, ikke faglig kontrollert. Alternativ til Tableau-appen | 06.11.2026 |
