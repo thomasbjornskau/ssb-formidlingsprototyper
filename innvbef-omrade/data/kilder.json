@@ -4,7 +4,7 @@
  "versjon": "0.1",
  "dato_valg": "2026-11-11",
  "merknad": "Variant av innvbef. URL-ene bruker PxWebApi v2 med valueCodes[...], codelist[...] og outputValues[...]. Hentet direkte med scripts/hent_data.py.",
- "valg": "Kommune eller fylke er hovedvalget, og landbakgrunn er et valg for kartet (Thomas 11.11.2026).",
+ "valg": "Kommune eller fylke er hovedvalget, og landbakgrunn er et valg for kartet (Thomas 11.11.2026). Egen fylkesvelger og kommunevelger; fylkesvalg viser fylkeskart (Thomas 11.11.2026).",
  "manglende_verdier": {},
  "fallgruver": [],
  "datasett": [
@@ -135,6 +135,11 @@
  "kart": {
   "fil": "data/raw/kommuner2024-S.geojson",
   "kilde_url": "https://github.com/robhop/fylker-og-kommuner (gren 2024, Kommuner-S.geojson, commit 8d178fa)",
-  "beskrivelse": "Kommunegrenser 2024 fra Kartverket, forenklet av robhop. Kopiert fra arealprofiler. lag_data.py projiserer og forenkler til SVG-stier."
+  "beskrivelse": "Kommunegrenser 2024 fra Kartverket, forenklet av robhop. Kopiert fra arealprofiler. lag_data.py projiserer og forenkler til SVG-stier.",
+  "fylker": {
+   "fil": "data/raw/fylker2024-S.geojson",
+   "kilde_url": "https://github.com/robhop/fylker-og-kommuner (commit 8d178fa, Fylker-S.geojson)",
+   "beskrivelse": "Fylkesgrenser 2024 fra Kartverket, forenklet av robhop. Hentet 11.11.2026 fra samme commit som kommunekartet, og projisert med samme transformasjon."
+  }
  }
 }

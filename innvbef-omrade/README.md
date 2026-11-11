@@ -4,7 +4,7 @@
 
 **Lenke:** https://thomasbjornskau.github.io/ssb-formidlingsprototyper/innvbef-omrade/
 
-En variant av [`innvbef`](../innvbef/), med kommune eller fylke som hovedvalg og et kart over alle 357 kommuner. Landbakgrunn velges for kartet, for eksempel for å se hvor de med polsk bakgrunn bor. Valget ligger i adressen, for eksempel `#omrade=1835&land=131` for Træna og Polen.
+En variant av [`innvbef`](../innvbef/), med egen fylkesvelger og kommunevelger. Velger du et fylke, viser kartet de 15 fylkene. Velger du en kommune, viser kartet kommunene i fylket. Landbakgrunn velges for kartet, for eksempel for å se hvor de med polsk bakgrunn bor. Valget ligger i adressen, for eksempel `#omrade=1835&land=131` for Træna og Polen.
 
 ## Hva prototypen svarer på
 

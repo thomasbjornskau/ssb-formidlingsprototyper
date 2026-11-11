@@ -1,10 +1,10 @@
-Steg 4 i formidlingsprototype for innvbef-omrade · versjon 0.1 · 11.11.2026 · Status: utkast
+Steg 4 i formidlingsprototype for innvbef-omrade · versjon 0.2 · 11.11.2026 · Status: utkast
 
 # Byggenotat: Innvandrere og norskfødte med innvandrerforeldre i kommunene (innvbef-omrade)
 
 En variant av [`innvbef`](../../innvbef/), bestilt av Thomas 11.11.2026: kommune eller fylke er hovedvalget, og siden har et kart. Landbakgrunn er et valg for kartet, ikke for hele siden (valgt av Thomas samme dag). Innsikten, konseptgrafikken og kvalitetssikringen fra steg 1–2 i `innvbef` gjelder også her. Konseptgrafikken er kopiert uendret.
 
-Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (projeksjon, forenkling, piltaster). Siden er én fil på 1,58 MB, og to bygg gir identisk fil. Testet i Chromium i 1280 og 390 px uten feil i konsollen og uten horisontal rulling.
+Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (projeksjon, forenkling, piltaster). Siden er én fil på 1,71 MB, og to bygg gir identisk fil. Testet i Chromium i 1280 og 390 px uten feil i konsollen og uten horisontal rulling.
 
 ## 1. Kilder og struktur
 
@@ -15,7 +15,7 @@ Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (pr
 | `komm_bef`, `fylke_bef` | 07459 | Folketall med sammenslåtte tidsserier, 1986–2026 | Andeler |
 | `komm_delt`, `fylke_delt` | 09817 | Innvandrere og norskfødte hver for seg, ikke sammenslått | «Hvem bor her», kartet |
 | `komm_land`, `fylke_land` | 09817 | Per landbakgrunn, 2026 | Kartet for valgt land, landbakgrunner i området |
-| Kart | robhop/fylker-og-kommuner | Kommunegrenser 2024 fra Kartverket, kopiert fra `arealprofiler` | Kartet |
+| Kart | robhop/fylker-og-kommuner | Kommunegrenser 2024 fra Kartverket, kopiert fra `arealprofiler`. Fylkesgrenser 2024 hentet fra samme commit (8d178fa) og projisert med samme transformasjon | Kartet |
 
 **Funn som former siden:**
 
@@ -28,17 +28,17 @@ Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (pr
 
 | Del | Svarer på | Innhold |
 |---|---|---|
-| Hode | – | Ingress generert fra tallene, søk etter kommune eller fylke (også tidligere kommunenavn fra Klass, for eksempel Skedsmo, og tospråklige navn som Tråante), «Se alle kommuner» etter fylke med andelen ved hvert navn, «Vis hele landet», sju eksempler, også ett uten treff (Atlantis) |
+| Hode | – | Ingress generert fra tallene. **Fylkesvelger** (nedtrekksliste med hele landet og 15 fylker) og **kommunevelger** (søk, også tidligere kommunenavn fra Klass, for eksempel Skedsmo, og tospråklige navn som Tråante). Velgerne følger hverandre: velger du en kommune, viser fylkesvelgeren fylket. «Se alle kommuner» etter fylke med andelen ved hvert navn, «Vis hele landet», seks eksempler, også ett uten treff (Atlantis) |
 | Kort for valgt område | – | Fylke som lenke, kommunenummer, innbyggere, innvandrere og norskfødte med andel, rangering blant 357 kommuner, tekst om hull i serien, søkeordet som ga treffet, varsel under 2 000 innbyggere |
 | Lesehjelpen | H1, H2, H6, H7 | Fødested, ikke pass. To grupper, ikke én (tall for området). Andel og antall forteller ulike historier (flest og høyest andel). Registrert bosatt. Konseptgrafikken i «Slik lages tallene» |
 | Toppgrafikk | 2 | Stort avrundet tall, setning som sammenligner andelen med landet, fire nøkkeltall. Bryter **Antall** (linje, prikket før 1986; for landet to linjer) og **Andel av innbyggerne** (stablet areal til 100 prosent med øvrig befolkning, fra 1986, med landet som stiplet linje) |
-| Hvor bor de? (kartet) | 4 | Koroplet over alle kommuner med fem kvintilklasser og egen klasse for «Ingen». Brytere for innvandrere, norskfødte eller begge, og søk etter landbakgrunn (med synonymer fra `innvbef`). Kartet zoomer til fylket for valgt kommune eller fylke, med knapp for hele landet. Valgt kommune har oker kant. Ved siden av: de ti med høyest andel i utsnittet, valgt kommune lagt til, og landet som strek |
+| Hvor bor de? (kartet) | 4 | Koroplet med fem kvintilklasser og egen klasse for «Ingen». **Fylke eller hele landet valgt: fylkeskart** med alle 15 fylker og listen over fylkene etter andel. **Kommune valgt: kommunekart** zoomet til fylket (fylket med mørk kant, kommunen med oker kant), knapp for hele landet, og de ti kommunene med høyest andel. Bryteren «Fylker | Kommuner» overstyrer nivået. Brytere for innvandrere, norskfødte eller begge, og søk etter landbakgrunn (med synonymer fra `innvbef`) |
 | Hvem bor i …? | 1, 3 | Andel innvandrere og norskfødte i området, fylket og landet, med andelen av gruppen som er født i Norge i overskriften. Verdensdeler 1970–2026 som stablet areal |
 | Hvor kommer de fra? | 3 | De 15 største landbakgrunnene i området, delt i innvandrere og norskfødte. En rad setter landet på kartet |
 | Sammenligning | 4 | Kommunene i fylket (eller fylkene) med andel 2016 og 2026 som prikker. Over 20 kommuner: ti høyeste, fem laveste og valgt kommune |
 | Bunntekst | – | Om tallene, egne beregninger, kilder, kartkilde, hentedato og lenke til `innvbef` |
 
-Valgt område og kartland ligger i adressen: `#omrade=1835&land=131`. Søkefeltene følger adressen. Kartet kan brukes med piltastene (neste og forrige kommune), og alle rader i listene kan velges med tastatur.
+Valgt område og kartland ligger i adressen: `#omrade=1835&land=131`. Velgerne følger adressen. Kartet kan brukes med piltastene (neste og forrige fylke eller kommune), og alle rader i listene kan velges med tastatur.
 
 ## 3. Kontroller
 
@@ -56,7 +56,7 @@ Den første negative testen (+500 i samme celle) gikk **ikke** gjennom kontrolle
 | 07459 mangler folketall ⇒ 07108 har ingen personer samme år | 0 | 0 |
 | 09817: sum av land = «Alle land», per kommune og fylke | 5 | 3 |
 | 09817: publisert andel = antall / 07459, 2026 | 0,011 prosentpoeng | 0 |
-| Kartet og tabellene har de samme 357 kommunene | 0 | 0 |
+| Kartene og tabellene har de samme 357 kommunene og 15 fylkene | 0 | 0 |
 | Synonymer peker på kommuner og land som finnes | 0 | 0 |
 
 ## 4. Nye valg til kvalitetssikring
@@ -74,6 +74,9 @@ Nummerert videre fra B1–B11 i `innvbef/docs/04-byggenotat.md`.
 | C7 | Tospråklige fylkesnavn er forkortet til det norske navnet i løpende tekst (Nordland, Troms). Kommunenavn er beholdt offisielle, unntatt Oslo | Eget valg | Språkrådet/fag |
 | C8 | Prosentvis vekst vises bare når utgangspunktet er minst 500 personer | Eget valg | – |
 | C9 | Kartgrunnlaget er robhop/fylker-og-kommuner, ikke en SSB-kilde | Samme som Q35 i `arealprofiler` | Lisens, og om SSB har et eget forenklet kart |
+| C10 | Fylke og hele landet gir fylkeskart, kommune gir kommunekart. Hele landet kunne like gjerne vist kommunene | Valg av Thomas 11.11.2026 (fylkesvelger viser fylkeskart), hele landet er eget valg | Thomas |
+| C11 | Fylkeskartet har bare 15 enheter, så kvintilene gir tre fylker per farge. Klassegrensene kan ligge tett (14,2–14,6) | Diagramstandarden | Vurder faste grenser eller sortert liste alene |
+| C12 | Kommunesøket viser bare kommuner. Et fylkesnavn i kommunefeltet gir kommuner med navnet i seg, for eksempel Herøy (Nordland) | Eget valg | – |
 
 ## 5. Kjente svakheter
 

@@ -141,6 +141,10 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
 @media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-brytere { display: none; } .bf-tablewrap { max-height: none; overflow: visible; } }
 /* Tillegg for innvbef-omrade */
 .bf-velgere { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; align-items: end; }
+.bf-hovedvalg { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 30rem) auto auto; gap: 8px 12px; align-items: end; }
+@media (max-width: 860px) { .bf-hovedvalg { grid-template-columns: 1fr 1fr; } .bf-hovedvalg .bf-sokfelt { grid-column: 1 / -1; max-width: none; } }
+.bf-velg label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-select { width: 100%; font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid var(--tekst); background: #fff; color: var(--tekst); border-radius: 0; }
 @media (max-width: 640px) { .bf-velgere { grid-template-columns: 1fr 1fr; } .bf-velgere .bf-sokfelt { grid-column: 1 / -1; } }
 .bf-kart-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
 @media (max-width: 860px) { .bf-kart-grid { grid-template-columns: 1fr; } }
@@ -163,10 +167,14 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
     <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
     <h1 class="bf-title">Innvandrere og norskfødte med innvandrerforeldre i kommunen din</h1>
     <p class="bf-lede" id="ingress"></p>
-    <div class="bf-sok bf-velgere" role="search">
+    <div class="bf-sok bf-hovedvalg" role="search">
+      <div class="bf-velg">
+        <label for="bf-fylke">Fylke</label>
+        <select class="bf-select" id="bf-fylke"></select>
+      </div>
       <div class="bf-sokfelt">
-        <label for="bf-sok">Velg kommune eller fylke</label>
-        <input class="bf-input" id="bf-sok" type="search" placeholder="Skriv et kommune- eller fylkesnavn" autocomplete="off"
+        <label for="bf-sok">Kommune</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="Skriv et kommunenavn" autocomplete="off"
                role="combobox" aria-expanded="false" aria-controls="bf-forslag" aria-autocomplete="list">
         <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
       </div>
@@ -233,6 +241,10 @@ body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open
       <article class="bf-card bf-wide">
         <h3 class="bf-h" data-h="kart"></h3>
         <div class="bf-kartvalg">
+          <div class="bf-brytere" role="group" aria-label="Kartet viser">
+            <button type="button" class="bf-knapp" data-niva="f" aria-pressed="true">Fylker</button>
+            <button type="button" class="bf-knapp" data-niva="k" aria-pressed="false">Kommuner</button>
+          </div>
           <div class="bf-brytere" role="group" aria-label="Gruppe">
             <button type="button" class="bf-knapp" data-kkat="innv" aria-pressed="true">Innvandrere</button>
             <button type="button" class="bf-knapp" data-kkat="nmi" aria-pressed="false">Norskfødte med innvandrerforeldre</button>
@@ -419,10 +431,10 @@ const skrivAdresse = (o, l) => {
   const s = p.toString();
   try { history.replaceState(null, '', s ? '#' + s : location.pathname + location.search); } catch (e) { /* ignorer */ }
 };
-const visning = {topp: 'abs', kkat: 'innv', zoom: null};
+const visning = {topp: 'abs', kkat: 'innv', zoom: null, niva: null};   // niva null: følger valget (fylke og landet gir fylkeskart)
 const velg = (o, opt = {}) => {
   funnetMed = opt.ord || null;
-  visning.zoom = null;
+  visning.zoom = null; visning.niva = null;
   skrivAdresse(o, kartLand());
   tegnAlt();
   if (opt.rull) ($('#bf-kort').hidden ? $('#hovedtall') : $('#bf-kort')).scrollIntoView({behavior: 'smooth'});
@@ -516,7 +528,7 @@ function ingress() {
   const [i, n] = deltSist(LANDET), hoy = RANG[0], lav = RANG[RANG.length - 1];
   const b = (t) => { const e = document.createElement('b'); e.textContent = t; return e; };
   $('#ingress').replaceChildren(`1. januar ${SISTAAR} bodde det `, b(`${nf0.format(i)} innvandrere`), ' og ', b(`${nf0.format(n)} norskfødte med innvandrerforeldre`),
-    ` i Norge. Andelen av innbyggerne varierer fra ${nf1.format(ANDEL26[lav])} prosent i ${O[lav].n} til ${nf1.format(ANDEL26[hoy])} prosent i ${O[hoy].n}. Velg en kommune eller et fylke.`);
+    ` i Norge. Andelen av innbyggerne varierer fra ${nf1.format(ANDEL26[lav])} prosent i ${O[lav].n} til ${nf1.format(ANDEL26[hoy])} prosent i ${O[hoy].n}. Velg et fylke eller en kommune.`);
 }
 function tegnKort(o) {
   const el = $('#bf-kort');
@@ -654,10 +666,10 @@ function tegnTopp(o) {
 const KLASSEFARGE = ['#cff1d0', '#91cd9a', '#58a772', '#00824d', '#075745'];
 const INGEN = '#e9eded';
 const KKAT = {innv: 'innvandrere', nmi: 'norskfødte med innvandrerforeldre', begge: 'innvandrere og norskfødte med innvandrerforeldre'};
-function kartVerdier(l) {
+function kartVerdier(l, enheter) {
   const v = {};
   const per = l ? Object.fromEntries(DATA.landOmr[l].map(([o, a, b]) => [o, [a, b]])) : null;
-  for (const k of KOMM) {
+  for (const k of enheter) {
     const [a, b] = l ? (per[k] || [0, 0]) : deltSist(k);
     const n = visning.kkat === 'innv' ? a : visning.kkat === 'nmi' ? b : a + b;
     v[k] = {n, p: n / bef(k, SISTAAR) * 100};
@@ -670,111 +682,120 @@ function kvintiler(verdier) {
   const g = [0.2, 0.4, 0.6, 0.8].map((q) => d3.quantileSorted(pos, q));
   return [...new Set(g)].filter((x) => x > pos[0] && x < pos[pos.length - 1]);
 }
-const KART_REKKE = KOMM.slice();
+// Kartnivå: valgt kommune gir kommunekart, valgt fylke og hele landet gir fylkeskart. Bryteren kan overstyre.
+const kartNiva = (o) => visning.niva || (O[o].type === 'kommune' ? 'k' : 'f');
 function tegnKart(o) {
-  const l = kartLand(), v = kartVerdier(l), K = DATA.kart, f = fylkeAv(o);
-  knappRad(true, visning.kkat, 'data-kkat');
+  const l = kartLand(), K = DATA.kart, f = fylkeAv(o), niva = kartNiva(o), erF = niva === 'f';
+  const enheter = erF ? FYL : KOMM, stier = erF ? K.fp : K.p, bokser = erF ? K.fboks : K.boks;
+  const v = kartVerdier(l, enheter);
+  const enhet = erF ? ['fylke', 'fylker', 'fylkene'] : ['kommune', 'kommuner', 'kommunene'];
+  knappRad(true, visning.kkat, 'data-kkat'); knappRad(true, niva, 'data-niva');
   $('#bf-lalle').hidden = !l;
-  const zoomFylke = f && visning.zoom !== 'land';
-  const zb = $('#bf-zoom'); zb.hidden = !f; zb.textContent = zoomFylke ? 'Vis hele landet' : `Vis ${O[f || FYL[0]].kort}`;
+  const zoomFylke = !erF && f && visning.zoom !== 'land';
+  const zb = $('#bf-zoom'); zb.hidden = erF || !f; zb.textContent = zoomFylke ? 'Vis hele landet' : `Vis ${iNavn(f || FYL[0])}`;
   const hvem = KKAT[visning.kkat] + (l ? ` med bakgrunn fra ${LANDN[l].n}` : '');
-  const tot = sum(KOMM.map((k) => v[k].n)), totB = sum(KOMM.map((k) => bef(k, SISTAAR))), pl = tot / totB * 100;
-  const grenser = kvintiler(KOMM.map((k) => v[k].p));
+  const tot = sum(enheter.map((k) => v[k].n)), totB = sum(enheter.map((k) => bef(k, SISTAAR))), pl = tot / totB * 100;
+  const grenser = kvintiler(enheter.map((k) => v[k].p));
   const fmtP = (x) => (pl < 1 ? nf2 : nf1).format(x);
   const klasse = (p) => (p <= 0 ? -1 : d3.bisectRight(grenser, p));
   const farge = (p) => (p <= 0 ? INGEN : KLASSEFARGE[Math.min(4, klasse(p) + (5 - grenser.length - 1))]);
-  const ant0 = KOMM.filter((k) => !v[k].n).length;
-  settH('kart', `Andel ${hvem}, 1. januar ${SISTAAR}`);
-  settN('kart', `Hele landet: ${fmtP(pl)} prosent (${nf0.format(tot)} personer). Fargene deler kommunene med personer i gruppen i fem omtrent like store grupper.${ant0 ? ` ${ant0} ${ant0 === 1 ? 'kommune har' : 'kommuner har'} ingen.` : ''} Velg en kommune i kartet for å se tallene for den.`);
-  varsel('kart', tot ? '' : `Ingen ${hvem} er registrert i noen kommune.`);
-  // Fargeforklaring med klassegrensene
+  const ant0 = enheter.filter((k) => !v[k].n).length;
+  settH('kart', `Andel ${hvem}, ${enhet[1]}, 1. januar ${SISTAAR}`);
+  settN('kart', `Hele landet: ${fmtP(pl)} prosent (${nf0.format(tot)} personer). Fargene deler ${enhet[2]} med personer i gruppen i fem omtrent like store grupper.${ant0 ? ` ${ant0} ${ant0 === 1 ? `${enhet[0]} har` : `${enhet[1]} har`} ingen.` : ''} Velg ${erF ? 'et fylke' : 'en kommune'} i kartet for å se tallene.`);
   const brukt = KLASSEFARGE.slice(5 - grenser.length - 1);
-  const kanter = [d3.min(KOMM.filter((k) => v[k].n > 0), (k) => v[k].p), ...grenser, d3.max(KOMM, (k) => v[k].p)];
+  const kanter = [d3.min(enheter.filter((k) => v[k].n > 0), (k) => v[k].p), ...grenser, d3.max(enheter, (k) => v[k].p)];
   $('#kart-klasser').innerHTML = (ant0 ? `<span><i style="background:${INGEN}"></i>Ingen</span>` : '') +
     (tot ? brukt.map((c, i) => `<span><i style="background:${c}"></i>${fmtP(kanter[i])}–${fmtP(kanter[i + 1])}</span>`).join('') : '') + '<span style="align-self:end;padding-left:6px">prosent</span>';
-  // Tegn kartet én gang, oppdater fargene
+
+  // Tegn begge nivåene én gang, vis det ene
   const box = $('#fig-kart');
   let svg = d3.select(box).select('svg');
   if (svg.empty()) {
     box.style.minHeight = '0';
-    svg = d3.select(box).append('svg').attr('tabindex', 0).attr('role', 'group').attr('preserveAspectRatio', 'xMidYMid meet')
-      .attr('aria-label', 'Kart over kommunene. Piltastene velger neste eller forrige kommune.');
-    svg.append('g').attr('class', 'alle').selectAll('path').data(KOMM).join('path').attr('class', 'k').attr('d', (k) => K.p[k])
-      .attr('stroke', '#fff').attr('stroke-width', 0.5).attr('vector-effect', 'non-scaling-stroke')
-      .on('click', (ev, k) => { $('#bf-sok').value = O[k].n; velg(k); })
-      .on('pointerleave', skjulTips);
-    svg.append('g').attr('class', 'fylke');
+    svg = d3.select(box).append('svg').attr('tabindex', 0).attr('role', 'group').attr('preserveAspectRatio', 'xMidYMid meet');
+    for (const [cls, liste, st] of [['k', KOMM, K.p], ['f', FYL, K.fp]]) {
+      svg.append('g').attr('class', 'niva-' + cls).selectAll('path').data(liste).join('path').attr('class', 'k').attr('d', (k) => st[k])
+        .attr('stroke', '#fff').attr('stroke-width', cls === 'f' ? 0.8 : 0.5).attr('vector-effect', 'non-scaling-stroke')
+        .on('click', (ev, k) => velg(k)).on('pointerleave', skjulTips);
+    }
+    svg.append('path').attr('class', 'fylkekant').attr('fill', 'none').attr('stroke', css('--tekst')).attr('stroke-width', 1.2).attr('vector-effect', 'non-scaling-stroke').attr('pointer-events', 'none');
     svg.append('path').attr('class', 'valgt').attr('fill', 'none').attr('stroke', css('--oker')).attr('stroke-width', 2.5).attr('vector-effect', 'non-scaling-stroke').attr('pointer-events', 'none');
     svg.append('circle').attr('class', 'mrk').attr('fill', 'none').attr('stroke', css('--oker')).attr('stroke-width', 2).attr('vector-effect', 'non-scaling-stroke').attr('pointer-events', 'none');
     svg.on('keydown', (ev) => {
       const steg = {ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1}[ev.key];
       if (!steg) return;
       ev.preventDefault();
-      const cur = O[valgt()].type === 'kommune' ? valgt() : KART_REKKE[steg > 0 ? KART_REKKE.length - 1 : 0];
-      const i = (KART_REKKE.indexOf(cur) + steg + KART_REKKE.length) % KART_REKKE.length;
-      $('#bf-sok').value = O[KART_REKKE[i]].n; velg(KART_REKKE[i]); svg.node().focus();
+      const n = kartNiva(valgt()), rekke = n === 'f' ? FYL : KOMM, o2 = valgt();
+      const cur = rekke.includes(o2) ? o2 : rekke[steg > 0 ? rekke.length - 1 : 0];
+      const neste = rekke[(rekke.indexOf(cur) + steg + rekke.length) % rekke.length];
+      const holdNiva = visning.niva;
+      velg(neste); visning.niva = holdNiva; tegnKart(neste); svg.node().focus();
     });
   }
-  svg.select('g.alle').selectAll('path').attr('fill', (k) => farge(v[k].p))
+  svg.attr('aria-label', `Kart over ${enhet[2]}. Piltastene velger neste eller forrige ${enhet[0]}.`);
+  svg.select('g.niva-k').attr('display', erF ? 'none' : null);
+  svg.select('g.niva-f').attr('display', erF ? null : 'none');
+  svg.select(`g.niva-${niva}`).selectAll('path').attr('fill', (k) => farge(v[k].p))
     .on('pointermove', (ev, k) => visTips(ev, O[k].n, [{c: farge(v[k].p), n: 'Andel', v: `${nf2.format(v[k].p)} %`}, {n: 'Antall', v: nf0.format(v[k].n)}, {n: 'Innbyggere', v: nf0.format(bef(k, SISTAAR))}]));
-  // Utsnitt
+  // Utsnitt: fylkeskartet viser alltid hele landet
   let bb = [0, 0, K.b, K.h];
   if (zoomFylke) {
-    const ks = kommIFylke(f).map((k) => K.boks[k]);
-    const x0 = d3.min(ks, (b) => b[0]), y0 = d3.min(ks, (b) => b[1]), x1 = d3.max(ks, (b) => b[2]), y1 = d3.max(ks, (b) => b[3]);
-    const MIN = 110;   // fylker med én kommune (Oslo) skal vise naboene
-    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, bw = Math.max(MIN, (x1 - x0) * 1.08), bh = Math.max(MIN, (y1 - y0) * 1.08);
+    const b = K.fboks[f], MIN = 110;   // fylker med én kommune (Oslo) skal vise naboene
+    const cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2, bw = Math.max(MIN, (b[2] - b[0]) * 1.08), bh = Math.max(MIN, (b[3] - b[1]) * 1.08);
     bb = [cx - bw / 2, cy - bh / 2, bw, bh];
   }
   svg.attr('viewBox', bb.map((x) => x.toFixed(1)).join(' '));
-  // Fylket med mørk kant, valgt kommune med oker
-  svg.select('g.fylke').selectAll('path').data(f ? kommIFylke(f) : []).join('path').attr('d', (k) => K.p[k]).attr('fill', 'none')
-    .attr('stroke', css('--tekst')).attr('stroke-width', 0.8).attr('vector-effect', 'non-scaling-stroke').attr('pointer-events', 'none');
-  const erK = O[o].type === 'kommune';
-  svg.select('path.valgt').attr('d', erK ? K.p[o] : null);
+  // Valgt område med oker kant. I kommunekartet får fylket mørk kant
+  const valgtHer = enheter.includes(o) ? o : null;
+  svg.select('path.valgt').attr('d', valgtHer ? stier[valgtHer] : null);
+  svg.select('path.fylkekant').attr('d', !erF && f ? K.fp[f] : null);
   const mrk = svg.select('circle.mrk');
-  if (erK) {
-    // Ringen vises bare når kommunen er mindre enn 24 piksler på skjermen
-    const b = K.boks[o], r0 = svg.node().getBoundingClientRect(), skala = Math.max(bb[2] / (r0.width || 600), bb[3] / (r0.height || 600));
+  if (valgtHer) {
+    // Ringen vises bare når området er mindre enn 24 piksler på skjermen
+    const b = bokser[valgtHer], r0 = svg.node().getBoundingClientRect(), skala = Math.max(bb[2] / (r0.width || 600), bb[3] / (r0.height || 600));
     const str = Math.max(b[2] - b[0], b[3] - b[1]);
     mrk.attr('cx', (b[0] + b[2]) / 2).attr('cy', (b[1] + b[3]) / 2).attr('r', str / 2 + 8 * skala).attr('display', str / skala < 24 ? null : 'none');
   } else mrk.attr('display', 'none');
 
-  // Listen ved siden av: høyest andel i utsnittet
-  const utvalg = zoomFylke ? kommIFylke(f) : KOMM;
-  const topp = utvalg.slice().sort((a, b) => v[b].p - v[a].p || v[b].n - v[a].n).slice(0, 10);
-  if (erK && !topp.includes(o)) topp.push(o);
-  settH('kart-liste', `Høyest andel ${zoomFylke ? `i ${iNavn(f)}` : 'i landet'}`);
+  // Listen ved siden av: alle fylker, eller de ti kommunene med høyest andel i utsnittet
+  const utvalg = erF ? FYL : zoomFylke ? kommIFylke(f) : KOMM;
+  const topp = utvalg.slice().sort((a, b) => v[b].p - v[a].p || v[b].n - v[a].n).slice(0, erF ? FYL.length : 10);
+  if (valgtHer && !topp.includes(valgtHer)) topp.push(valgtHer);
+  const kutt = erF ? 99 : 10;
+  settH('kart-liste', erF ? 'Fylkene etter andel' : `Høyest andel ${zoomFylke ? `i ${iNavn(f)}` : 'i landet'}`);
   const lb = $('#fig-kart-liste');
   if (!tot) { d3.select(lb).selectAll('svg').remove(); lb.style.minHeight = '0'; } else {
-    const rh = 26, H = topp.length * rh + (topp.length > 10 ? 10 : 0) + 24;
-    const {svg: s2, w} = lerret(lb, H, `Kommunene med høyest andel ${hvem}${zoomFylke ? ` i ${O[f].n}` : ''}.`);
+    const rh = 26, H = topp.length * rh + (topp.length > kutt ? 10 : 0) + 24;
+    const navnK = (k) => (erF ? iNavn(k) : O[k].n);
+    const {svg: s2, w} = lerret(lb, H, `${erF ? 'Fylkene' : 'Kommunene'} med høyest andel ${hvem}.`);
     const vt = (k) => `${fmtP(v[k].p)} (${nf0.format(v[k].n)})`;
-    const lbw = d3.max(topp, (k) => bredde(s2, O[k].n, 'bf-lab')) + 10, vb = d3.max(topp, (k) => bredde(s2, vt(k), 'bf-lab')) + 10;
+    const lbw = d3.max(topp, (k) => bredde(s2, navnK(k), 'bf-lab bf-strong')) + 10, vb = d3.max(topp, (k) => bredde(s2, vt(k), 'bf-lab')) + 10;
     const xs = d3.scaleLinear().domain([0, Math.max(v[topp[0]].p, pl)]).range([lbw, w - vb]);
+    const lagLinje = s2.append('g');   // streken for hele landet ligger bak radene
     topp.forEach((k, i) => {
-      const y = 4 + i * rh + (i >= 10 ? 10 : 0), er = k === o;
+      const y = 4 + i * rh + (i >= kutt ? 10 : 0), er = k === o;
       const g = s2.append('g').attr('role', 'button').attr('tabindex', 0).attr('aria-pressed', String(er)).attr('aria-label', `${O[k].n}: ${vt(k)}`).style('cursor', 'pointer');
       g.append('rect').attr('x', 0).attr('y', y - 2).attr('width', w).attr('height', rh).attr('fill', er ? css('--lys') : 'transparent');
-      g.append('text').attr('class', 'bf-lab' + (er ? ' bf-strong' : '')).attr('x', lbw - 8).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(O[k].n);
+      g.append('text').attr('class', 'bf-lab' + (er ? ' bf-strong' : '')).attr('x', lbw - 8).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(navnK(k));
       g.append('rect').attr('x', xs(0)).attr('y', y + 4).attr('width', Math.max(1, xs(v[k].p) - xs(0))).attr('height', rh - 12).attr('fill', farge(v[k].p) === INGEN ? css('--dempet') : farge(v[k].p));
       g.append('text').attr('class', 'bf-lab').attr('x', xs(v[k].p) + 5).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').text(vt(k));
-      const ta = () => { $('#bf-sok').value = O[k].n; velg(k); };
+      const ta = () => velg(k);
       g.on('click', ta).on('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ta(); } });
     });
-    if (topp.length > 10) s2.append('line').attr('x1', 0).attr('x2', w).attr('y1', 4 + 10 * rh + 3).attr('y2', 4 + 10 * rh + 3).attr('stroke', css('--stotte')).attr('stroke-dasharray', '3 3');
+    if (topp.length > kutt) s2.append('line').attr('x1', 0).attr('x2', w).attr('y1', 4 + kutt * rh + 3).attr('y2', 4 + kutt * rh + 3).attr('stroke', css('--stotte')).attr('stroke-dasharray', '3 3');
     const xl = xs(pl);
-    s2.append('line').attr('x1', xl).attr('x2', xl).attr('y1', 0).attr('y2', H - 20).attr('stroke', css('--sek')).attr('stroke-width', 1.5);
+    lagLinje.append('line').attr('x1', xl).attr('x2', xl).attr('y1', 0).attr('y2', H - 20).attr('stroke', css('--null')).attr('stroke-width', 1.5);
     const t = s2.append('text').attr('class', 'bf-tick').attr('y', H - 6).text(`Hele landet ${fmtP(pl)}`);
     t.attr('x', Math.max(0, Math.min(w - t.node().getComputedTextLength(), xl - t.node().getComputedTextLength() / 2)));
   }
   const forste = topp[0];
-  varsel('kart', !tot ? `Ingen ${hvem} er registrert i noen kommune.` : bef(forste, SISTAAR) < SMAA_KOMM && v[forste].n > 0
+  varsel('kart', !tot ? `Ingen ${hvem} er registrert.` : !erF && bef(forste, SISTAAR) < SMAA_KOMM && v[forste].n > 0
     ? `Små tall: ${O[forste].n} har ${nf0.format(bef(forste, SISTAAR))} innbyggere, så ${nf0.format(v[forste].n)} personer gir en andel på ${fmtP(v[forste].p)} prosent. Andelen kan endre seg mye fra år til år.` : '');
-  talltabell('kart', `Alle kommuner, andel ${hvem}`, ['Kommune', 'Fylke', 'Antall', 'Innbyggere', 'Andel, prosent'],
-    KOMM.slice().sort((a, b) => v[b].p - v[a].p).map((k) => [O[k].n, O[O[k].f].kort, nf0.format(v[k].n), nf0.format(bef(k, SISTAAR)), nf2.format(v[k].p)]));
-  settSrc('kart', kilde('09817', '07459') + ' Kommunegrenser 2024: Kartverket, forenklet av robhop. ' + (l || visning.kkat !== 'innv' ? 'Andelene er egne beregninger.' : '') + ' Små tall er avrundet.');
-  sett('ing-kart', 'Kartet viser andelen av innbyggerne i hver kommune. Velg gruppe og eventuelt en landbakgrunn. Store byer har flest, men andelen kan være høyest i små kommuner.');
+  talltabell('kart', `Alle ${enhet[1]}, andel ${hvem}`, erF ? ['Fylke', 'Antall', 'Innbyggere', 'Andel, prosent'] : ['Kommune', 'Fylke', 'Antall', 'Innbyggere', 'Andel, prosent'],
+    enheter.slice().sort((a, b) => v[b].p - v[a].p).map((k) => (erF ? [O[k].n] : [O[k].n, iNavn(O[k].f)]).concat([nf0.format(v[k].n), nf0.format(bef(k, SISTAAR)), nf2.format(v[k].p)])));
+  $('[data-tall="kart"] summary').textContent = `Vis tallene for alle ${enhet[1]}`;
+  settSrc('kart', kilde('09817', '07459') + ` ${erF ? 'Fylkesgrenser' : 'Kommunegrenser'} 2024: Kartverket, forenklet av robhop. ` + (l || visning.kkat !== 'innv' || erF ? 'Andelene er egne beregninger.' : '') + ' Små tall er avrundet.');
+  sett('ing-kart', `Kartet viser andelen av innbyggerne i ${erF ? 'hvert fylke' : 'hver kommune'}. Velg et fylke for å se fylkene, eller en kommune for å se kommunene i fylket. Store byer har flest, men andelen kan være høyest i små kommuner.`);
 }
 
 // ---------- Hvem bor her: innvandrere og norskfødte mot fylket og landet ----------
@@ -1005,13 +1026,13 @@ function kobleSok(inp, liste, sok, rad, ved, ingen) {
 
 // Område
 const typeTekst = (k) => (k === LANDET ? 'hele landet' : O[k].type === 'fylke' ? 'fylke' : `kommune i ${O[O[k].f].kort}`);
-const sokOmr = lagSok(Object.values(O).map((x) => ({k: x.k, n: x.n})).concat(FYL.filter((f) => O[f].kort !== O[f].n).map((f) => ({k: f, n: O[f].kort}))),
+const sokOmr = lagSok(KOMM.map((k) => ({k, n: O[k].n})),
   Object.entries(DATA.synK).map(([ord, ks]) => ({ord, k: ks})), (k) => bef(k, SISTAAR) || 0);
 const inp = $('#bf-sok'), tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
 const visOmr = kobleSok(inp, $('#bf-forslag'), sokOmr,
   (t) => `${esc(O[t.k].n)}<span class="s">${t.ord ? `Søkeord «${esc(t.ord)}» · ` : ''}${esc(typeTekst(t.k))} · ${nf0.format(bef(t.k, SISTAAR))} innbyggere</span>`,
   (t) => { inp.value = O[t.k].n; velg(t.k, {ord: t.ord, rull: true}); },
-  'Ingen treff. Prøv dagens kommunenavn, eller <button type="button" class="bf-lenke">se alle kommuner</button>.');
+  'Ingen treff. Prøv dagens kommunenavn, velg et fylke over, eller <button type="button" class="bf-lenke">se alle kommuner</button>.');
 $('#bf-forslag').addEventListener('velg-alle', () => { if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({behavior: 'smooth'}); });
 alleKnapp.addEventListener('click', () => {
   const vis = tre.hidden;
@@ -1023,7 +1044,10 @@ alleKnapp.addEventListener('click', () => {
 });
 tre.addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) { tre.hidden = true; alleKnapp.setAttribute('aria-expanded', 'false'); inp.value = O[b.dataset.k].n; velg(b.dataset.k, {rull: true}); } });
 $('#bf-landet').addEventListener('click', () => { inp.value = ''; velg(LANDET); });
-const EKS = ['Træna', 'Oslo', 'Lillestrøm', 'Skedsmo', 'Nordland', 'Narvik', 'Atlantis'];
+const fsel = $('#bf-fylke');
+fsel.innerHTML = `<option value="${LANDET}">Hele landet</option>` + FYL.map((f) => `<option value="${esc(f)}">${esc(iNavn(f))}</option>`).join('');
+fsel.addEventListener('change', () => { inp.value = ''; velg(fsel.value); });
+const EKS = ['Træna', 'Oslo', 'Lillestrøm', 'Skedsmo', 'Narvik', 'Atlantis'];
 $('#bf-eksempler').innerHTML = EKS.map((n) => `<button type="button" class="bf-lenke" data-eks="${esc(n)}">${esc(n)}</button>`).join(', ');
 $('#bf-eksempler').addEventListener('click', (e) => { const b = e.target.closest('[data-eks]'); if (!b) return; inp.value = b.dataset.eks; inp.focus(); visOmr(); });
 
@@ -1042,6 +1066,7 @@ root.addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
   if (b.dataset.topp) { visning.topp = b.dataset.topp; tegnTopp(valgt()); }
   else if (b.dataset.kkat) { visning.kkat = b.dataset.kkat; tegnKart(valgt()); }
+  else if (b.dataset.niva) { visning.niva = b.dataset.niva; visning.zoom = null; tegnKart(valgt()); }
   else if (b.id === 'bf-zoom') { visning.zoom = visning.zoom === 'land' ? null : 'land'; tegnKart(valgt()); }
   else if (b.dataset.velg) { const k = b.dataset.velg; inp.value = k === LANDET ? '' : O[k].n; velg(k, {rull: true}); }
 });
@@ -1053,7 +1078,8 @@ function tegnAlt() {
   const o = valgt(), n = iNavn(o);
   document.title = o === LANDET ? 'Innvandrere og norskfødte med innvandrerforeldre i kommunene' : `${O[o].n}: innvandrere og norskfødte med innvandrerforeldre`;
   // Feltene følger adressen, unntatt mens noen skriver i dem
-  if (document.activeElement !== inp) inp.value = o === LANDET ? '' : O[o].n;
+  if (document.activeElement !== inp) inp.value = O[o].type === 'kommune' ? O[o].n : '';
+  fsel.value = fylkeAv(o) || LANDET;
   if (document.activeElement !== linp) linp.value = kartLand() ? LANDN[kartLand()].n : '';
   tegnKort(o); tegnLes(o); tegnTopp(o); tegnKart(o);
   sett('hvem-h', `Hvem bor i ${n}?`);
@@ -1062,7 +1088,7 @@ function tegnAlt() {
 }
 ingress();
 tegnAlt();
-window.addEventListener('hashchange', () => { funnetMed = null; visning.zoom = null; tegnAlt(); });
+window.addEventListener('hashchange', () => { funnetMed = null; visning.zoom = null; visning.niva = null; tegnAlt(); });
 let sisteBredde = root.clientWidth, venter = 0;
 new ResizeObserver(() => {
   if (root.clientWidth === sisteBredde) return;

@@ -8,7 +8,7 @@ Kjøres av felles/bygg.py. Stopper med feil hvis en kontroll ikke går opp:
 - 07459: kommunene og restkodene summerer til landet i 05803, og fylkene likeså
 - 09817: summen av landbakgrunner = «Alle land» per kommune og fylke, 2026
 - 09817: publisert andel = antall / folkemengde fra 07459, 2026
-- kartet har nøyaktig de samme 357 kommunene som tabellene
+- kartene har nøyaktig de samme 357 kommunene og 15 fylkene som tabellene
 - synonymene peker på kommuner og land som finnes
 Toleransene er satt etter faktiske avvik og er forklart der de står. Bare standardbiblioteket.
 """
@@ -70,10 +70,11 @@ def koder(t, dim):
     return t["koder"][t["dims"].index(dim)]
 
 
-def kartstier(geojson, knr):
+def kartstier(geojson, knr, fylkegeo, fnr):
     """Fra arealprofiler: sfærisk transvers Mercator med sentralmeridian 15° Ø (som UTM 33),
     Douglas-Peucker-forenkling og SVG-stier i et koordinatsystem 1000 piksler bredt.
-    Gir også en avgrensningsboks per kommune, brukt til å zoome til fylket."""
+    Gir også en avgrensningsboks per kommune, brukt til å zoome til fylket.
+    Fylkene projiseres med nøyaktig samme transformasjon, så fylkeskartet og kommunekartet passer sammen."""
     l0 = math.radians(15)
 
     def proj(lon, lat):
@@ -112,8 +113,12 @@ def kartstier(geojson, knr):
     x0, y0 = min(xs), min(ys)
     skala = 1000 / (max(xs) - x0)
     hoyde = math.ceil((max(ys) - y0) * skala)
+    for f in fylkegeo["features"]:
+        g = f["geometry"]
+        polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
+        proj_ringer["F" + f["properties"]["fylkesnummer"]] = [[proj(*c[:2]) for c in ring] for poly in polys for ring in poly]
     stier, boks = {}, {}
-    for k in knr:
+    for k in list(knr) + ["F" + f for f in fnr]:
         deler, bx, by = [], [], []
         for r in proj_ringer[k]:
             pts = [((x - x0) * skala, (y - y0) * skala) for x, y in r]
@@ -131,7 +136,8 @@ def kartstier(geojson, knr):
             deler.append("M" + "L".join(f"{(x - x0) * skala:.1f},{(y - y0) * skala:.1f}" for x, y in r[:-1]) + "Z")
         stier[k] = "".join(deler)
         boks[k] = [round(min(bx), 1), round(min(by), 1), round(max(bx), 1), round(max(by), 1)]
-    return {"b": 1000, "h": hoyde, "p": stier, "boks": boks}
+    return {"b": 1000, "h": hoyde, "p": {k: stier[k] for k in knr}, "boks": {k: boks[k] for k in knr},
+            "fp": {f: stier["F" + f] for f in fnr}, "fboks": {f: boks["F" + f] for f in fnr}}
 
 
 def main():
@@ -140,6 +146,7 @@ def main():
         "komm_delt", "fylke_delt", "komm_land", "fylke_land"))
     vdk = json.loads((RAW / "verdensdel.json").read_text(encoding="utf8"))
     geo = json.loads((RAW / "kommuner2024-S.geojson").read_text(encoding="utf8"))
+    fgeo = json.loads((RAW / "fylker2024-S.geojson").read_text(encoding="utf8"))
     syn_k = json.loads((MAPPE / "data" / "synonymer.json").read_text(encoding="utf8"))["synonymer"]
     syn_l = json.loads((MAPPE / "data" / "land-synonymer.json").read_text(encoding="utf8"))
 
@@ -292,7 +299,9 @@ def main():
             if k not in land:
                 feil(f"landsynonymet «{ord_}» peker på {k}, som ikke har personer")
 
-    kart = kartstier(geo, kom)
+    if {f["properties"]["fylkesnummer"] for f in fgeo["features"]} != set(fyl):
+        feil("fylkeskartet og 07108 har ikke de samme fylkene")
+    kart = kartstier(geo, kom, fgeo, fyl)
 
     # Kompakt: land -> [[områdekode, innv, nmi], ...]
     land_ut = {l: [[o, v[0], v[1]] for o, v in sorted(land[l].items())] for l in landliste}
