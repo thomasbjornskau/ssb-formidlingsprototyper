@@ -52,13 +52,14 @@ Valget ligger i adressen: `#omrade=5610&aar=2024&ind=InntektBrutto`.
 19. Tidsserier er lenket gjennom rene nummerendringer med Klass. Metoden er vår.
 20. Fylkene som ble gjenopprettet i 2024, har bare tall for 2024 i prototypen.
 21. Listene «høyest skår» og «lavest skår» er en rangering av kommuner. Innsikten sier at prototypen ikke skal rangere (H2, H5).
-22. Kartet bruker faste klasser (under 0,5 til 0,9 og over) for alle indikatorer og år. SSBs eget kart bruker relative farger.
+22. Kartet bruker som standard faste klasser (under 0,5 til 0,9 og over) for alle indikatorer og år. SSBs eget kart bruker relative farger.
 23. Kartet har grå toner, ikke rødt og blått, fordi de fargene betyr kvinner og menn her.
 24. Varselet om små kommuner vises for alle kommuner, også Oslo. Prototypen har ikke folketall.
 25. Ingressen i tidsseksjonen bruker grensen 0,05 for «steget» og «falt».
 26. Kortet bruker SSBs navn fra tabellen, med skrivefeilene «næringsstuktur» og «offtentlig».
 27. Y-aksen for grunnlagstall i kortet starter ikke på null for prosent.
 28. Kartfilen er hentet fra en tredjepart som bygger på Kartverket.
+30. Kartet har en bryter til «egen skala»: fem like store grupper av kommunene etter skåren siste år, med grensene holdt faste for alle år. Kvantiler er valgt framfor Jenks fordi de kan forklares i én setning. Like skårer havner i samme klasse, så gruppene blir ikke helt like store.
 29. For offentlig sektor 2012 skriver kortet at avviket står på listen til faglig kontroll.
 
 ## Kjente svakheter
