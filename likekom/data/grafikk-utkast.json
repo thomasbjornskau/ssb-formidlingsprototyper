@@ -1,0 +1,58 @@
+{
+ "merknad": "Utkast til steg 2. Hentet 13.11.2026 fra PxWebApi v2 (data.ssb.no), hele landet. Erstattes av data/raw/ i steg 3.",
+ "kilder": {
+  "skar": "tabell 09292",
+  "grunnlag": "tabell 09293"
+ },
+ "aar": 2024,
+ "skar": {
+  "Barnehage": 0.94,
+  "KomRepresentant": 0.81,
+  "UtdNiva": 0.75,
+  "Arbeid": 0.94,
+  "InntektBrutto": 0.72,
+  "Deltidsarbeid": 0.47,
+  "Fedrekvote": 0.67,
+  "Naringsstruktur": 0.62,
+  "OffentligSektor": 0.61,
+  "PrivatSektor": 0.74,
+  "Ledere": 0.79,
+  "UtdanningVGS": 0.67
+ },
+ "grunnlag": {
+  "Barnehage": 94.3,
+  "KomReprMenn": 59.4,
+  "KomRepresentant": 40.6,
+  "UtdMenn": 32.5,
+  "UtdKvinner": 43.2,
+  "MennTjueSekstiseks": 79.1,
+  "KvinnerTjueSekstisek": 74.6,
+  "BruttoMenn": 722100,
+  "BruttoKvinner": 522000,
+  "MennDeltid": 15.8,
+  "KvinnerDeltid": 33.4,
+  "Fedrekvote": 67.5,
+  "Naringsstruktur": 0.62,
+  "MennOffentligSyss": 30.3,
+  "KvinnerOffentligSyss": 69.7,
+  "MennPrivatSyss": 63.1,
+  "KvinnerPrivatSyss": 36.9,
+  "MennLedere": 60.7,
+  "KvinnerLedere": 39.3,
+  "UtdanningVGS": 0.67
+ },
+ "skar_2008": {
+  "Barnehage": 0.87,
+  "KomRepresentant": 0.75,
+  "UtdNiva": 0.87,
+  "Arbeid": 0.92,
+  "InntektBrutto": 0.64,
+  "Deltidsarbeid": 0.38,
+  "Fedrekvote": 0.6,
+  "Naringsstruktur": 0.64,
+  "OffentligSektor": 0.58,
+  "PrivatSektor": 0.74,
+  "Ledere": 0.64,
+  "UtdanningVGS": 0.65
+ }
+}

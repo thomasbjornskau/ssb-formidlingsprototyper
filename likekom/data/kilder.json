@@ -1,0 +1,30 @@
+{
+  "statistikk": "likekom",
+  "api": "SSB PxWebApi v2, CC BY 4.0",
+  "format": "json-stat2",
+  "merknad": "URL-ene følger PxWebApi v2 med valueCodes[...]. Rådataene i data/raw/ er hentet direkte med scripts/hent_data.py 13.11.2026.",
+  "datasett": [
+    {
+      "id": "skar",
+      "tabell": "09292",
+      "svarer_paa": ["Hvor likestilte er vi?", "Hva har endret seg siden 2008?"],
+      "beskrivelse": "Skår per indikator (0–1) for de tolv indikatorene, hele landet, 2008–2024.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09292/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+      "omfang": "1 region × 12 indikatorer × 17 år = 204 celler"
+    },
+    {
+      "id": "grunnlag",
+      "tabell": "09293",
+      "svarer_paa": ["Hva ligger bak skåren?", "Hva har endret seg siden 2008?"],
+      "beskrivelse": "Grunnlagstall for indikatorene: andeler og beløp for kvinner og menn, hele landet, 2008–2024.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09293/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+      "omfang": "1 region × 20 statistikkvariabler × 17 år = 340 celler"
+    }
+  ],
+  "manglende_verdier": "Ingen i landstallene 2008–2024 (kontrollert i lag_data.py).",
+  "fallgruver": [
+    "Skåren i 09292 er publisert med to desimaler. Skår regnet fra grunnlagstallene i 09293 avviker med inntil 0,01 fordi grunnlagstallene er avrundet. Prototypen viser publisert skår.",
+    "Brudd i tidsserien: fedrekvote (2013), deltid (2015), arbeidsstyrke (a-ordningen, Om statistikken oppgir 2017, grunnlagstallene hopper i 2015).",
+    "Tabellene har 979 regionkoder med gamle og nye kommuner. Kommunenivået er ikke hentet i denne versjonen."
+  ]
+}

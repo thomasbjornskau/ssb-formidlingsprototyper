@@ -1,0 +1,35 @@
+<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>likekom · grafikkutkast steg 2</title>
+<style>
+@font-face{font-family:ETB;src:url("../../../felles/vendor/et-book/et-book-roman-old-style-figures.ttf")}
+@font-face{font-family:ETB;font-style:italic;src:url("../../../felles/vendor/et-book/et-book-display-italic-old-style-figures.ttf")}
+body{margin:0;background:#fffff8;color:#111;font-family:ETB,Palatino,Georgia,serif;font-size:19px;line-height:1.45}
+main{max-width:1200px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
+h1{font-weight:400;font-size:44px;margin:.2em 0}h2{font-weight:400;font-size:30px;margin:2.2em 0 .3em}
+.sc{text-transform:uppercase;letter-spacing:.14em;color:#85857c;font-size:14px}
+p{max-width:44em}em{color:#55554e}object{display:block;max-width:100%;border-top:1px solid #c9c9bf;border-bottom:1px solid #c9c9bf;margin:14px 0}
+ol{max-width:44em}.smal{max-width:390px}
+</style></head><body><main>
+<div class="sc">Steg 2 i formidlingsprototype for likekom · versjon 0.1 · 13.11.2026 · Status: utkast</div>
+<h1>Grafikkutkast: Indikatorer for kjønnslikestilling</h1>
+<p><em>Uttrykket følger filmen og avviker bevisst fra SSBs designpraksis: ET Book i stedet for Roboto og Open Sans, papirhvit bunn, sort skår, og rødt og blått bare på grunnlagstallene. Steg 1 er ikke gjort, så variantene er ikke knyttet til godkjente spørsmål ennå.</em></p>
+
+<h2>Konseptgrafikk: Slik lages tallene</h2>
+<object type="image/svg+xml" data="../../src/konsept-bred.svg" width="1200"></object>
+<ol><li><b>Grunnlagstall.</b> Andeler eller beløp for kvinner og menn, her kvinner og menn blant ledere.</li>
+<li><b>Vippehuske.</b> Skåren sier hvor skjev fordelingen er, ikke hvem som har mest. For ledere: den minste andelen delt på 0,5.</li>
+<li><b>Ringen.</b> Hver indikator får én eike. Skår 1 når ytterkanten.</li></ol>
+<p>Smal versjon for mobil:</p>
+<object class="smal" type="image/svg+xml" data="../../src/konsept-smal.svg" width="390"></object>
+
+<h2>Variant A: Kransen</h2>
+<p>Ringen i midten og grunnlagstallene som tolv små vippehusker rundt, hver ved sin eike. Nærmest konseptet fra 2018. Krever stor flate og må stables på mobil.</p>
+<object type="image/svg+xml" data="02-topp-a.svg" width="1200"></object>
+
+<h2>Variant B: Ring og rekke</h2>
+<p>Ringen til venstre og de tolv indikatorene som en sortert liste til høyre. Lettere å lese og sammenligne, og listen fungerer alene på mobil. Koblingen mellom eike og vippehuske går gjennom navnet.</p>
+<object type="image/svg+xml" data="02-topp-b.svg" width="1200"></object>
+
+<h2>Variant C: Spennet</h2>
+<p>Toppgrafikk i standardmålet 1200 × 330: spennet fra laveste til høyeste skår, ringen, og vippehusken for indikatoren som ligger lengst unna.</p>
+<object type="image/svg+xml" data="02-topp-c.svg" width="1200"></object>
+</main></body></html>
