@@ -21,7 +21,7 @@ RAW = MAPPE / "data" / "raw"
 
 def hent(url):
     req = urllib.request.Request(url, headers={"Accept": "application/json", "User-Agent": "ssb-formidlingsprototyper"})
-    with urllib.request.urlopen(req, timeout=60) as svar:
+    with urllib.request.urlopen(req, timeout=240) as svar:
         return json.loads(svar.read().decode("utf8"))
 
 
@@ -32,6 +32,12 @@ def main():
         if i:
             time.sleep(3)  # API-et tillater 30 spørringer per minutt
         data = hent(ds["url"])
+        if ds.get("type") == "klass":
+            if "codeChanges" not in data:
+                raise SystemExit(f"{ds['id']}: svaret mangler 'codeChanges'")
+            (RAW / f"{ds['id']}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf8")
+            print(f"{ds['id']}: {ds['tabell']}, {len(data['codeChanges'])} endringer")
+            continue
         for nokkel in ("id", "size", "dimension", "value"):
             if nokkel not in data:
                 raise SystemExit(f"{ds['id']}: svaret mangler '{nokkel}', er det json-stat2?")

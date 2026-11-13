@@ -1,57 +1,75 @@
-Steg 3 i formidlingsprototype for likekom · versjon 0.1 · 13.11.2026 · Status: utkast
+Steg 3 i formidlingsprototype for likekom · versjon 0.2 · 13.11.2026 · Status: utkast
 
 # Kildekart
 
-Steg 1 er ikke gjort. Spørsmålene under er arbeidsspørsmål fra filmen og grafikken i steg 2, ikke godkjente prioriteringer.
-
 ## Spørsmål, datasett og seksjon
 
-| Spørsmål | Datasett | Tabell | Seksjon i prototypen |
-|---|---|---|---|
-| Hvor likestilte er vi? | `skar` | 09292 | Hode, toppgrafikk, «Tolv indikatorer, én ring» |
-| Hva ligger bak skåren? | `grunnlag` | 09293 | Vippehuskene, kortet for valgt indikator |
-| Hva har rørt seg siden 2008? | `skar`, `grunnlag` | 09292, 09293 | «Hva har rørt seg siden 2008?», tidsseriene i kortet |
+| Nr | Spørsmål | Datasett | Tabell | Seksjon i prototypen |
+|---|---|---|---|---|
+| 1 | Hvor likestilte er vi, i landet og i min kommune? | `skar` | 09292 | Hode med kommunevelger, ringen |
+| 2 | Hva ligger bak skåren? | `grunnlag` | 09293 | Vippehuskene, kortet for valgt indikator |
+| 3 | Hvordan ligger kommunen an mot landet og andre? | `skar`, `klass_kommuner`, `klass_fylker` | 09292, Klass 131 og 104 | Stiplet landslinje, «Hvor i landet?» |
+| 4 | Hva har endret seg siden 2008? | `skar`, `grunnlag` | 09292, 09293 | «Hva har rørt seg siden 2008?», tidsseriene i kortet |
 
-Begge tabellene er oppdatert 20.01.2026 og hentet direkte fra PxWebApi v2 med `scripts/hent_data.py` 13.11.2026. Nye tall kommer 24.11.2026.
+Alt er hentet direkte fra API-ene med `scripts/hent_data.py` 13.11.2026. Tabellene er oppdatert 20.01.2026. Nye tall kommer 24.11.2026.
 
 ## Struktur, talt fra dataene
 
-- 09292 har 12 statistikkvariabler (én skår per indikator), 17 år (2008–2024) og 979 regionkoder.
-- 09293 har 20 statistikkvariabler: 8 par for kvinner og menn, 2 andeler (barnehage, fedrekvote) og 2 skårer (næringsstruktur, utdanningsprogram).
-- Landstallene har ingen manglende verdier og ingen statussymboler.
-- 8 av 12 indikatorer har ett tall for kvinner og ett for menn, og kan vises som vippehuske. 4 kan ikke det.
+- Begge tabellene har 979 regionkoder: landet, 41 tosifrede fylkeskoder og 936 firesifrede kommunekoder, gamle og nye, og koden «0716u» for Våle (til 2001).
+- I 2024 har 357 kommuner og 15 fylker tall. Alle 357 finnes i kartet.
+- Tidsseriene ligger på koden som gjaldt hvert år. Av dagens 357 kommunenummer har bare 83 tall for alle år, 242 fra 2020 og alle 357 fra 2024.
+- Statussymboler: «.» (koden gjaldt ikke) 111 948 ganger i 09292, og «..» (tall mangler) 1 370 ganger. I 09293: 187 560 og 1 418.
+- 8 av 12 indikatorer har ett tall for kvinner og ett for menn. 2 er andeler, og 2 har bare skår.
+
+## Lenking av tidsserier
+
+Klass 131 har 516 endringer i kommuneinndelingen 2008–2024, og Klass 104 har 24 for fylkene. En serie lenkes bakover bare når endringen er ren omnummerering: én gammel kode til én ny. Ved sammenslåing eller deling stopper serien.
+
+| Serien starter | Kommuner |
+|---|---|
+| 2008 | 307 |
+| 2012–2018 | 6 |
+| 2020 | 42 |
+| 2024 | 2 |
+
+For fylkene har Oslo, Rogaland, Møre og Romsdal og Nordland hel serie. Trøndelag har fra 2018, Innlandet, Agder og Vestland fra 2020, og de sju andre bare 2024. Østfold og de andre fylkene som ble gjenopprettet i 2024, lenkes ikke til fylkene før 2020, fordi Klass viser deling av Viken.
+
+Med lenking har 312 av 373 områder hel serie. Innenfor seriene mangler 147 skårer («..»).
 
 ## Metoden er testet
 
-Skåren er regnet på nytt fra grunnlagstallene for alle år, med metoden i Om statistikken, og sammenlignet med publisert skår.
+Skåren er regnet på nytt fra grunnlagstallene og sammenlignet med publisert skår.
 
-| Type | Indikatorer | Metode | Største avvik |
-|---|---|---|---|
-| Fordeling | Kommunestyre, offentlig sektor, privat sektor, ledere | min(kvinner, menn) / 50 | Innenfor 0,011, med ett unntak |
-| Forhold | Utdanningsnivå, arbeidsstyrke, inntekt, deltid | min(kvinner/menn, menn/kvinner) | 0,0053 (utdanningsnivå 2020) |
-| Andel | Barnehage, fedrekvote | andel / 100 | Innenfor 0,011 |
-| Skår | Næringsstruktur, utdanningsprogram | samme tall i begge tabeller | Innenfor 0,011 |
+| Nivå | Resultat |
+|---|---|
+| Hele landet, alle år | Største avvik 0,0053 (utdanningsnivå 2020). Ett avvik over 0,011: kommunestyre 2010 |
+| Kommuner og fylker, alle år | 129 avvik over 0,05, alle for offentlig sektor i 2012. Ingen andre |
 
-Kvinner og menn summerer til 100 prosent (± 0,1) i alle fordelingene, alle år.
-
-**Ett avvik:** Kommunestyre 2010. Grunnlagstallene er 38,2 prosent kvinner, som gir 0,76. Publisert skår er 0,75, som i 2008 og 2009. Kvinneandelen 38,2 står i 09293 fra 2010, året før valget i 2011. Prototypen viser publisert skår.
+Kvinner og menn summerer til 100 prosent (± 0,1) i alle fordelinger, alle områder og år.
 
 ## Datamengde og valg
 
-| Alternativ | Celler | Gjør mulig |
+| Alternativ | Tall i `index.html` | Gjør mulig |
 |---|---|---|
-| **Valgt: hele landet, alle år** | 544 | Ringen, vippehuskene og tidsseriene. 8 kB i `index.html` |
-| Fylker i tillegg | ca. 8 700 | Sammenligning mellom fylker |
-| Alle kommuner, alle år | ca. 530 000 | «Min kommune». Krever opprydding i 979 regionkoder og kommunesammenslåinger |
+| Bare landet | 544 | Landsbildet |
+| **Valgt: landet, 15 fylker og 357 kommuner, alle år** | ca. 190 000, 791 kB | Kommunevelger, kart alle år, tidsserier per kommune |
+| Bare siste år for kommunene | ca. 11 000 | Kart og kommunevelger, men ingen tidsserie for kommunen |
 
-Valgt av Claude 13.11.2026 etter Thomas' føring «vi må starte med landsbildet». Kommunenivået er neste utvidelse.
+Valgt av Claude 13.11.2026 etter Thomas' ønske om kommunevelger og kart. `index.html` er 1,3 MB, og kartet er 123 kB av det.
+
+## Kart
+
+Kommunegrenser fra Kartverket (CC BY 4.0), hentet fra `github.com/robhop/fylker-og-kommuner` (Kommuner-S, 2024). `scripts/lag_kart.py` projiserer og forenkler til `src/kart.json`. Rådataene ligger i `data/raw/kommuner-S.geojson`.
 
 ## Hull og hindre
 
-1. Kommunestyre 2010: de to tabellene stemmer ikke overens (se over).
-2. Arbeidsstyrke: Om statistikken oppgir brudd i 2017. Grunnlagstallene hopper fra 2014 til 2015 (menn 83,1 til 77,1 prosent). Prototypen merker bruddet i 2015.
-3. Deltid: bruddet er i 2015. Om statistikken sier at definisjonen gjelder 2008–2014 og fra 2016, så 2015 er et overgangsår.
-4. Fedrekvote: brudd i 2013, og nytt datagrunnlag fra 2019-kullet. Prototypen merker bare 2013.
-5. Næringsstruktur og utdanningsprogram har ikke grunnlagstall i 09293. De vises som «bare skår».
-6. 09293 har tallet 0,6 der 09292 har 0,60, altså færre desimaler i noen år for de to skår-indikatorene.
-7. Kommunenivået er ikke hentet. Tabellene har 979 regionkoder med både gamle og nye kommuner.
+1. Kommunestyre 2010, hele landet: grunnlagstallene gir 0,76, publisert skår er 0,75.
+2. Offentlig sektor 2012: i 129 kommuner og fylker stemmer ikke skår og grunnlagstall overens. Eksempel: Bardu, der grunnlagstallene gir 1,00 og publisert skår er 0,54. Landstallet stemmer.
+3. Arbeidsstyrke: Om statistikken oppgir brudd i 2017, grunnlagstallene hopper i 2015.
+4. Deltid: 2015 er et overgangsår mellom to definisjoner.
+5. Fedrekvote: nytt datagrunnlag fra 2019-kullet er ikke merket, bare bruddet i 2013.
+6. Næringsstruktur og utdanningsprogram har ikke grunnlagstall i 09293.
+7. 50 kommuner og 11 fylker har ikke hel tidsserie på grunn av grenseendringer.
+8. Klass viser ikke grensejusteringer. En kommune kan ha fått justert grensene uten at serien brytes her.
+9. Det er ikke kjent om hver indikator følger bosted eller arbeidssted.
+10. Kartfilen er hentet fra en tredjepart. Den bør byttes med en fil hentet direkte fra Kartverket.

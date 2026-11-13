@@ -8,20 +8,21 @@
 
 - Hvor likestilte er vi, målt med tolv indikatorer på en skala fra 0 til 1?
 - Hva ligger bak hver skår? Grunnlagstallene vises som vippehusker.
+- Hvordan ligger kommunen an mot landet og andre kommuner? Kart.
 - Hva har rørt seg siden 2008?
 
-Bare hele landet i denne versjonen.
+For hele landet, 15 fylker og 357 kommuner, 2008–2024.
 
 ## Dokumentene
 
 - `docs/02-kvalitetssikring.md` og `docs/grafikk/`: grafikken fra steg 2
 - `docs/03-kildekart.md`: tabeller, metodetest, hull og hindre
 - `docs/04-byggenotat.md`: hva som er bygget, kontroller og nye valg
-- `docs/01-innsikt.md` mangler. Steg 1 er ikke gjort.
+- `docs/01-innsikt.md` og `docs/01b-sammenligning.md`: innsikt, hypoteser og sammenligning med første versjon. Ikke godkjent.
 
 ## Kilder
 
-SSB, tabell 09292 (skår) og 09293 (grunnlagstall), PxWebApi v2, CC BY 4.0. Rådataene i `data/raw/` er hentet direkte fra API-et 13.11.2026 og er uendret.
+SSB, tabell 09292 (skår) og 09293 (grunnlagstall), PxWebApi v2, CC BY 4.0, og Klass 131 og 104 for endringer i kommune- og fylkesinndelingen. Kartgrunnlag: Kartverket, CC BY 4.0, hentet fra github.com/robhop/fylker-og-kommuner. Rådataene i `data/raw/` er hentet direkte fra API-et 13.11.2026 og er uendret.
 
 Ikon 115 «kvinne og mann» er fra `ssb-ikoner`. Skriften ET Book (MIT-lisens) ligger i `felles/vendor/et-book/`.
 
@@ -29,6 +30,7 @@ Ikon 115 «kvinne og mann» er fra `ssb-ikoner`. Skriften ET Book (MIT-lisens) l
 
 ```
 python likekom/scripts/hent_data.py
+python likekom/scripts/lag_kart.py   # bare når kommuneinndelingen endres
 python felles/bygg.py likekom
 ```
 

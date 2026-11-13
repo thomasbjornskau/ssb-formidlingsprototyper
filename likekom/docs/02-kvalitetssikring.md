@@ -11,7 +11,7 @@ Steg 1 (innsiktsnotatet) er ikke gjort. Grafikken bygger på filmen fra 13.11.20
 | 3 | Vippehusken tipper 40 grader ved skår 0, og den tyngste siden er kjønnet med høyest verdi | [T] Eget valg, ikke fra statistikken | Om «tyngst» leses riktig for deltid, der høy verdi ikke er et gode |
 | 4 | Barnehage og fedrekvote vises som fylt måler, ikke vippehuske | [K1]: andelen brukes direkte som skår | Om fedrekvoten heller bør få en vippehuske mot mødre. Grunnlagstall for det finnes ikke i 09293 |
 | 5 | Næringsstruktur og utdanningsprogram vises som «bare skår» | 09293 har bare skåren for disse to | Om næringsfordelingen bak kan hentes fra en annen tabell |
-| 6 | De tolv er gruppert i fem: rammer, arbeid og omsorg, ressurser, politikk, penger | Thomas' gruppering, etter perspektivene i [K2] | Om fagseksjonen bruker samme inndeling og navn |
+| 6 | De tolv er gruppert i SSBs seks dimensjoner, med egne kortnavn. Grafikkutkastene i `docs/grafikk/` viser fortsatt fem grupper | [K1], [K2] | Om kortnavnene er dekkende |
 | 7 | «Ikke med: én samlet skår per kommune» | [K1]: fra 2012 publiseres ingen samlet skår | Ingen |
 | 8 | «Hver har sin egen målestokk» | [T] Skårene regnes på tre ulike måter [K1] | Hvor langt fagseksjonen mener skårene kan sammenlignes på tvers |
 | 9 | «Om lag hver tredje kvinne jobber deltid, mot hver sjette mann» (variant C) | 33,4 og 15,8 prosent av sysselsatte 20–66 år | Formuleringen gjelder sysselsatte, ikke alle kvinner og menn |

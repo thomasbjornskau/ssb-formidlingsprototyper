@@ -2,29 +2,61 @@
   "statistikk": "likekom",
   "api": "SSB PxWebApi v2, CC BY 4.0",
   "format": "json-stat2",
-  "merknad": "URL-ene følger PxWebApi v2 med valueCodes[...]. Rådataene i data/raw/ er hentet direkte med scripts/hent_data.py 13.11.2026.",
+  "merknad": "URL-ene følger PxWebApi v2 med valueCodes[...]. Rådataene i data/raw/ er hentet direkte med scripts/hent_data.py. Klass-svarene er ikke json-stat2.",
   "datasett": [
     {
       "id": "skar",
       "tabell": "09292",
-      "svarer_paa": ["Hvor likestilte er vi?", "Hva har endret seg siden 2008?"],
-      "beskrivelse": "Skår per indikator (0–1) for de tolv indikatorene, hele landet, 2008–2024.",
-      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09292/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
-      "omfang": "1 region × 12 indikatorer × 17 år = 204 celler"
+      "svarer_paa": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "beskrivelse": "Skår per indikator (0–1) for de tolv indikatorene, alle regionkoder (landet, fylker og kommuner, gamle og nye), 2008–2024.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09292/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+      "omfang": "979 regionkoder × 12 indikatorer × 17 år = 199 716 celler"
     },
     {
       "id": "grunnlag",
       "tabell": "09293",
-      "svarer_paa": ["Hva ligger bak skåren?", "Hva har endret seg siden 2008?"],
-      "beskrivelse": "Grunnlagstall for indikatorene: andeler og beløp for kvinner og menn, hele landet, 2008–2024.",
-      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09293/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
-      "omfang": "1 region × 20 statistikkvariabler × 17 år = 340 celler"
+      "svarer_paa": [
+        1,
+        2,
+        3
+      ],
+      "beskrivelse": "Grunnlagstall for indikatorene: andeler og beløp for kvinner og menn, alle regionkoder, 2008–2024.",
+      "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09293/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*",
+      "omfang": "979 regionkoder × 20 statistikkvariabler × 17 år = 332 860 celler"
+    },
+    {
+      "id": "klass_kommuner",
+      "type": "klass",
+      "tabell": "Klass 131",
+      "svarer_paa": [
+        3
+      ],
+      "beskrivelse": "Endringer i kommuneinndelingen 2008–2024. Brukes til å lenke tidsserier for kommuner som bare har byttet nummer.",
+      "url": "https://data.ssb.no/api/klass/v1/classifications/131/changes?from=2008-01-01&to=2025-01-01",
+      "omfang": "516 endringer"
+    },
+    {
+      "id": "klass_fylker",
+      "type": "klass",
+      "tabell": "Klass 104",
+      "svarer_paa": [
+        3
+      ],
+      "beskrivelse": "Endringer i fylkesinndelingen 2008–2024.",
+      "url": "https://data.ssb.no/api/klass/v1/classifications/104/changes?from=2008-01-01&to=2025-01-01",
+      "omfang": "24 endringer"
     }
   ],
-  "manglende_verdier": "Ingen i landstallene 2008–2024 (kontrollert i lag_data.py).",
+  "manglende_verdier": "«.» betyr at regionkoden ikke gjaldt det året. «..» betyr at tallet mangler. Begge blir null i build/likekom.json, og prototypen skriver «tall mangler».",
   "fallgruver": [
-    "Skåren i 09292 er publisert med to desimaler. Skår regnet fra grunnlagstallene i 09293 avviker med inntil 0,01 fordi grunnlagstallene er avrundet. Prototypen viser publisert skår.",
-    "Brudd i tidsserien: fedrekvote (2013), deltid (2015), arbeidsstyrke (a-ordningen, Om statistikken oppgir 2017, grunnlagstallene hopper i 2015).",
-    "Tabellene har 979 regionkoder med gamle og nye kommuner. Kommunenivået er ikke hentet i denne versjonen."
+    "Skåren i 09292 er publisert med to desimaler. Skår regnet fra grunnlagstallene avviker litt fordi grunnlagstallene er avrundet. Prototypen viser publisert skår.",
+    "Tidsseriene ligger på regionkoden som gjaldt hvert år. Av dagens 357 kommunenummer har bare 83 tall for alle år. Serier lenkes bare når Klass viser ren omnummerering, ikke ved sammenslåing eller deling.",
+    "Brudd i tidsserien: fedrekvote (2013), deltid (2015), arbeidsstyrke (a-ordningen; Om statistikken oppgir 2017, grunnlagstallene hopper i 2015).",
+    "Kommunestyre 2010, hele landet: 09292 og 09293 stemmer ikke overens."
   ]
 }

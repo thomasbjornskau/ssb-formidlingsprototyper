@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Indikatorer for kjønnslikestilling · prototype</title>
-<meta name="description" content="Prototype: tolv indikatorer for kjønnslikestilling, hele landet 2008–2024, med skår og grunnlagstall. Tall fra SSB, tabell 09292 og 09293.">
+<meta name="description" content="Prototype: tolv indikatorer for kjønnslikestilling for landet, fylkene og alle kommuner 2008–2024, med skår, grunnlagstall og kart. Tall fra SSB, tabell 09292 og 09293.">
 <style>
 :root{--papir:#fffff8;--sort:#111111;--graa:#55554e;--lysgraa:#85857c;--strek:#c9c9bf;--kv:#DC3400;--ma:#0D81CF}
 *{box-sizing:border-box}
@@ -58,11 +58,34 @@ svg text{font-family:"ETB",Palatino,"Palatino Linotype",Georgia,serif;fill:#1111
 svg .t{font-family:"ETL",Palatino,Georgia,serif}svg .i{font-style:italic;fill:#55554e}svg .g{fill:#55554e}
 svg .sc{text-transform:uppercase;letter-spacing:.14em;fill:#85857c}
 svg [role=button]{cursor:pointer}
+
+.bf-velg{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start;margin:18px 0 4px}
+.bf-sokfelt{position:relative;flex:1 1 320px;max-width:520px}
+.bf-input{width:100%;font:inherit;font-size:22px;padding:8px 2px;border:0;border-bottom:1.5px solid var(--sort);background:transparent;color:var(--sort);border-radius:0}
+.bf-input::placeholder{color:var(--lysgraa);font-style:italic}
+.bf-forslag{position:absolute;z-index:5;left:0;right:0;top:100%;margin:0;padding:4px 0;list-style:none;background:var(--papir);border:1px solid var(--sort);max-height:340px;overflow:auto}
+.bf-forslag li{padding:6px 10px;cursor:pointer}
+.bf-forslag li[aria-selected=true]{background:var(--sort);color:var(--papir)}
+.bf-forslag small{color:var(--lysgraa);font-style:italic;margin-left:8px}
+.bf-forslag li[aria-selected=true] small{color:var(--strek)}
+.bf-knapp{font:inherit;font-size:18px;background:transparent;color:var(--sort);border:1px solid var(--sort);padding:8px 14px;cursor:pointer;border-radius:0}
+.bf-knapp[aria-pressed=true]{background:var(--sort);color:var(--papir)}
+.bf-valgt{font-size:17px;color:var(--graa);font-style:italic;margin:6px 0 0}
+.bf-kartgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:start}
+.bf-kartgrid select{font:inherit;font-size:20px;background:var(--papir);color:var(--sort);border:0;border-bottom:1.5px solid var(--sort);padding:6px 2px;max-width:100%;border-radius:0}
+.bf-topper{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:16px}
+.bf-topper ol{margin:.2em 0;padding:0;list-style:none}
+.bf-topper button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:10px;width:100%;padding:3px 0;border-bottom:1px solid var(--strek);font-size:17px;box-sizing:border-box}
+.bf-topper button span:last-child{font-family:"ETL",Palatino,Georgia,serif}
+.bf-kart path{cursor:pointer}
+.bf-forklaring{display:flex;flex-wrap:wrap;margin:14px 0 4px;font-family:"ETL",Palatino,Georgia,serif;font-size:14px;color:var(--graa)}
+.bf-forklaring span{flex:1 1 0;min-width:44px;border-top:14px solid;padding-top:4px}
 @media (max-width:900px){
+  .bf-kartgrid{grid-template-columns:minmax(0,1fr)}
   body{font-size:18px}
   .bf-bred{display:none}.bf-smal{display:block}
   .bf-krans{display:none}.bf-rekke{display:block}
-  .bf-topp,.bf-kort{grid-template-columns:minmax(0,1fr)}
+  .bf-kort{grid-template-columns:minmax(0,1fr)}
   .bf-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
   section{margin-top:48px}
 }
@@ -76,49 +99,28 @@ svg [role=button]{cursor:pointer}
 <div class="bf-wrap">
   <header>
     <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
-    <p class="bf-sc">Indikatorer for kjønnslikestilling i kommunene · hele landet</p>
+    <p class="bf-sc">Indikatorer for kjønnslikestilling i kommunene</p>
     <h1 class="bf-title">Hvor likestilte er vi?</h1>
     <p class="bf-lede" id="ingress"></p>
+    <div class="bf-velg" role="search">
+      <div class="bf-sokfelt">
+        <input class="bf-input" id="sok" type="search" placeholder="Søk etter kommune eller fylke" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="forslag" aria-autocomplete="list" aria-label="Søk etter kommune eller fylke">
+        <ul class="bf-forslag" id="forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="landet">Hele landet</button>
+    </div>
+    <p class="bf-valgt" id="valgt" aria-live="polite"></p>
+  </header>
+
+  <section id="ringen" aria-labelledby="ring-h" style="margin-top:36px">
+    <h2 id="ring-h"></h2>
+    <p class="bf-ingress">Jo mer av ringen som er fylt, desto likere. Vippa står i vater når kvinner og menn har like mye. Velg en indikator for å se tallene bak.</p>
     <div class="bf-aar">
       <output id="aar-ut" for="aar"></output>
       <input type="range" id="aar" step="1" aria-label="Velg år">
       <label for="aar">Dra for å se et annet år</label>
     </div>
-  </header>
-
-  <section class="bf-les" aria-labelledby="les-h">
-    <h2 id="les-h">Slik leser du indikatorene</h2>
-    <ol>
-      <li><b>Skåren går fra 0 til 1.</b> 1 betyr at kvinner og menn har like mye. 0 betyr at bare det ene kjønnet er med.</li>
-      <li><b>Skåren måler skjevheten, ikke hvem som har mest.</b> <span id="les-utd"></span></li>
-      <li><b>Hver indikator har sin egen målestokk.</b> Skårene regnes på ulike måter, og det finnes ingen samlet skår. Sammenlign dem med varsomhet.</li>
-      <li><b>Tre tidsserier har brudd.</b> Fedrekvote, deltid og arbeidsstyrke kan ikke sammenlignes over hele perioden. Bruddene er vist som opphold i linjen.</li>
-    </ol>
-    <details>
-      <summary>Slik lages tallene</summary>
-      <div class="bf-konsept">
-        <div class="bf-bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
-        <div class="bf-smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
-        <p class="bf-note">Eksempelet er ledere i 2024. For utdanningsnivå, arbeidsstyrke, inntekt og deltid er skåren den minste verdien delt på den største. Barnehage og fedrekvote er andeler som brukes direkte. Kilde: SSB, «Om statistikken» for indikatorer for kjønnslikestilling i kommunene.</p>
-      </div>
-    </details>
-  </section>
-
-  <section class="bf-topp" id="hovedtall" aria-live="polite">
-    <div>
-      <p class="bf-sc" data-t="omr"></p>
-      <p class="bf-stort" data-t="stort"></p>
-      <p class="bf-setning" data-t="setning"></p>
-      <div class="bf-note" data-t="under"></div>
-    </div>
-    <div class="bf-fig" id="fig-topp"></div>
-    <div class="bf-tiles" id="tiles"></div>
-    <p class="bf-src" style="grid-column:1/-1" data-kilde="09292"></p>
-  </section>
-
-  <section id="ringen" aria-labelledby="ring-h">
-    <h2 id="ring-h">Tolv indikatorer, én ring</h2>
-    <p class="bf-ingress">Jo mer av ringen som er fylt, desto likere. Vippa står i vater når kvinner og menn har like mye. Velg en indikator for å se tallene bak.</p>
+    <p class="bf-note" id="ring-merk" aria-live="polite"></p>
     <div class="bf-fig bf-krans" id="fig-krans"></div>
     <div class="bf-fig bf-smal" id="fig-ring-smal"></div>
     <ul class="bf-rekke" id="rekke"></ul>
@@ -143,38 +145,92 @@ svg [role=button]{cursor:pointer}
     </div>
   </section>
 
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du indikatorene</h2>
+    <ol>
+      <li><b>Skåren går fra 0 til 1.</b> 1 betyr at kvinner og menn har like mye. Skåren sier ikke om nivået er høyt eller lavt for begge.</li>
+      <li><b>Skåren måler skjevheten, ikke hvem som har mest.</b> <span id="les-utd"></span></li>
+      <li><b>Hver indikator har sin egen målestokk.</b> Skårene regnes på ulike måter, og det finnes ingen samlet skår for en kommune. Sammenlign indikatorene med varsomhet.</li>
+      <li><b>Tallene sier mer om strukturer enn om kommunens innsats.</b> Næringsliv, pendling og hvem som bor i kommunen, betyr mye. I små kommuner kan få personer gi store utslag.</li>
+      <li><b>Ikke alle tidsserier går tilbake til 2008.</b> Fedrekvote, deltid og arbeidsstyrke har brudd. Kommuner som er slått sammen eller delt, har tall fra året grensene ble som nå.</li>
+    </ol>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bf-bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="bf-smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+        <p class="bf-note">Eksempelet er ledere i hele landet i 2024. For utdanningsnivå, arbeidsstyrke, inntekt og deltid er skåren den minste verdien delt på den største. Barnehage og fedrekvote er andeler som brukes direkte. Kilde: SSB, «Om statistikken» for indikatorer for kjønnslikestilling i kommunene.</p>
+      </div>
+    </details>
+  </section>
+
+  <section id="kart" aria-labelledby="kart-h">
+    <h2 id="kart-h">Hvor i landet?</h2>
+    <div class="bf-kartgrid">
+      <div>
+        <p class="bf-ingress">Samme indikator, kommune for kommune. Mørkere betyr høyere skår. Velg en kommune i kartet eller i listene.</p>
+        <label class="bf-tile-lab" for="kart-ind">Indikator</label><br>
+        <select id="kart-ind"></select>
+        <div class="bf-forklaring" id="forklaring" aria-hidden="true"></div>
+        <p class="bf-note" id="kart-merk"></p>
+        <div class="bf-topper">
+          <div><p class="bf-tile-lab">Høyest skår</p><ol id="topp-hoy"></ol></div>
+          <div><p class="bf-tile-lab">Lavest skår</p><ol id="topp-lav"></ol></div>
+        </div>
+      </div>
+      <div class="bf-fig bf-kart" id="fig-kart"></div>
+    </div>
+    <details class="bf-tall"><summary>Vis tallene</summary><div class="bf-tablewrap" id="tab-kart" style="max-height:420px;overflow:auto"></div></details>
+    <p class="bf-src" data-kilde="kart"></p>
+  </section>
+
   <section id="tid" aria-labelledby="tid-h">
     <h2 id="tid-h">Hva har rørt seg siden 2008?</h2>
     <p class="bf-ingress" id="tid-ingress"></p>
     <div class="bf-fig" id="fig-tid"></div>
-    <p class="bf-note">Samme skala i alle tolv ruter, fra 0,3 til 1. Opphold i linjen viser brudd i tidsserien. Velg en rute for å se tallene bak.</p>
+    <p class="bf-note">Samme skala i alle tolv ruter, fra 0,3 til 1. Opphold i linjen viser brudd i tidsserien eller år uten tall. Velg en rute for å se tallene bak.</p>
     <details class="bf-tall"><summary>Vis tallene</summary><div class="bf-tablewrap" id="tab-tid"></div></details>
     <p class="bf-src" data-kilde="09292"></p>
   </section>
 
   <footer class="bf-bunn">
-    <p><b>Om tallene.</b> Statistikken har tolv indikatorer for kjønnslikestilling, publisert for alle kommuner, fylker og landet. Denne prototypen viser bare landstallene. Skåren er SSBs publiserte skår. Grunnlagstallene er andeler og beløp for kvinner og menn.</p>
-    <p><b>Egne valg i prototypen.</b> Vippehusken, grupperingen i fem og kortnavnene på indikatorene er laget for prototypen og er ikke SSBs. Vippa tipper 40 grader ved skår 0, mot kjønnet med høyest verdi. Høyest verdi er ikke alltid et gode: for deltid betyr det flere som jobber deltid.</p>
-    <p><b>Kilder.</b> SSB, tabell 09292 (skår) og 09293 (grunnlagstall). <span id="hentet"></span> <a href="https://www.ssb.no/befolkning/likestilling/statistikk/indikatorer-for-kjonnslikestilling-i-kommunene">Statistikken på ssb.no</a>.</p>
+    <p><b>Om tallene.</b> Statistikken har tolv indikatorer for kjønnslikestilling, publisert for landet, fylkene og alle kommuner. Skåren er SSBs publiserte skår. Grunnlagstallene er andeler og beløp for kvinner og menn. Bruttoinntekt er alle skattepliktige inntekter, i løpende kroner.</p>
+    <p><b>Egne valg i prototypen.</b> Vippehusken og kortnavnene på indikatorene og dimensjonene er laget for prototypen og er ikke SSBs. Vippa tipper 40 grader ved skår 0, mot kjønnet med høyest verdi. Høyest verdi er ikke alltid et gode: for deltid betyr det flere som jobber deltid. Tidsserier for kommuner og fylker er lenket bakover gjennom nummerendringer, men ikke gjennom sammenslåinger og delinger.</p>
+    <p><b>Kilder.</b> SSB, tabell 09292 (skår) og 09293 (grunnlagstall), og Klass for endringer i kommune- og fylkesinndelingen. Kartgrunnlag: Kartverket, CC BY 4.0. <span id="hentet"></span> <a href="https://www.ssb.no/befolkning/likestilling/statistikk/indikatorer-for-kjonnslikestilling-i-kommunene">Statistikken på ssb.no</a>.</p>
   </footer>
 </div>
 
 <script id="data" type="application/json">/*__INKLUDER:build/likekom.json__*/</script>
+<script id="kartdata" type="application/json">/*__INKLUDER:src/kart.json__*/</script>
 <script>
 (function(){
 "use strict";
-var D=JSON.parse(document.getElementById("data").textContent), IND=D.ind, AAR=D.aar, N=AAR.length;
+var D=JSON.parse(document.getElementById("data").textContent), K=JSON.parse(document.getElementById("kartdata").textContent);
+var IND=D.ind, AAR=D.aar, N=AAR.length, REG={}, FYLKE={};
+D.reg.forEach(function(r){REG[r.k]=r;if(r.t==="f")FYLKE[r.k]=r.n;});
+IND.forEach(function(d,j){d.j=j;});
 var SORT="#111111",GRAA="#55554e",LYS="#c9c9bf",KV="#DC3400",MA="#0D81CF",MAKSV=40;
-var st={aar:AAR[N-1],ind:"Ledere"};
+var KF=["#f1eee2","#ddd8c6","#bdb7a2","#948e7b","#66614f","#2f2c25"], KG=[.5,.6,.7,.8,.9];
+var st={omr:"0",aar:AAR[N-1],ind:"Ledere"}, V, LV;
 function nb(v,d){d=d==null?1:d;return (v<0?"−":"")+Math.abs(v).toFixed(d).replace(".",",");}
 function kr(v){return String(Math.round(v)).replace(/\B(?=(\d{3})+$)/g," ");}
 function dato(s){var p=s.split("-");return p[2]+"."+p[1]+"."+p[0];}
 function $(id){return document.getElementById(id);}
-function finn(k){for(var i=0;i<IND.length;i++)if(IND[i].kode===k)return IND[i];return IND[0];}
 function ai(){return AAR.indexOf(st.aar);}
-function harVippe(d){return d.type==="fordeling"||d.type==="forhold";}
-function verdi(d,v){return d.enhet==="kr"?kr(v):nb(v)+" %";}
 function liten(s){return s.charAt(0).toLowerCase()+s.slice(1);}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
+function typenavn(r){return r.t==="l"?"":r.t==="f"?"fylke":"kommune";}
+function stedsnavn(r){return r.t==="l"?"Hele landet":r.n;}
+// Tallene for ett område, pakket ut: skår 0–1, prosent med én desimal, kroner.
+function visning(r){return IND.map(function(d){
+  var g=r.g[d.j],f=d.enhet==="kr"?1:10,o={kode:d.kode,navn:d.navn,ssbnavn:d.ssbnavn,hva:d.hva,dim:d.dim,type:d.type,brudd:d.brudd,enhet:d.enhet,avvik:d.avvik,j:d.j};
+  o.skar=r.s[d.j].map(function(v){return v==null?null:v/100;});
+  if(g&&g.length===2){o.kv=g[0].map(function(v){return v==null?null:v/f;});o.menn=g[1].map(function(v){return v==null?null:v/f;});}
+  if(g&&g.length===1)o.andel=g[0].map(function(v){return v==null?null:v/10;});
+  return o;});}
+function finn(k){for(var i=0;i<V.length;i++)if(V[i].kode===k)return V[i];return V[0];}
+function harVippe(d,i){return !!d.kv&&d.kv[i]!=null&&d.menn[i]!=null&&d.skar[i]!=null;}
+function verdi(d,v){return d.enhet==="kr"?kr(v):nb(v)+" %";}
 
 // ---------- tegnefunksjoner (SVG som tekst) ----------
 function tx(x,y,s,st_,kl,anker,fyll){return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="'+st_+'" text-anchor="'+(anker||"start")+'" class="'+(kl||"")+'"'+(fyll?' style="fill:'+fyll+'"':"")+">"+s+"</text>";}
@@ -189,171 +245,228 @@ function vippe(cx,cy,L,skar,kvTyngst,ih,vk,vm,fs,b){
   if(vm)o+=tx(cx+dx*i,cy+dy*i-ih-fs*.55,vm,fs,"t","middle",MA);
   return o;}
 function maaler(cx,cy,L,andel,b){b=b||7;return '<rect x="'+(cx-L/2)+'" y="'+(cy-b/2)+'" width="'+L+'" height="'+b+'" fill="none" stroke="'+SORT+'"/><rect x="'+(cx-L/2)+'" y="'+(cy-b/2)+'" width="'+(L*andel).toFixed(1)+'" height="'+b+'" fill="'+SORT+'"/>';}
+function mangekant(cx,cy,R,vals){var p=[];vals.forEach(function(v,k){if(v==null)return;var th=k*Math.PI/6;p.push((cx+R*v*Math.sin(th)).toFixed(1)+" "+(cy-R*v*Math.cos(th)).toFixed(1));});return p.length>2?"M"+p.join("L")+"Z":"";}
 function ring(cx,cy,R,i,merk,buer,prikk,skygge){
-  var o='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+SORT+'" stroke-width="1.4"/>',pts=[],sk=[];
+  var o='<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="none" stroke="'+SORT+'" stroke-width="1.4"/>';
   [.25,.5,.75].forEach(function(f){o+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(R*f)+'" fill="none" stroke="'+LYS+'" stroke-width="'+(f===.5?1:.6)+'"/>';});
-  IND.forEach(function(d,k){var th=k*Math.PI/6,sx=Math.sin(th),sy=-Math.cos(th);
-    o+=ln(cx,cy,cx+R*sx,cy+R*sy,SORT,merk===d.kode?3.5:.7);
-    pts.push([cx+R*d.skar[i]*sx,cy+R*d.skar[i]*sy]); sk.push([cx+R*d.skar[0]*sx,cy+R*d.skar[0]*sy]);});
-  function p(a){return "M"+a.map(function(q){return q[0].toFixed(1)+" "+q[1].toFixed(1);}).join("L")+"Z";}
-  if(skygge&&i>0)o+='<path d="'+p(sk)+'" fill="none" stroke="#85857c" stroke-width="1.2" stroke-dasharray="4 4"/>';
-  o+='<path d="'+p(pts)+'" fill="'+SORT+'" fill-opacity=".15" stroke="'+SORT+'" stroke-width="1.8" stroke-linejoin="round"/>';
-  pts.forEach(function(q,k){o+='<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="'+(prikk*(merk===IND[k].kode?1.9:1))+'" fill="'+SORT+'"/>';});
-  if(buer){var gr={};IND.forEach(function(d,k){(gr[d.gruppe]=gr[d.gruppe]||[]).push(k);});
+  V.forEach(function(d,k){var th=k*Math.PI/6;o+=ln(cx,cy,cx+R*Math.sin(th),cy-R*Math.cos(th),SORT,merk===d.kode?3.5:.7);});
+  if(skygge){var sp=mangekant(cx,cy,R,skygge);if(sp)o+='<path d="'+sp+'" fill="none" stroke="#85857c" stroke-width="1.2" stroke-dasharray="4 4"/>';}
+  var mp=mangekant(cx,cy,R,V.map(function(d){return d.skar[i];}));
+  if(mp)o+='<path d="'+mp+'" fill="'+SORT+'" fill-opacity=".15" stroke="'+SORT+'" stroke-width="1.8" stroke-linejoin="round"/>';
+  V.forEach(function(d,k){var v=d.skar[i];if(v==null)return;var th=k*Math.PI/6;o+='<circle cx="'+(cx+R*v*Math.sin(th)).toFixed(1)+'" cy="'+(cy-R*v*Math.cos(th)).toFixed(1)+'" r="'+(prikk*(merk===d.kode?1.9:1))+'" fill="'+SORT+'"/>';});
+  if(buer){var gr={};V.forEach(function(d,k){(gr[d.dim]=gr[d.dim]||[]).push(k);});
     Object.keys(gr).forEach(function(g){var a=gr[g][0],b=gr[g][gr[g].length-1],r=R+10,t0=(a*30-10)*Math.PI/180,t1=(b*30+10)*Math.PI/180;
       o+='<path d="M'+(cx+r*Math.sin(t0)).toFixed(1)+" "+(cy-r*Math.cos(t0)).toFixed(1)+"A"+r+" "+r+" 0 "+(t1-t0>Math.PI?1:0)+" 1 "+(cx+r*Math.sin(t1)).toFixed(1)+" "+(cy-r*Math.cos(t1)).toFixed(1)+'" fill="none" stroke="'+SORT+'" stroke-width="2.4"/>';
-      var mid=(a+b)*15,ned=mid>100&&mid<260,rr=R+(ned?30:20),u0=(a*30-14)*Math.PI/180,u1=(b*30+14)*Math.PI/180,id="gb"+buer+g;
+      var mid=(a+b)*15,ned=mid>100&&mid<260,rr=R+(ned?29:20),u0=(a*30-14.5)*Math.PI/180,u1=(b*30+14.5)*Math.PI/180,id="gb"+buer+g;
       var dd=ned?"M"+(cx+rr*Math.sin(u1)).toFixed(1)+" "+(cy-rr*Math.cos(u1)).toFixed(1)+"A"+rr+" "+rr+" 0 0 0 "+(cx+rr*Math.sin(u0)).toFixed(1)+" "+(cy-rr*Math.cos(u0)).toFixed(1)
                 :"M"+(cx+rr*Math.sin(u0)).toFixed(1)+" "+(cy-rr*Math.cos(u0)).toFixed(1)+"A"+rr+" "+rr+" 0 "+(u1-u0>Math.PI?1:0)+" 1 "+(cx+rr*Math.sin(u1)).toFixed(1)+" "+(cy-rr*Math.cos(u1)).toFixed(1);
-      o+='<path id="'+id+'" d="'+dd+'" fill="none"/><text font-size="12" class="sc" text-anchor="middle"><textPath href="#'+id+'" startOffset="50%">'+D.grupper[g]+"</textPath></text>";});}
+      o+='<path id="'+id+'" d="'+dd+'" fill="none"/><text font-size="10.5" class="sc" style="letter-spacing:.07em" text-anchor="middle"><textPath href="#'+id+'" startOffset="50%">'+D.dim[g]+"</textPath></text>";});}
   return o;}
-function svg(w,h,indre,tittel){return '<svg viewBox="0 0 '+w+" "+h+'" role="img" aria-label="'+tittel+'">'+indre+"</svg>";}
-function knapp(d,indre){return '<g role="button" tabindex="0" data-ind="'+d.kode+'" aria-pressed="'+(st.ind===d.kode)+'" aria-label="'+d.navn+", skår "+nb(d.skar[ai()],2)+'">'+indre+"</g>";}
+function svg(w,h,indre,tittel){return '<svg viewBox="0 0 '+w+" "+h+'" role="img" aria-label="'+esc(tittel)+'">'+indre+"</svg>";}
+function knapp(d,indre,i){return '<g role="button" tabindex="0" data-ind="'+d.kode+'" aria-pressed="'+(st.ind===d.kode)+'" aria-label="'+d.navn+(d.skar[i]==null?", tall mangler":", skår "+nb(d.skar[i],2))+'">'+indre+"</g>";}
 
-// ---------- hode og topp ----------
-function topp(){
-  var i=ai(),sort=IND.slice().sort(function(a,b){return a.skar[i]-b.skar[i];}),lav=sort[0],hoy=sort[sort.length-1];
-  var like=sort.filter(function(d){return d.skar[i]===hoy.skar[i];}).map(function(d){return liten(d.navn);});
-  $("ingress").textContent="Tolv indikatorer måler forskjellene mellom kvinner og menn i arbeid, utdanning, inntekt og innflytelse. I "+st.aar+" lå skårene mellom "+nb(lav.skar[i],2)+" for "+liten(lav.navn)+" og "+nb(hoy.skar[i],2)+" for "+like.join(" og ")+".";
-  var q=document.querySelector("#hovedtall");
-  q.querySelector('[data-t="omr"]').textContent="Hele landet · "+st.aar;
-  q.querySelector('[data-t="stort"]').textContent=nb(lav.skar[i],2)+" – "+nb(hoy.skar[i],2);
-  q.querySelector('[data-t="setning"]').textContent="Tolv indikatorer på en skala der 1 er full likestilling.";
-  var u="Nærmest: "+like.join(" og ")+". Lengst unna: "+liten(lav.navn)+".";
-  if(harVippe(lav))u+=" "+lav.hva+": "+verdi(lav,lav.kv[i])+" for kvinner og "+verdi(lav,lav.menn[i])+" for menn.";
-  q.querySelector('[data-t="under"]').textContent=u;
-  var f=ring(150,150,118,i,lav.kode,0,3.2,false);
-  if(harVippe(lav))f+=vippe(430,196,190,lav.skar[i],lav.kv[i]>lav.menn[i],62,verdi(lav,lav.kv[i]),verdi(lav,lav.menn[i]),18,4)+tx(430,268,lav.navn+" "+nb(lav.skar[i],2),20,"","middle");
-  else f+=maaler(430,170,190,lav.skar[i],9)+tx(430,210,lav.navn+" "+nb(lav.skar[i],2),20,"","middle");
-  $("fig-topp").innerHTML=svg(560,300,f,"Ringen med de tolv skårene og vippehusken for "+liten(lav.navn));
-  // nøkkeltall: endring fra første år, bare for indikatorer uten brudd
-  var uten=IND.filter(function(d){return !d.brudd;}).map(function(d){return {d:d,e:d.skar[i]-d.skar[0]};}).sort(function(a,b){return b.e-a.e;});
-  var opp=uten[0],ned=uten[uten.length-1];
-  function tile(lab,num,sm){return '<div><div class="bf-tile-lab">'+lab+'</div><div class="bf-num">'+num+" <small>"+sm+"</small></div></div>";}
-  var h=tile("Høyest skår",nb(hoy.skar[i],2),like.join(" og "))+tile("Lavest skår",nb(lav.skar[i],2),liten(lav.navn));
-  if(i>0)h+=tile("Størst økning siden "+AAR[0],(opp.e>0?"+":"")+nb(opp.e,2),liten(opp.d.navn))+tile("Størst fall siden "+AAR[0],nb(ned.e,2),liten(ned.d.navn));
-  else h+=tile("Første år i serien",String(AAR[0]),"")+tile("Siste år i serien",String(AAR[N-1]),"");
-  $("tiles").innerHTML=h;
-  var ud=finn("UtdNiva");
-  $("les-utd").textContent="For høyere utdanning har kvinner dratt fra menn, "+nb(ud.kv[N-1])+" mot "+nb(ud.menn[N-1])+" prosent i "+AAR[N-1]+". Derfor har skåren falt fra "+nb(ud.skar[0],2)+" til "+nb(ud.skar[N-1],2)+".";
+// ---------- hode ----------
+function hode(){
+  var i=ai(),r=REG[st.omr],med=V.filter(function(d){return d.skar[i]!=null;}).sort(function(a,b){return a.skar[i]-b.skar[i];});
+  var t="Tolv indikatorer måler forskjellene mellom kvinner og menn i arbeid, utdanning, inntekt og innflytelse, for landet, fylkene og alle kommuner. ";
+  if(med.length){var lav=med[0],hoy=med[med.length-1],like=med.filter(function(d){return d.skar[i]===hoy.skar[i];}).map(function(d){return liten(d.navn);});
+    t+="I "+(r.t==="l"?"":stedsnavn(r)+" i ")+st.aar+" lå skårene mellom "+nb(lav.skar[i],2)+" for "+liten(lav.navn)+" og "+nb(hoy.skar[i],2)+" for "+like.join(" og ").replace(/ og (?=.* og )/g,", ")+".";}
+  $("ingress").textContent=t;
+  $("ring-h").textContent=r.t==="l"?"Tolv indikatorer, én ring":stedsnavn(r)+": tolv indikatorer, én ring";
+  $("valgt").textContent=r.t==="l"?"Viser hele landet. Søk for å se en kommune eller et fylke.":"Viser "+stedsnavn(r)+" ("+typenavn(r)+(r.t==="k"&&FYLKE[r.k.slice(0,2)]?" i "+FYLKE[r.k.slice(0,2)]:"")+"). Stiplet linje i ringen er hele landet.";
+  $("landet").setAttribute("aria-pressed",r.t==="l");
+  var m="";
+  if(st.aar<r.fra)m="Tall for "+stedsnavn(r)+" finnes fra "+r.fra+". Før det hadde "+(r.t==="f"?"fylket":"kommunen")+" andre grenser.";
+  else if(r.t==="k")m="I kommuner med få innbyggere kan noen få personer gi store utslag i skåren fra år til år.";
+  $("ring-merk").textContent=m;
+  var ud=LV.filter(function(d){return d.kode==="UtdNiva";})[0];
+  $("les-utd").textContent="For høyere utdanning har kvinner dratt fra menn i hele landet, "+nb(ud.kv[N-1])+" mot "+nb(ud.menn[N-1])+" prosent i "+AAR[N-1]+". Derfor har skåren falt fra "+nb(ud.skar[0],2)+" til "+nb(ud.skar[N-1],2)+".";
 }
 
 // ---------- kransen og rekka ----------
 function satellitt(d,px,py,i){
-  var sk=d.skar[i],o="",valgt=st.ind===d.kode;
+  var sk=d.skar[i],o="",valgt=st.ind===d.kode,hv=harVippe(d,i);
   o+='<rect x="'+(px-105)+'" y="'+(py-100)+'" width="210" height="180" fill="#fffff8" fill-opacity="0"/>';
-  o+=tx(px,py-(harVippe(d)?80:40),d.navn,20,"","middle");
-  if(valgt)o+=ln(px-44,py-(harVippe(d)?73:33),px+44,py-(harVippe(d)?73:33),SORT,1.2);
-  if(harVippe(d))o+=vippe(px,py+18,120,sk,d.kv[i]>d.menn[i],40,verdi(d,d.kv[i]),verdi(d,d.menn[i]),d.enhet==="kr"?14:15);
-  else{o+=maaler(px,py+12,120,sk);o+=tx(px,py-6,d.type==="andel"?nb(d.andel[i])+" % av "+(d.kode==="Barnehage"?"barna":"fedrene"):"bare skår",15,d.type==="andel"?"t g":"i","middle");}
+  o+=tx(px,py-(hv?80:40),d.navn,20,"","middle");
+  if(valgt)o+=ln(px-44,py-(hv?73:33),px+44,py-(hv?73:33),SORT,1.2);
+  if(sk==null){o+=tx(px,py+10,"tall mangler",15,"i","middle");return knapp(d,o,i);}
+  if(hv)o+=vippe(px,py+18,120,sk,d.kv[i]>d.menn[i],40,verdi(d,d.kv[i]),verdi(d,d.menn[i]),d.enhet==="kr"?14:15);
+  else{o+=maaler(px,py+12,120,sk);o+=tx(px,py-6,d.andel&&d.andel[i]!=null?nb(d.andel[i])+" % av "+(d.kode==="Barnehage"?"barna":"fedrene"):"bare skår",15,d.andel?"t g":"i","middle");}
   o+=tx(px,py+66,nb(sk,2),24,"t","middle");
-  return knapp(d,o);}
+  return knapp(d,o,i);}
+function skyggeverdier(i){var r=REG[st.omr];return r.t==="l"?(i>0?V.map(function(d){return d.skar[0];}):null):LV.map(function(d){return d.skar[i];});}
 function krans(){
-  var i=ai(),cx=600,cy=520,R=200,o=ring(cx,cy,R,i,st.ind,"k",5,true)+tx(cx+5,cy-R*.5+15,"0,5",12,"t g");
-  IND.forEach(function(d,k){var th=k*Math.PI/6;o+=satellitt(d,cx+445*Math.sin(th),cy-405*Math.cos(th)-6,i);});
+  var i=ai(),r=REG[st.omr],cx=600,cy=520,R=200,sg=skyggeverdier(i),o=ring(cx,cy,R,i,st.ind,"k",5,sg)+tx(cx+5,cy-R*.5+15,"0,5",12,"t g");
+  V.forEach(function(d,k){var th=k*Math.PI/6;o+=satellitt(d,cx+445*Math.sin(th),cy-405*Math.cos(th)-6,i);});
   o+=ikon(true,60,1018,30)+tx(74,1012,"kvinner",15,"g")+ikon(false,156,1018,30)+tx(170,1012,"menn",15,"g");
-  if(i>0)o+='<line x1="250" y1="1007" x2="290" y2="1007" stroke="#85857c" stroke-width="1.2" stroke-dasharray="4 4"/>'+tx(300,1012,String(AAR[0]),15,"g");
-  $("fig-krans").innerHTML=svg(1200,1040,o,"Ringen med tolv skårer for "+st.aar+", og grunnlagstallene som vippehusker rundt");
-  // smal: ring med navn, og sortert rekke
-  var c=195,r=100,s=ring(c,c+10,r,i,st.ind,0,3.6,true);
-  IND.forEach(function(d,k){var th=k*Math.PI/6,sx=Math.sin(th),sy=-Math.cos(th);s+=tx(c+(r+14)*sx,c+10+(r+14)*sy+(k===0?-2:k===6?12:5),d.navn,11.5,"",sx>.25?"start":sx<-.25?"end":"middle");});
-  $("fig-ring-smal").innerHTML=svg(390,400,s,"Ringen med tolv skårer for "+st.aar);
-  $("rekke").innerHTML=IND.slice().sort(function(a,b){return b.skar[i]-a.skar[i];}).map(function(d){
-    var f=harVippe(d)?vippe(75,46,96,d.skar[i],d.kv[i]>d.menn[i],28,null,null,0,2.4):maaler(75,34,96,d.skar[i]);
-    var v=harVippe(d)?'<span style="color:'+KV+'">'+verdi(d,d.kv[i])+'</span> · <span style="color:'+MA+'">'+verdi(d,d.menn[i])+"</span>":d.type==="andel"?nb(d.andel[i])+" %":"bare skår";
-    return '<li><button type="button" data-ind="'+d.kode+'" aria-pressed="'+(st.ind===d.kode)+'"><span><span class="bf-rn">'+d.navn+'</span><span class="bf-rv">'+v+'</span></span><svg viewBox="0 0 150 64" width="150" height="64" aria-hidden="true">'+f+'</svg><span class="bf-rs">'+nb(d.skar[i],2)+"</span></button></li>";}).join("");
-  var t="<table><thead><tr><th>Indikator</th><th>Skår</th><th>Kvinner</th><th>Menn</th><th>Andel</th></tr></thead><tbody>";
-  IND.forEach(function(d){t+="<tr><td>"+d.ssbnavn+"</td><td>"+nb(d.skar[i],2)+"</td><td>"+(d.kv?verdi(d,d.kv[i]):"")+"</td><td>"+(d.menn?verdi(d,d.menn[i]):"")+"</td><td>"+(d.andel?nb(d.andel[i])+" %":"")+"</td></tr>";});
+  if(sg)o+='<line x1="250" y1="1007" x2="290" y2="1007" stroke="#85857c" stroke-width="1.2" stroke-dasharray="4 4"/>'+tx(300,1012,r.t==="l"?String(AAR[0]):"hele landet",15,"g");
+  $("fig-krans").innerHTML=svg(1200,1040,o,"Ringen med tolv skårer for "+stedsnavn(r)+" i "+st.aar+", og grunnlagstallene som vippehusker rundt");
+  var c=195,rr=100,s=ring(c,c+10,rr,i,st.ind,0,3.6,sg);
+  V.forEach(function(d,k){var th=k*Math.PI/6,sx=Math.sin(th),sy=-Math.cos(th);s+=tx(c+(rr+14)*sx,c+10+(rr+14)*sy+(k===0?-2:k===6?12:5),d.navn,11.5,"",sx>.25?"start":sx<-.25?"end":"middle");});
+  $("fig-ring-smal").innerHTML=svg(390,400,s,"Ringen med tolv skårer for "+stedsnavn(r)+" i "+st.aar);
+  $("rekke").innerHTML=V.slice().sort(function(a,b){return (b.skar[i]==null?-1:b.skar[i])-(a.skar[i]==null?-1:a.skar[i]);}).map(function(d){
+    var hv=harVippe(d,i),f=d.skar[i]==null?"":hv?vippe(75,46,96,d.skar[i],d.kv[i]>d.menn[i],28,null,null,0,2.4):maaler(75,34,96,d.skar[i]);
+    var v=d.skar[i]==null?"tall mangler":hv?'<span style="color:'+KV+'">'+verdi(d,d.kv[i])+'</span> · <span style="color:'+MA+'">'+verdi(d,d.menn[i])+"</span>":d.andel&&d.andel[i]!=null?nb(d.andel[i])+" %":"bare skår";
+    return '<li><button type="button" data-ind="'+d.kode+'" aria-pressed="'+(st.ind===d.kode)+'"><span><span class="bf-rn">'+d.navn+'</span><span class="bf-rv">'+v+'</span></span><svg viewBox="0 0 150 64" width="150" height="64" aria-hidden="true">'+f+'</svg><span class="bf-rs">'+(d.skar[i]==null?"–":nb(d.skar[i],2))+"</span></button></li>";}).join("");
+  var t="<table><thead><tr><th>Indikator</th><th>Skår</th><th>Kvinner</th><th>Menn</th><th>Andel</th>"+(r.t==="l"?"":"<th>Skår, hele landet</th>")+"</tr></thead><tbody>";
+  V.forEach(function(d,k){t+="<tr><td>"+d.ssbnavn+"</td><td>"+(d.skar[i]==null?"..":nb(d.skar[i],2))+"</td><td>"+(d.kv&&d.kv[i]!=null?verdi(d,d.kv[i]):"")+"</td><td>"+(d.menn&&d.menn[i]!=null?verdi(d,d.menn[i]):"")+"</td><td>"+(d.andel&&d.andel[i]!=null?nb(d.andel[i])+" %":"")+"</td>"+(r.t==="l"?"":"<td>"+nb(LV[k].skar[i],2)+"</td>")+"</tr>";});
   $("tab-ring").innerHTML=t+"</tbody></table>";
 }
 
 // ---------- kort for valgt indikator ----------
-function linje(arr,X,Y,brudd){var p="";arr.forEach(function(v,k){p+=(k===0||AAR[k]===brudd?"M":"L")+X(k).toFixed(1)+" "+Y(v).toFixed(1);});return p;}
+function linje(arr,X,Y,brudd){var p="",ny=true;arr.forEach(function(v,k){if(v==null){ny=true;return;}if(AAR[k]===brudd)ny=true;p+=(ny?"M":"L")+X(k).toFixed(1)+" "+Y(v).toFixed(1);ny=false;});return p;}
+function siste(arr){for(var k=arr.length-1;k>=0;k--)if(arr[k]!=null)return k;return -1;}
+function forste(arr){for(var k=0;k<arr.length;k++)if(arr[k]!=null)return k;return -1;}
 function kort(){
-  var d=finn(st.ind),i=ai(),q=$("kort");
+  var d=finn(st.ind),i=ai(),q=$("kort"),r=REG[st.omr],ld=LV[d.j];
   function set(k,s){q.querySelector('[data-k="'+k+'"]').textContent=s;}
-  set("gruppe",D.grupper[d.gruppe]+" · "+st.aar); set("navn",d.ssbnavn); set("hva",d.hva+"."); set("skar",nb(d.skar[i],2));
-  var tk="";
-  if(d.type==="fordeling")tk=verdi(d,d.kv[i])+" kvinner og "+verdi(d,d.menn[i])+" menn. Skåren er den minste andelen delt på 50.";
-  else if(d.type==="forhold")tk=verdi(d,d.kv[i])+(d.enhet==="kr"?" kroner":"")+" for kvinner og "+verdi(d,d.menn[i])+(d.enhet==="kr"?" kroner":"")+" for menn. Skåren er den minste verdien delt på den største.";
-  else if(d.type==="andel")tk=nb(d.andel[i])+" prosent. Andelen brukes direkte som skår, uten sammenligning mellom kjønnene.";
-  else tk="For denne indikatoren publiseres bare skåren. Den er et veid gjennomsnitt av hvor kjønnsbalansert hver næring eller hvert utdanningsprogram er.";
+  set("gruppe",D.dimssb[d.dim]+" · "+stedsnavn(r)+" · "+st.aar); set("navn",d.ssbnavn); set("hva",d.hva+"."); set("skar",d.skar[i]==null?"–":nb(d.skar[i],2));
+  var tk="",hv=harVippe(d,i);
+  if(d.skar[i]==null)tk="Tall mangler for "+stedsnavn(r)+" i "+st.aar+".";
+  else if(d.type==="fordeling"&&hv)tk=verdi(d,d.kv[i])+" kvinner og "+verdi(d,d.menn[i])+" menn. Skåren er den minste andelen delt på 50.";
+  else if(d.type==="forhold"&&hv)tk=verdi(d,d.kv[i])+(d.enhet==="kr"?" kroner":"")+" for kvinner og "+verdi(d,d.menn[i])+(d.enhet==="kr"?" kroner":"")+" for menn. Skåren er den minste verdien delt på den største.";
+  else if(d.type==="andel"&&d.andel[i]!=null)tk=nb(d.andel[i])+" prosent. Andelen brukes direkte som skår, uten sammenligning mellom kjønnene.";
+  else if(d.type==="skar")tk="For denne indikatoren publiseres bare skåren. Den er et veid gjennomsnitt av hvor kjønnsbalansert hver næring eller hvert utdanningsprogram er.";
+  if(r.t!=="l"&&d.skar[i]!=null)tk+=" Hele landet: "+nb(ld.skar[i],2)+".";
+  if(r.t!=="l"&&d.avvik.indexOf(st.aar)>=0)tk+=" For "+st.aar+" stemmer ikke skår og grunnlagstall overens i mange kommuner. Avviket står på listen til faglig kontroll.";
   set("tekst",tk);
-  $("fig-kort-vippe").innerHTML=harVippe(d)?svg(420,200,vippe(210,150,270,d.skar[i],d.kv[i]>d.menn[i],84,verdi(d,d.kv[i]),verdi(d,d.menn[i]),20,5),"Vippehuske for "+d.navn)
+  $("fig-kort-vippe").innerHTML=d.skar[i]==null?"":hv?svg(420,200,vippe(210,150,270,d.skar[i],d.kv[i]>d.menn[i],84,verdi(d,d.kv[i]),verdi(d,d.menn[i]),20,5),"Vippehuske for "+d.navn)
     :svg(420,60,maaler(210,30,300,d.skar[i],12),"Måler for "+d.navn);
-  // tidsserier: grunnlagstall øverst, skår under
-  var smal=window.matchMedia("(max-width:900px)").matches,W=smal?400:640,x0=smal?62:70,x1=W-(smal?72:110),o="";
+  var smal=window.matchMedia("(max-width:900px)").matches,W=smal?400:640,x0=smal?62:70,x1=W-(smal?76:112),o="";
   function X(k){return x0+(x1-x0)*k/(N-1);}
-  var harG=d.type!=="skar",yS0=harG?330:60,yS1=harG?430:240;
+  var gt=d.kv?d.kv.concat(d.menn):d.andel?d.andel:[],gv=gt.filter(function(v){return v!=null;}),harG=gv.length>0,yS0=harG?330:60,yS1=harG?430:240;
   if(harG){
-    var alle=d.kv?d.kv.concat(d.menn):d.andel,mn=Math.min.apply(null,alle),mx=Math.max.apply(null,alle);
+    var mn=Math.min.apply(null,gv),mx=Math.max.apply(null,gv);
     var lo=d.enhet==="kr"?0:Math.max(0,Math.floor((mn-4)/5)*5),hi=d.enhet==="kr"?Math.ceil(mx/100000)*100000:Math.min(100,Math.ceil((mx+4)/5)*5);
     var Y=function(v){return 250-(v-lo)/(hi-lo)*200;};
-    o+=tx(x0,30,d.enhet==="kr"?"Kroner":"Prosent",15,"i");
+    o+=tx(x0,30,d.enhet==="kr"?"Kroner, løpende priser":"Prosent",15,"i");
     [lo,(lo+hi)/2,hi].forEach(function(v){o+=ln(x0,Y(v),x1,Y(v),LYS,.6)+tx(x0-8,Y(v)+5,d.enhet==="kr"?kr(v):nb(v,v%1?1:0),14,"t g","end");});
     if(d.kv){o+='<path d="'+linje(d.kv,X,Y,d.brudd)+'" fill="none" stroke="'+KV+'" stroke-width="2.4" stroke-linejoin="round"/><path d="'+linje(d.menn,X,Y,d.brudd)+'" fill="none" stroke="'+MA+'" stroke-width="2.4" stroke-linejoin="round"/>';
-      var yk=Y(d.kv[N-1]),ym=Y(d.menn[N-1]);if(Math.abs(yk-ym)<18){var m=(yk+ym)/2;yk=m+(yk<ym?-9:9);ym=m+(yk<ym?9:-9);}
+      var e=siste(d.kv),yk=Y(d.kv[e]),ym=Y(d.menn[e]);if(Math.abs(yk-ym)<18){var m=(yk+ym)/2,opp=yk<ym;yk=m+(opp?-9:9);ym=m+(opp?9:-9);}
       o+=tx(x1+10,yk+5,"Kvinner",16,"","start",KV)+tx(x1+10,ym+5,"Menn",16,"","start",MA);
-      o+='<circle cx="'+X(i)+'" cy="'+Y(d.kv[i])+'" r="5" fill="'+KV+'"/><circle cx="'+X(i)+'" cy="'+Y(d.menn[i])+'" r="5" fill="'+MA+'"/>';}
-    else{o+='<path d="'+linje(d.andel,X,Y,d.brudd)+'" fill="none" stroke="'+SORT+'" stroke-width="2.4" stroke-linejoin="round"/><circle cx="'+X(i)+'" cy="'+Y(d.andel[i])+'" r="5" fill="'+SORT+'"/>';}
+      if(hv)o+='<circle cx="'+X(i)+'" cy="'+Y(d.kv[i])+'" r="5" fill="'+KV+'"/><circle cx="'+X(i)+'" cy="'+Y(d.menn[i])+'" r="5" fill="'+MA+'"/>';}
+    else{o+='<path d="'+linje(d.andel,X,Y,d.brudd)+'" fill="none" stroke="'+SORT+'" stroke-width="2.4" stroke-linejoin="round"/>';if(d.andel[i]!=null)o+='<circle cx="'+X(i)+'" cy="'+Y(d.andel[i])+'" r="5" fill="'+SORT+'"/>';}
     o+=ln(X(i),40,X(i),250,"#85857c",.8,' stroke-dasharray="2 4"');
   }
-  var YS=function(v){return yS1-(v-.3)/.7*(yS1-yS0);};
+  var YS=function(v){return yS1-(Math.max(v,.2)-.2)/.8*(yS1-yS0);};
   o+=tx(x0,yS0-14,"Skår",15,"i");
-  [.3,.5,1].forEach(function(v){o+=ln(x0,YS(v),x1,YS(v),LYS,.6)+tx(x0-8,YS(v)+5,nb(v,1),14,"t g","end");});
-  o+='<path d="'+linje(d.skar,X,YS,d.brudd)+'" fill="none" stroke="'+SORT+'" stroke-width="2.4" stroke-linejoin="round"/><circle cx="'+X(i)+'" cy="'+YS(d.skar[i])+'" r="5" fill="'+SORT+'"/>';
-  o+=tx(X(i),YS(d.skar[i])-12,nb(d.skar[i],2),16,"t","middle");
+  [.2,.5,1].forEach(function(v){o+=ln(x0,YS(v),x1,YS(v),LYS,.6)+tx(x0-8,YS(v)+5,nb(v,1),14,"t g","end");});
+  if(r.t!=="l"){o+='<path d="'+linje(ld.skar,X,YS,d.brudd)+'" fill="none" stroke="#85857c" stroke-width="1.4" stroke-dasharray="4 4"/>';
+    var yl=YS(ld.skar[N-1]),ye=siste(d.skar)>=0?YS(d.skar[siste(d.skar)]):-99;o+=tx(x1+10,yl+(Math.abs(yl-ye)<14?(yl<ye?-6:16):5),"Landet",15,"g");}
+  o+='<path d="'+linje(d.skar,X,YS,d.brudd)+'" fill="none" stroke="'+SORT+'" stroke-width="2.4" stroke-linejoin="round"/>';
+  if(d.skar[i]!=null)o+='<circle cx="'+X(i)+'" cy="'+YS(d.skar[i])+'" r="5" fill="'+SORT+'"/>'+tx(X(i),YS(d.skar[i])-12,nb(d.skar[i],2),16,"t","middle");
   if(d.brudd){var xb=(X(AAR.indexOf(d.brudd))+X(AAR.indexOf(d.brudd)-1))/2;o+=ln(xb,harG?40:yS0,xb,yS1,SORT,1,' stroke-dasharray="6 5"')+tx(xb+6,(harG?40:yS0)+12,"Brudd",14,"i");}
   [0,Math.round((N-1)/2),N-1].forEach(function(k){o+=tx(X(k),yS1+26,String(AAR[k]),14,"t g","middle");});
-  $("fig-kort-tid").innerHTML=svg(W,yS1+40,o,"Tidsserie for "+d.navn+", "+AAR[0]+"–"+AAR[N-1]);
-  set("brudd",d.brudd?"Brudd i tidsserien i "+d.brudd+". Tallene før og etter kan ikke sammenlignes direkte.":"");
-  var t="<table><thead><tr><th>År</th><th>Skår</th>"+(d.kv?"<th>Kvinner</th><th>Menn</th>":d.andel?"<th>Andel</th>":"")+"</tr></thead><tbody>";
-  AAR.forEach(function(a,k){t+="<tr><td>"+a+"</td><td>"+nb(d.skar[k],2)+"</td>"+(d.kv?"<td>"+verdi(d,d.kv[k])+"</td><td>"+verdi(d,d.menn[k])+"</td>":d.andel?"<td>"+nb(d.andel[k])+" %</td>":"")+"</tr>";});
+  $("fig-kort-tid").innerHTML=svg(W,yS1+40,o,"Tidsserie for "+d.navn+" i "+stedsnavn(r)+", "+AAR[0]+"–"+AAR[N-1]);
+  var bt=d.brudd?"Brudd i tidsserien i "+d.brudd+". Tallene før og etter kan ikke sammenlignes direkte. ":"";
+  if(r.fra>AAR[0])bt+="Tall for "+stedsnavn(r)+" finnes fra "+r.fra+".";
+  set("brudd",bt);
+  var t="<table><thead><tr><th>År</th><th>Skår</th>"+(d.kv?"<th>Kvinner</th><th>Menn</th>":d.andel?"<th>Andel</th>":"")+(r.t==="l"?"":"<th>Skår, hele landet</th>")+"</tr></thead><tbody>";
+  AAR.forEach(function(a,k){t+="<tr><td>"+a+"</td><td>"+(d.skar[k]==null?"..":nb(d.skar[k],2))+"</td>"+(d.kv?"<td>"+(d.kv[k]==null?"..":verdi(d,d.kv[k]))+"</td><td>"+(d.menn[k]==null?"..":verdi(d,d.menn[k]))+"</td>":d.andel?"<td>"+(d.andel[k]==null?"..":nb(d.andel[k])+" %")+"</td>":"")+(r.t==="l"?"":"<td>"+nb(ld.skar[k],2)+"</td>")+"</tr>";});
   $("tab-kort").innerHTML=t+"</tbody></table>";
+}
+
+// ---------- kart ----------
+function klasse(v){for(var k=0;k<KG.length;k++)if(v<KG[k])return k;return KG.length;}
+function kart(){
+  var i=ai(),d=finn(st.ind),o="",valgt="",rader=[];
+  Object.keys(K.k).forEach(function(k){var r=REG[k],v=r?r.s[d.j][i]:null;v=v==null?null:v/100;
+    if(v!=null)rader.push({k:k,n:r.n,v:v});
+    var p='<path d="'+K.k[k]+'" data-omr="'+k+'" fill="'+(v==null?"#fffff8":KF[klasse(v)])+'" stroke="'+(v==null?"#c9c9bf":"#fffff8")+'" stroke-width=".5"><title>'+esc(r?r.n:k)+": "+(v==null?"tall mangler":nb(v,2))+"</title></path>";
+    if(k===st.omr||(REG[st.omr].t==="f"&&k.slice(0,2)===st.omr))valgt+='<path d="'+K.k[k]+'" fill="none" stroke="'+(k===st.omr?KV:SORT)+'" stroke-width="'+(k===st.omr?2.2:.9)+'" stroke-linejoin="round" pointer-events="none"/>';
+    o+=p;});
+  $("fig-kart").innerHTML=svg(K.b,K.h,o+valgt,"Kart over skår for "+liten(d.navn)+" i kommunene, "+st.aar);
+  $("forklaring").innerHTML=KF.map(function(f,k){return '<span style="border-color:'+f+'">'+(k===0?"under 0,5":k===KF.length-1?"0,9 og over":nb(KG[k-1],1)+"–"+nb(KG[k],1))+"</span>";}).join("");
+  rader.sort(function(a,b){return b.v-a.v||a.n.localeCompare(b.n,"nb");});
+  function liste(a){return a.map(function(x){return '<li><button type="button" data-omr="'+x.k+'"><span>'+esc(x.n)+"</span><span>"+nb(x.v,2)+"</span></button></li>";}).join("");}
+  $("topp-hoy").innerHTML=liste(rader.slice(0,5)); $("topp-lav").innerHTML=liste(rader.slice(-5).reverse());
+  var uten=Object.keys(K.k).length-rader.length;
+  $("kart-merk").textContent=d.hva+". "+(rader.length?"Skårene går fra "+nb(rader[rader.length-1].v,2)+" til "+nb(rader[0].v,2)+" i "+st.aar+". Hele landet: "+nb(LV[d.j].skar[i],2)+". ":"")+(uten?uten+" kommuner er uten tall dette året, de fleste fordi grensene var andre. ":"")+(REG[st.omr].t==="k"?"Valgt kommune har rød kant.":"");
+  var t="<table><thead><tr><th>Kommune</th><th>Skår</th></tr></thead><tbody>";
+  rader.forEach(function(x){t+="<tr><td>"+esc(x.n)+"</td><td>"+nb(x.v,2)+"</td></tr>";});
+  $("tab-kart").innerHTML=t+"</tbody></table>"; $("kart-ind").value=st.ind;
 }
 
 // ---------- små multipler ----------
 function tid(){
-  var smal=window.matchMedia("(max-width:900px)").matches,kol=smal?2:4,cw=smal?195:300,ch=smal?150:190,lw=smal?92:170,o="",i=ai();
-  IND.forEach(function(d,k){var x0=(k%kol)*cw,y0=Math.floor(k/kol)*ch,a=d.skar,q="";
+  var smal=window.matchMedia("(max-width:900px)").matches,kol=smal?2:4,cw=smal?195:300,ch=smal?150:190,lw=smal?92:170,o="",i=ai(),r=REG[st.omr];
+  V.forEach(function(d,k){var x0=(k%kol)*cw,y0=Math.floor(k/kol)*ch,a=d.skar,q="",f=forste(a),e=siste(a);
     function X(j){return x0+48+lw*j/(N-1);}
-    function Y(v){return y0+ch-38-(v-.3)/.7*(ch-90);}
+    function Y(v){return y0+ch-38-(Math.min(Math.max(v,.2),1)-.3)/.7*(ch-90);}
     q+='<rect x="'+x0+'" y="'+y0+'" width="'+(cw-8)+'" height="'+(ch-8)+'" fill="#fffff8" fill-opacity="0"/>';
     q+=tx(x0,y0+24,d.navn,smal?17:22)+(st.ind===d.kode?ln(x0,y0+31,x0+60,y0+31,SORT,1.2):"");
     q+=ln(X(0),Y(.3)+8,X(N-1),Y(.3)+8,LYS,.8);
-    q+=tx(X(0)-6,Y(a[0])+5,nb(a[0],2),smal?13:16,"t g","end");
+    if(r.t!=="l")q+='<path d="'+linje(LV[k].skar,X,Y,d.brudd)+'" fill="none" stroke="#a5a196" stroke-width="1.2"/>';
+    if(f<0){q+=tx(X(0),Y(.6),"tall mangler",smal?13:15,"i");o+=knapp(d,q,i);return;}
+    q+=tx(X(f)-6,Y(a[f])+5,nb(a[f],2),smal?13:16,"t g","end");
     q+='<path d="'+linje(a,X,Y,d.brudd)+'" fill="none" stroke="'+SORT+'" stroke-width="2" stroke-linejoin="round"/>';
-    q+='<circle cx="'+X(N-1)+'" cy="'+Y(a[N-1])+'" r="3.6" fill="'+SORT+'"/><circle cx="'+X(i)+'" cy="'+Y(a[i])+'" r="4.5" fill="none" stroke="'+SORT+'" stroke-width="1.4"/>';
-    q+=tx(X(N-1)+8,Y(a[N-1])+5,nb(a[N-1],2),smal?14:18,"t");
-    if(!d.brudd){var e=a[N-1]-a[0];q+=tx(X(N-1)+8,Y(a[N-1])+(smal?21:26),(e>0?"+":"")+nb(e,2),smal?12:15,"i");}
-    o+=knapp(d,q);});
-  var rader=Math.ceil(IND.length/kol);
+    q+='<circle cx="'+X(e)+'" cy="'+Y(a[e])+'" r="3.6" fill="'+SORT+'"/>'+(a[i]!=null?'<circle cx="'+X(i)+'" cy="'+Y(a[i])+'" r="4.5" fill="none" stroke="'+SORT+'" stroke-width="1.4"/>':"");
+    q+=tx(X(e)+8,Y(a[e])+5,nb(a[e],2),smal?14:18,"t");
+    if(!d.brudd&&f===0&&e===N-1){var df=a[e]-a[f];q+=tx(X(e)+8,Y(a[e])+(smal?21:26),(df>0?"+":"")+nb(df,2),smal?12:15,"i");}
+    o+=knapp(d,q,i);});
+  var rader=Math.ceil(V.length/kol);
   o+=tx(48,rader*ch+6,String(AAR[0]),13,"t g")+tx(48+lw,rader*ch+6,String(AAR[N-1]),13,"t g","end");
-  $("fig-tid").innerHTML=svg(kol*cw,rader*ch+14,o,"Tolv tidsserier for skåren, "+AAR[0]+"–"+AAR[N-1]);
-  var u=IND.filter(function(d){return !d.brudd;}).map(function(d){return {n:liten(d.navn),e:Math.round((d.skar[N-1]-d.skar[0])*100)/100};});
-  var opp=u.filter(function(x){return x.e>=.05;}).sort(function(a,b){return b.e-a.e;}),ned=u.filter(function(x){return x.e<=-.05;}),flat=u.filter(function(x){return Math.abs(x.e)<.05;});
+  $("fig-tid").innerHTML=svg(kol*cw,rader*ch+14,o,"Tolv tidsserier for skåren i "+stedsnavn(r)+", "+AAR[0]+"–"+AAR[N-1]);
+  $("tid-h").textContent=r.fra>AAR[0]?"Hva har rørt seg siden "+r.fra+"?":"Hva har rørt seg siden "+AAR[0]+"?";
+  var u=V.filter(function(d){return !d.brudd&&d.skar[0]!=null&&d.skar[N-1]!=null;}).map(function(d){return {n:liten(d.navn),e:Math.round((d.skar[N-1]-d.skar[0])*100)/100};});
+  var opp=u.filter(function(x){return x.e>=.05;}).sort(function(a,b){return b.e-a.e;}),ned=u.filter(function(x){return x.e<=-.05;}).sort(function(a,b){return a.e-b.e;}),flat=u.filter(function(x){return Math.abs(x.e)<.05;});
   function liste(a){return a.map(function(x){return x.n;}).join(", ").replace(/, ([^,]*)$/," og $1");}
-  $("tid-ingress").textContent=(opp.length?"Steget med 0,05 eller mer: "+liste(opp)+". ":"")+(ned.length?"Falt: "+liste(ned)+". ":"")+(flat.length?"Nesten uendret: "+liste(flat)+".":"");
+  var ti=(r.t==="l"?"":stedsnavn(r)+". ");
+  if(!u.length)ti+="Tidsserien er for kort til å sammenligne første og siste år."+(r.fra>AAR[0]?" Tallene finnes fra "+r.fra+".":"");
+  else ti+=(opp.length?"Steget med 0,05 eller mer siden "+AAR[0]+": "+liste(opp)+". ":"")+(ned.length?"Falt: "+liste(ned)+". ":"")+(flat.length?"Nesten uendret: "+liste(flat)+".":"");
+  if(r.t!=="l")ti+=" Grå linje er hele landet.";
+  $("tid-ingress").textContent=ti;
   var t="<table><thead><tr><th>Indikator</th>"+AAR.map(function(a){return "<th>"+a+"</th>";}).join("")+"</tr></thead><tbody>";
-  IND.forEach(function(d){t+="<tr><td>"+d.navn+"</td>"+d.skar.map(function(v){return "<td>"+nb(v,2)+"</td>";}).join("")+"</tr>";});
+  V.forEach(function(d){t+="<tr><td>"+d.navn+"</td>"+d.skar.map(function(v){return "<td>"+(v==null?"..":nb(v,2))+"</td>";}).join("")+"</tr>";});
   $("tab-tid").innerHTML=t+"</tbody></table>";
 }
 
+// ---------- søk ----------
+var sok=$("sok"),fl=$("forslag"),treff=[],aktiv=-1;
+function norm(s){return s.toLowerCase().replace(/[.\-–]/g," ").replace(/\s+/g," ").trim();}
+var SOKBAR=D.reg.filter(function(r){return r.t!=="l";}).map(function(r){return {r:r,n:norm(r.n),ord:norm(r.n).split(" ")};});
+function rang(x,q){if(x.n===q)return 0;if(x.ord.indexOf(q)>=0)return 1;if(x.n.indexOf(q)===0)return 2;for(var k=0;k<x.ord.length;k++)if(x.ord[k].indexOf(q)===0)return 3;return x.n.indexOf(q)>=0?4:9;}
+function forslag(){
+  var q=norm(sok.value);if(!q){lukk();return;}
+  treff=SOKBAR.map(function(x){return {x:x,g:rang(x,q)};}).filter(function(t){return t.g<9;}).sort(function(a,b){return a.g-b.g||(a.x.r.t==="k"?0:1)-(b.x.r.t==="k"?0:1)||a.x.n.localeCompare(b.x.n,"nb");}).slice(0,10).map(function(t){return t.x.r;});
+  aktiv=treff.length?0:-1;
+  fl.innerHTML=treff.length?treff.map(function(r,k){return '<li role="option" id="fs'+k+'" data-omr="'+r.k+'" aria-selected="'+(k===aktiv)+'">'+esc(r.n)+"<small>"+typenavn(r)+(r.t==="k"&&FYLKE[r.k.slice(0,2)]?", "+esc(FYLKE[r.k.slice(0,2)]):"")+"</small></li>";}).join("")
+    :'<li role="option" aria-disabled="true" style="cursor:default;color:#55554e;font-style:italic">Ingen kommune eller fylke heter det. Prøv et annet navn, eller velg i kartet.</li>';
+  fl.hidden=false;sok.setAttribute("aria-expanded","true");sok.setAttribute("aria-activedescendant",aktiv>=0?"fs"+aktiv:"");}
+function lukk(){fl.hidden=true;sok.setAttribute("aria-expanded","false");sok.removeAttribute("aria-activedescendant");}
+function merk(n){if(!treff.length)return;aktiv=(n+treff.length)%treff.length;[].forEach.call(fl.children,function(li,k){li.setAttribute("aria-selected",k===aktiv);if(k===aktiv)li.scrollIntoView({block:"nearest"});});sok.setAttribute("aria-activedescendant","fs"+aktiv);}
+sok.addEventListener("input",forslag);
+sok.addEventListener("keydown",function(e){
+  if(e.key==="ArrowDown"){e.preventDefault();if(fl.hidden)forslag();else merk(aktiv+1);}
+  else if(e.key==="ArrowUp"){e.preventDefault();merk(aktiv-1);}
+  else if(e.key==="Enter"){if(!fl.hidden&&aktiv>=0){e.preventDefault();velgOmr(treff[aktiv].k);sok.value="";lukk();}}
+  else if(e.key==="Escape"){lukk();}});
+sok.addEventListener("blur",function(){setTimeout(lukk,150);});
+fl.addEventListener("mousedown",function(e){var li=e.target.closest("[data-omr]");if(li){e.preventDefault();velgOmr(li.getAttribute("data-omr"));sok.value="";lukk();}});
+$("landet").addEventListener("click",function(){velgOmr("0");});
+
 // ---------- tilstand ----------
-function les(){var m=location.hash.match(/aar=(\d{4})/),n=location.hash.match(/ind=([A-Za-z]+)/);
-  if(m&&AAR.indexOf(+m[1])>=0)st.aar=+m[1]; if(n&&finn(n[1]).kode===n[1])st.ind=n[1];}
-function skriv(){var h="#aar="+st.aar+"&ind="+st.ind;if(location.hash!==h)history.replaceState(null,"",h);}
-function tegn(){$("aar").value=st.aar;$("aar-ut").textContent=st.aar;topp();krans();kort();tid();skriv();}
+function les(){var h=location.hash,m=h.match(/aar=(\d{4})/),n=h.match(/ind=([A-Za-z]+)/),o=h.match(/omrade=(\d+)/);
+  if(o&&REG[o[1]])st.omr=o[1]; if(m&&AAR.indexOf(+m[1])>=0)st.aar=+m[1];
+  if(n)for(var k=0;k<IND.length;k++)if(IND[k].kode===n[1])st.ind=n[1];}
+function skriv(){var h="#omrade="+st.omr+"&aar="+st.aar+"&ind="+st.ind;if(location.hash!==h)history.replaceState(null,"",h);}
+function tegn(){V=visning(REG[st.omr]);$("aar").value=st.aar;$("aar-ut").textContent=st.aar;hode();krans();kort();kart();tid();skriv();}
 function velg(k,rull){st.ind=k;tegn();if(rull)$("kort").scrollIntoView({behavior:"smooth",block:"nearest"});}
-document.addEventListener("click",function(e){var b=e.target.closest("[data-ind]");if(b)velg(b.getAttribute("data-ind"),!b.closest("#rekke")||true);});
-document.addEventListener("keydown",function(e){if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches('g[role="button"]')){e.preventDefault();var k=e.target.getAttribute("data-ind");velg(k,true);var n=document.querySelector('#'+e.target.closest(".bf-fig").id+' [data-ind="'+k+'"]');if(n)n.focus();}});
+function velgOmr(k){if(!REG[k])return;st.omr=k;if(st.aar<REG[k].fra)st.aar=REG[k].fra;tegn();}
+document.addEventListener("click",function(e){
+  var o=e.target.closest("#fig-kart [data-omr],.bf-topper [data-omr]");if(o){velgOmr(o.getAttribute("data-omr"));$("ringen").scrollIntoView({behavior:"smooth",block:"start"});return;}
+  var b=e.target.closest("[data-ind]");if(b)velg(b.getAttribute("data-ind"),true);});
+document.addEventListener("keydown",function(e){if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches('g[role="button"]')){e.preventDefault();var k=e.target.getAttribute("data-ind"),fig=e.target.closest(".bf-fig").id;velg(k,true);var n=document.querySelector("#"+fig+' [data-ind="'+k+'"]');if(n)n.focus();}});
 var sl=$("aar");sl.min=AAR[0];sl.max=AAR[N-1];
 sl.addEventListener("input",function(){st.aar=+sl.value;tegn();});
+$("kart-ind").innerHTML=IND.map(function(d){return '<option value="'+d.kode+'">'+d.navn+"</option>";}).join("");
+$("kart-ind").addEventListener("change",function(){st.ind=this.value;tegn();});
 window.addEventListener("hashchange",function(){les();tegn();});
 window.matchMedia("(max-width:900px)").addEventListener("change",function(){kort();tid();});
-var kilde={"09292":"Kilde: SSB, tabell 09292. Sist oppdatert: "+dato(D.oppdatert["09292"])+".","begge":"Kilde: SSB, tabell 09292 og 09293. Sist oppdatert: "+dato(D.oppdatert["09293"])+"."};
+var kilde={"09292":"Kilde: SSB, tabell 09292. Sist oppdatert: "+dato(D.oppdatert["09292"])+".","begge":"Kilde: SSB, tabell 09292 og 09293. Sist oppdatert: "+dato(D.oppdatert["09293"])+".","kart":"Kilde: SSB, tabell 09292. Sist oppdatert: "+dato(D.oppdatert["09292"])+". Kartgrunnlag: Kartverket."};
 [].forEach.call(document.querySelectorAll("[data-kilde]"),function(p){p.textContent=kilde[p.getAttribute("data-kilde")];});
 $("hentet").textContent="Hentet "+dato(D.hentet)+".";
+LV=visning(REG["0"]);
 les();tegn();
 })();
 </script>
