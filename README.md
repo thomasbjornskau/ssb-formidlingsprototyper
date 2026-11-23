@@ -10,14 +10,13 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 |---|---|---|---|
 | [Regionale befolkningsframskrivinger](regfram/) | `regfram` | Til faglig kontroll | 14.10.2026 |
 | [Konsumprisindeksen](kpi/) | `kpi` | Til faglig kontroll | 14.10.2026 |
-| [Indikatorer for kjønnslikestilling i kommunene](likekom/) | `likekom` | Utkast, ikke sendt til faglig kontroll | 13.11.2026 |
 | [Utenrikshandel med varer](muh/) | `muh` | Del A kontrollert av fagseksjonen 04.11.2026 | 04.11.2026 |
 | [Lønn](lonnansatt/) | `lonnansatt` | Til faglig kontroll | 16.10.2026 |
 | [Befolkning](folkemengde/) | `folkemengde` | Til faglig kontroll | 21.10.2026 |
 | [Nasjonalregnskap](knr/) | `knr` | Til faglig kontroll | 21.10.2026 |
 | [Navn](navn/) | `navn` | Til faglig kontroll | 23.10.2026 |
 | [Innvandrere og norskfødte med innvandrerforeldre](innvbef/) | `innvbef` | Under arbeid, ikke faglig kontrollert | 26.10.2026 |
-| [Innvandrere og norskfødte med innvandrerforeldre i kommunene (med kart)](innvbef-omrade/) | `innvbef-omrade` | Under arbeid, ikke faglig kontrollert. Variant av `innvbef` med kommune og fylke som hovedvalg | 11.11.2026 |
+| [Innvandrere og norskfødte med innvandrerforeldre i kommunene (med kart)](innvbef-omrade/) | `innvbef-omrade` | Under arbeid, første tilbakemelding fra fag innarbeidet (0.3). Variant av `innvbef` med kommune og fylke som hovedvalg | 23.11.2026 |
 | [Antall arbeidsforhold og lønn](arblonn/) | `arblonn` | Til faglig kontroll | 02.11.2026 |
 | [Pasienter i spesialisthelsetjenesten](pasient/) | `pasient` | Under arbeid, ikke faglig kontrollert | 02.11.2026 |
 | [Arealprofiler](arealprofiler/) | `arealprofiler` | Under arbeid, ikke faglig kontrollert. Alternativ til Tableau-appen | 06.11.2026 |
