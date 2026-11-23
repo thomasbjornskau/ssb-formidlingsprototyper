@@ -6,12 +6,14 @@
 
 En variant av [`innvbef`](../innvbef/), med egen fylkesvelger og kommunevelger. Velger du et fylke, viser kartet de 15 fylkene. Velger du en kommune, viser kartet kommunene i fylket. Landbakgrunn velges for kartet, for eksempel for å se hvor de med polsk bakgrunn bor. Valget ligger i adressen, for eksempel `#omrade=1835&land=131` for Træna og Polen.
 
+Innvandrere og norskfødte med innvandrerforeldre vises hver for seg, med summen bare i tillegg. Versjon 0.3 (23.11.2026) bygger på første tilbakemelding fra fag.
+
 ## Hva prototypen svarer på
 
 | | Spørsmål | Seksjon |
 |---|---|---|
 | 1 | Hvem regnes med? | Lesehjelpen og «Slik lages tallene» |
-| 2 | Hvordan har antallet og andelen endret seg i området? | Toppgrafikken, 1970–2026 (andel fra 1986) |
+| 2 | Hvordan har antallet og andelen endret seg i området? | Toppgrafikken: summen fra 1970 (andel fra 1986), gruppene hver for seg fra 2010 |
 | 3 | Hvor kommer de fra? | Verdensdeler over tid og de største landbakgrunnene i området |
 | 4 | Hvor bor de? | Kartet og sammenligningen med de andre kommunene i fylket |
 
@@ -28,7 +30,8 @@ En variant av [`innvbef`](../innvbef/), med egen fylkesvelger og kommunevelger. 
 | [05803](https://www.ssb.no/statbank/table/05803) | Befolkning 1. januar, hele landet |
 | [07108](https://www.ssb.no/statbank/table/07108) | Innvandrere og norskfødte etter verdensdel, kommuner og fylker med sammenslåtte tidsserier |
 | [07459](https://www.ssb.no/statbank/table/07459) | Folketall, kommuner og fylker med sammenslåtte tidsserier |
-| [09817](https://www.ssb.no/statbank/table/09817) | Kommune- og fylkestall etter landbakgrunn |
+| [09817](https://www.ssb.no/statbank/table/09817) | Kommune- og fylkestall etter landbakgrunn. Gruppene hver for seg 2010–2026, regnet om til dagens kommuner |
+| [Klass 131](https://www.ssb.no/klass/klassifikasjoner/131) | Kodeendringer for kommuner 2010–2026, brukt til omregningen |
 | [robhop/fylker-og-kommuner](https://github.com/robhop/fylker-og-kommuner) | Kommunegrenser 2024 fra Kartverket, forenklet. `data/raw/kommuner2024-S.geojson` |
 
 Spørringene står i [data/kilder.json](data/kilder.json). Tidligere kommunenavn i søket (`data/synonymer.json`) er kopiert fra `folkemengde` (Klass 131), og landsynonymene (`data/land-synonymer.json`) fra `innvbef`.
@@ -38,8 +41,8 @@ Spørringene står i [data/kilder.json](data/kilder.json). Tidligere kommunenavn
 Fra roten av repoet:
 
 ```
-python innvbef-omrade/scripts/hent_data.py     # henter ferske tall og kodelisten fra statistikkbanken
+python innvbef-omrade/scripts/hent_data.py     # henter ferske tall, kodelisten og kommuneendringene
 python felles/bygg.py innvbef-omrade           # kontrollerer og bygger innvbef-omrade/index.html
 ```
 
-Rådataene i `data/raw/` er hentet direkte fra PxWebApi v2 med `hent_data.py` 11.11.2026, ikke rekonstruert. Kartfilen er kopiert fra `arealprofiler` og hentes ikke av skriptet.
+Rådataene i `data/raw/` er hentet direkte fra PxWebApi v2 med `hent_data.py` 23.11.2026, ikke rekonstruert. Kartfilen er kopiert fra `arealprofiler` og hentes ikke av skriptet.

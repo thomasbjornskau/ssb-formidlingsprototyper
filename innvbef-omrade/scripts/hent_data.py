@@ -4,7 +4,7 @@ Bruk, fra roten av repoet:
     python innvbef-omrade/scripts/hent_data.py
 
 Leser data/kilder.json, henter hver URL som json-stat2 og lagrer svaret uendret
-i data/raw/<id>.json. Henter også kodelistene i kilder.json. Skriver hentedatoen til data/raw/_hentet.json.
+i data/raw/<id>.json. Henter også kodelistene og Klass-endringene i kilder.json. Skriver hentedatoen til data/raw/_hentet.json.
 Kjør deretter python felles/bygg.py innvbef-omrade fra roten.
 
 
@@ -44,6 +44,13 @@ def main():
             raise SystemExit(f"{kl['id']}: svaret mangler 'values', er det en kodeliste?")
         (RAW / f"{kl['id']}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf8")
         print(f"{kl['id']}: kodeliste {kl['kodeliste']}, {len(data['values'])} grupper")
+    for kl in kilder.get("klass", []):
+        time.sleep(3)
+        data = hent(kl["url"])
+        if "codeChanges" not in data:
+            raise SystemExit(f"{kl['id']}: svaret mangler 'codeChanges', er det Klass-endringer?")
+        (RAW / f"{kl['id']}.json").write_text(json.dumps(data, ensure_ascii=False), encoding="utf8")
+        print(f"{kl['id']}: Klass {kl['klassifikasjon']}, {len(data['codeChanges'])} endringer")
     (RAW / "_hentet.json").write_text(json.dumps({"hentet": datetime.date.today().isoformat()}), encoding="utf8")
 
 

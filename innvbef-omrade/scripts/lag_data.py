@@ -6,6 +6,8 @@ Kjøres av felles/bygg.py. Stopper med feil hvis en kontroll ikke går opp:
 - 07108: kommunene i hvert fylke summerer til fylket, fra 2024 (før det ligger delte kommuner i restkoden)
 - 07108 og 09817 gir samme antall per kommune i 2026
 - 07459: kommunene og restkodene summerer til landet i 05803, og fylkene likeså
+- 09817 regnet om til dagens kommuner med Klass: innvandrere + norskfødte = 07108 per kommune og fylke, 2010–2026,
+  og nøyaktig lik 09817 med dagens koder fra 2024
 - 09817: summen av landbakgrunner = «Alle land» per kommune og fylke, 2026
 - 09817: publisert andel = antall / folkemengde fra 07459, 2026
 - kartene har nøyaktig de samme 357 kommunene og 15 fylkene som tabellene
@@ -141,9 +143,9 @@ def kartstier(geojson, knr, fylkegeo, fnr):
 
 
 def main():
-    lt, lb, kt, ft, kb, fb, kd, fd, kl, fl = (les(n) for n in (
+    lt, lb, kt, ft, kb, fb, kd, fd, kl, fl, kh = (les(n) for n in (
         "landet_tid", "landet_bef", "komm_tid", "fylke_tid", "komm_bef", "fylke_bef",
-        "komm_delt", "fylke_delt", "komm_land", "fylke_land"))
+        "komm_delt", "fylke_delt", "komm_land", "fylke_land", "komm_delt_hist"))
     vdk = json.loads((RAW / "verdensdel.json").read_text(encoding="utf8"))
     geo = json.loads((RAW / "kommuner2024-S.geojson").read_text(encoding="utf8"))
     fgeo = json.loads((RAW / "fylker2024-S.geojson").read_text(encoding="utf8"))
@@ -242,15 +244,82 @@ def main():
     hull = {k: [a for a, v in zip(b_aar, tid[k]["bef"]) if v is None] for k in kom}
     hull = {k: v for k, v in hull.items() if v}
 
-    # ---------- Innvandrere og norskfødte hver for seg (09817) ----------
+    # ---------- Innvandrere og norskfødte hver for seg, 2010–2026 (09817 regnet om til dagens kommuner) ----------
+    # 09817 har ingen sammenslåtte tidsserier. Vi henter alle kommunekoder som har vært i bruk, og følger
+    # kodeendringene i Klass fram til dagens kommune. En gammel kode som ble delt på flere kommuner,
+    # legges i den som ellers mangler mest mot 07108 (der hoveddelen gikk). Så kontrolleres alt mot 07108.
     d_aar = koder(kd, "Tid")
-    delt = {}
-    for t, omr in ((kd, kom), (fd, fyl)):
-        for o in omr:
-            inn = [hent(t, Region=o, InnvandrKat="B", ContentsCode="Personer1", Tid=a) for a in d_aar]
-            nmi = [hent(t, Region=o, InnvandrKat="C", ContentsCode="Personer1", Tid=a) for a in d_aar]
-            # 0 for begge betyr at dagens områdekode ikke fantes det året (09817 er ikke sammenslått)
-            delt[o] = [[x if (x or y) else None for x, y in zip(inn, nmi)], [y if (x or y) else None for x, y in zip(inn, nmi)]]
+    endr = json.loads((RAW / "kommuneendringer.json").read_text(encoding="utf8"))["codeChanges"]
+    datoer = sorted({e["changeOccurred"] for e in endr})
+
+    def dagens(kode, a):
+        naa = {kode}
+        for dt in datoer:
+            if dt <= f"{a}-01-01":   # tallene gjelder 1. januar, så endringer den dagen er allerede med
+                continue
+            ny = set()
+            for k in naa:
+                til = {e["newCode"] for e in endr if e["changeOccurred"] == dt and e["oldCode"] == k}
+                ny |= til or {k}
+            naa = ny
+        return naa
+
+    def tot_kt(k, a):
+        return sum(hent(kt, Region="K-" + k, Landbakgrunn=v, Tid=a) for v in vd)
+
+    delt = {o: [[], []] for o in kom + fyl}
+    for a in d_aar:
+        agg, delte = {k: [0, 0] for k in kom}, []
+        for r in koder(kh, "Region"):
+            b = hent(kh, tom=True, Region=r, InnvandrKat="B", Tid=a) or 0
+            n = hent(kh, tom=True, Region=r, InnvandrKat="C", Tid=a) or 0
+            if not (b or n):
+                continue
+            til = dagens(r, a)
+            if not til <= set(kom):
+                feil(f"09817 {a}: kode {r} leder til {sorted(til - set(kom))}, som ikke er en kommune i dag")
+            if len(til) == 1:
+                k = til.pop()
+                agg[k][0] += b
+                agg[k][1] += n
+            else:
+                delte.append((r, til, b, n))
+        for r, til, b, n in sorted(delte, key=lambda x: -(x[2] + x[3])):
+            k = max(sorted(til), key=lambda k: tot_kt(k, a) - sum(agg[k]))
+            agg[k][0] += b
+            agg[k][1] += n
+        for k in kom:
+            if tid[k]["bef"][b_aar.index(a)] is None:   # kommunen kan ikke følges (delt kommune), som i 07108
+                delt[k][0].append(None)
+                delt[k][1].append(None)
+                continue
+            d = sum(agg[k]) - tot_kt(k, a)
+            if abs(d) > 6:   # avrundede småceller i begge tabeller; største faktiske avvik er 4
+                feil(f"09817 omregnet {k} {a}: innvandrere og norskfødte summerer til {d} mer enn 07108")
+            avvik("09817 omregnet mot 07108 per kommune", d)
+            delt[k][0].append(agg[k][0])
+            delt[k][1].append(agg[k][1])
+            if int(a) >= 2024:
+                # Fra 2024 er kodene de samme som i dag. Da skal omregningen gi nøyaktig det 09817 selv har.
+                for m, kat in ((0, "B"), (1, "C")):
+                    if agg[k][m] != hent(kd, Region=k, InnvandrKat=kat, ContentsCode="Personer1", Tid=a):
+                        feil(f"09817 omregnet {k} {a} {kat}: ulik 09817 med dagens koder")
+        for f in fyl:
+            # Fylket er summen av alle omregnede koder i fylket, også delte kommuner som ikke kan følges hver for seg
+            s = [sum(agg[k][m] for k in kom if k[:2] == f) for m in (0, 1)]
+            d = sum(s) - tot(ft, "F-" + f, a)
+            if abs(d) > 25:   # største faktiske avvik er 13
+                feil(f"09817 omregnet fylke {f} {a}: summerer til {d} mer enn 07108")
+            avvik("09817 omregnet mot 07108 per fylke", d)
+            if int(a) >= 2024:
+                # Fylketallet i 09817 er avrundet for seg, så kommunene kan avvike litt. Største faktiske avvik er 1.
+                for m, kat in ((0, "B"), (1, "C")):
+                    d = s[m] - hent(fd, Region=f, InnvandrKat=kat, ContentsCode="Personer1", Tid=a)
+                    if abs(d) > 3:
+                        feil(f"09817 omregnet fylke {f} {a} {kat}: {d} mer enn 09817 med dagens koder")
+                    avvik("09817 kommuner mot fylke fra 2024", d)
+            delt[f][0].append(s[0])
+            delt[f][1].append(s[1])
     for o in kom:
         a = hent(kd, Region=o, InnvandrKat="B", ContentsCode="AndelBefolkning", Tid=SISTE)
         bef = tid[o]["bef"][-1]
@@ -306,7 +375,7 @@ def main():
     # Kompakt: land -> [[områdekode, innv, nmi], ...]
     land_ut = {l: [[o, v[0], v[1]] for o, v in sorted(land[l].items())] for l in landliste}
     ut = {
-        "kilde": {"oppdatert": {t["navn"]: t["oppdatert"] for t in (lt, lb, kt, ft, kb, fb, kd, fd, kl, fl)},
+        "kilde": {"oppdatert": {t["navn"]: t["oppdatert"] for t in (lt, lb, kt, ft, kb, fb, kd, fd, kl, fl, kh)},
                   "hentet": json.loads((RAW / "_hentet.json").read_text(encoding="utf8"))["hentet"]},
         "aar": [int(a) for a in aar], "befAar": [int(a) for a in b_aar], "deltAar": [int(a) for a in d_aar],
         "vd": vd_navn, "landet": landet, "tid": tid, "delt": delt, "hull": hull,

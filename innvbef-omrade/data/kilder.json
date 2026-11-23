@@ -1,10 +1,10 @@
 {
  "statistikk": "Innvandrere og norskfødte med innvandrerforeldre, med kommune og fylke som hovedvalg",
  "kortnavn": "innvbef-omrade",
- "versjon": "0.1",
+ "versjon": "0.2",
  "dato_valg": "2026-11-11",
  "merknad": "Variant av innvbef. URL-ene bruker PxWebApi v2 med valueCodes[...], codelist[...] og outputValues[...]. Hentet direkte med scripts/hent_data.py.",
- "valg": "Kommune eller fylke er hovedvalget, og landbakgrunn er et valg for kartet (Thomas 11.11.2026). Egen fylkesvelger og kommunevelger; fylkesvalg viser fylkeskart (Thomas 11.11.2026).",
+ "valg": "Kommune eller fylke er hovedvalget, og landbakgrunn er et valg for kartet (Thomas 11.11.2026). Egen fylkesvelger og kommunevelger; fylkesvalg viser fylkeskart (Thomas 11.11.2026). Innvandrere og norskfødte vises hver for seg, summen bare i tillegg (fag 23.11.2026). 01451 er intern og brukes ikke; delingen fra 2010 regnes ut fra 09817.",
  "manglende_verdier": {},
  "fallgruver": [],
  "datasett": [
@@ -122,6 +122,18 @@
    "beskrivelse": "Innvandrere og norskfødte per fylke og landbakgrunn, 1. januar 2026.",
    "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=agg_FylkerGjeldende&outputValues%5BRegion%5D=aggregated&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B,C&valueCodes%5BLandbakgrunn%5D=*&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=2026",
    "omfang": "15 × 2 × 250 × 1"
+  },
+  {
+   "id": "komm_delt_hist",
+   "tabell": "09817",
+   "svarer_paa": [
+    1,
+    2
+   ],
+   "seksjon": "Toppgrafikk, kart og sammenligning: innvandrere og norskfødte hver for seg over tid",
+   "beskrivelse": "Innvandrere og norskfødte med innvandrerforeldre hver for seg, alle kommunekoder som har vært i bruk 2010–2026 (vs_Kommune). Regnes om til kommuner 2024 med kommuneendringene fra Klass, og kontrolleres mot de sammenslåtte seriene i 07108.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/09817/data?lang=no&outputFormat=json-stat2&codelist%5BRegion%5D=vs_Kommune&valueCodes%5BRegion%5D=*&valueCodes%5BInnvandrKat%5D=B,C&valueCodes%5BLandbakgrunn%5D=999&valueCodes%5BContentsCode%5D=Personer1&valueCodes%5BTid%5D=*",
+   "omfang": "937 kommunekoder × 2 grupper × 17 år (2010–2026)"
   }
  ],
  "kodelister": [
@@ -141,5 +153,13 @@
    "kilde_url": "https://github.com/robhop/fylker-og-kommuner (commit 8d178fa, Fylker-S.geojson)",
    "beskrivelse": "Fylkesgrenser 2024 fra Kartverket, forenklet av robhop. Hentet 11.11.2026 fra samme commit som kommunekartet, og projisert med samme transformasjon."
   }
- }
+ },
+ "klass": [
+  {
+   "id": "kommuneendringer",
+   "klassifikasjon": "131 Standard for kommuneinndeling",
+   "beskrivelse": "Alle kodeendringer for kommuner 2010–2026. Brukes til å regne 09817 om til dagens kommuner.",
+   "url": "https://data.ssb.no/api/klass/v1/classifications/131/changes?from=2010-01-01&to=2026-01-02"
+  }
+ ]
 }

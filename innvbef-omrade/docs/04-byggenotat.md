@@ -1,10 +1,10 @@
-Steg 4 i formidlingsprototype for innvbef-omrade · versjon 0.2 · 11.11.2026 · Status: utkast
+Steg 4 i formidlingsprototype for innvbef-omrade · versjon 0.3 · 23.11.2026 · Status: utkast, etter første tilbakemelding fra fag
 
 # Byggenotat: Innvandrere og norskfødte med innvandrerforeldre i kommunene (innvbef-omrade)
 
 En variant av [`innvbef`](../../innvbef/), bestilt av Thomas 11.11.2026: kommune eller fylke er hovedvalget, og siden har et kart. Landbakgrunn er et valg for kartet, ikke for hele siden (valgt av Thomas samme dag). Innsikten, konseptgrafikken og kvalitetssikringen fra steg 1–2 i `innvbef` gjelder også her. Konseptgrafikken er kopiert uendret.
 
-Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (projeksjon, forenkling, piltaster). Siden er én fil på 1,71 MB, og to bygg gir identisk fil. Testet i Chromium i 1280 og 390 px uten feil i konsollen og uten horisontal rulling.
+Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (projeksjon, forenkling, piltaster). Siden er én fil på 1,75 MB, og to bygg gir identisk fil. Testet i Chromium i 1280 og 390 px uten feil i konsollen og uten horisontal rulling.
 
 ## 1. Kilder og struktur
 
@@ -13,13 +13,15 @@ Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (pr
 | `landet_tid`, `landet_bef` | 05182, 05803 | Hele landet 1970–2026, innvandrere og norskfødte hver for seg | Toppgrafikk for hele landet |
 | `komm_tid`, `fylke_tid` | 07108 | Innvandrere og norskfødte **samlet** etter verdensdel, kommuner og fylker 2024 med **sammenslåtte tidsserier**, 1970, 1980, 1986–2026 | Toppgrafikk, verdensdeler, sammenligning |
 | `komm_bef`, `fylke_bef` | 07459 | Folketall med sammenslåtte tidsserier, 1986–2026 | Andeler |
-| `komm_delt`, `fylke_delt` | 09817 | Innvandrere og norskfødte hver for seg, ikke sammenslått | «Hvem bor her», kartet |
+| `komm_delt`, `fylke_delt` | 09817 | Innvandrere og norskfødte hver for seg med dagens koder, 2010–2026 | Kontroll av omregningen, publisert andel |
+| `komm_delt_hist` | 09817 | Innvandrere og norskfødte hver for seg for **alle kommunekoder** som har vært i bruk 2010–2026 (`vs_Kommune`) | Regnes om til dagens kommuner og fylker: toppgrafikk, kart, sammenligning |
+| `kommuneendringer` | Klass 131 | Alle kodeendringer for kommuner 2010–2026 | Omregningen |
 | `komm_land`, `fylke_land` | 09817 | Per landbakgrunn, 2026 | Kartet for valgt land, landbakgrunner i området |
 | Kart | robhop/fylker-og-kommuner | Kommunegrenser 2024 fra Kartverket, kopiert fra `arealprofiler`. Fylkesgrenser 2024 hentet fra samme commit (8d178fa) og projisert med samme transformasjon | Kartet |
 
 **Funn som former siden:**
 
-- Den sammenslåtte tidsserien i 07108 finnes bare for innvandrere og norskfødte samlet. Hver for seg finnes de bare i 09817, uten sammenslåing: alle kommuner fra 2024, noen fra 2010. Toppgrafikken for kommuner og fylker viser derfor gruppene samlet, og skillet vises bare for 2026.
+- Den sammenslåtte tidsserien i 07108 finnes bare for innvandrere og norskfødte samlet. 01451 har gruppene hver for seg, men er en intern tabell. Fra versjon 0.3 regnes 09817 om til dagens kommuner: hver gammel kode følges gjennom kodeendringene i Klass. En kode som gikk til flere kommuner (for eksempel Stokke til Sandefjord og Tønsberg), legges i den kommunen som ellers mangler mest mot 07108. Det er der hoveddelen gikk. Resultatet kontrolleres mot 07108 for hver kommune og hvert år (se kontrollene). Innvandrere og norskfødte vises dermed hver for seg fra 2010 for alle kommuner og fylker. Før 2010 vises bare summen.
 - Folketall per kommune finnes fra 1986. Andelen vises derfor fra 1986, antallet fra 1970.
 - Seks kommuner kan ikke følges hele veien, fordi de er satt sammen av deler av kommuner som ble delt. Heim, Hitra, Orkland, Narvik og Hamarøy har tall fra 2020. Haram mangler 2020–2023, da den var en del av Ålesund. Personene ligger i restkoden «Delte kommuner og uoppgitt». Hullene vises skravert som «Kan ikke følges», ikke som null.
 - 09817 har 213 landbakgrunner med personer i 2026 (13880 i `innvbef` har 215). Tallene per land for hele landet er summen av fylkene.
@@ -28,21 +30,21 @@ Malen bygger på `innvbef` (CSS, verktøy, søk) og kartet i `arealprofiler` (pr
 
 | Del | Svarer på | Innhold |
 |---|---|---|
-| Hode | – | Ingress generert fra tallene. **Fylkesvelger** (nedtrekksliste med hele landet og 15 fylker) og **kommunevelger** (søk, også tidligere kommunenavn fra Klass, for eksempel Skedsmo, og tospråklige navn som Tråante). Velgerne følger hverandre: velger du en kommune, viser fylkesvelgeren fylket. «Se alle kommuner» etter fylke med andelen ved hvert navn, «Vis hele landet», seks eksempler, også ett uten treff (Atlantis) |
-| Kort for valgt område | – | Fylke som lenke, kommunenummer, innbyggere, innvandrere og norskfødte med andel, rangering blant 357 kommuner, tekst om hull i serien, søkeordet som ga treffet, varsel under 2 000 innbyggere |
-| Lesehjelpen | H1, H2, H6, H7 | Fødested, ikke pass. To grupper, ikke én (tall for området). Andel og antall forteller ulike historier (flest og høyest andel). Registrert bosatt. Konseptgrafikken i «Slik lages tallene» |
-| Toppgrafikk | 2 | Stort avrundet tall, setning som sammenligner andelen med landet, fire nøkkeltall. Bryter **Antall** (linje, prikket før 1986; for landet to linjer) og **Andel av innbyggerne** (stablet areal til 100 prosent med øvrig befolkning, fra 1986, med landet som stiplet linje) |
-| Hvor bor de? (kartet) | 4 | Koroplet med fem kvintilklasser og egen klasse for «Ingen». **Fylke eller hele landet valgt: fylkeskart** med alle 15 fylker og listen over fylkene etter andel. **Kommune valgt: kommunekart** zoomet til fylket (fylket med mørk kant, kommunen med oker kant), knapp for hele landet, og de ti kommunene med høyest andel. Bryteren «Fylker | Kommuner» overstyrer nivået. Brytere for innvandrere, norskfødte eller begge, og søk etter landbakgrunn (med synonymer fra `innvbef`) |
+| Hode | – | **Definisjonen av de to gruppene først**, med «født med» (fag 23.11). Ingress generert fra tallene, med andelen innvandrere. **Fylkesvelger** (nedtrekksliste med hele landet og 15 fylker) og **kommunevelger** (søk, også tidligere kommunenavn fra Klass, for eksempel Skedsmo, og tospråklige navn som Tråante). Velgerne følger hverandre: velger du en kommune, viser fylkesvelgeren fylket. «Se alle kommuner» etter fylke med andelen innvandrere og andelen norskfødte ved hvert navn, «Vis hele landet», seks eksempler, også ett uten treff (Atlantis) |
+| Kort for valgt område | – | Fylke som lenke, kommunenummer, innbyggere, innvandrere og norskfødte med hver sin andel og summen i tillegg, rangering blant 357 kommuner etter andel innvandrere, tekst om hull i serien, søkeordet som ga treffet, varsel under 2 000 innbyggere |
+| Lesehjelpen | H1, H2, H6, H7 | Fødested, ikke pass. To grupper, ikke én (tall for området). Andel og antall forteller ulike historier (flest og høyest andel innvandrere; «mottak» er tatt ut og erstattet med «bosetting av flyktninger»). Registrert bosatt («asylsøkere som venter på svar på søknaden, er ikke med»). Konseptgrafikken i «Slik lages tallene» |
+| Toppgrafikk | 2 | **To store tall**, innvandrere og norskfødte, med hver sin andel i setningen og mot landet. Summen står i en egen linje under. Nøkkeltall: andel og endring siste år for hver gruppe. Bryter **Antall** (innvandrere og norskfødte som linjer fra 2010, for landet fra 1970; summen som grå tilleggslinje fra 1970) og **Andel av innbyggerne** (stablet areal til 100 prosent: innvandrere, norskfødte, øvrig befolkning; før 2010 ett grått lag for summen; landet som stiplet linje) |
+| Hvor bor de? (kartet) | 4 | Koroplet med fem klasser med **naturlige brudd** (ckmeans) og egen klasse for «Ingen». Klassene regnes for alle kommunene (eller fylkene) i landet. **Fylke eller hele landet valgt: fylkeskart** med alle 15 fylker og listen over fylkene etter andel. **Kommune valgt: kommunekart** zoomet til fylket (fylket med mørk kant, kommunen med oker kant), knapp for hele landet, og **alle kommunene i fylket** i listen. Hele landet utenfor fylket: de ti med høyest andel og valgt kommune. Listen har **Hele landet** og fylket som egne, uthevede rader der de hører hjemme i rekkefølgen. Bryteren «Fylker | Kommuner» overstyrer nivået. Brytere for innvandrere, norskfødte eller begge, og søk etter landbakgrunn (med synonymer fra `innvbef`) |
 | Hvem bor i …? | 1, 3 | Andel innvandrere og norskfødte i området, fylket og landet, med andelen av gruppen som er født i Norge i overskriften. Verdensdeler 1970–2026 som stablet areal |
-| Hvor kommer de fra? | 3 | De 15 største landbakgrunnene i området, delt i innvandrere og norskfødte. En rad setter landet på kartet |
-| Sammenligning | 4 | Kommunene i fylket (eller fylkene) med andel 2016 og 2026 som prikker. Over 20 kommuner: ti høyeste, fem laveste og valgt kommune |
+| Hvor kommer de fra? | 3 | De 15 største landbakgrunnene i området for **innvandrere, norskfødte eller begge samlet** (samme gruppevalg som kartet og sammenligningen). Rangeringen følger gruppen, så de største landene kan være ulike. En rad setter landet på kartet |
+| Sammenligning (flyttet til «Hvor bor de?», full bredde) | 4 | **Alle** kommunene i fylket (eller alle fylkene) med andel 2016 og 2026 for valgt gruppe. Fylket og **Hele landet** er egne rader i rekkefølgen |
 | Bunntekst | – | Om tallene, egne beregninger, kilder, kartkilde, hentedato og lenke til `innvbef` |
 
 Valgt område og kartland ligger i adressen: `#omrade=1835&land=131`. Velgerne følger adressen. Kartet kan brukes med piltastene (neste og forrige fylke eller kommune), og alle rader i listene kan velges med tastatur.
 
 ## 3. Kontroller
 
-`lag_data.py` stopper bygget med «Kontroll feilet: …». Negativ test: Halden, Europa, 1970 ble økt med 5 i `komm_tid.json`, og bygget stoppet med «07108 1970, verdensdel 1: kommunene summerer til 5 mer enn fylkene». Filen ble satt tilbake og er byte for byte lik originalen.
+`lag_data.py` stopper bygget med «Kontroll feilet: …». Negativ test for omregningen (0.3): Oslo, innvandrere, 2015 ble økt med 7 i `komm_delt_hist.json`, og bygget stoppet med «09817 omregnet 0301 2015: innvandrere og norskfødte summerer til 7 mer enn 07108». Filen ble satt tilbake. Negativ test fra 0.2: Halden, Europa, 1970 ble økt med 5 i `komm_tid.json`, og bygget stoppet med «07108 1970, verdensdel 1: kommunene summerer til 5 mer enn fylkene». Filen ble satt tilbake og er byte for byte lik originalen.
 
 Den første negative testen (+500 i samme celle) gikk **ikke** gjennom kontrollen. 1970 avvek allerede med −208 mot landet, så +500 ga +292, innenfor toleransen på 350. Derfor ble den eksakte kontrollen mellom kommuner og fylker lagt til.
 
@@ -54,6 +56,10 @@ Den første negative testen (+500 i samme celle) gikk **ikke** gjennom kontrolle
 | 07108 = 09817 per kommune, 2026 | 3 | 1 |
 | 07459: kommuner og fylker = landet i 05803, alle år | 0 | 0 |
 | 07459 mangler folketall ⇒ 07108 har ingen personer samme år | 0 | 0 |
+| 09817 omregnet til dagens kommuner = 07108, per kommune og år 2010–2026 | 6 | 4 |
+| 09817 omregnet til dagens fylker = 07108, per fylke og år 2010–2026 | 25 | 13 |
+| 09817 omregnet = 09817 med dagens koder, per kommune, 2024–2026 | 0 | 0 |
+| 09817 omregnet: kommunene i fylket = fylket i 09817, 2024–2026 | 3 | 1 |
 | 09817: sum av land = «Alle land», per kommune og fylke | 5 | 3 |
 | 09817: publisert andel = antall / 07459, 2026 | 0,011 prosentpoeng | 0 |
 | Kartene og tabellene har de samme 357 kommunene og 15 fylkene | 0 | 0 |
@@ -65,8 +71,8 @@ Nummerert videre fra B1–B11 i `innvbef/docs/04-byggenotat.md`.
 
 | # | Valg eller påstand | Grunnlag | Må sjekkes |
 |---|---|---|---|
-| C1 | Toppgrafikken for kommuner og fylker viser innvandrere og norskfødte samlet, fordi bare den serien er sammenslått | 07108 | Fag: finnes en sammenslått serie hver for seg? |
-| C2 | Kartet bruker kvintiler blant kommunene med personer i gruppen, og «Ingen» som egen klasse | Diagramstandarden, eget valg | – |
+| C1 | Innvandrere og norskfødte hver for seg 2010–2026 er regnet om fra 09817 til dagens kommuner med Klass. En kode som gikk til flere kommuner, legges der hoveddelen gikk. Før 2010 vises bare summen (07108) | 09817, Klass, kontroll mot 07108 | Fag: stemmer det med 01451? |
+| C2 | Kartet bruker naturlige brudd (ckmeans, fem klasser) blant områdene med personer i gruppen, og «Ingen» som egen klasse. Klassene gjelder hele landet også når kartet viser ett fylke | Fag 23.11, diagramstandarden | – |
 | C3 | Andel per kommune for valgt land, for norskfødte og for begge er egne beregninger mot 07459 | Egen beregning | Fag |
 | C4 | Tall per land for hele landet er summen av fylkene i 09817, ikke tallet i 13880 | Egen beregning | Avvik fra `innvbef` på inntil 3 per land |
 | C5 | Verdensdelene er slått sammen til fem: Europa, Asia, Afrika, Amerika og «Oseania, statsløse og uoppgitt». Europa omfatter Tyrkia, Russland og Ukraina | 07108, eget valg | Fag: ønsker dere SSBs grupper? |
@@ -75,12 +81,33 @@ Nummerert videre fra B1–B11 i `innvbef/docs/04-byggenotat.md`.
 | C8 | Prosentvis vekst vises bare når utgangspunktet er minst 500 personer | Eget valg | – |
 | C9 | Kartgrunnlaget er robhop/fylker-og-kommuner, ikke en SSB-kilde | Samme som Q35 i `arealprofiler` | Lisens, og om SSB har et eget forenklet kart |
 | C10 | Fylke og hele landet gir fylkeskart, kommune gir kommunekart. Hele landet kunne like gjerne vist kommunene | Valg av Thomas 11.11.2026 (fylkesvelger viser fylkeskart), hele landet er eget valg | Thomas |
-| C11 | Fylkeskartet har bare 15 enheter, så kvintilene gir tre fylker per farge. Klassegrensene kan ligge tett (14,2–14,6) | Diagramstandarden | Vurder faste grenser eller sortert liste alene |
+| C11 | Fylkeskartet har bare 15 enheter. Med naturlige brudd kan en klasse ha ett fylke (Oslo) | Fag 23.11 | – |
 | C12 | Kommunesøket viser bare kommuner. Et fylkesnavn i kommunefeltet gir kommuner med navnet i seg, for eksempel Herøy (Nordland) | Eget valg | – |
 
-## 5. Kjente svakheter
+## 5. Tilbakemelding fra fag 23.11.2026
+
+Thomas ba om at «et par av de viktigste» punktene ble tatt. 01451 er intern og er ikke brukt.
+
+| Punkt fra fag | Status i 0.3 |
+|---|---|
+| For mye vekt på summen. Vis innvandrere og norskfødte hver for seg, summen bare i tillegg | **Gjort.** Toppgrafikk, kort, nøkkeltall, ingress, rangering, landbakgrunner og sammenligning viser gruppene hver for seg. Summen er grå tilleggslinje eller eget valg («Begge samlet»). Delingen fra 2010 er regnet ut fra 09817, se C1 |
+| Definisjonen tidlig, «født med», ikke «født av» | **Gjort.** Definisjonen står først under tittelen og i bunnteksten |
+| «Slik leser du tallene»: punkt 3 og 4 motsier hverandre om mottak | **Rettet midlertidig.** «Mottak» er tatt ut av punkt 3. Punkt 4 sier at asylsøkere som venter på svar, ikke er med. **Lesehjelpen bør sendes til Magnus Haug**, som har forklart reglene |
+| Kvintiler skiller fylker som ligner. Naturlige skiller forteller mer | **Gjort** for fylker og kommuner (ckmeans, fem klasser) |
+| «Hvor kommer de fra?» fokuserer på summen | **Gjort.** Valg mellom innvandrere, norskfødte og begge samlet. Innvandrere er standard |
+| «Hele landet» trengs flere steder, for eksempel i 2016–2026-figuren for fylkene | **Gjort** i sammenligningen og i listen ved kartet |
+| Innlandet: liste over alle kommunene, ikke bare de ti høyeste | **Gjort** i listen ved kartet og i sammenligningen |
+| Etnedal trenger en forklaring (Magnus Haug har skrevet en) | **Ikke gjort.** Venter på teksten fra Magnus Haug |
+| C1: 01451 har tallene, Alice Steinkellner kan levere | Løst uten 01451, med omregning av 09817 og kontroll mot 07108. Fag bør bekrefte at metoden gir de samme tallene som 01451 |
+| C2: uklart hvordan kommunene i hvert fylke presenteres | Klassene gjelder alle kommunene i landet, og det står nå i teksten ved kartet. Listen viser alle kommunene i fylket |
+| C3: tall under 3 ser ut til å kunne publiseres i statistikkbanken. Kan de stå i kartene? | **Svar:** kartene bruker tallene slik de står i 09817. Der er celler på 1–3 publisert som 0 eller 3, så tallene er med, men avrundet. Teksten om avrunding står ved landbakgrunnene |
+| C5: bruk SSBs grupperinger, Europa delt i tre (gamle EU-land, nye EU-land, utenfor EU/EØS) | **Ikke gjort.** 07108 og 09817 har ingen kodeliste for denne grupperingen. Den kan lages fra land i 09817 for 2010–2026 eller fra en annen tabell. Tas i neste runde |
+| C11: Oslo-bydeler kan tas med | **Ikke gjort.** Tas i neste runde |
+
+## 6. Kjente svakheter
 
 - Kartet kan brukes med piltaster, men kommunene kan ikke nås én og én med Tab. Den fulle tabellen under kartet og søket er alternativene.
 - Befolkningsregnskap og botid per kommune er ikke med. 10598 har botid per fylke, men ikke per kommune.
 - Oslo-bydeler er ikke med.
-- Den samlede siden er 1,58 MB, mest tidsseriene per verdensdel (07108) og kartstiene (237 kB).
+- Den samlede siden er 1,75 MB, mest tidsseriene per verdensdel (07108) og kartstiene (237 kB).
+- Verdensdeler over tid finnes per kommune bare for begge grupper samlet. Figuren sier det.
