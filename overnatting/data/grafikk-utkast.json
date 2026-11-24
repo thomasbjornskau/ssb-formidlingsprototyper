@@ -1,0 +1,1227 @@
+{
+ "merknad": "Utkast til steg 2. Hentet direkte fra data.ssb.no (PxWebApi v2) 24.11.2026. Erstattes av data/raw/ i steg 3.",
+ "serier": {
+  "hotell_september": {
+   "tabell": "14162",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14162/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0N&valueCodes[InnKvartering1]=01&valueCodes[Landkoder2]=00000&valueCodes[ContentsCode]=Overnattinger&valueCodes[Tid]=2016M09,2017M09,2018M09,2019M09,2020M09,2021M09,2022M09,2023M09,2024M09,2025M09,2026M09",
+   "dims": [
+    "Region",
+    "InnKvartering1",
+    "Landkoder2",
+    "ContentsCode",
+    "Tid"
+   ],
+   "merknad": "",
+   "verdier": [
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2016M09"
+     ],
+     "verdi": 2022447,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2017M09"
+     ],
+     "verdi": 2132559,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2018M09"
+     ],
+     "verdi": 2069222,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2019M09"
+     ],
+     "verdi": 2175593,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2020M09"
+     ],
+     "verdi": 1255788,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2021M09"
+     ],
+     "verdi": 1828857,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2022M09"
+     ],
+     "verdi": 2208050,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2023M09"
+     ],
+     "verdi": 2297267,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2024M09"
+     ],
+     "verdi": 2389974,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 2510517,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 2579128,
+     "status": null
+    }
+   ]
+  },
+  "hotell_sesongjustert": {
+   "tabell": "14178",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14178/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0N&valueCodes[InnKvartering1]=01&valueCodes[Landkoder2]=00000&valueCodes[ContentsCode]=Overnattinger,OvernattingerSesongj&valueCodes[Tid]=2024M10,2024M11,2024M12,2025M01,2025M02,2025M03,2025M04,2025M05,2025M06,2025M07,2025M08,2025M09,2025M10,2025M11,2025M12,2026M01,2026M02,2026M03,2026M04,2026M05,2026M06,2026M07,2026M08,2026M09",
+   "dims": [
+    "Region",
+    "InnKvartering1",
+    "Landkoder2",
+    "ContentsCode",
+    "Tid"
+   ],
+   "merknad": "",
+   "verdier": [
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2024M10"
+     ],
+     "verdi": 2103792,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2024M11"
+     ],
+     "verdi": 1970032,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2024M12"
+     ],
+     "verdi": 1562320,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M01"
+     ],
+     "verdi": 1657780,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M02"
+     ],
+     "verdi": 1866886,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M03"
+     ],
+     "verdi": 2105655,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M04"
+     ],
+     "verdi": 1819448,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M05"
+     ],
+     "verdi": 2311047,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M06"
+     ],
+     "verdi": 2924659,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M07"
+     ],
+     "verdi": 3848193,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M08"
+     ],
+     "verdi": 3323033,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 2510517,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M10"
+     ],
+     "verdi": 2191114,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M11"
+     ],
+     "verdi": 1929525,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2025M12"
+     ],
+     "verdi": 1667793,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M01"
+     ],
+     "verdi": 1727297,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M02"
+     ],
+     "verdi": 1936598,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M03"
+     ],
+     "verdi": 2122477,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M04"
+     ],
+     "verdi": 1881634,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M05"
+     ],
+     "verdi": 2261999,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M06"
+     ],
+     "verdi": 2932899,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M07"
+     ],
+     "verdi": 4005330,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M08"
+     ],
+     "verdi": 3422946,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 2579128,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2024M10"
+     ],
+     "verdi": 2273323,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2024M11"
+     ],
+     "verdi": 2318595,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2024M12"
+     ],
+     "verdi": 2309477,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M01"
+     ],
+     "verdi": 2308054,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M02"
+     ],
+     "verdi": 2309192,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M03"
+     ],
+     "verdi": 2311394,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M04"
+     ],
+     "verdi": 2334292,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M05"
+     ],
+     "verdi": 2392673,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M06"
+     ],
+     "verdi": 2355467,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M07"
+     ],
+     "verdi": 2369895,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M08"
+     ],
+     "verdi": 2320343,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M09"
+     ],
+     "verdi": 2358824,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M10"
+     ],
+     "verdi": 2355372,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M11"
+     ],
+     "verdi": 2329339,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2025M12"
+     ],
+     "verdi": 2421004,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M01"
+     ],
+     "verdi": 2382069,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M02"
+     ],
+     "verdi": 2391291,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M03"
+     ],
+     "verdi": 2394914,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M04"
+     ],
+     "verdi": 2377165,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M05"
+     ],
+     "verdi": 2362303,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M06"
+     ],
+     "verdi": 2349810,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M07"
+     ],
+     "verdi": 2433805,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M08"
+     ],
+     "verdi": 2428988,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "00000",
+      "OvernattingerSesongj",
+      "2026M09"
+     ],
+     "verdi": 2408544,
+     "status": null
+    }
+   ]
+  },
+  "sept_endring": {
+   "tabell": "14162",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14162/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0N&valueCodes[InnKvartering1]=01,02,03%2B04&valueCodes[Landkoder2]=000,ccc&valueCodes[ContentsCode]=Overnattinger&valueCodes[Tid]=2025M09,2026M09",
+   "dims": [
+    "Region",
+    "InnKvartering1",
+    "Landkoder2",
+    "ContentsCode",
+    "Tid"
+   ],
+   "merknad": "",
+   "verdier": [
+    {
+     "koder": [
+      "0N",
+      "01",
+      "000",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 1726962,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "000",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 1737498,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "ccc",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 783555,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "01",
+      "ccc",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 841630,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "02",
+      "000",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 335764,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "02",
+      "000",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 330290,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "02",
+      "ccc",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 196734,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "02",
+      "ccc",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 183661,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "03+04",
+      "000",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 167246,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "03+04",
+      "000",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 178855,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "03+04",
+      "ccc",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 184068,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "03+04",
+      "ccc",
+      "Overnattinger",
+      "2026M09"
+     ],
+     "verdi": 176145,
+     "status": null
+    }
+   ]
+  },
+  "reiseundersokelsen_2025": {
+   "tabell": "11270",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11270/data?lang=no&outputFormat=json-stat2&valueCodes[InnKvartering]=*&valueCodes[Reisetype]=01&valueCodes[ContentsCode]=Overnattinger&valueCodes[Tid]=2025K1,2025K2,2025K3,2025K4",
+   "dims": [
+    "InnKvartering",
+    "Reisetype",
+    "ContentsCode",
+    "Tid"
+   ],
+   "merknad": "Nordmenns overnattinger på reiser i Norge, Reiseundersøkelsen. Mill. overnattinger.",
+   "verdier": [
+    {
+     "koder": [
+      "00",
+      "01",
+      "Overnattinger",
+      "2025K1"
+     ],
+     "verdi": 14.92,
+     "status": null
+    },
+    {
+     "koder": [
+      "00",
+      "01",
+      "Overnattinger",
+      "2025K2"
+     ],
+     "verdi": 19.79,
+     "status": null
+    },
+    {
+     "koder": [
+      "00",
+      "01",
+      "Overnattinger",
+      "2025K3"
+     ],
+     "verdi": 31.5,
+     "status": null
+    },
+    {
+     "koder": [
+      "00",
+      "01",
+      "Overnattinger",
+      "2025K4"
+     ],
+     "verdi": 17.21,
+     "status": null
+    },
+    {
+     "koder": [
+      "10",
+      "01",
+      "Overnattinger",
+      "2025K1"
+     ],
+     "verdi": 2.9,
+     "status": null
+    },
+    {
+     "koder": [
+      "10",
+      "01",
+      "Overnattinger",
+      "2025K2"
+     ],
+     "verdi": 3.76,
+     "status": null
+    },
+    {
+     "koder": [
+      "10",
+      "01",
+      "Overnattinger",
+      "2025K3"
+     ],
+     "verdi": 3.76,
+     "status": null
+    },
+    {
+     "koder": [
+      "10",
+      "01",
+      "Overnattinger",
+      "2025K4"
+     ],
+     "verdi": 4,
+     "status": null
+    },
+    {
+     "koder": [
+      "30",
+      "01",
+      "Overnattinger",
+      "2025K1"
+     ],
+     "verdi": 0.33,
+     "status": null
+    },
+    {
+     "koder": [
+      "30",
+      "01",
+      "Overnattinger",
+      "2025K2"
+     ],
+     "verdi": 1.29,
+     "status": null
+    },
+    {
+     "koder": [
+      "30",
+      "01",
+      "Overnattinger",
+      "2025K3"
+     ],
+     "verdi": 2.48,
+     "status": null
+    },
+    {
+     "koder": [
+      "30",
+      "01",
+      "Overnattinger",
+      "2025K4"
+     ],
+     "verdi": 0.32,
+     "status": null
+    },
+    {
+     "koder": [
+      "20",
+      "01",
+      "Overnattinger",
+      "2025K1"
+     ],
+     "verdi": 1.49,
+     "status": null
+    },
+    {
+     "koder": [
+      "20",
+      "01",
+      "Overnattinger",
+      "2025K2"
+     ],
+     "verdi": 1.43,
+     "status": null
+    },
+    {
+     "koder": [
+      "20",
+      "01",
+      "Overnattinger",
+      "2025K3"
+     ],
+     "verdi": 2.66,
+     "status": null
+    },
+    {
+     "koder": [
+      "20",
+      "01",
+      "Overnattinger",
+      "2025K4"
+     ],
+     "verdi": 0.8,
+     "status": null
+    },
+    {
+     "koder": [
+      "75",
+      "01",
+      "Overnattinger",
+      "2025K1"
+     ],
+     "verdi": 10.2,
+     "status": null
+    },
+    {
+     "koder": [
+      "75",
+      "01",
+      "Overnattinger",
+      "2025K2"
+     ],
+     "verdi": 13.3,
+     "status": null
+    },
+    {
+     "koder": [
+      "75",
+      "01",
+      "Overnattinger",
+      "2025K3"
+     ],
+     "verdi": 22.61,
+     "status": null
+    },
+    {
+     "koder": [
+      "75",
+      "01",
+      "Overnattinger",
+      "2025K4"
+     ],
+     "verdi": 12.09,
+     "status": null
+    },
+    {
+     "koder": [
+      "99",
+      "01",
+      "Overnattinger",
+      "2025K1"
+     ],
+     "verdi": 0,
+     "status": null
+    },
+    {
+     "koder": [
+      "99",
+      "01",
+      "Overnattinger",
+      "2025K2"
+     ],
+     "verdi": 0,
+     "status": null
+    },
+    {
+     "koder": [
+      "99",
+      "01",
+      "Overnattinger",
+      "2025K3"
+     ],
+     "verdi": 0,
+     "status": null
+    },
+    {
+     "koder": [
+      "99",
+      "01",
+      "Overnattinger",
+      "2025K4"
+     ],
+     "verdi": 0,
+     "status": null
+    }
+   ]
+  },
+  "norske_kommersielle_2025": {
+   "tabell": "14162",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14162/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0N&valueCodes[InnKvartering1]=00&valueCodes[Landkoder2]=000&valueCodes[ContentsCode]=Overnattinger&valueCodes[Tid]=2025M*",
+   "dims": [
+    "Region",
+    "InnKvartering1",
+    "Landkoder2",
+    "ContentsCode",
+    "Tid"
+   ],
+   "merknad": "",
+   "verdier": [
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M01"
+     ],
+     "verdi": 1393719,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M02"
+     ],
+     "verdi": 1533197,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M03"
+     ],
+     "verdi": 1782703,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M04"
+     ],
+     "verdi": 1773548,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M05"
+     ],
+     "verdi": 2274718,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M06"
+     ],
+     "verdi": 2932352,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M07"
+     ],
+     "verdi": 4513971,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M08"
+     ],
+     "verdi": 3050971,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M09"
+     ],
+     "verdi": 2229972,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M10"
+     ],
+     "verdi": 1907232,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M11"
+     ],
+     "verdi": 1724305,
+     "status": null
+    },
+    {
+     "koder": [
+      "0N",
+      "00",
+      "000",
+      "Overnattinger",
+      "2025M12"
+     ],
+     "verdi": 1307487,
+     "status": null
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="744" viewBox="0 0 1200 744">
+<title>Slik lages tallene i Overnattingar</title>
+<desc>Fire trinn fra gjesten sjekker inn til tallene publiseres, og hva som ikke er med.</desc>
+<rect x="0.0" y="0.0" width="1200.0" height="744.0" rx="0" fill="#ffffff" stroke="none" stroke-width="1"/>
+<text x="30.0" y="44.0" font-family="Roboto Condensed, Arial Narrow, Arial, sans-serif" font-size="30" font-weight="700" fill="#274247" text-anchor="start">Slik lages tallene</text>
+<text x="30.0" y="72.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="16" font-weight="400" fill="#5e787a" text-anchor="start">Fra resepsjonen til statistikkbanken, hver måned</text>
+<rect x="30.0" y="96.0" width="255.0" height="412.0" rx="2" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1"/>
+<circle cx="61.0" cy="126.0" r="15" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="61.0" y="131.5" font-family="Roboto, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="86.0" y="132.0" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="700" fill="#274247" text-anchor="start">Gjesten sjekker inn</text>
+<text x="46.0" y="174.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">Bedriften registrerer hver</text>
+<text x="46.0" y="196.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">person og hver natt, og hvilket</text>
+<text x="46.0" y="218.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">land gjesten bor i. Det er</text>
+<text x="46.0" y="240.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">bostedet som teller, ikke</text>
+<text x="46.0" y="262.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">passet.</text>
+<rect x="46.0" y="320.0" width="223.0" height="172.0" rx="2" fill="#f2f0ff" stroke="#d2ceff" stroke-width="1"/>
+<rect x="46.0" y="320.0" width="4.0" height="172.0" rx="0" fill="#7e5ee8" stroke="none" stroke-width="1"/>
+<text x="60.0" y="342.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#4b2fb0" text-anchor="start">Eksempeltall, ikke statistikk</text>
+<text x="60.0" y="366.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Et par som bor i Tyskland,</text>
+<text x="60.0" y="386.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">sover 3 netter på hotell i</text>
+<text x="60.0" y="406.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Bergen og 2 netter på en</text>
+<text x="60.0" y="426.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">campingplass i Lofoten.</text>
+<text x="60.0" y="452.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">= 10 overnattinger og</text>
+<text x="60.0" y="472.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">4 ankomne gjester</text>
+<line x1="291.0" y1="126.0" x2="309.0" y2="126.0" stroke="#274247" stroke-width="2"/>
+<polygon points="319.0,126.0 309.0,120.5 309.0,131.5" fill="#274247"/>
+<rect x="325.0" y="96.0" width="255.0" height="412.0" rx="2" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1"/>
+<circle cx="356.0" cy="126.0" r="15" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="356.0" y="131.5" font-family="Roboto, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="381.0" y="132.0" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="700" fill="#274247" text-anchor="start">Bedriften rapporterer</text>
+<text x="341.0" y="174.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">Hver måned i Altinn, på skjema</text>
+<text x="341.0" y="196.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">eller rett fra bookingsystemet.</text>
+<text x="341.0" y="218.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">Fristen er 10 dager etter</text>
+<text x="341.0" y="240.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">månedsslutt.</text>
+<rect x="341.0" y="260.0" width="223.0" height="232.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<rect x="341.0" y="260.0" width="4.0" height="232.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="355.0" y="282.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#00824d" text-anchor="start">Disse rapporterer</text>
+<text x="355.0" y="306.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Alle hotell · campingplasser</text>
+<text x="355.0" y="326.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">med minst 20 enheter ·</text>
+<text x="355.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">hyttegrender med minst 10</text>
+<text x="355.0" y="366.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">senger · alle vandrerhjem · 42</text>
+<text x="355.0" y="386.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">norske formidlere av</text>
+<text x="355.0" y="406.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">fritidsboliger</text>
+<text x="355.0" y="432.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">Hotellene oppgir også</text>
+<text x="355.0" y="452.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">formål, rom, senger og</text>
+<text x="355.0" y="472.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">losjiomsetning</text>
+<line x1="586.0" y1="126.0" x2="604.0" y2="126.0" stroke="#274247" stroke-width="2"/>
+<polygon points="614.0,126.0 604.0,120.5 604.0,131.5" fill="#274247"/>
+<rect x="620.0" y="96.0" width="255.0" height="412.0" rx="2" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1"/>
+<circle cx="651.0" cy="126.0" r="15" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="651.0" y="131.5" font-family="Roboto, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="676.0" y="132.0" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="700" fill="#274247" text-anchor="start">SSB kontrollerer og</text>
+<text x="676.0" y="154.0" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="700" fill="#274247" text-anchor="start">beregner</text>
+<text x="636.0" y="202.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">Tallene sjekkes for feil. Om lag</text>
+<text x="636.0" y="224.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">2 prosent svarer ikke, og</text>
+<text x="636.0" y="246.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">overnattingene deres anslås ut</text>
+<text x="636.0" y="268.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">fra bedrifter som har svart.</text>
+<rect x="636.0" y="280.0" width="223.0" height="212.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<rect x="636.0" y="280.0" width="4.0" height="212.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="650.0" y="302.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#00824d" text-anchor="start">Camping, ny metode fra</text>
+<text x="650.0" y="322.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#00824d" text-anchor="start">februar 2026</text>
+<text x="650.0" y="346.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Vet plassen bare hvor mange</text>
+<text x="650.0" y="366.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">sesongkontrakter som er i</text>
+<text x="650.0" y="386.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">bruk, beregner SSB</text>
+<text x="650.0" y="406.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">overnattingene med faste</text>
+<text x="650.0" y="426.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">faktorer per måned og fylke.</text>
+<text x="650.0" y="452.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">Vær og etterspørsel</text>
+<text x="650.0" y="472.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">kommer ikke med</text>
+<line x1="881.0" y1="126.0" x2="899.0" y2="126.0" stroke="#274247" stroke-width="2"/>
+<polygon points="909.0,126.0 899.0,120.5 899.0,131.5" fill="#274247"/>
+<rect x="915.0" y="96.0" width="255.0" height="412.0" rx="2" fill="#f0f8f9" stroke="#c3dcdc" stroke-width="1"/>
+<circle cx="946.0" cy="126.0" r="15" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="946.0" y="131.5" font-family="Roboto, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="971.0" y="132.0" font-family="Roboto, Arial, sans-serif" font-size="18" font-weight="700" fill="#274247" text-anchor="start">Tallene publiseres</text>
+<text x="931.0" y="174.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">3–4 uker etter månedsslutt, for</text>
+<text x="931.0" y="196.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">landet, fylker, 66</text>
+<text x="931.0" y="218.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">reiselivsregioner og kommuner.</text>
+<text x="931.0" y="240.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">Tall fra færre enn tre bedrifter</text>
+<text x="931.0" y="262.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="15" font-weight="400" fill="#274247" text-anchor="start">vises som «:».</text>
+<rect x="931.0" y="320.0" width="223.0" height="172.0" rx="2" fill="#ecfeed" stroke="#b6e8b8" stroke-width="1"/>
+<rect x="931.0" y="320.0" width="4.0" height="172.0" rx="0" fill="#00824d" stroke="none" stroke-width="1"/>
+<text x="945.0" y="342.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#00824d" text-anchor="start">September 2026</text>
+<text x="945.0" y="366.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">3 448 079 overnattinger ved</text>
+<text x="945.0" y="386.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">kommersielle bedrifter, og</text>
+<text x="945.0" y="406.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">77 403 i fritidsboliger via</text>
+<text x="945.0" y="426.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">formidler</text>
+<text x="945.0" y="452.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">Land og fylker får også</text>
+<text x="945.0" y="472.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">sesongjusterte tall</text>
+<rect x="30.0" y="536.0" width="1140.0" height="152.0" rx="2" fill="#f3f5f5" stroke="#b9c5c6" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="48.0" y="568.0" font-family="Roboto, Arial, sans-serif" font-size="17" font-weight="700" fill="#274247" text-anchor="start">Ikke med i overnattingsstatistikken</text>
+<text x="48.0" y="598.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">Egen hytte, familie og venner</text>
+<text x="48.0" y="620.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Nordmenn hadde 58,2 millioner ikke-kommersielle</text>
+<text x="48.0" y="640.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">overnattinger på reiser i Norge i 2025</text>
+<text x="48.0" y="660.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">(Reiseundersøkelsen).</text>
+<text x="424.0" y="598.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">Airbnb, Booking og lignende</text>
+<text x="424.0" y="620.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">6,4 millioner overnattinger i norske boliger og</text>
+<text x="424.0" y="640.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">fritidsboliger i 2023 (eksperimentell statistikk fra</text>
+<text x="424.0" y="660.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Eurostat).</text>
+<text x="800.0" y="598.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" fill="#274247" text-anchor="start">Resten utenfor grensene</text>
+<text x="800.0" y="620.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">Bobil og telt utenfor campingplass, cruiseskip, og</text>
+<text x="800.0" y="640.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">campingplasser og hyttegrender under</text>
+<text x="800.0" y="660.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#274247" text-anchor="start">størrelsesgrensene.</text>
+<text x="30.0" y="722.0" font-family="Open Sans, Segoe UI, Arial, sans-serif" font-size="14" font-weight="400" fill="#5e787a" text-anchor="start">Kilde: SSB, Om statistikken for Overnattingar (oppdatert 9.9.2026), tabell 14162, 13100 og 11270. Eurostat, plattformstatistikk.</text>
+</svg>

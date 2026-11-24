@@ -1,0 +1,33 @@
+{
+ "merknad": "Steder og kallenavn som ikke er kommunenavn. Kommunenavnene fra KLASS (korrespondanse 1512) er søkbare uten å stå her. Hvert ord peker på én eller flere kommuner, og lag_data.py finner reiselivsregionen i KLASS. usikker = stedet ligger i flere regioner eller brukes om et større område.",
+ "ord": [
+  {"ord": "Geiranger", "kommuner": ["1525"]},
+  {"ord": "Flåm", "kommuner": ["4641"]},
+  {"ord": "Preikestolen", "kommuner": ["1130"]},
+  {"ord": "Beitostølen", "kommuner": ["3453"]},
+  {"ord": "Kvitfjell", "kommuner": ["3439"]},
+  {"ord": "Hafjell", "kommuner": ["3440"]},
+  {"ord": "Norefjell", "kommuner": ["3318"]},
+  {"ord": "Geilo", "kommuner": ["3330"]},
+  {"ord": "Rjukan", "kommuner": ["4026"]},
+  {"ord": "Gaustatoppen", "kommuner": ["4026"]},
+  {"ord": "Trolltunga", "kommuner": ["4618"]},
+  {"ord": "Odda", "kommuner": ["4618"]},
+  {"ord": "Lyngsalpene", "kommuner": ["5536"]},
+  {"ord": "Svolvær", "kommuner": ["1865"]},
+  {"ord": "Henningsvær", "kommuner": ["1865"]},
+  {"ord": "Reine", "kommuner": ["1874"]},
+  {"ord": "Nordkapp", "kommuner": ["5620"]},
+  {"ord": "Kirkenes", "kommuner": ["5605"]},
+  {"ord": "Mo i Rana", "kommuner": ["1833"]},
+  {"ord": "Mosjøen", "kommuner": ["1824"]},
+  {"ord": "Hovden", "kommuner": ["4222"]},
+  {"ord": "Åndalsnes", "kommuner": ["1539"]},
+  {"ord": "Longyearbyen", "kommuner": [], "region": "21101"},
+  {"ord": "Jotunheimen", "kommuner": ["3434", "3454", "4644"], "usikker": true},
+  {"ord": "Hardanger", "kommuner": ["4618"], "usikker": true},
+  {"ord": "Sørlandet", "kommuner": ["4204", "4203", "4202", "4215", "4201", "4213"], "usikker": true},
+  {"ord": "Nord-Norge", "kommuner": ["1804", "5501", "1865", "5601"], "usikker": true},
+  {"ord": "Fjord-Norge", "kommuner": ["4601", "4641", "1525", "4618"], "usikker": true}
+ ]
+}

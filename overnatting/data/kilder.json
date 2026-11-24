@@ -1,0 +1,154 @@
+{
+ "statistikk": "Overnattingar",
+ "kortnavn": "overnatting",
+ "versjon": "1.0",
+ "dato_valg": "2026-11-24",
+ "merknad": "URL-ene følger PxWebApi v2 med valueCodes[...]. Rådataene i data/raw/ er hentet direkte med scripts/hent_data.py. Landtall per reiselivsregion fra 2018M01 (valgt av Thomas 24.11.2026), delt i to spørringer.",
+ "datasett": [
+  {
+   "id": "region_tid",
+   "tabell": "14172",
+   "svarer_paa": [
+    3
+   ],
+   "beskrivelse": "Overnattinger per reiselivsregion (66), fylke (16) og landet, for hotell og for camping, hyttegrender og vandrerhjem, med norske og utenlandske. Grunnlaget for «Min reiselivsregion».",
+   "omfang": "83 regioner × 2 grupper × 3 bostedsgrupper × 2016M01–2026M09 (129 måneder) = 64 242 celler. Vokser med én måned per publisering.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14172/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=00000,000,ccc&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "region_land_a",
+   "tabell": "14172",
+   "svarer_paa": [
+    2,
+    3
+   ],
+   "beskrivelse": "Overnattinger per reiselivsregion etter bostedsland, første del (2018–2022). Delt i to fordi hele perioden er over API-grensen på 800 000 celler.",
+   "omfang": "83 regioner × 2 grupper × 74 landkoder × 2018M01–2022M12 (60 måneder) = 737 040 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14172/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=*&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=2018M01,2018M02,2018M03,2018M04,2018M05,2018M06,2018M07,2018M08,2018M09,2018M10,2018M11,2018M12,2019M01,2019M02,2019M03,2019M04,2019M05,2019M06,2019M07,2019M08,2019M09,2019M10,2019M11,2019M12,2020M01,2020M02,2020M03,2020M04,2020M05,2020M06,2020M07,2020M08,2020M09,2020M10,2020M11,2020M12,2021M01,2021M02,2021M03,2021M04,2021M05,2021M06,2021M07,2021M08,2021M09,2021M10,2021M11,2021M12,2022M01,2022M02,2022M03,2022M04,2022M05,2022M06,2022M07,2022M08,2022M09,2022M10,2022M11,2022M12"
+  },
+  {
+   "id": "region_land_b",
+   "tabell": "14172",
+   "svarer_paa": [
+    2,
+    3
+   ],
+   "beskrivelse": "Overnattinger per reiselivsregion etter bostedsland, andre del (fra 2023).",
+   "omfang": "83 regioner × 2 grupper × 74 landkoder × 2023M01–2026M09 (45 måneder) = 552 780 celler. Vokser med én måned per publisering.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14172/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=*&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=from(2023M01)"
+  },
+  {
+   "id": "region_hotell",
+   "tabell": "14176",
+   "svarer_paa": [
+    4
+   ],
+   "beskrivelse": "Hotell per reiselivsregion: kapasitetsutnytting av senger og rom, pris per rom, utleide rom, losjiomsetning per tilgjengelig rom og losjiomsetning.",
+   "omfang": "83 regioner × 6 mål × 129 måneder = 64 242 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14176/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "fylke_type",
+   "tabell": "14162",
+   "svarer_paa": [
+    1,
+    3
+   ],
+   "beskrivelse": "Overnattinger per fylke og landet etter fire innkvarteringsgrupper (i alt, hotell, camping, hyttegrender og vandrerhjem), norske og utenlandske.",
+   "omfang": "17 regioner × 4 grupper × 3 bostedsgrupper × 129 måneder = 26 316 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14162/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=00000,000,ccc&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "land_nasjonalt",
+   "tabell": "14162",
+   "svarer_paa": [
+    2
+   ],
+   "beskrivelse": "Overnattinger i hele landet etter innkvarteringsgruppe og alle 74 landkoder. Landtall brukes fra 2018 (se fallgruver).",
+   "omfang": "1 × 4 grupper × 74 landkoder × 129 måneder = 38 184 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14162/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0N&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=*&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "sesongjustert",
+   "tabell": "14178",
+   "svarer_paa": [
+    1
+   ],
+   "beskrivelse": "Ujusterte, sesongjusterte og trendtall for landet og fylkene. Toppgrafikk A.",
+   "omfang": "17 regioner × 3 grupper × 3 bostedsgrupper × 3 mål × 129 måneder = 59 211 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14178/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=*&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=*&valueCodes%5BContentsCode%5D=*&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "hotell_formal",
+   "tabell": "14166",
+   "svarer_paa": [
+    1
+   ],
+   "beskrivelse": "Hotellovernattinger i hele landet etter formål, fra 1986. Gir «flest i en september noen gang» i toppgrafikk A og lesehjelpen om formål.",
+   "omfang": "1 × 4 formål × 1986M01–2026M09 (489 måneder) = 1 956 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14166/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0N&valueCodes%5BHotellFormal%5D=*&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "gjester",
+   "tabell": "14165",
+   "svarer_paa": [
+    5
+   ],
+   "beskrivelse": "Ankomne gjester i hele landet etter innkvarteringsgruppe. Lesehjelpen om overnatting og gjest.",
+   "omfang": "1 × 4 grupper × 3 bostedsgrupper × 129 måneder = 1 548 celler.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/14165/data?lang=no&outputFormat=json-stat2&valueCodes%5BRegion%5D=0N&valueCodes%5BInnKvartering1%5D=*&valueCodes%5BLandkoder2%5D=*&valueCodes%5BContentsCode%5D=AnkomneGjester&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "fritidsbolig",
+   "tabell": "13100",
+   "svarer_paa": [
+    5
+   ],
+   "beskrivelse": "Overnattinger i private fritidsboliger formidlet av norske formidlere, hele landet. Konseptgrafikken.",
+   "omfang": "1 × 3 bostedsgrupper × 2020M01–2026M09 (81 måneder) = 243 celler. Brudd i 2025 (flere formidlere).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/13100/data?lang=no&outputFormat=json-stat2&valueCodes%5BLandsdel%5D=0&valueCodes%5BLandkoder%5D=00000,000,ccc&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=*"
+  },
+  {
+   "id": "reiseundersokelsen",
+   "tabell": "11270",
+   "svarer_paa": [
+    5
+   ],
+   "beskrivelse": "Nordmenns overnattinger på reiser i Norge etter innkvartering (Reiseundersøkelsen, 16–79 år). «Slik lages tallene» og B.",
+   "omfang": "6 innkvarteringsgrupper × innenlandsreiser × 2016K1–2026K2 (42 kvartaler) = 252 celler. Mill. overnattinger.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/11270/data?lang=no&outputFormat=json-stat2&valueCodes%5BInnKvartering%5D=*&valueCodes%5BReisetype%5D=01&valueCodes%5BContentsCode%5D=Overnattinger&valueCodes%5BTid%5D=*"
+  }
+ ],
+ "klass": [
+  {
+   "id": "klass_527",
+   "beskrivelse": "Reiselivsregioner 2024, gyldig fra 1.1.2024 (66 koder).",
+   "url": "https://data.ssb.no/api/klass/v1/classifications/527/codesAt.json?date=2026-01-01&language=nb"
+  },
+  {
+   "id": "klass_527_kommune",
+   "beskrivelse": "Korrespondanse Reiselivsregioner 2024 – Kommuneinndeling 2024 (tabell 1512).",
+   "url": "https://data.ssb.no/api/klass/v1/correspondencetables/1512?language=nb"
+  }
+ ],
+ "kart": {
+  "fil": "data/raw/kommuner2024-S.geojson",
+  "kilde": "Kopiert uendret fra innvbef-omrade/data/raw/ (robhop/fylker-og-kommuner, Kartverket, kommuner 2024). Reiselivsregionene lages ved å slå sammen kommunene etter klass_527_kommune. Svalbard (21101) har ingen geometri."
+ },
+ "manglende_verdier": {
+  ":": "Undertrykt av konfidensialitetshensyn, normalt færre enn tre bedrifter. I 14172 er Norge og utlandet alltid undertrykt når I alt er det. Sekundær undertrykking gjør at verdien ikke kan regnes ut fra fylket. Vis som hull, aldri som null.",
+  ".": "Kan ikke forekomme. Gjelder landkodene Resten av Europa, Resten av Asia -2017 og Uoppgitt i alle måneder.",
+  "0 før 2018": "24 landkoder har 0 i 2016 (og Bulgaria, Kroatia og Romania i 2017) fordi de ikke var med i landlisten. Ikke «ingen gjester»."
+ },
+ "fallgruver": [
+  "Landtallene summerer ikke til Utlandet i alt i 2016 (−531 797) og 2017 (+185 493). Bruk landtall fra 2018.",
+  "14172 har ingen total for alle innkvarteringstyper per region. Totalen = hotell + camping, hyttegrender og vandrerhjem, og er «:» hvis én av dem er undertrykt.",
+  "Summer over måneder (12 måneder, år) er bare gyldige når alle månedene er publisert.",
+  "Sesongjusterte tall finnes bare for landet og fylkene, og for seks fylker bare for hotell. Sesongjusterte tall revideres én gang i året.",
+  "SSB publiserer ingen endringsrater i tabellene. Endringer regnes fra publiserte heltall.",
+  "Campingtall fra februar 2026 er delvis beregnet med ny metode (sesongkontrakter × faste faktorer). Bruddet er ikke merket i tabellene.",
+  "Fritidsboliger via formidler: utvalget ble utvidet i 2020 og 2025 (26 til 42 formidlere).",
+  "Reiseundersøkelsen er i millioner, gjelder 16–79 år, og regner leid privat feriebolig (Airbnb o.l.) som kommersiell innkvartering.",
+  "Gjester telles per bestilling hos hver bedrift. En rundreise gir flere gjester."
+ ]
+}

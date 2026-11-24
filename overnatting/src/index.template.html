@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overnattinger i Norge</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Prototype: overnattinger ved hotell, campingplasser, hyttegrender og vandrerhjem i Norge, per reiselivsregion. Tall fra SSB, tabell 14162, 14165, 14166, 14172, 14176, 14178, 13100 og 11270.">
+<style>
+/*__FONT__*/
+:root {
+  color-scheme: light;
+  --tekst: #274246; --sek: #5e787a; --bg: #f3f5f5; --flate: #fff; --lys: #eff8fa;
+  --stotte: #d9dfe0; --null: #a9b5b7; --dempet: #c3cdcf;
+  --gronn: #00824d; --bla: #1d9de2; --oker: #c78800; --marine: #0f2080; --rosa: #c775a7;
+  --gronn-f: #339b71; --bla-f: #3face6; --oker-f: #d5a640; --marine-f: #5763a6; --rosa-f: #cd83b0;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--tekst); font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.bf { position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; display: grid; gap: 32px; }
+@media (max-width: 480px) { .bf { padding: 20px 16px 32px; gap: 24px; } }
+.bf-proto { font-size: 13px; color: var(--sek); margin: 0 0 6px; }
+.bf-proto b { color: var(--tekst); }
+.bf-title { font-size: 30px; font-weight: 700; line-height: 1.2; margin: 0 0 10px; }
+.bf-lede { margin: 0; max-width: 60rem; font-size: 17px; }
+.bf b { font-weight: 600; }
+:is(button, input, select, summary, a, [tabindex]):focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-section { display: grid; gap: 14px; }
+.bf-sh { font-size: 21px; font-weight: 700; margin: 0; }
+.bf-ingress { margin: -6px 0 0; color: var(--sek); max-width: 56rem; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr)); gap: 16px; }
+.bf-card { background: var(--flate); padding: 20px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.bf-wide { grid-column: 1 / -1; }
+.bf-h { font-size: 16px; font-weight: 600; margin: 0; line-height: 1.35; }
+.bf-note { color: var(--sek); font-size: 13px; margin: 0; line-height: 1.45; }
+.bf-src { color: var(--sek); font-size: 13px; margin: 0; padding-top: 4px; }
+.bf-varsel { border-left: 3px solid var(--oker); padding: 4px 0 4px 10px; color: var(--tekst); font-size: 13px; margin: 0; }
+
+/* Søk */
+.bf-sok { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: end; }
+.bf-sokfelt { position: relative; flex: 1 1 22rem; max-width: 34rem; }
+.bf-sokfelt label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-input { font: inherit; font-size: 16px; color: var(--tekst); background: var(--flate); border: 1px solid var(--tekst); border-radius: 0; padding: 10px 12px; width: 100%; }
+.bf-forslag { position: absolute; z-index: 10; left: 0; right: 0; top: 100%; margin: 0; padding: 0; list-style: none; background: #fff; border: 1px solid var(--null); border-top: 0; max-height: 24rem; overflow: auto; }
+.bf-forslag li { padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--stotte); line-height: 1.35; }
+.bf-forslag li[aria-selected="true"], .bf-forslag li:hover { background: var(--lys); }
+.bf-forslag .s { display: block; font-size: 12px; color: var(--sek); }
+.bf-forslag .tom { cursor: default; color: var(--sek); }
+.bf-knapp { font: inherit; font-size: 14px; color: var(--tekst); background: var(--flate); border: 1px solid var(--null); border-radius: 0; padding: 10px 14px; cursor: pointer; }
+.bf-knapp[aria-pressed="true"], .bf-knapp[aria-expanded="true"] { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+.bf-eks { font-size: 13px; color: var(--sek); margin: 8px 0 0; }
+.bf-lenke { all: unset; cursor: pointer; text-decoration: underline; text-decoration-color: var(--null); text-underline-offset: 3px; }
+.bf-lenke:hover { text-decoration-color: var(--tekst); }
+.bf-lenke:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-brytere { display: flex; flex-wrap: wrap; gap: 0; margin: 2px 0 4px; }
+.bf-brytere .bf-knapp { padding: 5px 12px; font-size: 13px; margin-right: -1px; }
+
+/* Alle kommuner */
+.bf-tre { background: var(--flate); padding: 16px 20px; max-height: 34rem; overflow: auto; }
+.bf-tre h3 { font-size: 15px; margin: 12px 0 4px; }
+.bf-tre h3:first-of-type { margin-top: 0; }
+.bf-tre ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 2px 32px; }
+.bf-tre li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--stotte); padding: 3px 0; }
+.bf-tre .v { color: var(--sek); font-size: 13px; white-space: nowrap; }
+
+/* Kort for valgt kommune */
+.bf-kort { background: var(--flate); border-left: 4px solid var(--gronn); padding: 16px 20px; display: grid; gap: 4px; }
+.bf-kort h2 { font-size: 20px; margin: 0; }
+.bf-kort p { margin: 0; font-size: 14px; }
+.bf-sti { font-size: 13px; color: var(--sek); }
+
+/* Lesehjelp */
+.bf-les { background: var(--lys); padding: 20px; display: grid; gap: 14px; }
+.bf-les h2 { margin: 0; font-size: 17px; }
+.bf-les ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px 24px; }
+.bf-les li { font-size: 14px; line-height: 1.45; }
+.bf-les li b { display: block; font-size: 15px; }
+.bf-les details summary { cursor: pointer; font-weight: 600; width: fit-content; }
+.bf-konsept { background: var(--flate); padding: 16px; margin-top: 10px; }
+.bf-konsept svg { display: block; width: 100%; height: auto; }
+.bf-konsept .smal { display: none; max-width: 390px; margin: 0 auto; }
+@media (max-width: 640px) { .bf-konsept .bred { display: none; } .bf-konsept .smal { display: block; } }
+
+/* Toppgrafikk */
+.bf-topp { background: var(--flate); padding: 24px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr); gap: 16px 32px; align-items: start; }
+@media (max-width: 860px) { .bf-topp { grid-template-columns: 1fr; } }
+.bf-omr { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sek); margin: 0; }
+.bf-stort { font-size: clamp(38px, 6vw, 56px); font-weight: 700; line-height: 1.1; margin: 6px 0 2px; }
+.bf-stort-under { color: var(--sek); margin: 0 0 10px; }
+.bf-setning { font-size: 20px; font-weight: 600; margin: 0 0 12px; line-height: 1.35; }
+.bf-topp-under { color: var(--tekst); font-size: 14px; display: grid; gap: 8px; margin: 0; }
+.bf-topp-under p { margin: 0; }
+.bf-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr)); gap: 12px; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--stotte); }
+.bf-tile-lab { color: var(--sek); font-size: 13px; line-height: 1.35; padding-top: 10px; }
+.bf-num { font-size: 24px; font-weight: 600; line-height: 1.3; }
+.bf-unit { font-size: 14px; font-weight: 400; color: var(--sek); }
+
+/* Figurer */
+.bf-chart { position: relative; }
+.bf-chart svg { display: block; overflow: visible; }
+.bf svg text { font-family: inherit; font-variant-numeric: tabular-nums; }
+.bf-tick, .bf-axt { font-size: 12px; fill: var(--sek); }
+.bf-lab { font-size: 12px; fill: var(--tekst); }
+.bf-strong { font-weight: 700; }
+.bf-halo { paint-order: stroke; stroke: var(--flate); stroke-width: 4px; stroke-linejoin: round; }
+.bf-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+.bf-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.bf-legend i { display: inline-block; flex: none; }
+.bf-sw-sq { width: 12px; height: 12px; }
+.bf-sw-tick { width: 14px; height: 0; border-top: 2.5px solid var(--tekst); }
+.bf-sw-line { width: 18px; height: 0; border-top: 2px solid; }
+.bf-sw-hatch { width: 14px; height: 12px; background: repeating-linear-gradient(45deg, var(--stotte) 0 2px, transparent 2px 5px); border: 1px solid var(--stotte); }
+.bf-tip { position: absolute; z-index: 5; left: 0; top: 0; max-width: 20rem; background: #fff; border: 1px solid var(--null); padding: 6px 10px; font-size: 13px; pointer-events: none; line-height: 1.5; color: var(--tekst); }
+.bf-tip-h { color: var(--sek); }
+.bf-tip-r { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.bf-tip-r i { width: 8px; height: 8px; flex: none; }
+.bf-tip-r b { margin-left: auto; padding-left: 16px; }
+.bf-tall { margin-top: auto; padding-top: 6px; font-size: 13px; }
+.bf-tall summary { cursor: pointer; color: var(--sek); width: fit-content; }
+.bf-tall .bf-tablewrap { max-height: 16rem; margin-top: 6px; }
+.bf-tall tbody th { position: static; font-weight: 400; font-size: inherit; border-bottom: 1px solid var(--stotte); }
+.bf-slider { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; }
+.bf-slider input { flex: 1 1 12rem; accent-color: var(--tekst); }
+.bf-slider output { font-weight: 700; min-width: 3.2em; }
+
+/* Tabeller */
+.bf-tablewrap { max-height: 32rem; overflow: auto; }
+.bf-table { width: 100%; border-collapse: collapse; }
+.bf-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bf-table th { position: sticky; top: 0; background: var(--flate); text-align: right; font-weight: 600; font-size: 13px; vertical-align: bottom; padding: 6px 10px; border-bottom: 1px solid var(--tekst); }
+.bf-table td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--stotte); white-space: nowrap; }
+.bf-table th:first-child, .bf-table td:first-child { text-align: left; white-space: normal; padding-left: 0; }
+.bf-table tr.valgt td { background: var(--lys); font-weight: 600; }
+.bf-sort { all: unset; cursor: pointer; font: inherit; color: inherit; }
+.bf-sort[data-dir]::after { content: ' ▲'; font-size: 0.8em; }
+.bf-sort[data-dir='-1']::after { content: ' ▼'; }
+.bf-foot { color: var(--sek); font-size: 13px; margin: 0; max-width: 62rem; display: grid; gap: 8px; }
+.bf-foot p { margin: 0; }
+@media (max-width: 34rem) { .bf-hide-narrow { display: none; } }
+@media print { body { background: #fff; } .bf-sok, .bf-tall, .bf-brytere { display: none; } .bf-tablewrap { max-height: none; overflow: visible; } }
+
+/* Tillegg for overnatting */
+.bf-hovedvalg { display: grid; grid-template-columns: minmax(12rem, 16rem) minmax(0, 30rem) auto auto; gap: 8px 12px; align-items: end; }
+@media (max-width: 860px) { .bf-hovedvalg { grid-template-columns: 1fr 1fr; } .bf-hovedvalg .bf-sokfelt { grid-column: 1 / -1; max-width: none; } }
+.bf-velg label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.bf-select { width: 100%; font: inherit; font-size: 16px; padding: 10px 12px; border: 1px solid var(--tekst); background: #fff; color: var(--tekst); border-radius: 0; }
+.bf-kart-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .bf-kart-grid { grid-template-columns: 1fr; } }
+.bf-kart svg { display: block; width: 100%; height: auto; max-height: 760px; touch-action: manipulation; }
+.bf-kart path.r { cursor: pointer; }
+.bf-kart path.r:hover { stroke: var(--tekst); stroke-width: 1.2px; }
+.bf-kart svg:focus-visible { outline: 2px solid var(--tekst); outline-offset: 2px; }
+.bf-klasser { display: flex; flex-wrap: wrap; gap: 0; font-size: 12px; color: var(--sek); margin: 2px 0; }
+.bf-klasser span { display: grid; gap: 2px; min-width: 64px; }
+.bf-klasser i { display: block; height: 12px; border: 1px solid #fff; }
+.bf-kortgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); gap: 8px 20px; margin-top: 8px; }
+.bf-kortgrid div { font-size: 13px; color: var(--sek); }
+.bf-kortgrid b { display: block; font-size: 20px; color: var(--tekst); font-weight: 600; }
+.bf-komm { font-size: 13px; color: var(--sek); }
+.bf-figpar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 640px) { .bf-figpar { grid-template-columns: 1fr; } }
+.bf-figpar h4 { font-size: 14px; margin: 0 0 2px; font-weight: 600; }
+.bf-grid { align-items: start; }
+.bf-tom { margin: 8px 0; padding: 14px 16px; background: var(--bg); color: var(--tekst); font-size: 14px; }
+.bf-b { background: var(--flate); padding: 16px; margin-top: 10px; display: grid; gap: 6px; }
+</style>
+</head>
+<body>
+<main class="bf">
+  <header>
+    <p class="bf-proto"><b>Prototype.</b> Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</p>
+    <h1 class="bf-title">Overnattinger i Norge</h1>
+    <p class="bf-lede" id="ingress"></p>
+    <div class="bf-sok bf-hovedvalg" role="search">
+      <div class="bf-velg">
+        <label for="bf-fylke">Fylke</label>
+        <select class="bf-select" id="bf-fylke"></select>
+      </div>
+      <div class="bf-sokfelt">
+        <label for="bf-sok">Reiselivsregion, kommune eller sted</label>
+        <input class="bf-input" id="bf-sok" type="search" placeholder="For eksempel Hemsedal eller Lofoten" autocomplete="off"
+          role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="bf-forslag">
+        <ul class="bf-forslag" id="bf-forslag" role="listbox" aria-label="Forslag" hidden></ul>
+      </div>
+      <button type="button" class="bf-knapp" id="bf-alle" aria-expanded="false" aria-controls="bf-tre">Se alle regioner</button>
+      <button type="button" class="bf-knapp" id="bf-landet" hidden>Vis hele landet</button>
+    </div>
+    <p class="bf-eks">Prøv: <span id="bf-eksempler"></span></p>
+  </header>
+
+  <nav class="bf-tre" id="bf-tre" aria-label="Alle reiselivsregioner etter fylke" hidden></nav>
+
+  <section class="bf-kort" id="bf-kort" aria-live="polite" hidden></section>
+
+  <section class="bf-les" aria-labelledby="les-h">
+    <h2 id="les-h">Slik leser du tallene</h2>
+    <ul id="les-punkter"></ul>
+    <details>
+      <summary>Slik lages tallene</summary>
+      <div class="bf-konsept">
+        <div class="bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+        <div class="smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+      </div>
+      <div class="bf-b">
+        <h3 class="bf-h" data-h="reise"></h3>
+        <p class="bf-note" data-n="reise"></p>
+        <div class="bf-legend" data-leg="reise"></div>
+        <div class="bf-chart" id="fig-reise" style="min-height:150px"></div>
+        <details class="bf-tall" data-tall="reise"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="reise"></p>
+      </div>
+    </details>
+  </section>
+
+  <section class="bf-topp" id="hovedtall">
+    <div>
+      <p class="bf-omr" data-t="omr"></p>
+      <p class="bf-stort" data-t="stort"></p>
+      <p class="bf-stort-under" data-t="stort-under"></p>
+      <p class="bf-setning" data-t="setning"></p>
+      <div class="bf-topp-under" data-t="under"></div>
+    </div>
+    <div class="bf-figpar">
+      <div>
+        <h4 data-h="topp-sm"></h4>
+        <div class="bf-chart" id="fig-topp-sm" style="min-height:220px"></div>
+      </div>
+      <div>
+        <h4 data-h="topp-sa"></h4>
+        <div class="bf-chart" id="fig-topp-sa" style="min-height:220px"></div>
+      </div>
+      <details class="bf-tall" data-tall="topp" style="grid-column:1/-1"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+    </div>
+    <div class="bf-tiles">
+      <div><div class="bf-tile-lab" data-t="t1-lab"></div><div class="bf-num" data-t="t1"></div></div>
+      <div><div class="bf-tile-lab" data-t="t2-lab"></div><div class="bf-num" data-t="t2"></div></div>
+      <div><div class="bf-tile-lab" data-t="t3-lab"></div><div class="bf-num" data-t="t3"></div></div>
+      <div><div class="bf-tile-lab" data-t="t4-lab"></div><div class="bf-num" data-t="t4"></div></div>
+    </div>
+    <p class="bf-src" style="grid-column:1/-1" data-src="topp"></p>
+  </section>
+
+  <section class="bf-section" id="maned">
+    <h2 class="bf-sh" data-t="maned-h"></h2>
+    <p class="bf-ingress" data-t="ing-maned"></p>
+    <div class="bf-brytere" role="group" aria-label="Innkvartering">
+      <button type="button" class="bf-knapp" data-gr="0" aria-pressed="true">Hotell</button>
+      <button type="button" class="bf-knapp" data-gr="1" aria-pressed="false">Camping, hyttegrender og vandrerhjem</button>
+    </div>
+    <div class="bf-grid">
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="tid"></h3>
+        <div class="bf-brytere" role="group" aria-label="Periode">
+          <button type="button" class="bf-knapp" data-per="3" aria-pressed="true">Siste tre år</button>
+          <button type="button" class="bf-knapp" data-per="alle" aria-pressed="false">Alle måneder fra 2016</button>
+        </div>
+        <div class="bf-legend" data-leg="tid"></div>
+        <div class="bf-chart" id="fig-tid" style="min-height:280px"></div>
+        <p class="bf-varsel" data-varsel="tid" hidden></p>
+        <p class="bf-note" data-n="tid"></p>
+        <details class="bf-tall" data-tall="tid"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="tid"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="aar"></h3>
+        <div class="bf-chart" id="fig-aar" style="min-height:260px"></div>
+        <p class="bf-note" data-n="aar"></p>
+        <details class="bf-tall" data-tall="aar"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="aar"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kart"></h3>
+        <div class="bf-brytere" role="group" aria-label="Kartet viser">
+          <button type="button" class="bf-knapp" data-mal="utl" aria-pressed="true">Andel utenlandske</button>
+          <button type="button" class="bf-knapp" data-mal="endr" aria-pressed="false">Endring fra året før</button>
+        </div>
+        <div class="bf-klasser" id="kart-klasser"></div>
+        <div class="bf-chart bf-kart" id="fig-kart"></div>
+        <p class="bf-note" data-n="kart"></p>
+        <details class="bf-tall" data-tall="kart"><summary>Vis tallene for alle regioner</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="kart"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="hvem">
+    <h2 class="bf-sh" data-t="hvem-h"></h2>
+    <p class="bf-ingress" data-t="ing-hvem"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="endr"></h3>
+        <div class="bf-chart" id="fig-endr" style="min-height:220px"></div>
+        <p class="bf-note" data-n="endr"></p>
+        <details class="bf-tall" data-tall="endr"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="endr"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="land"></h3>
+        <div class="bf-chart" id="fig-land" style="min-height:300px"></div>
+        <p class="bf-varsel" data-varsel="land" hidden></p>
+        <p class="bf-note" data-n="land"></p>
+        <details class="bf-tall" data-tall="land"><summary>Vis tallene for alle land</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="land"></p>
+      </article>
+      <article class="bf-card bf-wide">
+        <h3 class="bf-h" data-h="ltid"></h3>
+        <div class="bf-chart" id="fig-ltid" style="min-height:220px"></div>
+        <p class="bf-note" data-n="ltid"></p>
+        <details class="bf-tall" data-tall="ltid"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="ltid"></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bf-section" id="hotell">
+    <h2 class="bf-sh" data-t="hot-h"></h2>
+    <p class="bf-ingress" data-t="ing-hot"></p>
+    <div class="bf-grid">
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="kap"></h3>
+        <div class="bf-legend" data-leg="kap"></div>
+        <div class="bf-chart" id="fig-kap" style="min-height:240px"></div>
+        <p class="bf-note" data-n="kap"></p>
+        <details class="bf-tall" data-tall="kap"><summary>Vis tallene</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="kap"></p>
+      </article>
+      <article class="bf-card">
+        <h3 class="bf-h" data-h="stripe"></h3>
+        <div class="bf-chart" id="fig-stripe" style="min-height:240px"></div>
+        <p class="bf-note" data-n="stripe"></p>
+        <details class="bf-tall" data-tall="stripe"><summary>Vis tallene for alle regioner</summary><div class="bf-tablewrap"></div></details>
+        <p class="bf-src" data-src="stripe"></p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="bf-foot">
+    <p>Om tallene: Overnattingsstatistikken teller overnattinger (én person, én natt) og ankomne gjester ved hotell og lignende, campingplasser, hyttegrender og vandrerhjem. Hotellene er fulltelt. Campingplasser er med fra 20 enheter, hyttegrender fra 10 senger. Gjester fordeles etter landet de bor i, ikke statsborgerskap. Overnatting i egen hytte, hos familie og venner og i boliger leid ut via plattformer som Airbnb er ikke med. Reiselivsregionene følger Reiselivsregionar 2024 i KLASS, og SSB har regnet tallene om til denne inndelingen fra 2016. Tall som er skjult av hensyn til konfidensialitet («:»), vises som hull, aldri som null. Fra februar 2026 beregnes en del campingovernattinger fra antall sesongkontrakter, så campingtallene er ikke helt sammenlignbare med tidligere år.</p>
+    <p>Egne beregninger: endringer i prosent (SSB publiserer ikke endringsrater i tabellene), sesongjustert endring fra forrige måned, årstall og tolvmånederssummer (regnet bare når alle måneder er publisert), andel utenlandske, kartklassene og reiselivsregionene som kartflater (kommunene slått sammen etter KLASS). Landtall vises fra 2018, fordi landene ikke summerer til «Utlandet i alt» før det.</p>
+    <p>Kilder: SSB, statistikkbanken tabell 14162, 14165, 14166, 14172, 14176, 14178, 13100 og 11270, og Reiselivsregionar 2024 med kommunetilknytning i KLASS. Kommunegrenser 2024 fra Kartverket, forenklet av <a href="https://github.com/robhop/fylker-og-kommuner">robhop/fylker-og-kommuner</a>. Tallene er hentet <span data-hentet></span> og ligger lagret i denne filen. Siden oppdateres ikke automatisk. Les mer på <a href="https://www.ssb.no/overnatting">ssb.no/overnatting</a>.</p>
+  </footer>
+
+  <div class="bf-tip" hidden></div>
+</main>
+
+<script>
+/*__D3__*/
+</script>
+<script>
+const DATA = /*__INKLUDER:build/overnatting.json__*/;
+</script>
+<script>
+(() => {
+'use strict';
+// ---------- Data ----------
+// DATA.mnd        2016M01–siste måned. DATA.tid[o] = [hotell i alt, hotell utlandet, camping m.m. i alt, camping m.m. utlandet], null = «:»
+// DATA.per        perioder for land: 2018–2025, s12 (siste 12 måneder) og f12 (de 12 før). DATA.lreg[o]: f0/f1 = hel periode (1/0),
+//                 v0/v1 = {landindeks: [verdi per periode]}, n0/n1 = norske per periode. 0 = hotell, 1 = camping, hyttegrender og vandrerhjem
+// DATA.hotell[o]  [kapasitetsutnytting rom, senger, pris per rom, losjiomsetning per tilgjengelig rom] over DATA.hmnd
+// DATA.topp       toppgrafikken (hele landet). DATA.nasj[o][gruppe] = [norske, utenlandske] siste måned og samme måned året før
+// DATA.kart       reiselivsregionene som SVG-stier. Svalbard (21101) har ingen kartflate
+const MND = DATA.mnd, SISTE = MND[MND.length - 1], NM = MND.length;
+const LANDET = '0N';
+const OPPD = DATA.kilde.oppdatert;
+const dato = (s) => s.split('-').reverse().join('.');
+const kilde = (...t) => `Kilde: SSB, tabell ${t.join(', ').replace(/, ([^,]*)$/, ' og $1')}. Sist oppdatert: ${[...new Set(t.map((x) => dato(OPPD[x])))].join(' og ')}.`;
+const sum = (a) => a.reduce((x, y) => x + (y || 0), 0);
+const MN = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember'];
+const MK = ['jan.', 'feb.', 'mar.', 'apr.', 'mai', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'des.'];
+const mNavn = (m) => `${MN[+m.slice(5) - 1]} ${m.slice(0, 4)}`;
+const mKort = (m) => `${MK[+m.slice(5) - 1]} ${m.slice(0, 4)}`;
+const iM = (m) => MND.indexOf(m);
+const bak = (m, n) => { let a = +m.slice(0, 4), k = +m.slice(5) - n; while (k <= 0) { k += 12; a--; } return `${a}M${String(k).padStart(2, '0')}`; };
+const IFJOR = bak(SISTE, 12);
+const GRUPPE = ['hotell', 'camping, hyttegrender og vandrerhjem'];
+const GRUPPE_K = ['Hotell', 'Camping, hyttegrender og vandrerhjem'];
+
+// Områdene: hele landet, 16 fylker og 66 reiselivsregioner
+const O = {};
+DATA.omr.forEach(([k, n, t, f]) => { O[k] = {k, n, type: t, f}; });
+const REG = DATA.omr.filter((x) => x[2] === 'R').map((x) => x[0]);
+const FYL = DATA.omr.filter((x) => x[2] === 'F').map((x) => x[0]);
+const regIFylke = (f) => REG.filter((r) => r.slice(0, 2) === f);
+const fylkeAv = (o) => (O[o].type === 'R' ? O[o].f : O[o].type === 'F' ? o : null);
+const iNavn = (o) => (o === LANDET ? 'Norge' : O[o].n);
+const typeTekst = (o) => (o === LANDET ? 'hele landet' : O[o].type === 'F' ? 'fylke' : `reiselivsregion i ${O[O[o].f].n}`);
+
+// Serier. g: 0 hotell, 1 camping m.m. Totalen for en region finnes bare når begge gruppene er publisert
+const ser = (o, g, utl) => DATA.tid[o][g * 2 + (utl ? 1 : 0)];
+const verdi = (o, g, i, hva = 'tot') => {
+  if (g === 'begge') { const a = verdi(o, 0, i, hva), b = verdi(o, 1, i, hva); return a == null || b == null ? null : a + b; }
+  const t = ser(o, g, false)[i], u = ser(o, g, true)[i];
+  if (t == null) return null;
+  return hva === 'tot' ? t : hva === 'utl' ? u : t - u;
+};
+// Sum over måneder [fra, til] (indekser), bare når alle er publisert. Gir også antall skjulte
+const periode = (o, g, fra, til, hva = 'tot') => {
+  let s = 0, skjult = 0;
+  for (let i = fra; i <= til; i++) { const v = verdi(o, g, i, hva); if (v == null) skjult++; else s += v; }
+  return {v: skjult ? null : s, skjult, n: til - fra + 1};
+};
+const S12 = [NM - 12, NM - 1], F12 = [NM - 24, NM - 13];
+const LAND = DATA.land.map(([k, n]) => ({k, n}));
+const PER = DATA.per, PI = (p) => PER.indexOf(p);
+// Land i en periode: summen av gruppene som er hele. Returnerer null når ingen gruppe er hel
+const landPer = (o, li, p, grupper) => {
+  const L = DATA.lreg[o]; let s = 0;
+  for (const g of grupper) { if (!L['f' + g][PI(p)]) return null; s += (L['v' + g][li] || [])[PI(p)] || 0; }
+  return s;
+};
+const heleGrupper = (o, p) => [0, 1].filter((g) => DATA.lreg[o]['f' + g][PI(p)]);
+
+// ---------- Format ----------
+const nf0 = new Intl.NumberFormat('nb-NO', {maximumFractionDigits: 0});
+const nf1 = new Intl.NumberFormat('nb-NO', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const sgn = (v, f = nf0) => (v == null ? '–' : (v > 0 ? '+' : v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const tall = (v, f = nf0) => (v == null ? ':' : (v < 0 ? '−' : '') + f.format(Math.abs(v)));
+const pst = (a, b) => (a == null || b == null || !b ? null : (a / b - 1) * 100);
+const mill = (v) => `${nf1.format(v / 1e6)} millioner`;
+const avrund = (n) => { const a = Math.abs(n); return a >= 1e6 ? mill(a) : a >= 1e4 ? nf0.format(Math.round(a / 100) * 100) : a >= 1e3 ? nf0.format(Math.round(a / 10) * 10) : nf0.format(a); };
+const flere = (p) => (p >= 0 ? 'flere' : 'færre');
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const F = {no: css('--gronn-f'), ut: css('--bla-f'), noS: css('--gronn'), utS: css('--bla'), gra: '#b9c5c6', ingen: '#e9eded'};
+
+// ---------- Tilstand i adressen: #omrade=46105&land=144 ----------
+const root = document.querySelector('.bf');
+const $ = (s) => root.querySelector(s);
+const $$ = (s) => [...root.querySelectorAll(s)];
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[c]);
+const param = (n) => new URLSearchParams(location.hash.slice(1)).get(n);
+const valgt = () => { const k = param('omrade'); return k && O[k] ? k : LANDET; };
+let funnetMed = null;
+const visning = {gr: 0, per: '3', mal: 'utl', land: null};
+const skrivAdresse = (o) => {
+  const p = new URLSearchParams();
+  if (o !== LANDET) p.set('omrade', o);
+  if (visning.land) p.set('land', visning.land);
+  const s = p.toString();
+  try { history.replaceState(null, '', s ? '#' + s : location.pathname + location.search); } catch (e) { /* ignorer */ }
+};
+const velg = (o, opt = {}) => {
+  funnetMed = opt.ord || null;
+  skrivAdresse(o);
+  tegnAlt();
+  if (opt.rull) ($('#bf-kort').hidden ? $('#hovedtall') : $('#bf-kort')).scrollIntoView({behavior: 'smooth'});
+};
+
+// ---------- Verktøy ----------
+const tip = $('.bf-tip');
+const skjulTips = () => { tip.hidden = true; };
+const visTips = (ev, tittel, linjer) => {
+  tip.replaceChildren();
+  const h = document.createElement('div'); h.className = 'bf-tip-h'; h.textContent = tittel; tip.append(h);
+  for (const l of linjer) {
+    const r = document.createElement('div'); r.className = 'bf-tip-r';
+    if (l.c) { const i = document.createElement('i'); i.style.background = l.c; r.append(i); }
+    const n = document.createElement('span'); n.textContent = l.n;
+    const v = document.createElement('b'); v.textContent = l.v;
+    r.append(n, v); tip.append(r);
+  }
+  tip.hidden = false;
+  const b = root.getBoundingClientRect();
+  let x = ev.clientX - b.left + 14, y = ev.clientY - b.top + 14;
+  if (x + tip.offsetWidth > b.width) x = ev.clientX - b.left - tip.offsetWidth - 14;
+  if (ev.clientY + 14 + tip.offsetHeight > window.innerHeight) y = ev.clientY - b.top - tip.offsetHeight - 14;
+  tip.style.left = Math.max(0, x) + 'px';
+  tip.style.top = Math.max(0, y) + 'px';
+};
+const lerret = (box, h, beskrivelse) => {
+  const w = Math.max(260, Math.floor(box.clientWidth));
+  d3.select(box).selectAll('svg, .bf-tom').remove();
+  box.style.minHeight = h + 'px';
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('role', 'img').attr('aria-label', beskrivelse);
+  return {svg, w};
+};
+const bredde = (svg, s, cls) => { const t = svg.append('text').attr('class', cls).text(s); const l = t.node().getComputedTextLength(); t.remove(); return l; };
+const sett = (key, tekst) => { $(`[data-t="${key}"]`).textContent = tekst; };
+const settH = (key, tekst) => { $(`[data-h="${key}"]`).textContent = tekst; };
+const settN = (key, tekst) => { $(`[data-n="${key}"]`).textContent = tekst; };
+const settSrc = (key, tekst) => { $(`[data-src="${key}"]`).textContent = tekst; };
+const talltabell = (id, tittel, kolonner, rader) => {
+  const t = document.createElement('table'); t.className = 'bf-table';
+  const cap = document.createElement('caption'); cap.textContent = tittel; t.append(cap);
+  const hr = t.createTHead().insertRow();
+  for (const k of kolonner) { const th = document.createElement('th'); th.scope = 'col'; th.textContent = k; hr.append(th); }
+  const tb = t.createTBody();
+  for (const r of rader) { const tr = tb.insertRow(); r.forEach((c, i) => { const e = document.createElement(i ? 'td' : 'th'); if (!i) e.scope = 'row'; e.textContent = c; tr.append(e); }); }
+  $(`[data-tall="${id}"] .bf-tablewrap`).replaceChildren(t);
+};
+const legende = (key, items) => $(`[data-leg="${key}"]`).replaceChildren(...items.map(({c, n, cls}) => {
+  const s = document.createElement('span'), i = document.createElement('i');
+  i.className = cls || 'bf-sw-sq';
+  if (cls === 'bf-sw-line') i.style.borderColor = c; else if (c) i.style.background = c;
+  s.append(i, n); return s;
+}));
+const yakse = (svg, w, m, ys, yt, fmt, tittel) => {
+  const g = svg.append('g');
+  g.selectAll('line').data(yt).join('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', (t) => ys(t)).attr('y2', (t) => ys(t)).attr('stroke', (t) => (t === 0 ? css('--null') : css('--stotte')));
+  g.selectAll('text').data(yt).join('text').attr('class', 'bf-tick').attr('x', m.l - 8).attr('y', (t) => ys(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text(fmt);
+  svg.append('text').attr('class', 'bf-axt').attr('x', 0).attr('y', 12).text(tittel);
+};
+const venstremarg = (svg, yt, fmt) => Math.ceil(d3.max(yt, (t) => bredde(svg, fmt(t), 'bf-tick'))) + 12;
+
+const tomFigur = (box, tekst) => { d3.select(box).selectAll('svg, .bf-tom').remove(); box.style.minHeight = '0'; const p = document.createElement('p'); p.className = 'bf-tom'; p.textContent = tekst; box.append(p); };
+const knappRad = (attr, aktiv) => $$(`[${attr}]`).forEach((b) => b.setAttribute('aria-pressed', String(b.getAttribute(attr) === String(aktiv))));
+const varsel = (key, html) => { const e = $(`[data-varsel="${key}"]`); if (!html) { e.hidden = true; e.innerHTML = ''; } else { e.innerHTML = html; e.hidden = false; } };
+const klikkbar = (g, navn, ta) => g.attr('role', 'button').attr('tabindex', 0).attr('aria-label', navn).style('cursor', 'pointer')
+  .on('click', ta).on('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ta(); } });
+const skravur = (svg, id) => {
+  const p = svg.append('defs').append('pattern').attr('id', id).attr('width', 6).attr('height', 6).attr('patternUnits', 'userSpaceOnUse').attr('patternTransform', 'rotate(45)');
+  p.append('rect').attr('width', 2).attr('height', 6).attr('fill', css('--stotte'));
+};
+const brudd = (svg, x, m, H, w, tekst, rad = 0) => {
+  svg.append('line').attr('x1', x).attr('x2', x).attr('y1', m.t - 4).attr('y2', H - m.b).attr('stroke', css('--sek')).attr('stroke-dasharray', '3 3');
+  const t = svg.append('text').attr('class', 'bf-tick bf-halo').attr('y', m.t - 8 + rad * 13).text(tekst);
+  const tw = t.node().getComputedTextLength();
+  t.attr('x', Math.max(m.l, Math.min(w - m.r - tw, x - tw / 2)));
+};
+const yfmt = (maks) => (maks >= 2e6 ? (t) => nf1.format(t / 1e6) : maks >= 2e4 ? (t) => nf0.format(t / 1000) : (t) => nf0.format(t));
+const yenhet = (maks) => (maks >= 2e6 ? 'millioner overnattinger' : maks >= 2e4 ? 'tusen overnattinger' : 'overnattinger');
+
+// ---------- Ingress, kort og lesehjelp ----------
+function ingress() {
+  const n = DATA.nasj[LANDET]['00'], s = n[0] + n[1], f = n[2] + n[3], p = pst(s, f);
+  $('#ingress').textContent = `I ${mNavn(SISTE)} var det ${avrund(s)} overnattinger ved hotell, campingplasser, hyttegrender og vandrerhjem i Norge, ` +
+    `${nf1.format(Math.abs(p))} prosent ${flere(p)} enn i ${mNavn(IFJOR)}. ${nf0.format(n[1] / s * 100)} prosent var utenlandske. ` +
+    `Velg en av de ${REG.length} reiselivsregionene, eller søk på en kommune eller et sted.`;
+}
+function tegnKort(o) {
+  const k = $('#bf-kort');
+  $('#bf-landet').hidden = o === LANDET;
+  if (o === LANDET) { k.hidden = true; return; }
+  const f = fylkeAv(o), erR = O[o].type === 'R';
+  const h12 = periode(o, 0, ...S12), c12 = periode(o, 1, ...S12), hu = periode(o, 0, ...S12, 'utl');
+  const funnet = funnetMed ? `<p class="bf-sti">Funnet med søkeordet «${esc(funnetMed)}».</p>` : '';
+  const sti = erR ? `<p class="bf-sti">Reiselivsregion i <button type="button" class="bf-lenke" data-velg="${f}">${esc(O[f].n)}</button> · <button type="button" class="bf-lenke" data-velg="${LANDET}">Hele landet</button></p>`
+    : `<p class="bf-sti">Fylke · <button type="button" class="bf-lenke" data-velg="${LANDET}">Hele landet</button></p>`;
+  const under = erR ? (o === '21101' ? '<p class="bf-komm">Svalbard er ikke en kommune og har ingen kartflate.</p>'
+    : `<p class="bf-komm">Kommuner: ${esc(DATA.rkomm[o].join(', '))}.</p>`)
+    : `<p class="bf-komm">Reiselivsregioner: ${regIFylke(o).map((r) => `<button type="button" class="bf-lenke" data-velg="${r}">${esc(O[r].n)}</button>`).join(', ')}.</p>`;
+  const tile = (lab, p) => `<div>${lab}<b>${p.v == null ? ':' : nf0.format(p.v)}</b>${p.skjult ? `skjult i ${p.skjult} av ${p.n} måneder` : ''}</div>`;
+  const utl = h12.v && hu.v != null ? `<div>Andel utenlandske på hotell<b>${nf0.format(hu.v / h12.v * 100)} prosent</b></div>` : '';
+  k.innerHTML = `<h2>${esc(O[o].n)}</h2>${sti}${funnet}${under}<div class="bf-kortgrid">` +
+    tile(`Hotellovernattinger, siste 12 måneder`, h12) + tile(`Camping, hyttegrender og vandrerhjem, siste 12 måneder`, c12) + utl + '</div>';
+  k.hidden = false;
+}
+function tegnLes(o) {
+  const g = DATA.gjest['01'], r = DATA.reise, andel = Math.round(r['75'] / r['00'] * 10);
+  const skjulte = REG.filter((x) => periode(x, 1, ...S12).skjult || periode(x, 0, ...S12).skjult).length;
+  const p = [
+    ['En overnatting er én person én natt', `Gjester telles per bestilling hos hver bedrift, så en rundreise gir flere gjester. I 2025 kom ${mill(g[0])} gjester til hotellene, og de sto for ${mill(g[1])} overnattinger, i snitt ${nf1.format(g[1] / g[0])} netter.`],
+    ['Rekord er ikke det samme som vekst', 'Overnattingene svinger kraftig med sesongen. Sammenlign med samme måned året før, eller se på sesongjusterte tall, før du sier om det går opp eller ned.'],
+    ['Bare kommersielle overnattinger', `Egen hytte, familie og venner er ikke med, og heller ikke Airbnb og lignende. I 2025 sov nordmenn ${andel} av 10 netter på reiser i Norge utenfor kommersiell innkvartering, ifølge Reiseundersøkelsen.`],
+    ['Hull er ikke null', `«:» betyr at tallet er skjult fordi for få bedrifter ligger bak. ${skjulte} av ${REG.length} reiselivsregioner har minst én skjult måned det siste året. Summer for år vises bare når alle månedene er publisert.`],
+  ];
+  $('#les-punkter').innerHTML = p.map(([h, t]) => `<li><b>${esc(h)}</b>${esc(t)}</li>`).join('');
+}
+
+// ---------- Slik lages tallene: hvor stor del av reisene telles (B) ----------
+function tegnReise() {
+  const r = DATA.reise, komm = r['10'] + r['20'] + r['30'], ikke = r['75'], tot = r['00'];
+  const norske = sum(DATA.mnd.map((m, i) => (m.startsWith('2025') ? verdi(LANDET, 'begge', i, 'no') : 0))) / 1e6;
+  settH('reise', `${Math.round(ikke / tot * 10)} av 10 netter nordmenn sov borte på reiser i Norge i 2025, var ikke i kommersiell innkvartering`);
+  settN('reise', 'Reiseundersøkelsen spør et utvalg på 16–79 år om reisene deres, og regner også leie av privat feriebolig via for eksempel Airbnb som kommersiell. Overnattingsstatistikken teller gjestene ved bedriftene, uansett alder. De to kan ikke trekkes fra hverandre, men de viser størrelsesordenen.');
+  legende('reise', [{c: css('--gronn'), n: 'Kommersiell innkvartering'}, {c: '#cdd3d4', n: 'Ikke kommersiell: egen fritidsbolig, slekt og venner, annet ubetalt'}]);
+  const H = 150, {svg, w} = lerret($('#fig-reise'), H, 'Nordmenns overnattinger på reiser i Norge 2025 etter innkvartering, og norske overnattinger i overnattingsstatistikken.');
+  const lw = Math.min(250, w * 0.38), xs = d3.scaleLinear().domain([0, tot]).range([lw, w - 60]);
+  const rad = (y, lab, deler) => {
+    svg.append('text').attr('class', 'bf-lab').attr('x', 0).attr('y', y + 13).attr('dy', '0.35em').text(lab);
+    let x0 = 0;
+    for (const [v, c, t] of deler) {
+      svg.append('rect').attr('x', xs(x0)).attr('y', y).attr('width', xs(x0 + v) - xs(x0)).attr('height', 26).attr('fill', c);
+      if (t) svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', xs(x0) + 6).attr('y', y + 13).attr('dy', '0.35em').attr('fill', c === '#cdd3d4' ? css('--tekst') : '#fff').text(t);
+      x0 += v;
+    }
+    svg.append('text').attr('class', 'bf-lab').attr('x', xs(x0) + 6).attr('y', y + 13).attr('dy', '0.35em').text(nf1.format(x0));
+  };
+  svg.append('text').attr('class', 'bf-axt').attr('x', lw).attr('y', 12).text('millioner overnattinger, 2025');
+  rad(28, 'Reiseundersøkelsen', [[komm, css('--gronn'), nf1.format(komm)], [ikke, '#cdd3d4', w > 520 ? `Ikke kommersiell: ${nf1.format(ikke)}` : nf1.format(ikke)]]);
+  rad(84, 'Overnattingsstatistikken, norske', [[norske, css('--gronn'), '']]);
+  talltabell('reise', 'Nordmenns overnattinger 2025, millioner', ['Innkvartering', 'Millioner overnattinger'],
+    [['Hotell (Reiseundersøkelsen)', nf1.format(r['10'])], ['Camping (Reiseundersøkelsen)', nf1.format(r['30'])], ['Annen kommersiell (Reiseundersøkelsen)', nf1.format(r['20'])],
+      ['Ikke kommersiell (Reiseundersøkelsen)', nf1.format(ikke)], ['I alt (Reiseundersøkelsen)', nf1.format(tot)], ['Norske i overnattingsstatistikken', nf1.format(norske)]]);
+  settSrc('reise', kilde('11270', '14172') + ' Andelen er egen beregning.');
+}
+
+// ---------- Toppgrafikk A: rekord, men ikke opp (hele landet, hotell) ----------
+function tegnTopp() {
+  const T = DATA.topp, sm = T.sammeMnd, siste = sm[sm.length - 1][1], forrige = sm[sm.length - 2][1];
+  const rekord = siste === d3.max(sm, (d) => d[1]), mn = MN[+SISTE.slice(5) - 1];
+  const sa = T.sa, sa1 = sa[sa.length - 1], sa0 = sa[sa.length - 2], dsa = pst(sa1, sa0), p = pst(siste, forrige);
+  sett('omr', `Hele landet · Hotell · ${mNavn(SISTE)}`);
+  sett('stort', mill(siste));
+  sett('stort-under', 'hotellovernattinger');
+  sett('setning', (rekord ? `Flest i en ${mn} siden serien starter i ${sm[0][0]}.` : `${nf1.format(Math.abs(p))} prosent ${flere(p)} enn i ${mn} året før.`) +
+    ` Men justert for sesong var det ${Math.abs(dsa) < 1.5 ? 'litt ' : ''}${dsa < 0 ? 'færre' : 'flere'} enn i ${MN[+T.saMnd[T.saMnd.length - 2].slice(5) - 1]}.`);
+  $('[data-t="under"]').innerHTML = `<p>${sgn(p, nf1)} prosent fra ${mNavn(IFJOR)}</p><p>${sgn(dsa, nf1)} prosent fra ${mNavn(T.saMnd[T.saMnd.length - 2])}, sesongjustert</p>`;
+  // Samme måned hvert år
+  settH('topp-sm', `Hver ${mn}, millioner`);
+  const ar = sm.filter((d) => d[0] >= 2016);
+  {
+    const H = 220, {svg, w} = lerret($('#fig-topp-sm'), H, `Hotellovernattinger i ${mn} ${ar[0][0]}–${ar[ar.length - 1][0]}.`);
+    const m = {t: 18, r: 4, b: 22, l: 26}, maks = d3.max(ar, (d) => d[1]);
+    const ys = d3.scaleLinear().domain([0, maks * 1.08]).nice().range([H - m.b, m.t]);
+    const xs = d3.scaleBand().domain(ar.map((d) => d[0])).range([m.l, w - m.r]).paddingInner(0.33);
+    yakse(svg, w, m, ys, ys.ticks(3), (t) => nf0.format(t / 1e6), '');
+    svg.selectAll('rect.b').data(ar).join('rect').attr('x', (d) => xs(d[0])).attr('width', xs.bandwidth()).attr('y', (d) => ys(d[1])).attr('height', (d) => ys(0) - ys(d[1]))
+      .attr('fill', (d, i) => (i === ar.length - 1 ? css('--gronn') : F.gra))
+      .on('pointermove', (ev, d) => visTips(ev, `${MN[+SISTE.slice(5) - 1]} ${d[0]}`, [{n: 'Hotellovernattinger', v: nf0.format(d[1])}])).on('pointerleave', skjulTips);
+    const sx = xs(ar[ar.length - 1][0]) + xs.bandwidth();
+    svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', sx).attr('y', ys(siste) - 6).attr('text-anchor', 'end').text(nf0.format(siste));
+    for (const a of [ar[0][0], 2020, ar[ar.length - 1][0]]) svg.append('text').attr('class', 'bf-tick').attr('x', xs(a) + xs.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').text(a);
+    brudd(svg, xs(2020) - xs.step() * 0.165, m, H, w, 'Flere hotell med fra 2020');
+  }
+  // Sesongjustert
+  settH('topp-sa', 'Sesongjustert, per måned, millioner');
+  {
+    const H = 220, {svg, w} = lerret($('#fig-topp-sa'), H, `Sesongjusterte hotellovernattinger ${mNavn(T.saMnd[0])}–${mNavn(SISTE)}.`);
+    const lo = d3.min(sa) * 0.97, hi = d3.max(sa) * 1.02, m = {t: 18, r: 112, b: 22, l: 30};
+    const ys = d3.scaleLinear().domain([lo, hi]).nice().range([H - m.b, m.t]), xs = d3.scaleLinear().domain([0, sa.length - 1]).range([m.l, w - m.r]);
+    yakse(svg, w, m, ys, ys.ticks(4), (t) => nf1.format(t / 1e6), '');
+    svg.append('path').attr('d', d3.line().x((d, i) => xs(i)).y((d) => ys(d))(sa)).attr('fill', 'none').attr('stroke', css('--gronn')).attr('stroke-width', 2);
+    const n = sa.length;
+    svg.append('circle').attr('cx', xs(n - 2)).attr('cy', ys(sa0)).attr('r', 3.5).attr('fill', css('--gronn'));
+    svg.append('circle').attr('cx', xs(n - 1)).attr('cy', ys(sa1)).attr('r', 3.5).attr('fill', css('--gronn'));
+    const yA = ys(sa0), yS = ys(sa1), skyv = Math.abs(yA - yS) < 28 ? (28 - Math.abs(yA - yS)) / 2 : 0;
+    svg.append('text').attr('class', 'bf-lab').attr('x', xs(n - 1) + 10).attr('y', (yA < yS ? yA - skyv : yA + skyv)).attr('dy', '0.35em').text(`${MK[+T.saMnd[n - 2].slice(5) - 1]} ${nf0.format(sa0)}`);
+    svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', xs(n - 1) + 10).attr('y', (yA < yS ? yS + skyv : yS - skyv)).attr('dy', '0.35em').text(`${MK[+SISTE.slice(5) - 1]} ${nf0.format(sa1)}`);
+    T.saMnd.forEach((mm, i) => { if (mm.endsWith('M01')) svg.append('text').attr('class', 'bf-tick').attr('x', xs(i)).attr('y', H - 6).attr('text-anchor', 'middle').text(mm.slice(0, 4)); });
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.r - m.l).attr('height', H - m.b - m.t).attr('fill', 'transparent')
+      .on('pointermove', (ev) => { const i = Math.max(0, Math.min(n - 1, Math.round(xs.invert(d3.pointer(ev)[0])))); visTips(ev, mNavn(T.saMnd[i]), [{n: 'Sesongjustert', v: nf0.format(sa[i])}]); }).on('pointerleave', skjulTips);
+  }
+  talltabell('topp', 'Hotellovernattinger', ['Periode', 'Overnattinger'], [...ar.map((d) => [`${mn} ${d[0]}`, nf0.format(d[1])]), ...T.saMnd.map((mm, i) => [`${mNavn(mm)}, sesongjustert`, nf0.format(sa[i])])]);
+  // Nøkkeltall
+  const n = DATA.nasj[LANDET]['00'], s = n[0] + n[1], f = n[2] + n[3];
+  sett('t1-lab', `Alle kommersielle overnattinger, ${mNavn(SISTE)}`); sett('t1', `${mill(s)} (${sgn(pst(s, f), nf1)} %)`);
+  sett('t2-lab', 'Andel utenlandske'); sett('t2', `${nf0.format(n[1] / s * 100)} prosent`);
+  sett('t3-lab', 'Losjiomsetning, hotell'); sett('t3', `${nf1.format(T.losji[0] / 1e6)} mrd. kr (${sgn(pst(T.losji[0], T.losji[1]), nf1)} %)`);
+  sett('t4-lab', 'Pris per utleid hotellrom'); sett('t4', `${nf0.format(T.pris[0])} kr (${sgn(pst(T.pris[0], T.pris[1]), nf1)} %)`);
+  settSrc('topp', kilde('14166', '14178', '14162', '14176') + ' Endringene er egne beregninger fra samme måned året før. Brudd: flere hotell kom med i 2020. Pris per rom er uten servering og mva.');
+}
+
+// ---------- Måned for måned i valgt område ----------
+function tegnTid(o) {
+  const g = visning.gr, n = iNavn(o);
+  knappRad('data-gr', g); knappRad('data-per', visning.per);
+  sett('maned-h', o === LANDET ? 'Måned for måned' : `${O[o].n} måned for måned`);
+  sett('ing-maned', 'Overnattingene svinger med årstiden. Sammenlign samme måned år for år. Grå skravur betyr at tallet er skjult («:») fordi for få bedrifter ligger bak.');
+  settH('tid', `${GRUPPE_K[g]}: overnattinger per måned i ${n}`);
+  const fra = visning.per === '3' ? NM - 36 : 0, idx = d3.range(fra, NM);
+  const no = idx.map((i) => verdi(o, g, i, 'no')), ut = idx.map((i) => verdi(o, g, i, 'utl')), tot = idx.map((i) => verdi(o, g, i));
+  legende('tid', [{c: F.noS, n: 'Norske', cls: 'bf-sw-line'}, {c: F.utS, n: 'Utenlandske', cls: 'bf-sw-line'}, {n: 'Skjult («:»)', cls: 'bf-sw-hatch'}]);
+  const tidTom = tot.every((v) => v == null);
+  if (tidTom) tomFigur($('#fig-tid'), `Alle månedene i perioden er skjult («:») for ${GRUPPE[g]} i ${n}, fordi for få bedrifter ligger bak tallene. Velg den andre innkvarteringsgruppen, fylket eller hele landet.`);
+  else {
+  const H = 280, {svg, w} = lerret($('#fig-tid'), H, `${GRUPPE_K[g]}: norske og utenlandske overnattinger per måned i ${n}, ${mNavn(MND[fra])}–${mNavn(SISTE)}.`);
+  const maks = d3.max([...no, ...ut]) || 1, fmt = yfmt(maks);
+  const ys = d3.scaleLinear().domain([0, maks * 1.05]).nice().range([H - 24, 26]);
+  const yt = ys.ticks(4), m = {t: 26, r: 14, b: 24, l: venstremarg(svg, yt, fmt)};
+  const xs = d3.scaleLinear().domain([0, idx.length - 1]).range([m.l, w - m.r]);
+  skravur(svg, 'sk-tid');
+  tot.forEach((v, j) => { if (v == null) svg.append('rect').attr('x', xs(j - 0.5)).attr('width', xs(1) - xs(0)).attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'url(#sk-tid)'); });
+  yakse(svg, w, m, ys, yt, fmt, yenhet(maks));
+  for (const [s, c] of [[no, F.noS], [ut, F.utS]]) {
+    svg.append('path').attr('d', d3.line().defined((d) => d != null).x((d, j) => xs(j)).y((d) => ys(d))(s)).attr('fill', 'none').attr('stroke', c).attr('stroke-width', 2);
+    s.forEach((d, j) => { if (d != null && (s[j - 1] == null) && (s[j + 1] == null)) svg.append('circle').attr('cx', xs(j)).attr('cy', ys(d)).attr('r', 2.5).attr('fill', c); });
+  }
+  const steg = idx.length > 60 ? 12 : 6;
+  idx.forEach((i, j) => { if (MND[i].endsWith('M01') || (steg === 6 && MND[i].endsWith('M07'))) svg.append('text').attr('class', 'bf-tick').attr('x', xs(j)).attr('y', H - 6).attr('text-anchor', 'middle').text(MND[i].endsWith('M01') ? MND[i].slice(0, 4) : 'jul.'); });
+  if (g === 1 && iM('2026M02') >= fra) brudd(svg, xs(iM('2026M02') - fra - 0.5), m, H, w, 'Ny campingmetode');
+  if (g === 0 && iM('2020M01') > fra) brudd(svg, xs(iM('2020M01') - fra - 0.5), m, H, w, 'Flere hotell med');
+  const fokus = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', css('--null')).attr('display', 'none');
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const j = Math.max(0, Math.min(idx.length - 1, Math.round(xs.invert(d3.pointer(ev)[0])))), i = idx[j];
+      fokus.attr('x1', xs(j)).attr('x2', xs(j)).attr('display', null);
+      const f12 = i >= 12 ? verdi(o, g, i - 12) : null;
+      visTips(ev, mNavn(MND[i]), tot[j] == null ? [{n: 'Skjult', v: ':'}] : [{c: F.noS, n: 'Norske', v: nf0.format(no[j])}, {c: F.utS, n: 'Utenlandske', v: nf0.format(ut[j])}, {n: 'I alt', v: nf0.format(tot[j])},
+        {n: `Fra ${MK[+MND[i].slice(5) - 1]} ${+MND[i].slice(0, 4) - 1}`, v: f12 == null ? ':' : `${sgn(pst(tot[j], f12), nf1)} %`}]);
+    }).on('pointerleave', () => { fokus.attr('display', 'none'); skjulTips(); });
+  }
+  // Tekst fra tallene
+  const s = verdi(o, g, NM - 1), f = verdi(o, g, NM - 13), sk = periode(o, g, ...S12).skjult;
+  settN('tid', s == null ? `Tallet for ${mNavn(SISTE)} er skjult.` : `I ${mNavn(SISTE)} var det ${nf0.format(s)} overnattinger på ${GRUPPE[g]} i ${n}` +
+    (f == null ? '. Tallet for samme måned året før er skjult.' : `, ${nf1.format(Math.abs(pst(s, f)))} prosent ${flere(pst(s, f))} enn i ${mNavn(IFJOR)}.`));
+  varsel('tid', sk ? `${sk} av de siste 12 månedene er skjult («:») for ${GRUPPE[g]} i ${esc(n)}. Det er vanligst om vinteren, når få bedrifter er åpne.` : '');
+  talltabell('tid', `${GRUPPE_K[g]} per måned`, ['Måned', 'Norske', 'Utenlandske', 'I alt'], idx.slice().reverse().map((i) => [mNavn(MND[i]), tall(verdi(o, g, i, 'no')), tall(verdi(o, g, i, 'utl')), tall(verdi(o, g, i))]));
+  settSrc('tid', kilde('14172') + (g === 1 ? ' Campingtall fra februar 2026 er delvis beregnet med ny metode.' : ''));
+}
+
+// ---------- Hele år ----------
+function tegnAar(o) {
+  const g = visning.gr, n = iNavn(o);
+  settH('aar', `${GRUPPE_K[g]}: overnattinger per år i ${n}`);
+  const per = d3.range(2018, +SISTE.slice(0, 4)).map((a) => ({lab: String(a), fra: iM(`${a}M01`), til: iM(`${a}M12`)})).filter((p) => p.fra >= 0);
+  per.push({lab: 'Siste 12 mnd.', fra: S12[0], til: S12[1]});
+  const rader = per.map((p) => ({...p, no: periode(o, g, p.fra, p.til, 'no'), ut: periode(o, g, p.fra, p.til, 'utl')}));
+  const aarTom = rader.every((r) => r.no.v == null);
+  if (aarTom) tomFigur($('#fig-aar'), `Ingen hele år kan summeres for ${GRUPPE[g]} i ${n}: minst én måned er skjult hvert år.`);
+  else {
+  const H = 260, {svg, w} = lerret($('#fig-aar'), H, `${GRUPPE_K[g]}: overnattinger per år i ${n}.`);
+  const maks = d3.max(rader, (r) => (r.no.v == null ? 0 : r.no.v + r.ut.v)) || 1, fmt = yfmt(maks);
+  const ys = d3.scaleLinear().domain([0, maks * 1.1]).nice().range([H - 34, 26]), yt = ys.ticks(4);
+  const m = {t: 26, r: 4, b: 34, l: venstremarg(svg, yt, fmt)};
+  const xs = d3.scaleBand().domain(rader.map((r) => r.lab)).range([m.l, w - m.r]).paddingInner(0.33);
+  yakse(svg, w, m, ys, yt, fmt, yenhet(maks));
+  for (const r of rader) {
+    const x = xs(r.lab), bw = xs.bandwidth();
+    if (r.no.v == null) {
+      svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', x + bw / 2).attr('y', ys(0) - 6).attr('text-anchor', 'middle').text(':');
+    } else {
+      svg.append('rect').attr('x', x).attr('width', bw).attr('y', ys(r.no.v)).attr('height', ys(0) - ys(r.no.v)).attr('fill', F.no);
+      svg.append('rect').attr('x', x).attr('width', bw).attr('y', ys(r.no.v + r.ut.v)).attr('height', ys(r.no.v) - ys(r.no.v + r.ut.v)).attr('fill', F.ut);
+    }
+    svg.append('rect').attr('x', x).attr('width', bw).attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'transparent')
+      .on('pointermove', (ev) => visTips(ev, r.lab === 'Siste 12 mnd.' ? `${mKort(MND[r.fra])}–${mKort(MND[r.til])}` : r.lab, r.no.v == null ? [{n: 'Skjult', v: `${r.no.skjult} av ${r.no.n} måneder`}]
+        : [{c: F.no, n: 'Norske', v: nf0.format(r.no.v)}, {c: F.ut, n: 'Utenlandske', v: nf0.format(r.ut.v)}, {n: 'I alt', v: nf0.format(r.no.v + r.ut.v)}])).on('pointerleave', skjulTips);
+    const lab = r.lab === 'Siste 12 mnd.' ? (w < 420 ? 'S12' : 'Siste 12') : (w < 420 && rader.length > 6 ? `’${r.lab.slice(2)}` : r.lab);
+    svg.append('text').attr('class', 'bf-tick').attr('x', x + bw / 2).attr('y', H - m.b + 15).attr('text-anchor', 'middle').text(lab);
+  }
+  }
+  const skjulte = rader.filter((r) => r.no.v == null);
+  settN('aar', `Grønt er norske, blått utenlandske. ${skjulte.length ? `«:» betyr at minst én måned er skjult, så året kan ikke summeres (${skjulte.map((r) => `${r.lab === 'Siste 12 mnd.' ? 'siste 12 måneder' : r.lab}: ${r.no.skjult} mnd.`).join(', ')}).` : 'Alle månedene er publisert.'}`);
+  talltabell('aar', `${GRUPPE_K[g]} per år`, ['Periode', 'Norske', 'Utenlandske', 'I alt', 'Skjulte måneder'],
+    rader.map((r) => [r.lab, tall(r.no.v), tall(r.ut.v), r.no.v == null ? ':' : nf0.format(r.no.v + r.ut.v), String(r.no.skjult)]));
+  settSrc('aar', kilde('14172') + ' Årssummene er egne beregninger.');
+}
+
+// ---------- Kart over reiselivsregionene ----------
+const SEKV = ['#cff1d0', '#91cd9a', '#58a772', '#00824d', '#075745'];
+const DIV = ['#06479f', '#6bbbed', '#f0f0f0', '#d7a85a', '#723e02'];
+const DIVB = [-10, -2, 2, 10];
+function kartVerdi(r, g, mal) {
+  const t = periode(r, g, ...S12), u = periode(r, g, ...S12, 'utl');
+  if (mal === 'utl') return t.v == null || !t.v ? null : u.v / t.v * 100;
+  const f = periode(r, g, ...F12); return t.v == null || f.v == null || !f.v ? null : pst(t.v, f.v);
+}
+function tegnKart(o) {
+  const g = visning.gr, mal = visning.mal, K = DATA.kart, f = fylkeAv(o);
+  knappRad('data-mal', mal);
+  const V = Object.fromEntries(REG.map((r) => [r, kartVerdi(r, g, mal)]));
+  const verdier = REG.map((r) => V[r]).filter((v) => v != null).sort((a, b) => a - b);
+  const brudd5 = mal === 'utl' ? [0.2, 0.4, 0.6, 0.8].map((q) => d3.quantileSorted(verdier, q)) : DIVB;
+  const farger = mal === 'utl' ? SEKV : DIV;
+  const klasse = (v) => { let i = 0; while (i < 4 && v >= brudd5[i]) i++; return i; };
+  const farge = (v) => (v == null ? 'url(#sk-kart)' : farger[klasse(v)]);
+  const per = `${mKort(MND[S12[0]])}–${mKort(MND[S12[1]])}`;
+  settH('kart', mal === 'utl' ? `Andel utenlandske overnattinger, ${GRUPPE[g]}, ${per}` : `Endring i overnattinger på ${GRUPPE[g]}, ${per} mot de 12 månedene før`);
+  const fmt = (v) => (mal === 'utl' ? nf0.format(v) : sgn(v, nf0));
+  const gr = [null, ...brudd5, null], tekst = farger.map((c, i) => `<span><i style="background:${c};${c === '#f0f0f0' ? 'border-color:#cdd3d4' : ''}"></i>${gr[i] == null ? `under ${fmt(gr[i + 1])}` : gr[i + 1] == null ? `${fmt(gr[i])} og mer` : `${fmt(gr[i])}–${fmt(gr[i + 1])}`}</span>`);
+  $('#kart-klasser').innerHTML = tekst.join('') + `<span><i style="background:repeating-linear-gradient(45deg,#d9dfe0 0 2px,#fff 2px 5px)"></i>skjult</span><span style="align-self:end;padding-left:6px">prosent</span>`;
+  const box = $('#fig-kart');
+  let svg = d3.select(box).select('svg');
+  if (svg.empty()) {
+    svg = d3.select(box).append('svg').attr('viewBox', `0 0 ${K.b} ${K.h}`).attr('tabindex', 0).attr('role', 'group');
+    skravur(svg, 'sk-kart');
+    svg.append('g').attr('class', 'regioner').selectAll('path').data(REG.filter((r) => K.p[r])).join('path').attr('class', 'r').attr('d', (r) => K.p[r])
+      .attr('fill-rule', 'evenodd').attr('stroke', '#fff').attr('stroke-width', 0.6).attr('vector-effect', 'non-scaling-stroke')
+      .on('click', (ev, r) => velg(r)).on('pointerleave', skjulTips);
+    // Svalbard har ingen kommune og ingen kartflate: egen rute oppe til venstre
+    const sv = svg.append('g').attr('class', 'svalbard').style('cursor', 'pointer').on('click', () => velg('21101'));
+    sv.append('rect').attr('class', 'r').attr('x', 20).attr('y', 20).attr('width', 120).attr('height', 64).attr('stroke', '#fff').attr('stroke-width', 0.6).attr('vector-effect', 'non-scaling-stroke');
+    sv.append('text').attr('x', 80).attr('y', 106).attr('text-anchor', 'middle').attr('font-size', 22).attr('fill', css('--sek')).text('Svalbard');
+    svg.append('path').attr('class', 'fylke').attr('fill', 'none').attr('stroke', css('--tekst')).attr('stroke-width', 1.4).attr('vector-effect', 'non-scaling-stroke').attr('pointer-events', 'none');
+    svg.append('path').attr('class', 'valgt').attr('fill', 'none').attr('stroke', css('--oker')).attr('stroke-width', 2.5).attr('vector-effect', 'non-scaling-stroke').attr('pointer-events', 'none');
+    svg.on('keydown', (ev) => {
+      const steg = {ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1}[ev.key]; if (!steg) return;
+      ev.preventDefault(); const cur = REG.includes(valgt()) ? valgt() : REG[steg > 0 ? REG.length - 1 : 0];
+      velg(REG[(REG.indexOf(cur) + steg + REG.length) % REG.length]); svg.node().focus();
+    });
+  }
+  svg.attr('aria-label', 'Kart over reiselivsregionene. Piltastene velger neste eller forrige region.');
+  const sk = K.b / Math.max(200, box.clientWidth);   // 13 px på skjermen, uansett bredde
+  svg.select('.svalbard text').attr('font-size', 13 * sk).attr('y', 84 + 16 * sk);
+  const tips = (ev, r) => visTips(ev, O[r].n, [{c: V[r] == null ? F.ingen : farge(V[r]), n: mal === 'utl' ? 'Andel utenlandske' : 'Endring', v: V[r] == null ? 'skjult' : `${mal === 'utl' ? nf1.format(V[r]) : sgn(V[r], nf1)} %`}]);
+  svg.selectAll('path.r').attr('fill', (r) => farge(V[r])).on('pointermove', tips);
+  svg.select('.svalbard rect').attr('fill', farge(V['21101'])).on('pointermove', (ev) => tips(ev, '21101'));
+  svg.select('path.valgt').attr('d', O[o].type === 'R' && K.p[o] ? K.p[o] : null);
+  svg.select('.svalbard rect').attr('stroke', o === '21101' ? css('--oker') : '#fff').attr('stroke-width', o === '21101' ? 2.5 : 0.6);
+  svg.select('path.fylke').attr('d', f ? regIFylke(f).filter((r) => K.p[r]).map((r) => K.p[r]).join('') : null);
+  const skj = REG.filter((r) => V[r] == null).length;
+  const land = kartVerdi(LANDET, g, mal);
+  settN('kart', `Hele landet: ${mal === 'utl' ? nf1.format(land) : sgn(land, nf1)} prosent. ${mal === 'utl' ? 'Fargene deler regionene i fem like store grupper (kvintiler).' : 'Blått er nedgang, brunt er vekst. Grensene er faste: 2 og 10 prosent.'} ` +
+    `${skj} regioner er skravert fordi minst én måned er skjult. ${f ? `Mørk kant: ${O[f].n}. ` : ''}Velg en region i kartet.`);
+  talltabell('kart', 'Alle reiselivsregioner', ['Region', 'Fylke', mal === 'utl' ? 'Andel utenlandske, prosent' : 'Endring, prosent'],
+    REG.slice().sort((a, b) => (V[b] ?? -1e9) - (V[a] ?? -1e9)).map((r) => [O[r].n, O[O[r].f].n, V[r] == null ? ':' : mal === 'utl' ? nf1.format(V[r]) : sgn(V[r], nf1)]));
+  settSrc('kart', kilde('14172') + ' Regionene er kommunegrensene 2024 fra Kartverket (forenklet av robhop), slått sammen etter KLASS. Andelene og endringene er egne beregninger.');
+}
+
+// ---------- Hvem overnatter: endring fra samme måned året før (C) ----------
+function tegnEndr(o) {
+  const n = iNavn(o), erR = O[o].type === 'R';
+  sett('hvem-h', o === LANDET ? 'Hvem overnatter?' : `Hvem overnatter i ${O[o].n}?`);
+  sett('ing-hvem', 'Gjestene fordeles etter landet de bor i, ikke etter statsborgerskap. En nordmann som bor i Spania, telles som spansk. Landtallene vises fra 2018.');
+  settH('endr', `Endring fra ${mNavn(IFJOR)} til ${mNavn(SISTE)}`);
+  // Hele landet og fylkene har tre grupper (14162), regionene to (14172)
+  const grupper = erR ? [[GRUPPE_K[0], 0], [GRUPPE_K[1], 1]] : [['Hotell', '01'], ['Camping', '02'], ['Hyttegrender og vandrerhjem', '03+04']];
+  const rader = [];
+  for (const [gn, g] of grupper) {
+    let ut, no;
+    if (erR) { const a = verdi(o, g, NM - 1, 'utl'), b = verdi(o, g, NM - 13, 'utl'), c = verdi(o, g, NM - 1, 'no'), d = verdi(o, g, NM - 13, 'no'); ut = a == null || b == null ? null : a - b; no = c == null || d == null ? null : c - d; }
+    else { const v = DATA.nasj[o][g]; ut = v[1] - v[3]; no = v[0] - v[2]; }
+    rader.push({gn, ut, no});
+  }
+  const alle = rader.flatMap((r) => [r.ut, r.no]).filter((v) => v != null);
+  const H = rader.length * 74 + 6, {svg, w} = lerret($('#fig-endr'), H, `Endring i overnattinger etter innkvartering og bostedsland i ${n}.`);
+  if (!alle.length) { svg.append('text').attr('class', 'bf-lab').attr('x', 0).attr('y', 20).text('Tallene er skjult for denne måneden.'); }
+  const lo = Math.min(0, d3.min(alle) || 0), hi = Math.max(0, d3.max(alle) || 0);
+  const lw = 104, xs = d3.scaleLinear().domain([lo, hi]).range([lw + (lo < 0 ? 62 : 0), w - (hi > 0 ? 66 : 4)]);
+  let y = 4;
+  for (const r of rader) {
+    svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', 0).attr('y', y + 12).text(r.gn);
+    y += 22;
+    for (const [lab, v, c] of [['Utenlandske', r.ut, F.ut], ['Norske', r.no, F.no]]) {
+      svg.append('text').attr('class', 'bf-lab').attr('x', 10).attr('y', y + 9).attr('dy', '0.32em').text(lab);
+      if (v == null) svg.append('text').attr('class', 'bf-lab').attr('x', xs(0) + 6).attr('y', y + 9).attr('dy', '0.32em').text(': skjult');
+      else {
+        svg.append('rect').attr('x', Math.min(xs(0), xs(v))).attr('width', Math.max(1, Math.abs(xs(v) - xs(0)))).attr('y', y).attr('height', 18).attr('fill', c);
+        svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', v >= 0 ? xs(v) + 5 : xs(v) - 5).attr('y', y + 9).attr('dy', '0.32em').attr('text-anchor', v >= 0 ? 'start' : 'end').text(sgn(v));
+      }
+      y += 24;
+    }
+    y += 4;
+  }
+  svg.insert('line', ':first-child').attr('x1', xs(0)).attr('x2', xs(0)).attr('y1', 0).attr('y2', H).attr('stroke', css('--null'));
+  const tot = alle.length === rader.length * 2 ? sum(alle) : null, utH = rader[0].ut;
+  settN('endr', tot == null ? 'Noen av tallene er skjult, så summen kan ikke regnes.' :
+    `Samlet ${sgn(tot)} overnattinger. ${utH != null && tot > 0 && utH > tot ? 'Økningen i utenlandske hotellovernattinger er større enn hele økningen.' : ''}${o === LANDET || !erR ? ' Campingtall fra februar 2026 er delvis beregnet med ny metode.' : ''}`);
+  talltabell('endr', 'Endring fra samme måned året før', ['Gruppe', 'Utenlandske', 'Norske'], rader.map((r) => [r.gn, r.ut == null ? ':' : sgn(r.ut), r.no == null ? ':' : sgn(r.no)]));
+  settSrc('endr', kilde(erR ? '14172' : '14162') + ' Endringene er egne beregninger.');
+}
+
+// ---------- Hvem overnatter: land siste 12 måneder ----------
+function landGrupper(o, p) { const h = heleGrupper(o, p); return h; }
+function tegnLand(o) {
+  const n = iNavn(o), gr = landGrupper(o, 's12'), grF = gr.filter((g) => DATA.lreg[o]['f' + g][PI('f12')]);
+  const gt = gr.length === 2 ? 'alle innkvarteringstyper' : gr.length ? GRUPPE[gr[0]] : '';
+  settH('land', `Største land, ${mKort(MND[S12[0]])}–${mKort(MND[S12[1]])}`);
+  const box = $('#fig-land');
+  if (!gr.length) {
+    d3.select(box).selectAll('svg').remove(); box.style.minHeight = '0';
+    varsel('land', `Tallene for ${esc(n)} er skjult i minst én av de siste 12 månedene, både for hotell og for camping m.m. Velg fylket eller hele landet.`);
+    settN('land', ''); talltabell('land', 'Land', ['Land'], []); settSrc('land', kilde('14172')); return;
+  }
+  varsel('land', gr.length === 1 ? `${GRUPPE_K[1 - gr[0]]} er skjult i minst én av de siste 12 månedene. Tallene gjelder bare ${GRUPPE[gr[0]]}.` : '');
+  const MINF = 100;   // endring vises bare når året før har minst 100 overnattinger
+  const rader = LAND.map((l, li) => ({...l, li, v: landPer(o, li, 's12', gr), f: grF.length === gr.length ? landPer(o, li, 'f12', gr) : null})).filter((r) => r.v > 0).sort((a, b) => b.v - a.v);
+  const utl = sum(rader.map((r) => r.v)), norske = sum(gr.map((g) => DATA.lreg[o]['n' + g][PI('s12')]));
+  if (!visning.land || !rader.find((r) => r.k === visning.land)) visning.landAuto = rader[0] ? rader[0].k : null;
+  const valgtL = visning.land && rader.find((r) => r.k === visning.land) ? visning.land : visning.landAuto;
+  const topp = rader.slice(0, 15);
+  const rh = 22, H = topp.length * rh + 26, {svg, w} = lerret(box, H, `De største utenlandske markedene i ${n}, siste 12 måneder.`);
+  const lbw = d3.max(topp, (r) => bredde(svg, r.n, 'bf-lab')) + 10, vt = (r) => `${nf0.format(r.v)}${r.f >= MINF ? `  ${sgn(pst(r.v, r.f), nf0)} %` : ''}`;
+  const vb = d3.max(topp, (r) => bredde(svg, vt(r), 'bf-lab')) + 10;
+  const xs = d3.scaleLinear().domain([0, topp[0] ? topp[0].v : 1]).range([lbw, w - vb]);
+  svg.append('text').attr('class', 'bf-axt').attr('x', lbw).attr('y', 12).text(`overnattinger · endring fra året før`);
+  topp.forEach((r, i) => {
+    const y = 22 + i * rh, er = r.k === valgtL;
+    const g = svg.append('g'); klikkbar(g, `${r.n}: ${vt(r)}. Vis utviklingen.`, () => { visning.land = r.k; skrivAdresse(valgt()); tegnLand(valgt()); tegnLtid(valgt()); });
+    g.append('rect').attr('x', 0).attr('y', y - 2).attr('width', w).attr('height', rh).attr('fill', er ? css('--lys') : 'transparent');
+    g.append('text').attr('class', 'bf-lab' + (er ? ' bf-strong' : '')).attr('x', lbw - 8).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(r.n);
+    g.append('rect').attr('x', xs(0)).attr('y', y + 3).attr('width', Math.max(1, xs(r.v) - xs(0))).attr('height', rh - 9).attr('fill', er ? css('--bla') : F.ut);
+    g.append('text').attr('class', 'bf-lab').attr('x', xs(r.v) + 5).attr('y', y + rh / 2 - 2).attr('dy', '0.32em').text(vt(r));
+  });
+  const tot = utl + norske;
+  settN('land', `Utenlandske gjester sto for ${nf0.format(utl / tot * 100)} prosent av ${nf0.format(tot)} overnattinger på ${gt} i ${n}. ${rader.length} land og restgrupper har overnattinger. Endringen vises når landet hadde minst ${MINF} overnattinger året før. Velg et land for å se utviklingen. Store tall fra land som Polen og Litauen kan være arbeidsreiser, ikke turisme: formål registreres bare på hotell.`);
+  talltabell('land', 'Alle land, siste 12 måneder', ['Land', 'Overnattinger', 'De 12 månedene før', 'Endring, prosent'], rader.map((r) => [r.n, nf0.format(r.v), tall(r.f), r.f >= MINF ? sgn(pst(r.v, r.f), nf1) : '–']));
+  settSrc('land', kilde('14172') + ' Summene for 12 måneder og endringene er egne beregninger. «Resten av …» er SSBs restgrupper.');
+}
+function tegnLtid(o) {
+  const n = iNavn(o), lk = visning.land || visning.landAuto, li = LAND.findIndex((l) => l.k === lk);
+  const box = $('#fig-ltid');
+  if (li < 0) { settH('ltid', 'Utviklingen for et land'); tomFigur(box, `Velg et land i listen over for å se utviklingen i ${n}.`); settN('ltid', ''); talltabell('ltid', '', ['Periode'], []); settSrc('ltid', ''); return; }
+  const ln = LAND[li].n;
+  settH('ltid', `${ln}: overnattinger i ${n} per år`);
+  const per = PER.filter((p) => p !== 'f12');
+  // Hver periode bruker gruppene som er publisert alle månedene. Bare én gruppe gir skravert stolpe
+  const rader = per.map((p) => { const g = heleGrupper(o, p); return {p, g, v: g.length ? landPer(o, li, p, g) : null}; });
+  const plab = (p) => (p === 's12' ? 'Siste 12 måneder' : p);
+  if (rader.every((r) => r.v == null)) tomFigur(box, `Tallene for ${n} er skjult i minst én måned i alle periodene, både for hotell og for camping m.m.`);
+  else {
+    const H = 220, {svg, w} = lerret(box, H, `${ln}: overnattinger i ${n} per år.`);
+    skravur(svg, 'sk-ltid');
+    const maks = d3.max(rader, (r) => r.v ?? 0) || 1, fmt = yfmt(maks);
+    const ys = d3.scaleLinear().domain([0, maks * 1.1]).nice().range([H - 30, 24]), yt = ys.ticks(Math.min(4, Math.max(1, Math.round(maks))));
+    const m = {t: 24, r: 4, b: 30, l: venstremarg(svg, yt, fmt)};
+    const xs = d3.scaleBand().domain(per).range([m.l, w - m.r]).paddingInner(0.33);
+    yakse(svg, w, m, ys, yt, fmt, yenhet(maks));
+    for (const r of rader) {
+      const x = xs(r.p), bw = xs.bandwidth(), del = r.g.length === 1;
+      if (r.v == null) svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', x + bw / 2).attr('y', ys(0) - 6).attr('text-anchor', 'middle').text(':');
+      else {
+        svg.append('rect').attr('x', x).attr('width', bw).attr('y', ys(r.v)).attr('height', ys(0) - ys(r.v)).attr('fill', del ? 'url(#sk-ltid)' : css('--bla-f'));
+        if (del) svg.append('rect').attr('x', x + 0.5).attr('width', bw - 1).attr('y', ys(r.v) + 0.5).attr('height', Math.max(0, ys(0) - ys(r.v) - 1)).attr('fill', 'none').attr('stroke', css('--bla')).attr('stroke-width', 1);
+      }
+      svg.append('text').attr('class', 'bf-tick').attr('x', x + bw / 2).attr('y', H - m.b + 15).attr('text-anchor', 'middle').text(r.p === 's12' ? (w < 420 ? 'S12' : 'Siste 12') : (w < 420 ? `’${r.p.slice(2)}` : r.p));
+      svg.append('rect').attr('x', x).attr('width', bw).attr('y', m.t).attr('height', H - m.b - m.t).attr('fill', 'transparent')
+        .on('pointermove', (ev) => visTips(ev, plab(r.p), r.v == null ? [{n: 'Skjult', v: ':'}] : [{n: del ? `Bare ${GRUPPE[r.g[0]]}` : 'Alle typer', v: nf0.format(r.v)}])).on('pointerleave', skjulTips);
+    }
+  }
+  const delvis = rader.filter((r) => r.g.length === 1), tom = rader.filter((r) => !r.g.length);
+  const hvilke = [...new Set(delvis.map((r) => r.g[0]))];
+  settN('ltid', `Hele stolper er alle innkvarteringstyper.${delvis.length ? ` Skraverte stolper gjelder bare ${hvilke.map((g) => GRUPPE[g]).join(' eller ')}, fordi den andre gruppen er skjult i minst én måned (${delvis.map((r) => plab(r.p)).join(', ')}).` : ''}${tom.length ? ` «:» betyr at begge gruppene er skjult (${tom.map((r) => plab(r.p)).join(', ')}).` : ''} Landtall finnes fra 2018.`);
+  talltabell('ltid', `${ln} per år`, ['Periode', 'Overnattinger', 'Gjelder'], rader.map((r) => [plab(r.p), tall(r.v), r.g.length === 2 ? 'alle typer' : r.g.length ? `bare ${GRUPPE[r.g[0]]}` : 'skjult']));
+  settSrc('ltid', kilde('14172') + ' Årssummene er egne beregninger.');
+}
+
+// ---------- Hotellene ----------
+const HM = DATA.hmnd, NH = HM.length;
+function tegnKap(o) {
+  const n = iNavn(o), D = DATA.hotell[o], L = DATA.hotell[LANDET];
+  sett('hot-h', o === LANDET ? 'Hvor fulle er hotellene, og hva koster rommet?' : `Hotellene i ${O[o].n}`);
+  sett('ing-hot', 'Kapasitetsutnyttingen kan måles på rom og på senger. Et dobbeltrom med én gjest er fullt i rommålet, men halvfullt i sengemålet. Derfor er rommålet nesten alltid høyest.');
+  settH('kap', `Kapasitetsutnytting, prosent, ${n}`);
+  const ser2 = [{n: 'Rom', v: D[0], c: F.noS}, {n: 'Senger', v: D[1], c: F.utS}];
+  if (o !== LANDET) ser2.push({n: 'Rom, hele landet', v: L[0], c: css('--null'), d: '4 3'});
+  legende('kap', ser2.map((s) => ({c: s.c, n: s.n, cls: 'bf-sw-line'})));
+  if (D[0].every((v) => v == null)) tomFigur($('#fig-kap'), `Hotelltallene for ${n} er skjult i alle månedene fra ${mNavn(HM[0])}.`);
+  else {
+  const H = 240, {svg, w} = lerret($('#fig-kap'), H, `Kapasitetsutnytting av rom og senger på hotell i ${n}, ${mNavn(HM[0])}–${mNavn(HM[NH - 1])}.`);
+  const m = {t: 24, r: 8, b: 24, l: 30}, ys = d3.scaleLinear().domain([0, 100]).range([H - m.b, m.t]), xs = d3.scaleLinear().domain([0, NH - 1]).range([m.l, w - m.r]);
+  yakse(svg, w, m, ys, [0, 25, 50, 75, 100], nf0.format, 'prosent');
+  for (const s of ser2) svg.append('path').attr('d', d3.line().defined((d) => d != null).x((d, i) => xs(i)).y((d) => ys(d))(s.v)).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', s.d ? 1.5 : 2).attr('stroke-dasharray', s.d || null);
+  HM.forEach((mm, i) => { if (mm.endsWith('M01')) svg.append('text').attr('class', 'bf-tick').attr('x', xs(i)).attr('y', H - 6).attr('text-anchor', 'middle').text(mm.slice(0, 4)); });
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', w - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => { const i = Math.max(0, Math.min(NH - 1, Math.round(xs.invert(d3.pointer(ev)[0])))); visTips(ev, mNavn(HM[i]), [...ser2.map((s) => ({c: s.c, n: s.n, v: s.v[i] == null ? ':' : `${s.v[i]} %`})), {n: 'Pris per rom', v: D[2][i] == null ? ':' : `${nf0.format(D[2][i])} kr`}]); }).on('pointerleave', skjulTips);
+  }
+  const r = D[0][NH - 1], s = D[1][NH - 1];
+  settN('kap', r == null ? `Tallene for ${mNavn(HM[NH - 1])} er skjult.` : `I ${mNavn(HM[NH - 1])} var ${r} prosent av rommene og ${s} prosent av sengene i bruk.`);
+  talltabell('kap', 'Kapasitetsutnytting og pris', ['Måned', 'Rom, prosent', 'Senger, prosent', 'Pris per rom, kr'], HM.map((mm, i) => [mNavn(mm), tall(D[0][i]), tall(D[1][i]), tall(D[2][i])]).reverse());
+  settSrc('kap', kilde('14176'));
+}
+function tegnStripe(o) {
+  const i = NH - 1, mm = HM[i], f = fylkeAv(o);
+  settH('stripe', `Sammenlignet med de andre regionene, ${mNavn(mm)}`);
+  const mal = [['Kapasitetsutnytting av rom', 0, (v) => `${v} %`], ['Pris per rom', 2, (v) => `${nf0.format(v)} kr`], ['Losjiomsetning per tilgjengelig rom', 3, (v) => `${nf0.format(v)} kr`]];
+  const RH = 88, H = mal.length * RH + 4, {svg, w} = lerret($('#fig-stripe'), H, `Hotellenes kapasitetsutnytting, pris og omsetning per region, ${mNavn(mm)}.`);
+  mal.forEach(([navn, k, fmt], j) => {
+    const y0 = j * RH + 4, pkt = REG.map((r) => ({r, v: DATA.hotell[r][k][i]})).filter((p) => p.v != null);
+    const xs = d3.scaleLinear().domain(d3.extent(pkt, (p) => p.v)).nice().range([12, w - 12]);
+    svg.append('text').attr('class', 'bf-lab bf-strong').attr('x', 0).attr('y', y0 + 10).text(navn);
+    const yy = y0 + 46;
+    svg.append('line').attr('x1', 0).attr('x2', w).attr('y1', yy).attr('y2', yy).attr('stroke', css('--stotte'));
+    const lv = DATA.hotell[LANDET][k][i];
+    if (lv != null) { svg.append('line').attr('x1', xs(lv)).attr('x2', xs(lv)).attr('y1', yy - 12).attr('y2', yy + 12).attr('stroke', css('--tekst')).attr('stroke-width', 2); }
+    for (const p of pkt) {
+      const er = p.r === o, iF = f && p.r.slice(0, 2) === f;
+      const c = svg.append('circle').attr('cx', xs(p.v)).attr('cy', yy).attr('r', er ? 6 : 4.5).attr('fill', er ? css('--gronn') : iF ? '#91cd9a' : F.gra).attr('fill-opacity', er ? 1 : 0.8)
+        .attr('stroke', '#fff').attr('stroke-width', er ? 1.5 : 0.5);
+      klikkbar(c, `${O[p.r].n}: ${fmt(p.v)}`, () => velg(p.r));
+      c.on('pointermove', (ev) => visTips(ev, O[p.r].n, [{n: navn, v: fmt(p.v)}, {n: 'Hele landet', v: lv == null ? ':' : fmt(lv)}])).on('pointerleave', skjulTips);
+    }
+    svg.selectAll('circle').filter(function () { return +this.getAttribute('r') === 6; }).raise();
+    const mn = pkt.reduce((a, b) => (b.v < a.v ? b : a)), mx = pkt.reduce((a, b) => (b.v > a.v ? b : a));
+    svg.append('text').attr('class', 'bf-tick').attr('x', xs(mn.v)).attr('y', yy + 26).text(`${O[mn.r].n} ${fmt(mn.v)}`);
+    svg.append('text').attr('class', 'bf-tick').attr('x', xs(mx.v)).attr('y', yy + 26).attr('text-anchor', 'end').text(`${O[mx.r].n} ${fmt(mx.v)}`);
+    const sel = pkt.find((p) => p.r === o);
+    if (sel) svg.append('text').attr('class', 'bf-lab bf-strong bf-halo').attr('x', Math.max(40, Math.min(w - 40, xs(sel.v)))).attr('y', yy - 13).attr('text-anchor', 'middle').text(`${O[o].n} ${fmt(sel.v)}`);
+    else if (lv != null) svg.append('text').attr('class', 'bf-tick bf-halo').attr('x', Math.max(40, Math.min(w - 40, xs(lv)))).attr('y', yy - 15).attr('text-anchor', 'middle').text(`Hele landet ${fmt(lv)}`);
+  });
+  const skjult = REG.filter((r) => DATA.hotell[r][0][i] == null).length;
+  settN('stripe', `Hvert punkt er en reiselivsregion, streken er hele landet.${f ? ` Lysegrønt: regionene i ${O[f].n}.` : ''} ${skjult} regioner har skjulte tall og er ikke med. Pris per rom er uten servering og mva. Velg et punkt for å se regionen.`);
+  talltabell('stripe', 'Hotell per region', ['Region', 'Rom, prosent', 'Pris per rom, kr', 'Losjiomsetning per tilgjengelig rom, kr'],
+    REG.map((r) => [O[r].n, tall(DATA.hotell[r][0][i]), tall(DATA.hotell[r][2][i]), tall(DATA.hotell[r][3][i])]));
+  settSrc('stripe', kilde('14176'));
+}
+
+// ---------- Søk ----------
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').normalize('NFC').replace(/[^a-z0-9æøåáč]+/g, ' ').trim();
+function lagSok(kandidater, synonymer, storrelse) {
+  // kandidater: [{k, n}], synonymer: [{ord, k: [...], usikker}], storrelse(k) brukes ved likt
+  const K = kandidater.map((x) => ({...x, nn: norm(x.n), deler: norm(x.n).split(' ')}));
+  const S = synonymer.map((s) => ({...s, nn: norm(s.ord)}));
+  return (q) => {
+    const n = norm(q); if (!n) return [];
+    const treff = new Map();
+    const legg = (k, p, ord) => { const t = treff.get(k); if (!t || t.p < p) treff.set(k, {k, p, ord}); };
+    for (const s of S) {
+      if (s.nn === n) s.k.forEach((k) => legg(k, 100, s.ord));
+      else if (n.length >= 3 && s.nn.startsWith(n)) s.k.forEach((k) => legg(k, 70, s.ord));
+    }
+    for (const {k, nn, deler} of K) {
+      if (nn === n) legg(k, 99);
+      else if (nn.startsWith(n)) legg(k, 80);
+      else if (deler.some((d) => d.startsWith(n))) legg(k, 60);
+      else if (n.length >= 3 && nn.includes(n)) legg(k, 40);
+    }
+    return [...treff.values()].sort((a, b) => b.p - a.p || storrelse(b.k) - storrelse(a.k)).slice(0, 8);
+  };
+}
+function kobleSok(inp, liste, sok, rad, ved, ingen) {
+  let forslag = [], aktiv = -1;
+  const lukk = () => { liste.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); };
+  const vis = () => {
+    forslag = sok(inp.value); aktiv = forslag.length ? 0 : -1;
+    if (!inp.value.trim()) { lukk(); return; }
+    liste.innerHTML = forslag.length ? forslag.map((t, i) => `<li role="option" id="${liste.id}-${i}" data-k="${esc(t.k)}" aria-selected="${i === aktiv}">${rad(t)}</li>`).join('')
+      : `<li class="tom" role="option" aria-disabled="true" data-ingen>${ingen}</li>`;
+    liste.hidden = false; inp.setAttribute('aria-expanded', 'true');
+    if (aktiv >= 0) inp.setAttribute('aria-activedescendant', `${liste.id}-${aktiv}`);
+  };
+  const merk = (i) => {
+    aktiv = i;
+    liste.querySelectorAll('li[data-k]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i)));
+    inp.setAttribute('aria-activedescendant', `${liste.id}-${i}`);
+    const el = liste.querySelector(`#${liste.id}-${i}`); if (el) el.scrollIntoView({block: 'nearest'});
+  };
+  const ta = (i) => { const t = forslag[i]; if (!t) return; lukk(); ved(t); };
+  inp.addEventListener('input', vis);
+  inp.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (liste.hidden) vis(); else if (forslag.length) merk((aktiv + 1) % forslag.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); if (forslag.length) merk((aktiv - 1 + forslag.length) % forslag.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (!liste.hidden && aktiv >= 0) ta(aktiv); }
+    else if (e.key === 'Escape') lukk();
+  });
+  liste.addEventListener('mousedown', (e) => {
+    if (e.target.closest('[data-ingen] button')) { e.preventDefault(); lukk(); e.target.closest('button').dispatchEvent(new Event('velg-alle', {bubbles: true})); return; }
+    const el = e.target.closest('li[data-k]'); if (el) { e.preventDefault(); ta([...liste.querySelectorAll('li[data-k]')].indexOf(el)); }
+  });
+  inp.addEventListener('blur', () => setTimeout(lukk, 150));
+  return vis;
+}
+
+const STR = Object.fromEntries(Object.keys(O).map((o) => [o, (periode(o, 0, ...S12).v || 0) + (periode(o, 1, ...S12).v || 0)]));
+const KOMMNAVN = new Set(DATA.kommuner.map(([n]) => n.split(' - ')[0]));
+const synonymer = [...DATA.kommuner.map(([n, r]) => ({ord: n.split(' - ')[0], k: [r]})), ...DATA.syn.map(([ord, ks, usikker]) => ({ord, k: ks, usikker}))];
+const sokOmr = lagSok([...REG, ...FYL].map((k) => ({k, n: O[k].n})), synonymer, (k) => STR[k] || 0);
+const inp = $('#bf-sok'), tre = $('#bf-tre'), alleKnapp = $('#bf-alle');
+const visOmr = kobleSok(inp, $('#bf-forslag'), sokOmr,
+  (t) => `${esc(O[t.k].n)}<span class="s">${t.ord ? (KOMMNAVN.has(t.ord) ? `${esc(t.ord)} kommune ligger her · ` : `Søkeord «${esc(t.ord)}» · `) : ''}${esc(typeTekst(t.k))}</span>`,
+  (t) => { inp.value = O[t.k].n; velg(t.k, {ord: t.ord, rull: true}); },
+  'Ingen treff. Prøv et kommunenavn, velg et fylke, eller <button type="button" class="bf-lenke">se alle regioner</button>.');
+$('#bf-forslag').addEventListener('velg-alle', () => { if (tre.hidden) alleKnapp.click(); tre.scrollIntoView({behavior: 'smooth'}); });
+alleKnapp.addEventListener('click', () => {
+  const vis = tre.hidden;
+  if (vis && !tre.innerHTML) {
+    tre.innerHTML = `<p class="bf-note" style="margin-bottom:6px">${REG.length} reiselivsregioner i ${FYL.length} fylker. Tallet er alle overnattinger de siste 12 månedene, eller «:» når minst én måned er skjult.</p>` +
+      FYL.map((f) => `<h3><button type="button" class="bf-lenke" data-k="${esc(f)}">${esc(O[f].n)}</button></h3><ol>${regIFylke(f).map((r) => { const a = periode(r, 'begge', ...S12).v; return `<li><button type="button" class="bf-lenke" data-k="${esc(r)}">${esc(O[r].n)}</button><span class="v">${a == null ? ':' : nf0.format(a)}</span></li>`; }).join('')}</ol>`).join('');
+  }
+  tre.hidden = !vis; alleKnapp.setAttribute('aria-expanded', String(vis));
+});
+tre.addEventListener('click', (e) => { const b = e.target.closest('button[data-k]'); if (b) { tre.hidden = true; alleKnapp.setAttribute('aria-expanded', 'false'); inp.value = O[b.dataset.k].n; velg(b.dataset.k, {rull: true}); } });
+$('#bf-landet').addEventListener('click', () => { inp.value = ''; velg(LANDET); });
+const fsel = $('#bf-fylke');
+fsel.innerHTML = `<option value="${LANDET}">Hele landet</option>` + FYL.map((f) => `<option value="${esc(f)}">${esc(O[f].n)}</option>`).join('');
+fsel.addEventListener('change', () => { inp.value = ''; velg(fsel.value); });
+const EKS = ['Hemsedal', 'Geiranger', 'Lofoten', 'Midt-Telemark', 'Jotunheimen', 'Atlantis'];
+$('#bf-eksempler').innerHTML = EKS.map((n) => `<button type="button" class="bf-lenke" data-eks="${esc(n)}">${esc(n)}</button>`).join(', ');
+$('#bf-eksempler').addEventListener('click', (e) => { const b = e.target.closest('[data-eks]'); if (!b) return; inp.value = b.dataset.eks; inp.focus(); visOmr(); });
+
+// ---------- Brytere ----------
+root.addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.gr) { visning.gr = +b.dataset.gr; const o = valgt(); tegnTid(o); tegnAar(o); tegnKart(o); }
+  else if (b.dataset.per) { visning.per = b.dataset.per; tegnTid(valgt()); }
+  else if (b.dataset.mal) { visning.mal = b.dataset.mal; tegnKart(valgt()); }
+  else if (b.dataset.velg) { const k = b.dataset.velg; inp.value = k === LANDET ? '' : O[k].n; velg(k, {rull: true}); }
+});
+root.addEventListener('pointerleave', skjulTips);
+$('[data-hentet]').textContent = dato(DATA.kilde.hentet);
+
+function tegnAlt() {
+  skjulTips();
+  const o = valgt();
+  const l = param('land'); visning.land = l && LAND.find((x) => x.k === l) ? l : null;
+  document.title = o === LANDET ? 'Overnattinger i Norge' : `${O[o].n}: overnattinger`;
+  if (document.activeElement !== inp) inp.value = O[o].type === 'R' ? O[o].n : '';
+  fsel.value = fylkeAv(o) || LANDET;
+  tegnKort(o); tegnLes(o); tegnReise(); tegnTopp();
+  tegnTid(o); tegnAar(o); tegnKart(o);
+  tegnEndr(o); tegnLand(o); tegnLtid(o);
+  tegnKap(o); tegnStripe(o);
+}
+ingress();
+tegnAlt();
+window.addEventListener('hashchange', () => { funnetMed = null; tegnAlt(); });
+let sisteBredde = root.clientWidth, venter = 0;
+new ResizeObserver(() => {
+  if (root.clientWidth === sisteBredde) return;
+  sisteBredde = root.clientWidth;
+  cancelAnimationFrame(venter); venter = requestAnimationFrame(tegnAlt);
+}).observe(root);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(tegnAlt);
+})();
+</script>
+</body>
+</html>
