@@ -884,7 +884,7 @@ function tegnTid(o) {
   const s = verdi(o, g, NM - 1), f = verdi(o, g, NM - 13), sk = periode(o, g, ...S12).skjult;
   settN('tid', s == null ? `Tallet for ${mNavn(SISTE)} er skjult.` : `I ${mNavn(SISTE)} var det ${nf0.format(s)} overnattinger på ${GRUPPE[g]} i ${n}` +
     (f == null ? '. Tallet for samme måned året før er skjult.' : `, ${nf1.format(Math.abs(pst(s, f)))} prosent ${flere(pst(s, f))} enn i ${mNavn(IFJOR)}.`));
-  varsel('tid', sk ? `${sk} av de siste 12 månedene er skjult («:») for ${GRUPPE[g]} i ${esc(n)}. Det er vanligst om vinteren, når få bedrifter er åpne.` : '');
+  varsel('tid', sk ? `${sk} av de siste 12 månedene er skjult («:») for ${GRUPPE[g]} i ${esc(n)}. ${g === 1 ? 'For camping, hyttegrender og vandrerhjem skjer det mest om vinteren.' : 'Tallet skjules når for få bedrifter ligger bak.'}` : '');
   talltabell('tid', `${GRUPPE_K[g]} per måned`, ['Måned', 'Norske', 'Utenlandske', 'I alt'], idx.slice().reverse().map((i) => [mNavn(MND[i]), tall(verdi(o, g, i, 'no')), tall(verdi(o, g, i, 'utl')), tall(verdi(o, g, i))]));
   settSrc('tid', kilde('14172') + (g === 1 ? ' Campingtall fra februar 2026 er delvis beregnet med ny metode.' : ''));
 }

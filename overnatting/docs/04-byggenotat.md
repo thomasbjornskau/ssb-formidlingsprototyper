@@ -1,4 +1,4 @@
-Steg 4 i formidlingsprototype for overnatting · versjon 0.1 · 24.11.2026 · Status: utkast, til gjennomsyn hos Thomas
+Steg 4 i formidlingsprototype for overnatting · versjon 0.1 · 24.11.2026 · Status: sett av Thomas, til faglig kontroll
 
 # Byggenotat: Overnattingar (overnatting)
 

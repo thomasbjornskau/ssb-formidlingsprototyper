@@ -1,6 +1,6 @@
 # Overnattinger (overnatting)
 
-> **Prototype under arbeid, versjon 0.1.** Ikke en offisiell SSB-publisering, og ikke faglig kontrollert ennå. Tolkninger, overskrifter og utforming er våre.
+> **Prototype til faglig kontroll, versjon 0.1.** Ikke en offisiell SSB-publisering. Tallene er kontrollert ved bygging, men tolkninger, overskrifter og utforming er ikke kvalitetssikret av fagseksjonen ennå.
 
 **Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/overnatting/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/overnatting/index.html)
 
@@ -18,6 +18,10 @@ Prototypen viser overnattinger ved hotell, campingplasser, hyttegrender og vandr
 
 Tall som SSB har skjult av hensyn til konfidensialitet («:»), vises som hull. Summer for år og 12 måneder vises bare når alle månedene er publisert.
 
+## Til faglig kontroll
+
+Den samlede listen over det som må avklares, bør leses og spørsmålene til fagseksjonen står i [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md). Den erstatter listene fra de tidligere stegene.
+
 ## Dokumentasjon
 
 - [docs/01-innsikt.md](docs/01-innsikt.md): nøkkelbudskap, begreper og hypoteser om misforståelser
@@ -25,6 +29,7 @@ Tall som SSB har skjult av hensyn til konfidensialitet («:»), vises som hull. 
 - [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som er tolket i grafikken
 - [docs/03-kildekart.md](docs/03-kildekart.md): tabeller, spørringer, struktur og kontroller
 - [docs/04-byggenotat.md](docs/04-byggenotat.md): hva som er bygget, kontroller og kjente svakheter
+- [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md): samlet kvalitetssikring til faglig kontroll
 - [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
 
 ## Kilder
