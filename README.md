@@ -25,6 +25,7 @@ Hver prototype tar én mye brukt statistikk og viser det viktigste på en pedago
 | [Uføretrygdede](ufore/) | `ufore` | Til faglig kontroll | 09.11.2026 |
 | [Unge utenfor arbeid, utdanning og tiltak (NEET)](arbstatus-neet/) | `arbstatus-neet` | Under arbeid, ikke faglig kontrollert. Bygd fra tabell 12424 for en artikkel om varighet | 10.11.2026 |
 | [Overnattinger](overnatting/) | `overnatting` | Til faglig kontroll. Reiselivsregion som hovedvalg, med kart | 24.11.2026 |
+| [Sykefravær](sykefratot/) | `sykefratot` | Under arbeid, ikke faglig kontrollert. Kjønnsvelger, SSB og Nav, yrke og kommune | 26.11.2026 |
 
 ## Arbeidsprosess
 
