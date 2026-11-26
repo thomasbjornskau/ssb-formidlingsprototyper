@@ -1,10 +1,10 @@
 # Sykefravær (sykefratot)
 
-> **Prototype under arbeid, versjon 0.1.** Ikke en offisiell SSB-publisering. Tallene er kontrollert ved bygging, men tolkninger, overskrifter og utforming er ikke kvalitetssikret av fagseksjonen ennå.
+> **Prototype til faglig kontroll, versjon 0.1.** Ikke en offisiell SSB-publisering. Tallene er kontrollert ved bygging, men tolkninger, overskrifter og utforming er ikke kvalitetssikret av fagseksjonen ennå.
 
 **Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/sykefratot/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/sykefratot/index.html)
 
-Prototypen viser SSBs sykefraværsstatistikk for 3. kvartal 2026. Den forklarer hva sykefraværsprosenten måler, hvorfor SSB og Nav melder ulike tall samme dag, og hvor mye av fraværet som er lange sykmeldinger. Du kan velge kjønn, søke på yrke og søke på kommune. Valgene ligger i adressen, for eksempel `#kjonn=kvinner&yrke=2223&kommune=3403`.
+Prototypen viser SSBs sykefraværsstatistikk for 3. kvartal 2026. Den forklarer hva sykefraværsprosenten måler, hvorfor SSB og Nav kan vise ulike tall for samme kvartal, og hvor mye av fraværet som er lange sykmeldinger. Du kan velge kjønn, søke på yrke og søke på kommune. Valgene ligger i adressen, for eksempel `#kjonn=kvinner&yrke=2223&kommune=3403`.
 
 ## Hva prototypen svarer på
 
@@ -14,9 +14,13 @@ Prototypen viser SSBs sykefraværsstatistikk for 3. kvartal 2026. Den forklarer 
 | 2 | Hva betyr «6,7 prosent» egentlig? | Slik leser du tallene og Slik lages tallene |
 | 3 | Er det korte egenmeldinger eller lange sykmeldinger som utgjør fraværet? | Korte egenmeldinger eller lange sykmeldinger? |
 | 4 | Hvem har høyest fravær? | Kvinner og menn, yrkesgrupper, Finn yrket ditt, Min kommune |
-| – | Hvorfor melder SSB og Nav ulike tall? | Samme kvartal, to tall: SSB og Nav |
+| – | Hvorfor viser SSB og Nav ulike tall for samme kvartal? | Samme kvartal, to tall: SSBs hovedtall og Navs tabeller |
 
 Næring er utelatt med vilje. Sykefraværsstatistikken går over til ny næringsstandard (SN2025) fra 1. kvartal 2027, og tabellene etter SN2007 avsluttes.
+
+## Til faglig kontroll
+
+Den samlede listen over det som må avklares, bør leses og spørsmålene til fagseksjonen står i [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md). Den erstatter listene fra de tidligere stegene.
 
 ## Dokumentasjon
 
@@ -24,6 +28,7 @@ Næring er utelatt med vilje. Sykefraværsstatistikken går over til ny nærings
 - [docs/02-kvalitetssikring.md](docs/02-kvalitetssikring.md): det som er tolket i grafikken
 - [docs/03-kildekart.md](docs/03-kildekart.md): tabeller, struktur, kontroller og hull
 - [docs/04-byggenotat.md](docs/04-byggenotat.md): hva som er bygget, kontroller og kjente svakheter
+- [docs/05-kvalitetssikring.md](docs/05-kvalitetssikring.md): samlet kvalitetssikring til faglig kontroll
 - [docs/grafikk/](docs/grafikk/): de tre variantene av toppgrafikk som ble vurdert
 
 ## Kilder

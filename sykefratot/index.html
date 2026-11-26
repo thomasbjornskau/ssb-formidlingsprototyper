@@ -128,7 +128,7 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
         <button type="button" data-k="menn" aria-pressed="false">Menn</button>
       </div>
     </div>
-    <div class="bf-velger"><p>Kjønnsvalget gjelder hovedtallet, SSB og Nav, korte og lange fravær, og yrkene. Kommunetallene finnes bare for begge kjønn.</p></div>
+    <div class="bf-velger"><p>Kjønnsvalget gjelder hovedtallet, SSBs og Navs tall, korte og lange fravær, og yrkene. Kommunetallene finnes bare for begge kjønn.</p></div>
   </div>
 </header>
 
@@ -158,14 +158,14 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
   <div class="bf-nokkel" id="nokkeltall"></div>
 </section>
 
-<h2 id="s-navssb">Samme kvartal, to tall: SSB og Nav</h2>
+<h2 id="s-navssb">Samme kvartal, to tall: SSBs hovedtall og Navs tabeller</h2>
 <p class="bf-seksjonsingress" id="ingressNav"></p>
 <div class="bf-kort bf-bred">
   <div class="bf-velger" style="margin-bottom:12px">
     <span class="bf-etikett" id="visningEtikett">Vis hovedtallet slik</span>
     <div class="bf-knapper" role="group" aria-labelledby="visningEtikett" id="velgVisning">
-      <button type="button" data-v="ssb" aria-pressed="true">SSB melder det</button>
-      <button type="button" data-v="nav" aria-pressed="false">Nav melder det</button>
+      <button type="button" data-v="ssb" aria-pressed="true">SSBs hovedtall</button>
+      <button type="button" data-v="nav" aria-pressed="false">Navs tabeller</button>
     </div>
   </div>
   <div class="bf-to">
@@ -268,10 +268,10 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
 <footer class="bf-bunn">
   <h2>Om tallene</h2>
   <p>Tallene er fra SSBs statistikk <a href="https://www.ssb.no/sykefratot">Sykefravær</a>, som lages sammen med Nav. Sykefraværsprosenten er tapte dagsverk på grunn av egen sykdom i prosent av avtalte dagsverk, for bosatte lønnstakere 16–69 år. Legemeldt fravær kommer fra Navs sykmeldingsregister, egenmeldt fravær fra en utvalgsundersøkelse blant om lag 10 000 bedrifter. Fravær for barns sykdom, permisjoner og selvstendig næringsdrivende er ikke med.</p>
-  <p><b>Egne beregninger i denne prototypen</b>, ikke publisert av SSB: (1) Andelene i «Korte egenmeldinger eller lange sykmeldinger?» er regnet fra publiserte antall, og varighetsgruppene 1–8 og 9–16 dager er slått sammen. (2) Forskjellen i prosentpoeng mellom to sesongjusterte kvartaler er regnet fra publiserte nivåer. Alle endringer i prosent er publiserte tall. (3) «Slik melder Nav» bruker SSBs tabell 12439 med Navs måte å velge tall på: legemeldt, ikke sesongjustert, mot samme kvartal året før.</p>
+  <p><b>Egne beregninger i denne prototypen</b>, ikke publisert av SSB: (1) Andelene i «Korte egenmeldinger eller lange sykmeldinger?» er regnet fra publiserte antall, og varighetsgruppene 1–8 og 9–16 dager er slått sammen. (2) Forskjellen i prosentpoeng mellom to sesongjusterte kvartaler er regnet fra publiserte nivåer. Alle endringer i prosent er publiserte tall. (3) «Navs tabeller» bruker SSBs tabell 12439 med Navs måte å velge tall på: legemeldt, ikke sesongjustert, mot samme kvartal året før. Tallene er kontrollert mot Navs pressemeldinger for 3. kvartal 2025 og 2026.</p>
   <p><b>Næring mangler med vilje.</b> SSB går over til ny næringsstandard (SN2025) fra 1. kvartal 2027, og tabellene etter den gamle standarden avsluttes. Næring legges inn når de nye tabellene er publisert.</p>
   <p id="bunnKilder"></p>
-  <p>Prototype laget med KI-støtte i SSB, november 2026. Ikke kvalitetssikret av fagseksjonen ennå.</p>
+  <p>Prototype laget med KI-støtte i SSB, november 2026. Sendt til faglig kontroll 26. november 2026, ikke kvalitetssikret av fagseksjonen ennå.</p>
 </footer>
 </main>
 <div class="bf-tips" id="tips" hidden></div>
@@ -372,7 +372,7 @@ function skrivAdresse() {
 function hode() {
   const b = D.hoved.begge, k = D.hoved.kvinner.alt.sj[S], m = D.hoved.menn.alt.sj[S], sj = b.alt.sj[S];
   settTekst("ingress", `Sykefraværet var ${pst(sj, 2)} i ${kv(T[S])}, justert for sesong. Av 100 avtalte dagsverk gikk altså i underkant av ${Math.ceil(sj)} tapt til egen sykdom. ` +
-    `Kvinner hadde ${pst(k, 2)}, menn ${pst(m, 2)}. Prototypen forklarer hvorfor SSB og Nav melder ulike tall, hvor mye av fraværet som er lange sykmeldinger, og hvordan fraværet varierer mellom yrker og kommuner.`);
+    `Kvinner hadde ${pst(k, 2)}, menn ${pst(m, 2)}. Prototypen forklarer hvorfor SSB og Nav kan vise ulike tall for samme kvartal, hvor mye av fraværet som er lange sykmeldinger, og hvordan fraværet varierer mellom yrker og kommuner.`);
   document.querySelectorAll("#velgKjonn button").forEach(btn => btn.addEventListener("click", () => { tilstand.kjonn = btn.dataset.k; oppdater(); }));
   document.querySelectorAll("#velgVisning button").forEach(btn => btn.addEventListener("click", () => { tilstand.visning = btn.dataset.v; oppdater(); }));
 }
@@ -380,7 +380,7 @@ function lesehjelp() {
   const H = hv(), sj = H.alt.sj, L = H.lege, P = D.personer[tilstand.kjonn], ip = TP.length - 1;
   const endr = H.alt.endr_sj[S], pp = sj[S] - sj[S - 1];
   const p = [
-    ["SSB og Nav melder ulike tall samme dag.", `SSB melder ${pst(sj[S], 2)}: egen- og legemeldt, sesongjustert, ${sgn(endr)} prosent fra kvartalet før. Nav melder ${pst(L.uj[S])}: bare legemeldt, ikke sesongjustert, ${sgn(L.endr_aar[S])} prosent fra samme kvartal året før. Begge er riktige.`],
+    ["Samme dag, to tall.", `SSBs hovedtall er ${pst(sj[S], 2)}: egen- og legemeldt, sesongjustert, ${sgn(endr)} prosent fra kvartalet før. Navs tabeller viser ${pst(L.uj[S])}: bare legemeldt, ikke sesongjustert, ${sgn(L.endr_aar[S])} prosent fra samme kvartal året før. Begge er riktige.`],
     ["Prosenten måler dagsverk, ikke personer.", `${pst(L.uj[S])} av de avtalte dagsverkene gikk tapt til legemeldt fravær i ${kv(T[S])}. ${pst(P.ArbeidstakereSykePro[ip])} av lønnstakerne hadde en sykmelding på referansedagen. En som er halvt sykmeldt, teller som et halvt dagsverk.`],
     ["Prosent er ikke prosentpoeng.", `«${sgn(endr)} prosent» betyr at prosenten gikk fra ${nb(sj[S - 1], 2)} til ${nb(sj[S], 2)}, en endring på ${nb(Math.abs(pp), 2)} prosentpoeng.`],
     ["Sesongjustert eller ikke.", `Ikke sesongjustert var prosenten ${nb(H.alt.uj[S], 1)} i ${kv(T[S])}. Sommeren gir alltid lavere fravær og vinteren høyere. Sammenlign med kvartalet før med sesongjusterte tall, og med samme kvartal året før med ujusterte.`],
@@ -433,12 +433,12 @@ function topp() {
 function navSsb() {
   const k = tilstand.kjonn, H = hv(), ssb = tilstand.visning === "ssb";
   document.querySelectorAll("#velgVisning button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === tilstand.visning));
-  settTekst("ingressNav", `SSB og Nav lager sykefraværsstatistikken sammen og publiserer samme morgen. Likevel melder de ulike hovedtall. For ${kv(T[S])} melder SSB ${pst(H.alt.sj[S], 2)} og ${sgn(H.alt.endr_sj[S])} prosent, mens Nav melder ${pst(H.lege.uj[S])} og ${sgn(H.lege.endr_aar[S])} prosent. Tallene måler ulike ting, og begge er riktige.`);
+  settTekst("ingressNav", `SSB og Nav lager sykefraværsstatistikken sammen og publiserer samme morgen. SSBs hovedtall er sesongjustert og omfatter egen- og legemeldt fravær. Navs tabeller viser bare legemeldt fravær, uten sesongjustering, sammenlignet med samme kvartal året før. For ${kv(T[S])} gir det ${pst(H.alt.sj[S], 2)} og ${sgn(H.alt.endr_sj[S])} prosent hos SSB, og ${pst(H.lege.uj[S])} og ${sgn(H.lege.endr_aar[S])} prosent i Navs tabeller. Tallene svarer på ulike spørsmål, og begge er riktige. Begge tallene kan dukke opp i nyhetene samme dag.`);
   const fakta = ssb
     ? [["Hva som telles", "Egenmeldt og legemeldt fravær"], ["Justering", "Sesongjustert"], ["Sammenlignes med", `Kvartalet før (${kv(T[S - 1])})`], ["Endring", `${sgn(H.alt.endr_sj[S])} prosent, fra ${nb(H.alt.sj[S - 1], 2)} til ${nb(H.alt.sj[S], 2)}`]]
     : [["Hva som telles", "Bare legemeldt fravær"], ["Justering", "Ikke sesongjustert"], ["Sammenlignes med", `Samme kvartal året før (${kv(iFjor(T[S]))})`], ["Endring", (() => { const a = nb(H.lege.uj[T.indexOf(iFjor(T[S]))], 1), b = nb(H.lege.uj[S], 1);
         return `${sgn(H.lege.endr_aar[S])} prosent, ` + (a === b ? `men avrundet er nivået ${b} begge år` : `fra ${a} til ${b}`); })()]];
-  settTekst("tNav", ssb ? `Slik melder SSB${hvemTekst(k)}` : `Slik melder Nav${hvemTekst(k)}`);
+  settTekst("tNav", ssb ? `SSBs hovedtall${hvemTekst(k)}` : `Navs tabeller${hvemTekst(k)}`);
   settTekst("navTall", ssb ? pst(H.alt.sj[S], 2) : pst(H.lege.uj[S]));
   settTekst("navTekst", ssb ? `Sykefraværet i ${kv(T[S])}, justert for sesong. Brukes for å se om fraværet går opp eller ned fra kvartal til kvartal.`
     : `Legemeldt sykefravær i ${kv(T[S])}, slik det faktisk var. Brukes for å sammenligne med samme kvartal året før, der årstiden er den samme.`);
@@ -478,7 +478,7 @@ function navSsb() {
       if (w > 480 || j % 2 === (idx.length - 1) % 2) tekst(svg, x(i) + x.bandwidth() / 2, h - 8, T[i].slice(0, 4), {anker: "middle", farge: F.graT, str: 12});
     });
     tekst(svg, w, 32, `${sgn(H.lege.endr_aar[S])} prosent fra samme kvartal året før`, {anker: "end", vekt: 600, str: 12.5});
-    settTekst("kildeNav", kilde(["12439"]) + " Tallene er SSBs, valgt slik Nav melder dem.");
+    settTekst("kildeNav", kilde(["12439"]) + " Tallene er SSBs, valgt slik Navs tabeller viser dem.");
     tabellHTML("tabNav", ["Kvartal", "Legemeldt, ikke sesongjustert", "Endring fra året før (prosent)"], idx.map((i, j) => [kv(T[i]), nb(v[j], 1), sgn(H.lege.endr_aar[i])]).reverse());
   }
 }
