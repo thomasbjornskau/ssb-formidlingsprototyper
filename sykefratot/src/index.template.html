@@ -125,7 +125,17 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
         <button type="button" data-k="menn" aria-pressed="false">Menn</button>
       </div>
     </div>
-    <div class="bf-velger"><p>Kjønnsvalget gjelder hovedtallet, SSBs og Navs tall, korte og lange fravær, og yrkene. Kommunetallene finnes bare for begge kjønn.</p></div>
+    <div class="bf-velger">
+      <span class="bf-etikett" id="periodeEtikett">Sammenlign</span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <div class="bf-knapper" role="group" aria-labelledby="periodeEtikett" id="velgPeriode">
+          <button type="button" data-p="samme" aria-pressed="true">Samme kvartal hvert år</button>
+          <button type="button" data-p="alle" aria-pressed="false">Alle kvartaler</button>
+        </div>
+        <select id="velgKvnr" aria-label="Hvilket kvartal"></select>
+      </div>
+    </div>
+    <div class="bf-velger"><p>Kjønnsvalget gjelder hovedtallet, SSBs og Navs tall, korte og lange fravær, og yrkene. Kommunetallene finnes bare for begge kjønn. «Samme kvartal hvert år» gjelder bare tall som ikke er sesongjustert, der årstiden ellers ville dominert.</p></div>
   </div>
 </header>
 
@@ -186,17 +196,13 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
   <article class="bf-kort bf-bred">
     <h3 id="tVar"></h3>
     <p class="bf-note">Andel av alle fraværstilfeller og av alle tapte dagsverk, etter type og hvor lenge fraværet varte innenfor kvartalet. Ikke sesongjustert. Et fravær som begynte før kvartalet, telles bare med dagene i kvartalet.</p>
-    <div class="bf-velger" style="margin:4px 0 10px">
-      <label for="velgKvartal">Kvartal</label>
-      <select id="velgKvartal"></select>
-    </div>
     <div class="bf-figur" id="figVar"></div>
     <p class="bf-kilde" id="kildeVar"></p>
     <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabVar"></div></details>
   </article>
   <article class="bf-kort bf-bred">
     <h3 id="tVarTid"></h3>
-    <p class="bf-note">Egenmeldingenes andel av fraværstilfellene og av de tapte dagsverkene, hvert kvartal. Vinterkvartalene har flest egenmeldinger. Klikk i figuren for å velge kvartal.</p>
+    <p class="bf-note" id="nVarTid"></p>
     <div class="bf-figur" id="figVarTid"></div>
     <p class="bf-kilde" id="kildeVarTid"></p>
     <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabVarTid"></div></details>
@@ -237,6 +243,7 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
   <p id="yrkeTekst" style="margin:6px 0 0;max-width:860px"></p>
   <div class="bf-tallkort" id="yrkeTall"></div>
   <div class="bf-mangler" id="yrkeMangler" hidden></div>
+  <p class="bf-note" id="nYrke" style="margin-top:8px"></p>
   <div class="bf-figur" id="figYrke"></div>
   <p class="bf-kilde" id="kildeYrke"></p>
   <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabYrke"></div></details>
@@ -256,6 +263,7 @@ thead th{font-weight:600;border-bottom:1px solid var(--null)}
   <h3 id="tKommune" style="font-size:22px;margin-top:14px"></h3>
   <p id="kommuneTekst" style="margin:4px 0 0;max-width:860px"></p>
   <div class="bf-tallkort" id="kommuneTall"></div>
+  <p class="bf-note" id="nKommune" style="margin-top:8px"></p>
   <div class="bf-figur" id="figKommune"></div>
   <p class="bf-kilde" id="kildeKommune"></p>
   <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabKommune"></div></details>
@@ -281,7 +289,15 @@ const T = D.tid, S = T.length - 1, TV = D.tidV, TY = D.tidY, TK = D.tidK, TP = D
 const F = {gronn: "#00824d", gra: "#a9b5b7", graT: "#5e787a", linje: "#d9dfe0", null: "#a9b5b7", tekst: "#274247", bla: "#1d9de2"};
 const KJ = {begge: "begge kjønn", kvinner: "kvinner", menn: "menn"};
 const HOVEDGR = ["1", "2", "3_01-03", "4", "5", "6", "7", "8", "9"];
-const tilstand = {kjonn: "begge", visning: "ssb", kvartal: TV[TV.length - 1], yrke: "5321", kommune: "0301", funnetMed: null};
+const tilstand = {kjonn: "begge", visning: "ssb", periode: "samme", kvnr: T[T.length - 1].slice(5), kvartal: TV[TV.length - 1], yrke: "5321", kommune: "0301", funnetMed: null};
+// Indeksene som vises i ujusterte figurer: alle kvartaler, eller bare valgt kvartal hvert år.
+const vis = tider => tider.map((t, i) => i).filter(i => tilstand.periode === "alle" || tider[i].slice(5) === tilstand.kvnr);
+const sisteMed = tider => { const v = vis(tider); return v[v.length - 1]; };
+const periodeNote = () => tilstand.periode === "samme" ? `Bare ${tilstand.kvnr}. kvartal hvert år.` : "Alle kvartaler.";
+function naermest(idx, x, px) { let b = idx[0]; idx.forEach(i => { if (Math.abs(x(i) - px) < Math.abs(x(b) - px)) b = i; }); return b; }
+function settKvartalEtterPeriode() {
+  if (tilstand.periode === "samme" && tilstand.kvartal.slice(5) !== tilstand.kvnr) tilstand.kvartal = TV[sisteMed(TV)];
+}
 const YRKE = {}; D.yrker.forEach(([k, n, niv, f]) => { YRKE[k] = {k, navn: n, niv, f}; });
 const BARN = {}; D.yrker.forEach(([k, , , f]) => { if (f) (BARN[f] = BARN[f] || []).push(k); });
 
@@ -354,11 +370,14 @@ function lesAdresse() {
   const k = p.get("kjonn"); if (KJ[k]) tilstand.kjonn = k;
   const v = p.get("visning"); if (v === "ssb" || v === "nav") tilstand.visning = v;
   const q = p.get("kvartal"); if (TV.includes(q)) tilstand.kvartal = q;
+  const pe = p.get("periode"); if (pe === "samme" || pe === "alle") tilstand.periode = pe;
+  const kn = p.get("kvnr"); if (["1", "2", "3", "4"].includes(kn)) tilstand.kvnr = kn;
+  settKvartalEtterPeriode();
   const y = p.get("yrke"); if (y && YRKE[y]) tilstand.yrke = y;
   const ko = p.get("kommune"); if (ko && D.kommuner[ko]) tilstand.kommune = ko;
 }
 function skrivAdresse() {
-  const p = new URLSearchParams({kjonn: tilstand.kjonn, visning: tilstand.visning, kvartal: tilstand.kvartal, yrke: tilstand.yrke, kommune: tilstand.kommune});
+  const p = new URLSearchParams({kjonn: tilstand.kjonn, periode: tilstand.periode, kvnr: tilstand.kvnr, visning: tilstand.visning, kvartal: tilstand.kvartal, yrke: tilstand.yrke, kommune: tilstand.kommune});
   history.replaceState(null, "", "#" + p.toString());
 }
 
@@ -369,6 +388,10 @@ function hode() {
     `Kvinner hadde ${pst(k, 2)}, menn ${pst(m, 2)}. Prototypen forklarer hvorfor SSB og Nav kan vise ulike tall for samme kvartal, hvor mye av fraværet som er lange sykmeldinger, og hvordan fraværet varierer mellom yrker og kommuner.`);
   document.querySelectorAll("#velgKjonn button").forEach(btn => btn.addEventListener("click", () => { tilstand.kjonn = btn.dataset.k; oppdater(); }));
   document.querySelectorAll("#velgVisning button").forEach(btn => btn.addEventListener("click", () => { tilstand.visning = btn.dataset.v; oppdater(); }));
+  document.querySelectorAll("#velgPeriode button").forEach(btn => btn.addEventListener("click", () => { tilstand.periode = btn.dataset.p; settKvartalEtterPeriode(); oppdater(); }));
+  const kn = document.getElementById("velgKvnr");
+  kn.innerHTML = ["1", "2", "3", "4"].map(q => `<option value="${q}">${q}. kvartal</option>`).join("");
+  kn.addEventListener("change", () => { tilstand.kvnr = kn.value; tilstand.kvartal = TV[sisteMed(TV)]; oppdater(); });
 }
 function lesehjelp() {
   const H = hv(), sj = H.alt.sj, L = H.lege, P = D.personer[tilstand.kjonn], ip = TP.length - 1;
@@ -377,7 +400,7 @@ function lesehjelp() {
     ["Samme dag, to tall.", `SSBs hovedtall er ${pst(sj[S], 2)}: egen- og legemeldt, sesongjustert, ${sgn(endr)} prosent fra kvartalet før. Navs tabeller viser ${pst(L.uj[S])}: bare legemeldt, ikke sesongjustert, ${sgn(L.endr_aar[S])} prosent fra samme kvartal året før. Begge er riktige.`],
     ["Prosenten måler dagsverk, ikke personer.", `${pst(L.uj[S])} av de avtalte dagsverkene gikk tapt til legemeldt fravær i ${kv(T[S])}. ${pst(P.ArbeidstakereSykePro[ip])} av lønnstakerne hadde en sykmelding på referansedagen. En som er halvt sykmeldt, teller som et halvt dagsverk.`],
     ["Prosent er ikke prosentpoeng.", `«${sgn(endr)} prosent» betyr at prosenten gikk fra ${nb(sj[S - 1], 2)} til ${nb(sj[S], 2)}, en endring på ${nb(Math.abs(pp), 2)} prosentpoeng.`],
-    ["Sesongjustert eller ikke.", `Ikke sesongjustert var prosenten ${nb(H.alt.uj[S], 1)} i ${kv(T[S])}. Sommeren gir alltid lavere fravær og vinteren høyere. Sammenlign med kvartalet før med sesongjusterte tall, og med samme kvartal året før med ujusterte.`],
+    ["Sesongjustert eller ikke.", `Ikke sesongjustert var prosenten ${nb(H.alt.uj[S], 1)} i ${kv(T[S])}. Sommeren gir alltid lavere fravær og vinteren høyere. Sammenlign med kvartalet før med sesongjusterte tall, og med samme kvartal året før med ujusterte. Derfor viser figurene med ujusterte tall bare samme kvartal hvert år, med mindre du velger «Alle kvartaler».`],
   ];
   document.getElementById("lesPunkter").innerHTML = p.map(([t, x]) => `<li><b>${t}</b>${x}</li>`).join("");
 }
@@ -405,17 +428,19 @@ function topp() {
   if (smal) tekst(svg, x(ib) + 5, h - m.b - 6, "Brudd 2015", {farge: F.graT, str: 12});
   else { tekst(svg, x(ib) + 5, m.t + 6, "Brudd 2015:", {farge: F.graT, str: 12}); tekst(svg, x(ib) + 5, m.t + 20, "a-ordningen", {farge: F.graT, str: 12}); }
   const linje = d3.line((d, i) => x(i), d => y(d));
-  svg.append("path").attr("d", linje(uj)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 1);
+  const vi = vis(T), iu = vi[vi.length - 1];
+  svg.append("path").attr("d", d3.line(i => x(i), i => y(uj[i]))(vi)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", tilstand.periode === "samme" ? 1.5 : 1);
+  if (tilstand.periode === "samme") vi.forEach(i => svg.append("circle").attr("cx", x(i)).attr("cy", y(uj[i])).attr("r", 2.5).attr("fill", F.gra));
   svg.append("path").attr("d", linje(sj)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
   const it = d3.maxIndex(sj);
   svg.append("circle").attr("cx", x(it)).attr("cy", y(sj[it])).attr("r", 3.5).attr("fill", F.gronn);
   tekst(svg, x(it) + 7, y(sj[it]) - 7, `Toppen: ${nb(sj[it], 2)} i ${T[it].slice(0, 4)}`, {str: 12.5});
   svg.append("circle").attr("cx", x(S)).attr("cy", y(sj[S])).attr("r", 3.5).attr("fill", F.gronn);
-  const et = etiketterUtenOverlapp([{y: y(sj[S]), v: nb(sj[S], 2), n: smal ? "sesongjust." : "sesongjustert"}, {y: y(uj[S]), v: nb(uj[S], 1), n: smal ? "ujustert" : "ikke sesongjustert"}], 34);
+  const et = etiketterUtenOverlapp([{y: y(sj[S]), v: nb(sj[S], 2), n: smal ? "sesongjust." : "sesongjustert"}, {y: y(uj[iu]), v: nb(uj[iu], 1), n: tilstand.periode === "samme" ? (smal ? `ujust., ${tilstand.kvnr}. kv.` : `ujustert, ${tilstand.kvnr}. kvartal`) : (smal ? "ujustert" : "ikke sesongjustert")}], 34);
   et.forEach(e => { tekst(svg, x(S) + 8, e.y + 4, e.v, {vekt: 700, str: 15}); tekst(svg, x(S) + 8, e.y + 19, e.n, {farge: F.graT, str: 12}); });
   svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, T.length, px => Math.round(x.invert(px)),
     i => `<b>${kv(T[i])}</b><br>Sesongjustert: ${pst(sj[i], 2)}<br>Ikke sesongjustert: ${pst(uj[i])}`);
-  settTekst("kildeTopp", kilde(["12439"]) + " Tallene før og etter 2015 er bare sammenlignbare med forbehold.");
+  settTekst("kildeTopp", kilde(["12439"]) + ` Grønn: sesongjustert, alle kvartaler. Grå: ikke sesongjustert, ${tilstand.periode === "samme" ? "bare " + tilstand.kvnr + ". kvartal hvert år" : "alle kvartaler"}. Tallene før og etter 2015 er bare sammenlignbare med forbehold.`);
   tabellHTML("tabTopp", ["Kvartal", "Sesongjustert", "Ikke sesongjustert", "Sesong- og influensajustert", "Endring fra kvartalet før, sesongjustert (prosent)"],
     T.map((t, i) => [kv(t), nb(sj[i], 2), nb(uj[i], 1), nb(H.alt.si[i], 2), H.alt.endr_sj[i] == null ? "." : sgn(H.alt.endr_sj[i])]).reverse());
   document.getElementById("nokkeltall").innerHTML = [
@@ -456,7 +481,7 @@ function navSsb() {
     settTekst("kildeNav", kilde(["12439"]));
     tabellHTML("tabNav", ["Kvartal", "Sesongjustert", "Endring fra kvartalet før (prosent)"], idx.map((i, j) => [kv(T[i]), nb(v[j], 2), sgn(H.alt.endr_sj[i])]).reverse());
   } else {
-    const q = T[S].slice(5), idx = T.map((t, i) => [t, i]).filter(([t]) => t.endsWith("K" + q) && t >= "2015").map(([, i]) => i);
+    const q = tilstand.kvnr, idx = T.map((t, i) => [t, i]).filter(([t]) => t.endsWith("K" + q) && t >= "2015").map(([, i]) => i);
     const v = idx.map(i => H.lege.uj[i]);
     const {svg, w, h} = svgFor("figNav", 266, `Legemeldt sykefravær i ${q}. kvartal hvert år fra 2015${hvemTekst(k)}, ikke sesongjustert`);
     const m = {l: 34, r: 8, t: 48, b: 28};
@@ -471,7 +496,8 @@ function navSsb() {
       if (siste || nest) tekst(svg, x(i) + x.bandwidth() / 2, y(v[j]) - 6, nb(v[j], 1), {anker: "middle", vekt: siste ? 700 : 400});
       if (w > 480 || j % 2 === (idx.length - 1) % 2) tekst(svg, x(i) + x.bandwidth() / 2, h - 8, T[i].slice(0, 4), {anker: "middle", farge: F.graT, str: 12});
     });
-    tekst(svg, w, 32, `${sgn(H.lege.endr_aar[S])} prosent fra samme kvartal året før`, {anker: "end", vekt: 600, str: 12.5});
+    const il = idx[idx.length - 1];
+    tekst(svg, w, 32, `${kvK(T[il])}: ${sgn(H.lege.endr_aar[il])} prosent fra året før`, {anker: "end", vekt: 600, str: 12.5});
     settTekst("kildeNav", kilde(["12439"]) + " Tallene er SSBs, valgt slik Navs tabeller viser dem.");
     tabellHTML("tabNav", ["Kvartal", "Legemeldt, ikke sesongjustert", "Endring fra året før (prosent)"], idx.map((i, j) => [kv(T[i]), nb(v[j], 1), sgn(H.lege.endr_aar[i])]).reverse());
   }
@@ -496,12 +522,6 @@ function varighet() {
   settTekst("ingressVar", `I ${kv(TV[sist])} var ${tfS[0].hel} prosent av alle fraværstilfellene${hvemTekst(k)} egenmeldinger, men de sto for bare ${dvS[0].hel} prosent av de tapte dagsverkene. ` +
     `Sykmeldinger på 32 dager eller mer i kvartalet var ${tfS[3].hel} prosent av tilfellene og ${dvS[3].hel} prosent av dagsverkene. Det er de lange fraværene som bærer tallet.`);
   settTekst("tVar", `${kv(TV[i])}: egenmeldinger er ${tf[0].hel} prosent av fraværene, men ${dv[0].hel} prosent av dagsverkene`);
-  const sel = document.getElementById("velgKvartal");
-  if (!sel.options.length) {
-    sel.innerHTML = TV.slice().reverse().map(t => `<option value="${t}">${kv(t)}</option>`).join("");
-    sel.addEventListener("change", () => { tilstand.kvartal = sel.value; oppdater(); });
-  }
-  sel.value = tilstand.kvartal;
   const smal = document.getElementById("figVar").clientWidth < 560;
   const top = smal ? 98 : 54;
   const {svg, w, h} = svgFor("figVar", top + 2 * 86 + 24, `Fordeling av fraværstilfeller og tapte dagsverk etter type og varighet, ${kv(TV[i])}`);
@@ -531,32 +551,36 @@ function varighet() {
     VKAT.map(([n], j) => [n, nb(tf[j].antall), nb(tf[j].pst, 1), nb(dv[j].antall), nb(dv[j].pst, 1)]));
 }
 function varighetTid() {
-  const k = tilstand.kjonn, n = TV.length, sel = TV.indexOf(tilstand.kvartal);
+  const k = tilstand.kjonn, n = TV.length, sel = TV.indexOf(tilstand.kvartal), vi = vis(TV), samme = tilstand.periode === "samme";
   const et = TV.map((t, i) => andeler("Tilfeller", i)[0].pst), ed = TV.map((t, i) => andeler("Dagsverk", i)[0].pst);
   settTekst("tVarTid", `Gapet mellom tilfeller og dagsverk har holdt seg siden ${TV[0].slice(0, 4)}`);
-  const {svg, w, h} = svgFor("figVarTid", 230, `Egenmeldingenes andel av fraværstilfeller og dagsverk ${TV[0]}–${TV[n - 1]}${hvemTekst(k)}`);
+  settTekst("nVarTid", `Egenmeldingenes andel av fraværstilfellene og av de tapte dagsverkene. ${periodeNote()} ` +
+    (samme ? "Velg «Alle kvartaler» øverst for å se sesongmønsteret: vinterkvartalene har flest egenmeldinger. " : "Vinterkvartalene har flest egenmeldinger. ") + "Klikk i figuren for å velge kvartal til stolpene over.");
+  const {svg, w, h} = svgFor("figVarTid", 230, `Egenmeldingenes andel av fraværstilfeller og dagsverk ${TV[0]}–${TV[n - 1]}${hvemTekst(k)}. ${periodeNote()}`);
   const smal = w < 520, m = {l: 30, r: smal ? 92 : 150, t: 22, b: 26};
   const x = d3.scaleLinear([0, n - 1], [m.l, w - m.r]), y = d3.scaleLinear([0, 80], [h - m.b, m.t]);
   rutenett(svg, y, m.l, w - m.r, [0, 20, 40, 60, 80], v => nb(v));
   tekst(svg, 0, 12, "prosent", {farge: F.graT});
   aarAkse(svg, x, TV, h - m.b, smal ? 4 : 2);
   svg.append("line").attr("x1", x(sel)).attr("x2", x(sel)).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", "#c3cfd1");
-  const linje = d3.line((d, i) => x(i), d => y(d));
+  const linje = s_ => d3.line(i => x(i), i => y(s_[i]))(vi);
   svg.append("path").attr("d", linje(et)).attr("fill", "none").attr("stroke", F.bla).attr("stroke-width", 2);
   svg.append("path").attr("d", linje(ed)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
-  [[et, "av tilfellene"], [ed, "av dagsverkene"]].forEach(([s, nn]) => {
-    svg.append("circle").attr("cx", x(sel)).attr("cy", y(s[sel])).attr("r", 4).attr("fill", s === et ? F.bla : F.gronn);
-    tekst(svg, x(n - 1) + 8, y(s[n - 1]) + 4, nb(s[n - 1], 0) + " " + nn, {vekt: 600, str: 12.5});
+  const iu = vi[vi.length - 1];
+  [[et, "av tilfellene", F.bla], [ed, "av dagsverkene", F.gronn]].forEach(([s_, nn, f]) => {
+    if (samme) vi.forEach(i => svg.append("circle").attr("cx", x(i)).attr("cy", y(s_[i])).attr("r", 2.5).attr("fill", f));
+    svg.append("circle").attr("cx", x(sel)).attr("cy", y(s_[sel])).attr("r", 4.5).attr("fill", f);
+    tekst(svg, x(n - 1) + 8, y(s_[iu]) + 4, nb(s_[iu], 0) + " " + nn, {vekt: 600, str: 12.5});
   });
   const flate = svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", w - m.l - m.r).attr("height", h - m.t - m.b).attr("fill", "transparent").style("cursor", "pointer")
     .attr("tabindex", 0).attr("role", "slider").attr("aria-label", "Velg kvartal i figuren").attr("aria-valuemin", 0).attr("aria-valuemax", n - 1).attr("aria-valuenow", sel).attr("aria-valuetext", kv(TV[sel]));
-  const iFra = ev => Math.max(0, Math.min(n - 1, Math.round(x.invert(d3.pointer(ev)[0]))));
+  const iFra = ev => naermest(vi, x, d3.pointer(ev)[0]);
   flate.on("mousemove", ev => { const i = iFra(ev); visTips(ev, `<b>${kv(TV[i])}</b><br>Egenmeldt, av tilfellene: ${pst(et[i])}<br>Egenmeldt, av dagsverkene: ${pst(ed[i])}`); })
     .on("mouseleave", skjulTips).on("click", ev => { tilstand.kvartal = TV[iFra(ev)]; oppdater(); })
     .on("keydown", ev => { const d = {ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1}[ev.key];
-      if (d) { ev.preventDefault(); tilstand.kvartal = TV[Math.max(0, Math.min(n - 1, sel + d))]; oppdater(); document.querySelector("#figVarTid rect[role=slider]").focus(); } });
+      if (d) { ev.preventDefault(); const j = Math.max(0, Math.min(vi.length - 1, vi.indexOf(naermest(vi, x, x(sel))) + d)); tilstand.kvartal = TV[vi[j]]; oppdater(); document.querySelector("#figVarTid rect[role=slider]").focus(); } });
   settTekst("kildeVarTid", kilde(["12946"]) + " Andelene er regnet fra publiserte antall.");
-  tabellHTML("tabVarTid", ["Kvartal", "Egenmeldt, andel av tilfellene", "Egenmeldt, andel av dagsverkene"], TV.map((t, i) => [kv(t), nb(et[i], 1), nb(ed[i], 1)]).reverse());
+  tabellHTML("tabVarTid", ["Kvartal", "Egenmeldt, andel av tilfellene", "Egenmeldt, andel av dagsverkene"], vi.map(i => [kv(TV[i]), nb(et[i], 1), nb(ed[i], 1)]).reverse());
 }
 
 // ---------- kvinner og menn ----------
@@ -670,18 +694,21 @@ function yrke() {
     rutenett(svg, y, m.l, w - m.r, y.ticks(4), z => nb(z));
     tekst(svg, 0, 12, "prosent, legemeldt", {farge: F.graT});
     aarAkse(svg, x, TY, h - m.b, w < 520 ? 4 : 2);
-    const linje = d3.line().defined(d => d != null).x((d, i) => x(i)).y(d => y(d));
+    const vi = vis(TY), iu = vi[vi.length - 1], samme = tilstand.periode === "samme";
+    const linje = serie => d3.line().defined(i => serie[i] != null).x(i => x(i)).y(i => y(serie[i]))(vi);
     if (k !== "0-9") svg.append("path").attr("d", linje(ref)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 1.5);
     svg.append("path").attr("d", linje(s)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+    if (samme) vi.forEach(i => { if (s[i] != null) svg.append("circle").attr("cx", x(i)).attr("cy", y(s[i])).attr("r", 3).attr("fill", F.gronn); });
     const et = [];
-    if (k !== "0-9") et.push({y: y(ref[sist]), t: "Alle yrker", f: F.graT});
-    if (v != null) et.push({y: y(v), t: k === "0-9" ? "Alle yrker" : (Y.navn.length > 13 ? Y.navn.slice(0, 12) + "…" : Y.navn), f: F.gronn});
+    if (k !== "0-9") et.push({y: y(ref[iu]), t: "Alle yrker", f: F.graT});
+    if (s[iu] != null) et.push({y: y(s[iu]), t: k === "0-9" ? "Alle yrker" : (Y.navn.length > 13 ? Y.navn.slice(0, 12) + "…" : Y.navn), f: F.gronn});
     etiketterUtenOverlapp(et, 14).forEach(e => tekst(svg, x(sist) + 6, e.y + 4, e.t, {farge: e.f, vekt: 600, str: 12}));
-    svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, TY.length, px => Math.round(x.invert(px)),
+    svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, TY.length, px => naermest(vi, x, px),
       i => `<b>${kv(TY[i])}</b><br>${esc(Y.navn)}: ${s[i] == null ? "mangler" : pst(s[i])}` + (k === "0-9" ? "" : `<br>Alle yrker: ${pst(ref[i])}`));
   }
+  settTekst("nYrke", `Legemeldt sykefravær, ikke sesongjustert, med alle yrker i grått. ${periodeNote()}`);
   settTekst("kildeYrke", kilde(["12452"]) + " Endringen fra året før er publisert av SSB.");
-  tabellHTML("tabYrke", ["Kvartal", esc(Y.navn), "Alle yrker"], TY.map((t, i) => [kv(t), s[i] == null ? ((i === sist && symb) || "..") : nb(s[i], 1), nb(yv("0-9")[i], 1)]).reverse());
+  tabellHTML("tabYrke", ["Kvartal", esc(Y.navn), "Alle yrker"], vis(TY).map(i => [kv(TY[i]), s[i] == null ? ((i === sist && symb) || "..") : nb(s[i], 1), nb(yv("0-9")[i], 1)]).reverse());
   // undergrupper
   const barn = BARN[k] || [];
   document.getElementById("yrkeUnderBoks").hidden = !barn.length;
@@ -728,22 +755,28 @@ function kommune() {
     (spenn >= 2 ? ` Tallene har svingt mellom ${nb(d3.min(o.pros), 1)} og ${nb(d3.max(o.pros), 1)} prosent siden ${TK[0].slice(0, 4)}. Små kommuner svinger mye fra kvartal til kvartal, så se på flere kvartaler før du trekker konklusjoner.` : ""));
   document.getElementById("kommuneTall").innerHTML = [[pst(o.pros[sist]), `Legemeldt, ${kvK(TK[sist])}`], [o.endr[sist] == null ? "–" : sgn(o.endr[sist]) + " prosent", `Endring fra ${kvK(TK[iF])}`], [pst(land[sist]), "Hele landet"]]
     .map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
-  const {svg, w, h} = svgFor("figKommune", 230, `Legemeldt sykefravær for ${o.navn} ${TK[0]}–${TK[sist]}, med hele landet i grått`);
+  const vi = vis(TK), iu = vi[vi.length - 1], samme = tilstand.periode === "samme";
+  settTekst("nKommune", `Legemeldt sykefravær, ikke sesongjustert, med hele landet i grått. ${periodeNote()}` +
+    (samme ? ` Kommuneserien starter i ${TK[0].slice(0, 4)}, så det blir bare ${vi.length} punkter. Velg «Alle kvartaler» øverst for å se hvert kvartal.` : ""));
+  const {svg, w, h} = svgFor("figKommune", 230, `Legemeldt sykefravær for ${o.navn} ${TK[vi[0]]}–${TK[iu]}, med hele landet i grått. ${periodeNote()}`);
   const m = {l: 30, r: 96, t: 22, b: 26};
-  const x = d3.scalePoint(d3.range(n), [m.l, w - m.r]), y = d3.scaleLinear([0, Math.ceil(d3.max(o.pros.concat(land)) + 0.5)], [h - m.b, m.t]);
+  const x = d3.scalePoint(vi, [m.l, w - m.r]).padding(samme ? 0.3 : 0), y = d3.scaleLinear([0, Math.ceil(d3.max(vi.flatMap(i => [o.pros[i], land[i]])) + 0.5)], [h - m.b, m.t]);
   rutenett(svg, y, m.l, w - m.r, y.ticks(4), z => nb(z));
   tekst(svg, 0, 12, "prosent, legemeldt", {farge: F.graT});
-  TK.forEach((t, i) => { if (t.endsWith("K1") || (w > 560 && t.endsWith("K3"))) tekst(svg, x(i), h - 8, t.endsWith("K1") ? t.slice(0, 4) : "3. kv.", {anker: "middle", farge: F.graT, str: 12}); });
-  const linje = d3.line((d, i) => x(i), d => y(d));
+  vi.forEach(i => { const t = TK[i];
+    if (samme) tekst(svg, x(i), h - 8, kvK(t), {anker: "middle", farge: F.graT, str: 12});
+    else if (t.endsWith("K1") || (w > 560 && t.endsWith("K3"))) tekst(svg, x(i), h - 8, t.endsWith("K1") ? t.slice(0, 4) : "3. kv.", {anker: "middle", farge: F.graT, str: 12}); });
+  const linje = serie => d3.line(i => x(i), i => y(serie[i]))(vi);
   svg.append("path").attr("d", linje(land)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 2);
   svg.append("path").attr("d", linje(o.pros)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
-  o.pros.forEach((v, i) => svg.append("circle").attr("cx", x(i)).attr("cy", y(v)).attr("r", 3).attr("fill", F.gronn));
+  vi.forEach(i => svg.append("circle").attr("cx", x(i)).attr("cy", y(o.pros[i])).attr("r", samme ? 4 : 3).attr("fill", F.gronn));
+  if (samme) vi.forEach(i => tekst(svg, x(i), y(o.pros[i]) - 9, nb(o.pros[i], 1), {anker: "middle", vekt: 600, str: 12.5}));
   const kort = o.navn.split(" - ")[0];
-  etiketterUtenOverlapp([{y: y(land[sist]), t: "Hele landet", f: F.graT}, {y: y(o.pros[sist]), t: kort.length > 13 ? kort.slice(0, 12) + "…" : kort, f: F.gronn}], 14)
-    .forEach(e => tekst(svg, x(sist) + 8, e.y + 4, e.t, {farge: e.f, vekt: 600, str: 12}));
-  svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, n, px => Math.round((px - m.l) / x.step()), i => `<b>${kv(TK[i])}</b><br>${esc(kort)}: ${pst(o.pros[i])}<br>Hele landet: ${pst(land[i])}`);
+  etiketterUtenOverlapp([{y: y(land[iu]), t: "Hele landet", f: F.graT}, {y: y(o.pros[iu]), t: kort.length > 13 ? kort.slice(0, 12) + "…" : kort, f: F.gronn}], 14)
+    .forEach(e => tekst(svg, w - m.r + 8, e.y + 4, e.t, {farge: e.f, vekt: 600, str: 12}));
+  svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, n, px => naermest(vi, x, px), i => `<b>${kv(TK[i])}</b><br>${esc(kort)}: ${pst(o.pros[i])}<br>Hele landet: ${pst(land[i])}`);
   settTekst("kildeKommune", kilde(["12451", "12439"]) + " Hele landet er legemeldt, ikke sesongjustert, fra tabell 12439.");
-  tabellHTML("tabKommune", ["Kvartal", esc(kort), "Endring fra året før (prosent)", "Hele landet"], TK.map((t, i) => [kv(t), nb(o.pros[i], 1), o.endr[i] == null ? ".." : sgn(o.endr[i]), nb(land[i], 1)]).reverse());
+  tabellHTML("tabKommune", ["Kvartal", esc(kort), "Endring fra året før (prosent)", "Hele landet"], vi.map(i => [kv(TK[i]), nb(o.pros[i], 1), o.endr[i] == null ? ".." : sgn(o.endr[i]), nb(land[i], 1)]).reverse());
 }
 function alleKommuner() {
   const sist = TK.length - 1;
@@ -789,6 +822,8 @@ function bunn() {
 function oppdater() {
   skrivAdresse();
   document.querySelectorAll("#velgKjonn button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === tilstand.kjonn));
+  document.querySelectorAll("#velgPeriode button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === tilstand.periode));
+  const kn = document.getElementById("velgKvnr"); kn.value = tilstand.kvnr; kn.hidden = tilstand.periode !== "samme";
   lesehjelp(); topp(); navSsb(); varighet(); varighetTid(); kjonnFig(); hovedgrupper(); yrke(); kommune();
 }
 lesAdresse(); hode(); bunn(); yrkeTre(); alleKommuner();

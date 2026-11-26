@@ -20,7 +20,9 @@ Prototypen er bygget med `python felles/bygg.py sykefratot` fra `src/index.templ
 | Min kommune | Spørsmål 4 | Søk, tallkort, serie fra 2024K1 mot hele landet, «Se alle kommuner» |
 | Om tallene | – | Definisjon, egne beregninger, hvorfor næring mangler, tabeller og datoer |
 
-Valgene ligger i adressen: `#kjonn=menn&visning=nav&kvartal=2022K1&yrke=5321&kommune=0301`.
+Valgene ligger i adressen: `#kjonn=menn&periode=samme&kvnr=3&visning=nav&kvartal=2022K1&yrke=5321&kommune=0301`.
+
+**Tillegg 26.11.2026, etter ønske fra Thomas:** Valget «Sammenlign» i hodet, med «Samme kvartal hvert år» som standard og «Alle kvartaler» som alternativ. Velger man samme kvartal, velger man også hvilket (1–4). Standard er det siste publiserte kvartalet. Valget gjelder bare figurene med tall som ikke er sesongjustert: den grå linjen i toppgrafikken, søylene i «Navs tabeller», egenmeldingenes andel over tid, yrkesserien og kommuneserien. Tabellene under figurene følger samme utvalg. Den sesongjusterte linjen og kvinner og menn påvirkes ikke, fordi de allerede er renset for årstid. Kvartalsvelgeren i seksjon C er fjernet. Stolpene følger nå valget, og man kan fortsatt klikke på et punkt i tidsfiguren. Kommuneserien starter i 2024 og får derfor bare to–tre punkter i denne visningen. Det står i noten. Testet i 1280 og 390 px med alle fire kvartaler og «Alle kvartaler»: ingen feil i konsollen, adressen gjenopprettes.
 
 ## 2. Hvordan hull i data vises
 

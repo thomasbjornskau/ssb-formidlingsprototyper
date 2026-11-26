@@ -55,6 +55,7 @@ Formuleringer, tolkninger, søkeord og egne valg.
 | 30 | Kommunetallene har ingen publisert usikkerhet. Prototypen viser hele serien fra 2024 i stedet for bare siste tall | Min kommune | `[T]` | Bør det stå mer om usikkerhet? |
 | 31 | Næring er utelatt med vilje til SN2025-tabellene kommer | Om tallene | `[K3]` | Formuleringen |
 | 32 | Kjønnsvalget styrer toppgrafikken, SSBs og Navs tall, varighet og yrker | Hele siden | `[T]` | – |
+| 32b | «Samme kvartal hvert år» er standard for alle figurer med tall som ikke er sesongjustert. Sesongjusterte figurer viser alltid alle kvartaler | Valget «Sammenlign» øverst | Lagt til etter steg 4 `[T]`. Følger rådet i lesehjelpen (punkt 18) | Er det riktig standard, og er skillet mellom justerte og ujusterte figurer tydelig nok? |
 
 ## C. Spørsmål
 

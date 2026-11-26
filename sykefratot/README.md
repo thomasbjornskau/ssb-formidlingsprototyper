@@ -4,7 +4,7 @@
 
 **Se prototypen:** [https://thomasbjornskau.github.io/ssb-formidlingsprototyper/sykefratot/index.html](https://thomasbjornskau.github.io/ssb-formidlingsprototyper/sykefratot/index.html)
 
-Prototypen viser SSBs sykefraværsstatistikk for 3. kvartal 2026. Den forklarer hva sykefraværsprosenten måler, hvorfor SSB og Nav kan vise ulike tall for samme kvartal, og hvor mye av fraværet som er lange sykmeldinger. Du kan velge kjønn, søke på yrke og søke på kommune. Valgene ligger i adressen, for eksempel `#kjonn=kvinner&yrke=2223&kommune=3403`.
+Prototypen viser SSBs sykefraværsstatistikk for 3. kvartal 2026. Den forklarer hva sykefraværsprosenten måler, hvorfor SSB og Nav kan vise ulike tall for samme kvartal, og hvor mye av fraværet som er lange sykmeldinger. Du kan velge kjønn, velge om ujusterte tall skal vises for samme kvartal hvert år eller alle kvartaler, søke på yrke og søke på kommune. Valgene ligger i adressen, for eksempel `#kjonn=kvinner&periode=samme&kvnr=3&yrke=2223&kommune=3403`.
 
 ## Hva prototypen svarer på
 
