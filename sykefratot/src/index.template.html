@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sykefravær – prototype</title>
+<meta name="description" content="Prototype: pedagogisk oversikt over SSBs sykefraværsstatistikk, med kjønnsvelger, SSB- og Nav-tall, yrker og kommuner.">
+<style>
+/*__FONT__*/
+:root{
+  --tekst:#274247;--tekst2:#5e787a;--linje:#d9dfe0;--null:#a9b5b7;--bg:#f3f5f5;--kort:#ffffff;
+  --gronn:#00824d;--gronnlys:#ecfeed;--mork1:#f0f8f9;--mork2:#c3dcdc;--gra:#a9b5b7;--fokus:#1d9de2;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;background:var(--bg);color:var(--tekst);font:16px/1.55 "Open Sans","Segoe UI",Arial,sans-serif;font-variant-numeric:tabular-nums}
+a{color:#00824d}
+.bf-side{max-width:1180px;margin:0 auto;padding:0 16px 48px}
+.bf-prototype{background:#274247;color:#fff;font-size:14px;padding:8px 16px;text-align:center}
+.bf-hode{padding:28px 0 8px}
+.bf-hode h1{font-weight:700;font-size:44px;line-height:1.1;margin:0 0 10px}
+.bf-ingress{font-size:19px;max-width:800px;margin:0 0 20px}
+.bf-velgere{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:flex-end;background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:14px 16px}
+.bf-velger label,.bf-velger .bf-etikett,.bf-etikett{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+.bf-velger p{margin:0;font-size:14px;color:var(--tekst2);max-width:560px}
+select,input[type=search]{font:inherit;font-size:16px;padding:7px 10px;border:1px solid #8a9ea0;border-radius:2px;background:#fff;color:var(--tekst);min-height:40px}
+.bf-knapper{display:inline-flex;border:1px solid #8a9ea0;border-radius:2px;overflow:hidden;flex-wrap:wrap}
+.bf-knapper button{font:inherit;font-size:15px;border:0;background:#fff;color:var(--tekst);padding:8px 14px;cursor:pointer;min-height:40px}
+.bf-knapper button+button{border-left:1px solid #8a9ea0}
+.bf-knapper button[aria-pressed=true]{background:var(--gronn);color:#fff;font-weight:600}
+button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+h2{font-size:30px;line-height:1.15;margin:44px 0 6px}
+.bf-seksjonsingress{max-width:800px;margin:0 0 14px}
+.bf-les{background:var(--kort);border:1px solid var(--linje);border-top:5px solid var(--gronn);border-radius:2px;padding:16px 20px;margin-top:20px}
+.bf-les h2{margin-top:0;font-size:24px}
+.bf-les ol{margin:6px 0 10px;padding-left:22px;display:grid;grid-template-columns:1fr 1fr;gap:10px 32px}
+.bf-les li{padding-left:4px}
+.bf-les li b{display:block}
+details summary{cursor:pointer;font-weight:600;color:var(--gronn);padding:6px 0}
+.bf-konsept-smal{display:none}
+.bf-konsept-bred svg,.bf-konsept-smal svg{width:100%;height:auto;display:block}
+.bf-topp{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:20px 24px;margin-top:20px;display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:24px}
+.bf-etikett2{font-size:14px;font-weight:600;color:var(--tekst2);text-transform:uppercase;letter-spacing:.03em}
+.bf-topp .bf-tall{font-weight:700;font-size:64px;line-height:1;color:var(--gronn);margin:8px 0 6px}
+.bf-setning{font-size:20px;font-weight:600;margin:0 0 12px;max-width:520px}
+.bf-topp p{margin:0 0 8px}
+.bf-nokkel{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;grid-column:1/-1;border-top:1px solid var(--linje);padding-top:14px}
+.bf-nokkel div{font-size:14px;color:var(--tekst2)}
+.bf-nokkel b{display:block;font-size:24px;color:var(--tekst)}
+.bf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.bf-kort{background:var(--kort);border:1px solid var(--linje);border-radius:2px;padding:16px 18px;min-width:0}
+.bf-kort.bf-bred{grid-column:1/-1}
+.bf-kort h3{font-size:19px;line-height:1.25;margin:0 0 4px}
+.bf-note{font-size:14px;color:var(--tekst2);margin:0 0 10px}
+.bf-figur{width:100%;position:relative}
+.bf-figur svg{display:block;width:100%;height:auto;overflow:visible}
+.bf-kilde{font-size:12px;color:var(--tekst2);margin:8px 0 0}
+.bf-tabell{margin-top:6px}
+.bf-tabell summary{font-size:14px}
+.bf-rull{overflow-x:auto;max-width:100%}
+table{border-collapse:collapse;font-size:14px;margin:6px 0}
+th,td{padding:4px 10px;border-bottom:1px solid var(--linje);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-weight:600;border-bottom:1px solid var(--null)}
+.bf-tips{position:absolute;pointer-events:none;background:#fff;border:1px solid #c3cfd1;border-radius:2px;padding:6px 9px;font-size:13px;color:var(--tekst);white-space:nowrap;z-index:5}
+.bf-to{display:grid;grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr);gap:24px;align-items:start}
+.bf-stort{font-weight:700;font-size:44px;line-height:1.05;color:var(--gronn);margin:4px 0}
+.bf-fakta{list-style:none;padding:0;margin:10px 0 0}
+.bf-fakta li{display:grid;grid-template-columns:150px 1fr;gap:10px;padding:6px 0;border-top:1px solid var(--linje);font-size:15px}
+.bf-fakta li span:first-child{color:var(--tekst2)}
+.bf-sok{position:relative;max-width:460px}
+.bf-sok input{width:100%}
+.bf-forslag{position:absolute;left:0;right:0;top:100%;margin:2px 0 0;padding:0;list-style:none;background:#fff;border:1px solid #8a9ea0;border-radius:2px;max-height:300px;overflow:auto;z-index:10}
+.bf-forslag li{padding:7px 10px;cursor:pointer;font-size:15px}
+.bf-forslag li[aria-selected=true],.bf-forslag li:hover{background:var(--mork1)}
+.bf-forslag li small{color:var(--tekst2)}
+.bf-sti{font-size:14px;color:var(--tekst2);margin:14px 0 2px}
+.bf-sti button,.bf-lenkeknapp{font:inherit;color:var(--gronn);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-align:left}
+.bf-sti span.sep{margin:0 6px}
+.bf-tallkort{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.bf-tallkort div{background:var(--mork1);padding:10px 12px;border-radius:2px;font-size:14px;color:var(--tekst2)}
+.bf-tallkort b{display:block;font-size:24px;color:var(--tekst)}
+.bf-mangler{background:#f3f5f5;border:1px dashed #b9c5c6;padding:8px 12px;font-size:14px;color:var(--tekst2);border-radius:2px;margin:6px 0}
+.bf-under{list-style:none;padding:0;margin:6px 0 0;columns:2;column-gap:28px;font-size:15px}
+.bf-under li{break-inside:avoid;padding:3px 0;display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--linje)}
+.bf-tre details{margin:2px 0}
+.bf-tre ul{list-style:none;margin:4px 0 8px;padding-left:16px;columns:2;column-gap:28px;font-size:14px}
+.bf-tre li{padding:2px 0;break-inside:avoid}
+.bf-funnet{font-size:14px;color:var(--tekst2);margin:4px 0 0}
+.bf-bunn{margin-top:48px;border-top:1px solid var(--null);padding-top:16px;font-size:14px;color:var(--tekst2)}
+.bf-bunn h2{font-size:20px;margin:0 0 8px;color:var(--tekst)}
+.bf-bunn p{max-width:860px}
+@media (max-width:800px){
+  .bf-hode h1{font-size:34px}
+  .bf-ingress{font-size:17px}
+  .bf-topp{grid-template-columns:1fr;padding:16px}
+  .bf-topp .bf-tall{font-size:52px}
+  .bf-nokkel{grid-template-columns:1fr 1fr}
+  .bf-grid,.bf-to{grid-template-columns:1fr}
+  .bf-les ol{grid-template-columns:1fr}
+  .bf-konsept-bred{display:none}
+  .bf-konsept-smal{display:block;max-width:390px;margin:0 auto}
+  .bf-tallkort{grid-template-columns:1fr}
+  .bf-tallkort div{display:flex;align-items:baseline;gap:10px}
+  .bf-tallkort b{font-size:20px;white-space:nowrap}
+  .bf-under,.bf-tre ul{columns:1}
+  .bf-fakta li{grid-template-columns:110px 1fr}
+  h2{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="bf-prototype" role="note">Prototype. Laget for å prøve ut formidling av statistikken. Ikke en offisiell SSB-publisering.</div>
+<main class="bf-side">
+
+<header class="bf-hode">
+  <h1>Sykefravær</h1>
+  <p class="bf-ingress" id="ingress"></p>
+  <div class="bf-velgere" role="group" aria-label="Velg kjønn">
+    <div class="bf-velger">
+      <span class="bf-etikett" id="kjonnEtikett">Kjønn</span>
+      <div class="bf-knapper" role="group" aria-labelledby="kjonnEtikett" id="velgKjonn">
+        <button type="button" data-k="begge" aria-pressed="true">Begge</button>
+        <button type="button" data-k="kvinner" aria-pressed="false">Kvinner</button>
+        <button type="button" data-k="menn" aria-pressed="false">Menn</button>
+      </div>
+    </div>
+    <div class="bf-velger"><p>Kjønnsvalget gjelder hovedtallet, SSB og Nav, korte og lange fravær, og yrkene. Kommunetallene finnes bare for begge kjønn.</p></div>
+  </div>
+</header>
+
+<section class="bf-les" aria-labelledby="lesTittel">
+  <h2 id="lesTittel">Slik leser du tallene</h2>
+  <ol id="lesPunkter"></ol>
+  <details>
+    <summary>Slik lages tallene</summary>
+    <div class="bf-konsept-bred">/*__INKLUDER:src/konsept-bred.svg__*/</div>
+    <div class="bf-konsept-smal">/*__INKLUDER:src/konsept-smal.svg__*/</div>
+  </details>
+</section>
+
+<section class="bf-topp" aria-labelledby="toppTittel">
+  <div>
+    <div class="bf-etikett2" id="toppTittel"></div>
+    <div class="bf-tall" id="toppTall"></div>
+    <p class="bf-setning" id="toppSetning"></p>
+    <p id="toppL1"></p>
+    <p id="toppL2"></p>
+  </div>
+  <div>
+    <div class="bf-figur" id="figTopp"></div>
+    <p class="bf-kilde" id="kildeTopp"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabTopp"></div></details>
+  </div>
+  <div class="bf-nokkel" id="nokkeltall"></div>
+</section>
+
+<h2 id="s-navssb">Samme kvartal, to tall: SSB og Nav</h2>
+<p class="bf-seksjonsingress" id="ingressNav"></p>
+<div class="bf-kort bf-bred">
+  <div class="bf-velger" style="margin-bottom:12px">
+    <span class="bf-etikett" id="visningEtikett">Vis hovedtallet slik</span>
+    <div class="bf-knapper" role="group" aria-labelledby="visningEtikett" id="velgVisning">
+      <button type="button" data-v="ssb" aria-pressed="true">SSB melder det</button>
+      <button type="button" data-v="nav" aria-pressed="false">Nav melder det</button>
+    </div>
+  </div>
+  <div class="bf-to">
+    <div>
+      <h3 id="tNav"></h3>
+      <p class="bf-stort" id="navTall"></p>
+      <p id="navTekst" style="margin:0"></p>
+      <ul class="bf-fakta" id="navFakta"></ul>
+    </div>
+    <div>
+      <div class="bf-figur" id="figNav"></div>
+      <p class="bf-kilde" id="kildeNav"></p>
+      <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabNav"></div></details>
+    </div>
+  </div>
+</div>
+
+<h2 id="s-varighet">Korte egenmeldinger eller lange sykmeldinger?</h2>
+<p class="bf-seksjonsingress" id="ingressVar"></p>
+<div class="bf-grid">
+  <article class="bf-kort bf-bred">
+    <h3 id="tVar"></h3>
+    <p class="bf-note">Andel av alle fraværstilfeller og av alle tapte dagsverk, etter type og hvor lenge fraværet varte innenfor kvartalet. Ikke sesongjustert. Et fravær som begynte før kvartalet, telles bare med dagene i kvartalet.</p>
+    <div class="bf-velger" style="margin:4px 0 10px">
+      <label for="velgKvartal">Kvartal</label>
+      <select id="velgKvartal"></select>
+    </div>
+    <div class="bf-figur" id="figVar"></div>
+    <p class="bf-kilde" id="kildeVar"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabVar"></div></details>
+  </article>
+  <article class="bf-kort bf-bred">
+    <h3 id="tVarTid"></h3>
+    <p class="bf-note">Egenmeldingenes andel av fraværstilfellene og av de tapte dagsverkene, hvert kvartal. Vinterkvartalene har flest egenmeldinger. Klikk i figuren for å velge kvartal.</p>
+    <div class="bf-figur" id="figVarTid"></div>
+    <p class="bf-kilde" id="kildeVarTid"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabVarTid"></div></details>
+  </article>
+</div>
+
+<h2 id="s-hvem">Hvem har høyest sykefravær?</h2>
+<p class="bf-seksjonsingress" id="ingressHvem"></p>
+<div class="bf-grid">
+  <article class="bf-kort">
+    <h3 id="tKjonn"></h3>
+    <p class="bf-note">Sykefraværsprosent, sesongjustert, egen- og legemeldt. Viser alltid begge kjønn.</p>
+    <div class="bf-figur" id="figKjonn"></div>
+    <p class="bf-kilde" id="kildeKjonn"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabKjonn"></div></details>
+  </article>
+  <article class="bf-kort">
+    <h3 id="tHoved"></h3>
+    <p class="bf-note" id="nHoved"></p>
+    <div class="bf-figur" id="figHoved"></div>
+    <p class="bf-kilde" id="kildeHoved"></p>
+    <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabHoved"></div></details>
+  </article>
+</div>
+
+<h3 id="s-yrke" style="font-size:24px;margin:32px 0 6px">Finn yrket ditt</h3>
+<p class="bf-seksjonsingress">Legemeldt sykefravær for 407 yrker. Tallene er ikke sesongjustert, så sammenlign med samme kvartal året før. Små yrker kan svinge mye, og tabellen sier ikke hvor mange som jobber i hvert yrke.</p>
+<div class="bf-kort bf-bred">
+  <div class="bf-sok">
+    <label for="sokYrke" class="bf-etikett">Søk etter yrke</label>
+    <input type="search" id="sokYrke" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="forslagYrke" autocomplete="off" placeholder="For eksempel sykepleier, lærer eller bussjåfør">
+    <ul class="bf-forslag" id="forslagYrke" role="listbox" aria-label="Forslag til yrker" hidden></ul>
+  </div>
+  <p class="bf-note" id="sokYrkeIngen" style="margin-top:6px" hidden></p>
+  <p class="bf-sti" id="yrkeSti"></p>
+  <h3 id="tYrke" style="font-size:22px"></h3>
+  <p class="bf-funnet" id="yrkeFunnet" hidden></p>
+  <p id="yrkeTekst" style="margin:6px 0 0;max-width:860px"></p>
+  <div class="bf-tallkort" id="yrkeTall"></div>
+  <div class="bf-mangler" id="yrkeMangler" hidden></div>
+  <div class="bf-figur" id="figYrke"></div>
+  <p class="bf-kilde" id="kildeYrke"></p>
+  <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabYrke"></div></details>
+  <div id="yrkeUnderBoks"><h3 style="font-size:17px;margin-top:16px" id="tYrkeUnder"></h3><ul class="bf-under" id="yrkeUnder"></ul></div>
+  <details class="bf-tre" id="yrkeTre" style="margin-top:12px"><summary>Se alle yrker</summary><div id="yrkeTreInnhold"></div></details>
+</div>
+
+<h3 id="s-kommune" style="font-size:24px;margin:32px 0 6px">Min kommune</h3>
+<p class="bf-seksjonsingress">Legemeldt sykefravær for lønnstakere som bor i kommunen, uansett hvor de jobber. Ikke sesongjustert, og bare for begge kjønn. Egenmeldt fravær finnes ikke for kommuner.</p>
+<div class="bf-kort bf-bred">
+  <div class="bf-sok">
+    <label for="sokKommune" class="bf-etikett">Søk etter kommune</label>
+    <input type="search" id="sokKommune" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="forslagKommune" autocomplete="off" placeholder="For eksempel Hamar eller Tromsø">
+    <ul class="bf-forslag" id="forslagKommune" role="listbox" aria-label="Forslag til kommuner" hidden></ul>
+  </div>
+  <p class="bf-note" id="sokKommuneIngen" style="margin-top:6px" hidden></p>
+  <h3 id="tKommune" style="font-size:22px;margin-top:14px"></h3>
+  <p id="kommuneTekst" style="margin:4px 0 0;max-width:860px"></p>
+  <div class="bf-tallkort" id="kommuneTall"></div>
+  <div class="bf-figur" id="figKommune"></div>
+  <p class="bf-kilde" id="kildeKommune"></p>
+  <details class="bf-tabell"><summary>Vis tallene</summary><div class="bf-rull" id="tabKommune"></div></details>
+  <details class="bf-tabell" id="alleKommuner"><summary>Se alle kommuner</summary><div class="bf-rull" id="tabAlleKommuner"></div></details>
+</div>
+
+<footer class="bf-bunn">
+  <h2>Om tallene</h2>
+  <p>Tallene er fra SSBs statistikk <a href="https://www.ssb.no/sykefratot">Sykefravær</a>, som lages sammen med Nav. Sykefraværsprosenten er tapte dagsverk på grunn av egen sykdom i prosent av avtalte dagsverk, for bosatte lønnstakere 16–69 år. Legemeldt fravær kommer fra Navs sykmeldingsregister, egenmeldt fravær fra en utvalgsundersøkelse blant om lag 10 000 bedrifter. Fravær for barns sykdom, permisjoner og selvstendig næringsdrivende er ikke med.</p>
+  <p><b>Egne beregninger i denne prototypen</b>, ikke publisert av SSB: (1) Andelene i «Korte egenmeldinger eller lange sykmeldinger?» er regnet fra publiserte antall, og varighetsgruppene 1–8 og 9–16 dager er slått sammen. (2) Forskjellen i prosentpoeng mellom to sesongjusterte kvartaler er regnet fra publiserte nivåer. Alle endringer i prosent er publiserte tall. (3) «Slik melder Nav» bruker SSBs tabell 12439 med Navs måte å velge tall på: legemeldt, ikke sesongjustert, mot samme kvartal året før.</p>
+  <p><b>Næring mangler med vilje.</b> SSB går over til ny næringsstandard (SN2025) fra 1. kvartal 2027, og tabellene etter den gamle standarden avsluttes. Næring legges inn når de nye tabellene er publisert.</p>
+  <p id="bunnKilder"></p>
+  <p>Prototype laget med KI-støtte i SSB, november 2026. Ikke kvalitetssikret av fagseksjonen ennå.</p>
+</footer>
+</main>
+<div class="bf-tips" id="tips" hidden></div>
+
+<script>/*__D3__*/</script>
+<script>
+"use strict";
+const D = /*__INKLUDER:build/sykefratot.json__*/;
+const T = D.tid, S = T.length - 1, TV = D.tidV, TY = D.tidY, TK = D.tidK, TP = D.tidP;
+const F = {gronn: "#00824d", gra: "#a9b5b7", graT: "#5e787a", linje: "#d9dfe0", null: "#a9b5b7", tekst: "#274247", bla: "#1d9de2"};
+const KJ = {begge: "begge kjønn", kvinner: "kvinner", menn: "menn"};
+const HOVEDGR = ["1", "2", "3_01-03", "4", "5", "6", "7", "8", "9"];
+const tilstand = {kjonn: "begge", visning: "ssb", kvartal: TV[TV.length - 1], yrke: "5321", kommune: "0301", funnetMed: null};
+const YRKE = {}; D.yrker.forEach(([k, n, niv, f]) => { YRKE[k] = {k, navn: n, niv, f}; });
+const BARN = {}; D.yrker.forEach(([k, , , f]) => { if (f) (BARN[f] = BARN[f] || []).push(k); });
+
+// ---------- formatering ----------
+const nb = (x, d = 0) => x == null ? "–" : x.toLocaleString("nb-NO", {minimumFractionDigits: d, maximumFractionDigits: d}).replace(/-/g, "−");
+const pst = (x, d = 1) => nb(x, d) + " prosent";
+const sgn = (x, d = 1) => x == null ? "–" : (x > 0 ? "+" : "") + nb(x, d);
+const kv = t => `${t.slice(5)}. kvartal ${t.slice(0, 4)}`;
+const kvK = t => `${t.slice(5)}. kv. ${t.slice(0, 4)}`;
+const iFjor = t => `${+t.slice(0, 4) - 1}K${t.slice(5)}`;
+const forrige = t => t.endsWith("K1") ? `${+t.slice(0, 4) - 1}K4` : `${t.slice(0, 4)}K${+t.slice(5) - 1}`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const kilde = tab => "Kilde: SSB, " + (tab.length > 1 ? "tabell " + tab.slice(0, -1).join(", ") + " og " + tab[tab.length - 1] : "tabell " + tab[0]) +
+  ". Sist oppdatert: " + tab.map(t => D.oppdatert[t]).filter((v, i, a) => v && a.indexOf(v) === i).join(" / ") + ".";
+const hv = (k = tilstand.kjonn) => D.hoved[k];
+const hvemTekst = k => k === "begge" ? "" : ` for ${KJ[k]}`;
+
+// ---------- hjelpere for figurer ----------
+const tips = d3.select("#tips");
+function visTips(ev, html) {
+  tips.attr("hidden", null).html(html);
+  const b = tips.node().getBoundingClientRect();
+  let x = ev.pageX + 14, y = ev.pageY - b.height - 10;
+  if (x + b.width > window.scrollX + document.documentElement.clientWidth - 8) x = ev.pageX - b.width - 14;
+  if (y < window.scrollY + 4) y = ev.pageY + 16;
+  tips.style("left", Math.max(4, x) + "px").style("top", y + "px");
+}
+const skjulTips = () => tips.attr("hidden", true);
+function svgFor(id, h, beskrivelse) {
+  const el = d3.select("#" + id); el.selectAll("*").remove();
+  const w = Math.max(280, el.node().clientWidth);
+  const svg = el.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("width", w).attr("height", h)
+    .attr("role", "img").attr("aria-label", beskrivelse);
+  return {svg, w, h};
+}
+function tekst(g, x, y, t, o = {}) {
+  return g.append("text").attr("x", x).attr("y", y).text(t).attr("font-size", o.str || 13)
+    .attr("fill", o.farge || F.tekst).attr("text-anchor", o.anker || "start").attr("font-weight", o.vekt || 400);
+}
+function rutenett(g, y, x0, x1, verdier, fmt) {
+  verdier.forEach(v => {
+    g.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y(v)).attr("y2", y(v)).attr("stroke", v === 0 ? F.null : F.linje);
+    tekst(g, x0 - 6, y(v) + 4, fmt(v), {anker: "end", farge: F.graT});
+  });
+}
+function aarAkse(svg, x, tider, y0, steg) {
+  tider.forEach((t, i) => { if (t.endsWith("K1") && +t.slice(0, 4) % steg === 0) {
+    svg.append("line").attr("x1", x(i)).attr("x2", x(i)).attr("y1", y0).attr("y2", y0 + 4).attr("stroke", F.null);
+    tekst(svg, x(i), y0 + 18, t.slice(0, 4), {anker: "middle", farge: F.graT}); } });
+}
+function tabellHTML(id, hode, rader) {
+  document.getElementById(id).innerHTML = "<table><thead><tr>" + hode.map(h => `<th scope="col">${h}</th>`).join("") +
+    "</tr></thead><tbody>" + rader.map(r => "<tr>" + r.map((c, i) => i === 0 ? `<th scope="row">${c}</th>` : `<td>${c}</td>`).join("") + "</tr>").join("") + "</tbody></table>";
+}
+const settTekst = (id, t) => { document.getElementById(id).textContent = t; };
+function etiketterUtenOverlapp(e, min = 15) {
+  e.sort((a, b) => a.y - b.y);
+  for (let j = 1; j < e.length; j++) if (e[j].y - e[j - 1].y < min) e[j].y = e[j - 1].y + min;
+  return e;
+}
+function svevFlate(svg, x0, y0, w, h, n, xIdx, html) {
+  svg.append("rect").attr("x", x0).attr("y", y0).attr("width", w).attr("height", h).attr("fill", "transparent")
+    .on("mousemove", ev => { const i = xIdx(d3.pointer(ev)[0]); if (i >= 0 && i < n) visTips(ev, html(i)); })
+    .on("mouseleave", skjulTips);
+}
+
+// ---------- adresse ----------
+function lesAdresse() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  const k = p.get("kjonn"); if (KJ[k]) tilstand.kjonn = k;
+  const v = p.get("visning"); if (v === "ssb" || v === "nav") tilstand.visning = v;
+  const q = p.get("kvartal"); if (TV.includes(q)) tilstand.kvartal = q;
+  const y = p.get("yrke"); if (y && YRKE[y]) tilstand.yrke = y;
+  const ko = p.get("kommune"); if (ko && D.kommuner[ko]) tilstand.kommune = ko;
+}
+function skrivAdresse() {
+  const p = new URLSearchParams({kjonn: tilstand.kjonn, visning: tilstand.visning, kvartal: tilstand.kvartal, yrke: tilstand.yrke, kommune: tilstand.kommune});
+  history.replaceState(null, "", "#" + p.toString());
+}
+
+// ---------- hode og lesehjelp ----------
+function hode() {
+  const b = D.hoved.begge, k = D.hoved.kvinner.alt.sj[S], m = D.hoved.menn.alt.sj[S], sj = b.alt.sj[S];
+  settTekst("ingress", `Sykefraværet var ${pst(sj, 2)} i ${kv(T[S])}, justert for sesong. Av 100 avtalte dagsverk gikk altså i underkant av ${Math.ceil(sj)} tapt til egen sykdom. ` +
+    `Kvinner hadde ${pst(k, 2)}, menn ${pst(m, 2)}. Prototypen forklarer hvorfor SSB og Nav melder ulike tall, hvor mye av fraværet som er lange sykmeldinger, og hvordan fraværet varierer mellom yrker og kommuner.`);
+  document.querySelectorAll("#velgKjonn button").forEach(btn => btn.addEventListener("click", () => { tilstand.kjonn = btn.dataset.k; oppdater(); }));
+  document.querySelectorAll("#velgVisning button").forEach(btn => btn.addEventListener("click", () => { tilstand.visning = btn.dataset.v; oppdater(); }));
+}
+function lesehjelp() {
+  const H = hv(), sj = H.alt.sj, L = H.lege, P = D.personer[tilstand.kjonn], ip = TP.length - 1;
+  const endr = H.alt.endr_sj[S], pp = sj[S] - sj[S - 1];
+  const p = [
+    ["SSB og Nav melder ulike tall samme dag.", `SSB melder ${pst(sj[S], 2)}: egen- og legemeldt, sesongjustert, ${sgn(endr)} prosent fra kvartalet før. Nav melder ${pst(L.uj[S])}: bare legemeldt, ikke sesongjustert, ${sgn(L.endr_aar[S])} prosent fra samme kvartal året før. Begge er riktige.`],
+    ["Prosenten måler dagsverk, ikke personer.", `${pst(L.uj[S])} av de avtalte dagsverkene gikk tapt til legemeldt fravær i ${kv(T[S])}. ${pst(P.ArbeidstakereSykePro[ip])} av lønnstakerne hadde en sykmelding på referansedagen. En som er halvt sykmeldt, teller som et halvt dagsverk.`],
+    ["Prosent er ikke prosentpoeng.", `«${sgn(endr)} prosent» betyr at prosenten gikk fra ${nb(sj[S - 1], 2)} til ${nb(sj[S], 2)}, en endring på ${nb(Math.abs(pp), 2)} prosentpoeng.`],
+    ["Sesongjustert eller ikke.", `Ikke sesongjustert var prosenten ${nb(H.alt.uj[S], 1)} i ${kv(T[S])}. Sommeren gir alltid lavere fravær og vinteren høyere. Sammenlign med kvartalet før med sesongjusterte tall, og med samme kvartal året før med ujusterte.`],
+  ];
+  document.getElementById("lesPunkter").innerHTML = p.map(([t, x]) => `<li><b>${t}</b>${x}</li>`).join("");
+}
+
+// ---------- toppgrafikk A ----------
+function topp() {
+  const k = tilstand.kjonn, H = hv(), sj = H.alt.sj, uj = H.alt.uj;
+  settTekst("toppTittel", `Sykefravær${k === "begge" ? "" : ", " + KJ[k]} · ${kv(T[S])}`);
+  settTekst("toppTall", pst(sj[S]));
+  const i25 = T.indexOf(T[S].slice(0, 4) - 1 + "K1"), siden = sj.slice(i25), spenn = d3.max(siden) - d3.min(siden);
+  settTekst("toppSetning", spenn < 0.25 ? `Sykefraværet${hvemTekst(k)} har ligget nesten flatt siden starten av ${T[i25].slice(0, 4)}.`
+    : `Sykefraværet${hvemTekst(k)} har variert mellom ${nb(d3.min(siden), 1)} og ${nb(d3.max(siden), 1)} prosent siden starten av ${T[i25].slice(0, 4)}.`);
+  const e = H.alt.endr_sj[S];
+  settTekst("toppL1", `Sesongjustert ${nb(sj[S], 2)}, ${Math.abs(e) < 0.05 ? "uendret" : e < 0 ? "ned" : "opp"} fra ${nb(sj[S - 1], 2)} i ${kv(T[S - 1])} (${sgn(e)} prosent).`);
+  settTekst("toppL2", `Den faktiske prosenten i kvartalet var ${nb(uj[S], 1)}.` + (T[S].endsWith("K3") ? " Sommeren trekker alltid ned." : T[S].endsWith("K1") ? " Vinteren trekker alltid opp." : ""));
+  const {svg, w, h} = svgFor("figTopp", 270, `Sesongjustert sykefraværsprosent${hvemTekst(k)} ${T[0]}–${T[S]}, fra ${nb(sj[0], 2)} til ${nb(sj[S], 2)}. Ikke sesongjustert i grått.`);
+  const smal = w < 520, m = {l: 30, r: smal ? 86 : 122, t: 30, b: 26};
+  const lo = Math.floor(d3.min(uj.concat(sj))), hi = Math.ceil(d3.max(uj.concat(sj)));
+  const x = d3.scaleLinear([0, S], [m.l, w - m.r]), y = d3.scaleLinear([lo, hi], [h - m.b, m.t]);
+  rutenett(svg, y, m.l, w - m.r, d3.range(lo, hi + 1), v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  aarAkse(svg, x, T, h - m.b, smal ? 10 : 5);
+  const ib = T.indexOf("2015K1");
+  svg.append("line").attr("x1", x(ib)).attr("x2", x(ib)).attr("y1", m.t - 6).attr("y2", h - m.b).attr("stroke", F.tekst).attr("stroke-dasharray", "4 3");
+  if (smal) tekst(svg, x(ib) + 5, h - m.b - 6, "Brudd 2015", {farge: F.graT, str: 12});
+  else { tekst(svg, x(ib) + 5, m.t + 6, "Brudd 2015:", {farge: F.graT, str: 12}); tekst(svg, x(ib) + 5, m.t + 20, "a-ordningen", {farge: F.graT, str: 12}); }
+  const linje = d3.line((d, i) => x(i), d => y(d));
+  svg.append("path").attr("d", linje(uj)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 1);
+  svg.append("path").attr("d", linje(sj)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+  const it = d3.maxIndex(sj);
+  svg.append("circle").attr("cx", x(it)).attr("cy", y(sj[it])).attr("r", 3.5).attr("fill", F.gronn);
+  tekst(svg, x(it) + 7, y(sj[it]) - 7, `Toppen: ${nb(sj[it], 2)} i ${T[it].slice(0, 4)}`, {str: 12.5});
+  svg.append("circle").attr("cx", x(S)).attr("cy", y(sj[S])).attr("r", 3.5).attr("fill", F.gronn);
+  const et = etiketterUtenOverlapp([{y: y(sj[S]), v: nb(sj[S], 2), n: smal ? "sesongjust." : "sesongjustert"}, {y: y(uj[S]), v: nb(uj[S], 1), n: smal ? "ujustert" : "ikke sesongjustert"}], 34);
+  et.forEach(e => { tekst(svg, x(S) + 8, e.y + 4, e.v, {vekt: 700, str: 15}); tekst(svg, x(S) + 8, e.y + 19, e.n, {farge: F.graT, str: 12}); });
+  svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, T.length, px => Math.round(x.invert(px)),
+    i => `<b>${kv(T[i])}</b><br>Sesongjustert: ${pst(sj[i], 2)}<br>Ikke sesongjustert: ${pst(uj[i])}`);
+  settTekst("kildeTopp", kilde(["12439"]) + " Tallene før og etter 2015 er bare sammenlignbare med forbehold.");
+  tabellHTML("tabTopp", ["Kvartal", "Sesongjustert", "Ikke sesongjustert", "Sesong- og influensajustert", "Endring fra kvartalet før, sesongjustert (prosent)"],
+    T.map((t, i) => [kv(t), nb(sj[i], 2), nb(uj[i], 1), nb(H.alt.si[i], 2), H.alt.endr_sj[i] == null ? "." : sgn(H.alt.endr_sj[i])]).reverse());
+  document.getElementById("nokkeltall").innerHTML = [
+    ["Sesongjustert", pst(sj[S], 2)], ["Ikke sesongjustert", pst(uj[S])], ["Egenmeldt, sesongjustert", pst(H.egen.sj[S], 2)], ["Legemeldt, sesongjustert", pst(H.lege.sj[S], 2)]]
+    .map(([e, v]) => `<div><b>${v}</b>${e}, ${kvK(T[S])}</div>`).join("");
+}
+
+// ---------- SSB og Nav ----------
+function navSsb() {
+  const k = tilstand.kjonn, H = hv(), ssb = tilstand.visning === "ssb";
+  document.querySelectorAll("#velgVisning button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === tilstand.visning));
+  settTekst("ingressNav", `SSB og Nav lager sykefraværsstatistikken sammen og publiserer samme morgen. Likevel melder de ulike hovedtall. For ${kv(T[S])} melder SSB ${pst(H.alt.sj[S], 2)} og ${sgn(H.alt.endr_sj[S])} prosent, mens Nav melder ${pst(H.lege.uj[S])} og ${sgn(H.lege.endr_aar[S])} prosent. Tallene måler ulike ting, og begge er riktige.`);
+  const fakta = ssb
+    ? [["Hva som telles", "Egenmeldt og legemeldt fravær"], ["Justering", "Sesongjustert"], ["Sammenlignes med", `Kvartalet før (${kv(T[S - 1])})`], ["Endring", `${sgn(H.alt.endr_sj[S])} prosent, fra ${nb(H.alt.sj[S - 1], 2)} til ${nb(H.alt.sj[S], 2)}`]]
+    : [["Hva som telles", "Bare legemeldt fravær"], ["Justering", "Ikke sesongjustert"], ["Sammenlignes med", `Samme kvartal året før (${kv(iFjor(T[S]))})`], ["Endring", (() => { const a = nb(H.lege.uj[T.indexOf(iFjor(T[S]))], 1), b = nb(H.lege.uj[S], 1);
+        return `${sgn(H.lege.endr_aar[S])} prosent, ` + (a === b ? `men avrundet er nivået ${b} begge år` : `fra ${a} til ${b}`); })()]];
+  settTekst("tNav", ssb ? `Slik melder SSB${hvemTekst(k)}` : `Slik melder Nav${hvemTekst(k)}`);
+  settTekst("navTall", ssb ? pst(H.alt.sj[S], 2) : pst(H.lege.uj[S]));
+  settTekst("navTekst", ssb ? `Sykefraværet i ${kv(T[S])}, justert for sesong. Brukes for å se om fraværet går opp eller ned fra kvartal til kvartal.`
+    : `Legemeldt sykefravær i ${kv(T[S])}, slik det faktisk var. Brukes for å sammenligne med samme kvartal året før, der årstiden er den samme.`);
+  document.getElementById("navFakta").innerHTML = fakta.map(([a, b]) => `<li><span>${a}</span><span>${b}</span></li>`).join("");
+  if (ssb) {
+    const n = 12, idx = d3.range(S - n + 1, S + 1), v = idx.map(i => H.alt.sj[i]);
+    const {svg, w, h} = svgFor("figNav", 266, `Sesongjustert sykefraværsprosent de siste ${n} kvartalene${hvemTekst(k)}`);
+    const m = {l: 34, r: 56, t: 48, b: 28};
+    const x = d3.scalePoint(idx, [m.l, w - m.r]), y = d3.scaleLinear([Math.floor(d3.min(v) * 2) / 2 - 0.5, Math.ceil(d3.max(v) * 2) / 2], [h - m.b, m.t]);
+    rutenett(svg, y, m.l, w - m.r, y.ticks(4), x0 => nb(x0, 1));
+    tekst(svg, 0, 12, "prosent, sesongjustert", {farge: F.graT});
+    svg.append("path").attr("d", d3.line((d, j) => x(idx[j]), d => y(d))(v)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+    idx.forEach((i, j) => {
+      svg.append("circle").attr("cx", x(i)).attr("cy", y(v[j])).attr("r", j >= n - 2 ? 4.5 : 3).attr("fill", j >= n - 2 ? F.gronn : "#fff").attr("stroke", F.gronn).attr("stroke-width", 1.5);
+      if (T[i].endsWith("K1")) tekst(svg, x(i), h - 8, T[i].slice(0, 4), {anker: "middle", farge: F.graT});
+    });
+    tekst(svg, x(S) + 8, y(v[n - 1]) + 4, nb(v[n - 1], 2), {vekt: 700});
+    tekst(svg, x(S - 1), y(v[n - 2]) - 10, nb(v[n - 2], 2), {anker: "end", farge: F.graT});
+    tekst(svg, w, 32, `${sgn(H.alt.endr_sj[S])} prosent fra kvartalet før`, {anker: "end", vekt: 600, str: 12.5});
+    svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, n, px => Math.round((px - m.l) / x.step()), j => `<b>${kv(T[idx[j]])}</b><br>${pst(v[j], 2)}, sesongjustert`);
+    settTekst("kildeNav", kilde(["12439"]));
+    tabellHTML("tabNav", ["Kvartal", "Sesongjustert", "Endring fra kvartalet før (prosent)"], idx.map((i, j) => [kv(T[i]), nb(v[j], 2), sgn(H.alt.endr_sj[i])]).reverse());
+  } else {
+    const q = T[S].slice(5), idx = T.map((t, i) => [t, i]).filter(([t]) => t.endsWith("K" + q) && t >= "2015").map(([, i]) => i);
+    const v = idx.map(i => H.lege.uj[i]);
+    const {svg, w, h} = svgFor("figNav", 266, `Legemeldt sykefravær i ${q}. kvartal hvert år fra 2015${hvemTekst(k)}, ikke sesongjustert`);
+    const m = {l: 34, r: 8, t: 48, b: 28};
+    const x = d3.scaleBand(idx, [m.l, w - m.r]).padding(0.33), y = d3.scaleLinear([0, Math.ceil(d3.max(v) + 0.5)], [h - m.b, m.t]);
+    rutenett(svg, y, m.l, w - m.r, y.ticks(4), x0 => nb(x0));
+    tekst(svg, 0, 12, `prosent, legemeldt, ${q}. kvartal`, {farge: F.graT});
+    idx.forEach((i, j) => {
+      const siste = j === idx.length - 1, nest = j === idx.length - 2;
+      svg.append("rect").attr("x", x(i)).attr("y", y(v[j])).attr("width", x.bandwidth()).attr("height", y(0) - y(v[j]))
+        .attr("fill", siste ? F.gronn : nest ? "#58a772" : "#c3dcdc")
+        .on("mousemove", ev => visTips(ev, `<b>${kv(T[i])}</b><br>${pst(v[j])} legemeldt<br>${sgn(H.lege.endr_aar[i])} prosent fra året før`)).on("mouseleave", skjulTips);
+      if (siste || nest) tekst(svg, x(i) + x.bandwidth() / 2, y(v[j]) - 6, nb(v[j], 1), {anker: "middle", vekt: siste ? 700 : 400});
+      if (w > 480 || j % 2 === (idx.length - 1) % 2) tekst(svg, x(i) + x.bandwidth() / 2, h - 8, T[i].slice(0, 4), {anker: "middle", farge: F.graT, str: 12});
+    });
+    tekst(svg, w, 32, `${sgn(H.lege.endr_aar[S])} prosent fra samme kvartal året før`, {anker: "end", vekt: 600, str: 12.5});
+    settTekst("kildeNav", kilde(["12439"]) + " Tallene er SSBs, valgt slik Nav melder dem.");
+    tabellHTML("tabNav", ["Kvartal", "Legemeldt, ikke sesongjustert", "Endring fra året før (prosent)"], idx.map((i, j) => [kv(T[i]), nb(v[j], 1), sgn(H.lege.endr_aar[i])]).reverse());
+  }
+}
+
+// ---------- varighet ----------
+const VKAT = [["Egenmeldt", ["F1"], "#91cd9a", F.tekst], ["Legemeldt 1–16 dager", ["F3", "F4"], "#58a772", "#fff"],
+  ["Legemeldt 17–31 dager", ["F5"], "#00824d", "#fff"], ["Legemeldt 32 dager eller mer", ["F6", "F7"], "#075745", "#fff"]];
+function andeler(c, i) {
+  const V = D.varighet[tilstand.kjonn][c], tot = V.F0[i];
+  const d = VKAT.map(([n, fs]) => { const a = d3.sum(fs, f => V[f][i]); return {n, antall: a, pst: 100 * a / tot}; });
+  // Hele prosent til etikettene med største rest, så de summerer til 100.
+  d.forEach(x => { x.hel = Math.floor(x.pst); });
+  const rest = 100 - d3.sum(d, x => x.hel);
+  d.slice().sort((a, b) => (b.pst - b.hel) - (a.pst - a.hel)).slice(0, rest).forEach(x => { x.hel += 1; });
+  return d;
+}
+function varighet() {
+  const k = tilstand.kjonn, i = TV.indexOf(tilstand.kvartal), sist = TV.length - 1;
+  const tf = andeler("Tilfeller", i), dv = andeler("Dagsverk", i);
+  const tfS = andeler("Tilfeller", sist), dvS = andeler("Dagsverk", sist);
+  settTekst("ingressVar", `I ${kv(TV[sist])} var ${tfS[0].hel} prosent av alle fraværstilfellene${hvemTekst(k)} egenmeldinger, men de sto for bare ${dvS[0].hel} prosent av de tapte dagsverkene. ` +
+    `Sykmeldinger på 32 dager eller mer i kvartalet var ${tfS[3].hel} prosent av tilfellene og ${dvS[3].hel} prosent av dagsverkene. Det er de lange fraværene som bærer tallet.`);
+  settTekst("tVar", `${kv(TV[i])}: egenmeldinger er ${tf[0].hel} prosent av fraværene, men ${dv[0].hel} prosent av dagsverkene`);
+  const sel = document.getElementById("velgKvartal");
+  if (!sel.options.length) {
+    sel.innerHTML = TV.slice().reverse().map(t => `<option value="${t}">${kv(t)}</option>`).join("");
+    sel.addEventListener("change", () => { tilstand.kvartal = sel.value; oppdater(); });
+  }
+  sel.value = tilstand.kvartal;
+  const smal = document.getElementById("figVar").clientWidth < 560;
+  const top = smal ? 98 : 54;
+  const {svg, w, h} = svgFor("figVar", top + 2 * 86 + 24, `Fordeling av fraværstilfeller og tapte dagsverk etter type og varighet, ${kv(TV[i])}`);
+  VKAT.forEach(([n, , f], j) => {
+    const lx = smal ? 0 : (j % 2) * 260, ly = smal ? 4 + j * 22 : 4 + Math.floor(j / 2) * 22;
+    svg.append("rect").attr("x", lx).attr("y", ly).attr("width", 14).attr("height", 14).attr("fill", f);
+    tekst(svg, lx + 20, ly + 12, n, {str: 13.5});
+  });
+  const x = d3.scaleLinear([0, 100], [0, w]);
+  [["Fraværstilfeller", tf, D.varighet[k].Tilfeller.F0[i]], ["Tapte dagsverk", dv, D.varighet[k].Dagsverk.F0[i]]].forEach(([navn, d, tot], r) => {
+    const y0 = top + r * 86 + 20;
+    tekst(svg, 0, y0 - 8, `${navn} (${nb(tot / 1e6, 2)} millioner)`, {vekt: 600, str: 14});
+    let x0 = 0;
+    d.forEach((s, j) => {
+      const b = x(s.pst);
+      svg.append("rect").attr("x", x0).attr("y", y0).attr("width", Math.max(0, b - 1)).attr("height", 40).attr("fill", VKAT[j][2])
+        .on("mousemove", ev => visTips(ev, `<b>${VKAT[j][0]}</b><br>${navn}: ${nb(s.antall)}<br>${pst(s.pst)} av alle`)).on("mouseleave", skjulTips);
+      const lab = nb(s.hel, 0);
+      if (b > 32) tekst(svg, x0 + b / 2, y0 + 26, lab, {anker: "middle", farge: VKAT[j][3], vekt: 700, str: 14});
+      else tekst(svg, Math.min(x0 + b / 2, w - 8), y0 + 58, lab, {anker: "middle", vekt: 700, str: 13});
+      x0 += b;
+    });
+  });
+  tekst(svg, 0, h - 2, "Prosent av alle i kvartalet", {farge: F.graT, str: 12});
+  settTekst("kildeVar", kilde(["12946"]) + " Andelene er regnet fra publiserte antall.");
+  tabellHTML("tabVar", ["Type og varighet", "Tilfeller", "Andel av tilfellene (prosent)", "Dagsverk", "Andel av dagsverkene (prosent)"],
+    VKAT.map(([n], j) => [n, nb(tf[j].antall), nb(tf[j].pst, 1), nb(dv[j].antall), nb(dv[j].pst, 1)]));
+}
+function varighetTid() {
+  const k = tilstand.kjonn, n = TV.length, sel = TV.indexOf(tilstand.kvartal);
+  const et = TV.map((t, i) => andeler("Tilfeller", i)[0].pst), ed = TV.map((t, i) => andeler("Dagsverk", i)[0].pst);
+  settTekst("tVarTid", `Gapet mellom tilfeller og dagsverk har holdt seg siden ${TV[0].slice(0, 4)}`);
+  const {svg, w, h} = svgFor("figVarTid", 230, `Egenmeldingenes andel av fraværstilfeller og dagsverk ${TV[0]}–${TV[n - 1]}${hvemTekst(k)}`);
+  const smal = w < 520, m = {l: 30, r: smal ? 92 : 150, t: 22, b: 26};
+  const x = d3.scaleLinear([0, n - 1], [m.l, w - m.r]), y = d3.scaleLinear([0, 80], [h - m.b, m.t]);
+  rutenett(svg, y, m.l, w - m.r, [0, 20, 40, 60, 80], v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  aarAkse(svg, x, TV, h - m.b, smal ? 4 : 2);
+  svg.append("line").attr("x1", x(sel)).attr("x2", x(sel)).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", "#c3cfd1");
+  const linje = d3.line((d, i) => x(i), d => y(d));
+  svg.append("path").attr("d", linje(et)).attr("fill", "none").attr("stroke", F.bla).attr("stroke-width", 2);
+  svg.append("path").attr("d", linje(ed)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+  [[et, "av tilfellene"], [ed, "av dagsverkene"]].forEach(([s, nn]) => {
+    svg.append("circle").attr("cx", x(sel)).attr("cy", y(s[sel])).attr("r", 4).attr("fill", s === et ? F.bla : F.gronn);
+    tekst(svg, x(n - 1) + 8, y(s[n - 1]) + 4, nb(s[n - 1], 0) + " " + nn, {vekt: 600, str: 12.5});
+  });
+  const flate = svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", w - m.l - m.r).attr("height", h - m.t - m.b).attr("fill", "transparent").style("cursor", "pointer")
+    .attr("tabindex", 0).attr("role", "slider").attr("aria-label", "Velg kvartal i figuren").attr("aria-valuemin", 0).attr("aria-valuemax", n - 1).attr("aria-valuenow", sel).attr("aria-valuetext", kv(TV[sel]));
+  const iFra = ev => Math.max(0, Math.min(n - 1, Math.round(x.invert(d3.pointer(ev)[0]))));
+  flate.on("mousemove", ev => { const i = iFra(ev); visTips(ev, `<b>${kv(TV[i])}</b><br>Egenmeldt, av tilfellene: ${pst(et[i])}<br>Egenmeldt, av dagsverkene: ${pst(ed[i])}`); })
+    .on("mouseleave", skjulTips).on("click", ev => { tilstand.kvartal = TV[iFra(ev)]; oppdater(); })
+    .on("keydown", ev => { const d = {ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1}[ev.key];
+      if (d) { ev.preventDefault(); tilstand.kvartal = TV[Math.max(0, Math.min(n - 1, sel + d))]; oppdater(); document.querySelector("#figVarTid rect[role=slider]").focus(); } });
+  settTekst("kildeVarTid", kilde(["12946"]) + " Andelene er regnet fra publiserte antall.");
+  tabellHTML("tabVarTid", ["Kvartal", "Egenmeldt, andel av tilfellene", "Egenmeldt, andel av dagsverkene"], TV.map((t, i) => [kv(t), nb(et[i], 1), nb(ed[i], 1)]).reverse());
+}
+
+// ---------- kvinner og menn ----------
+function kjonnFig() {
+  const kv_ = D.hoved.kvinner.alt.sj, me = D.hoved.menn.alt.sj;
+  settTekst("ingressHvem", `Kvinner har høyere sykefravær enn menn i alle kvartaler i serien. I ${kv(T[S])} var forskjellen ${nb(kv_[S] - me[S], 1)} prosentpoeng, sesongjustert. Fraværet varierer også mye mellom yrker og mellom kommuner.`);
+  settTekst("tKjonn", `Kvinner ${pst(kv_[S], 2)}, menn ${pst(me[S], 2)}`);
+  const {svg, w, h} = svgFor("figKjonn", 240, `Sesongjustert sykefraværsprosent for kvinner og menn ${T[0]}–${T[S]}`);
+  const m = {l: 30, r: 70, t: 22, b: 26};
+  const x = d3.scaleLinear([0, S], [m.l, w - m.r]), y = d3.scaleLinear([0, Math.ceil(d3.max(kv_))], [h - m.b, m.t]);
+  rutenett(svg, y, m.l, w - m.r, y.ticks(5), v => nb(v));
+  tekst(svg, 0, 12, "prosent", {farge: F.graT});
+  aarAkse(svg, x, T, h - m.b, 10);
+  const ib = T.indexOf("2015K1");
+  svg.append("line").attr("x1", x(ib)).attr("x2", x(ib)).attr("y1", m.t).attr("y2", h - m.b).attr("stroke", F.tekst).attr("stroke-dasharray", "4 3");
+  const linje = d3.line((d, i) => x(i), d => y(d));
+  svg.append("path").attr("d", linje(kv_)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+  svg.append("path").attr("d", linje(me)).attr("fill", "none").attr("stroke", F.bla).attr("stroke-width", 2.5);
+  tekst(svg, x(S) + 6, y(kv_[S]) + 4, "Kvinner", {vekt: 600}); tekst(svg, x(S) + 6, y(me[S]) + 4, "Menn", {vekt: 600});
+  svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, T.length, px => Math.round(x.invert(px)), i => `<b>${kv(T[i])}</b><br>Kvinner: ${pst(kv_[i], 2)}<br>Menn: ${pst(me[i], 2)}`);
+  settTekst("kildeKjonn", kilde(["12439"]));
+  tabellHTML("tabKjonn", ["Kvartal", "Kvinner", "Menn"], T.map((t, i) => [kv(t), nb(kv_[i], 2), nb(me[i], 2)]).reverse());
+}
+
+// ---------- yrke ----------
+const yv = (k, kj = tilstand.kjonn) => D.yverdi[kj][k];
+const ySiste = (k, kj = tilstand.kjonn) => yv(k, kj)[TY.length - 1];
+function hovedgrupper() {
+  const kj = tilstand.kjonn, sist = TY.length - 1, alle = ySiste("0-9");
+  const rader = HOVEDGR.map(k => ({k, navn: YRKE[k].navn, v: ySiste(k)})).filter(r => r.v != null).sort((a, b) => b.v - a.v);
+  settTekst("tHoved", `${rader[0].navn} har høyest legemeldt fravær blant yrkesgruppene`);
+  settTekst("nHoved", `Legemeldt sykefravær etter hovedgruppe av yrker, ${kv(TY[sist])}${hvemTekst(kj)}. Ikke sesongjustert. Klikk på en gruppe for å se yrkene i den.`);
+  const smal = document.getElementById("figHoved").clientWidth < 460, rh = 24;
+  const {svg, w, h} = svgFor("figHoved", 30 + rader.length * rh + 30, `Legemeldt sykefravær etter yrkesgruppe, ${kv(TY[sist])}`);
+  const m = {l: smal ? 150 : 200, r: 44, t: 26};
+  const x = d3.scaleLinear([0, Math.ceil(d3.max(rader, r => r.v))], [m.l, w - m.r]);
+  x.ticks(4).forEach(v => { svg.append("line").attr("x1", x(v)).attr("x2", x(v)).attr("y1", m.t - 4).attr("y2", m.t + rader.length * rh).attr("stroke", v === 0 ? F.null : F.linje);
+    tekst(svg, x(v), m.t + rader.length * rh + 16, nb(v), {anker: "middle", farge: F.graT}); });
+  tekst(svg, w - m.r, h - 2, "prosent", {anker: "end", farge: F.graT});
+  rader.forEach((r, j) => {
+    const yc = m.t + j * rh, valgt = tilstand.yrke === r.k || YRKE[tilstand.yrke] && sti(tilstand.yrke).includes(r.k);
+    const g = svg.append("g").style("cursor", "pointer").attr("tabindex", 0).attr("role", "button").attr("aria-label", `${r.navn}: ${pst(r.v)}. Velg gruppen`);
+    g.append("rect").attr("x", 0).attr("y", yc).attr("width", w).attr("height", rh).attr("fill", "transparent");
+    const t = tekst(g, m.l - 8, yc + rh / 2 + 4, r.navn, {anker: "end", vekt: valgt ? 700 : 400});
+    let navn = r.navn;
+    while (t.node().getComputedTextLength() > m.l - 12 && navn.length > 8) { navn = navn.replace(/,? \S+$/, ""); t.text(navn + " …"); }
+    g.append("rect").attr("x", m.l).attr("y", yc + 4).attr("width", x(r.v) - m.l).attr("height", rh - 8).attr("fill", F.gronn);
+    tekst(g, x(r.v) + 5, yc + rh / 2 + 4, nb(r.v, 1), {vekt: 600});
+    const velg = () => { velgYrke(r.k, null); };
+    g.on("click", velg).on("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); velg(); } })
+      .on("mousemove", ev => visTips(ev, `<b>${r.navn}</b><br>${pst(r.v)} legemeldt`)).on("mouseleave", skjulTips);
+  });
+  svg.append("line").attr("x1", x(alle)).attr("x2", x(alle)).attr("y1", m.t - 10).attr("y2", m.t + rader.length * rh).attr("stroke", F.tekst).attr("stroke-dasharray", "4 3");
+  tekst(svg, x(alle), m.t - 12, `Alle yrker ${nb(alle, 1)}`, {anker: x(alle) > w - 120 ? "end" : "middle", farge: F.graT, str: 12});
+  settTekst("kildeHoved", kilde(["12452"]));
+  tabellHTML("tabHoved", ["Yrkesgruppe", `${kv(TY[sist])} (prosent)`, `Endring fra året før (prosent)`], rader.map(r => [r.navn, nb(r.v, 1), sgn(D.yendr[kj][r.k])]).concat([["Alle yrker", nb(alle, 1), sgn(D.yendr[kj]["0-9"])]]));
+}
+function sti(k) { const s = []; let c = k; while (c) { s.unshift(c); c = YRKE[c].f; } return s; }
+const NORM = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ŋ/g, "n").replace(/đ/g, "d").replace(/ŧ/g, "t").replace(/\s+/g, " ").trim();
+const SYN = Object.entries(D.synonymer).map(([o, ks]) => ({o, ks, n: NORM(o), usikker: D.usikre_synonymer.includes(o)}));
+function sokYrke(q) {
+  const n = NORM(q); if (n.length < 2) return [];
+  const rang = new Map();
+  const legg = (k, r, via) => { if (!rang.has(k) || rang.get(k).r > r) rang.set(k, {r, via}); };
+  // Ved synonymtreff gjelder rekkefølgen i synonymlisten: første kode er den vanligste betydningen.
+  SYN.forEach(s => { if (s.n === n) s.ks.forEach((k, j) => legg(k, j / 100, s)); else if (s.n.startsWith(n)) s.ks.forEach((k, j) => legg(k, 2.5 + j / 100, s)); });
+  D.yrker.forEach(([k, navn]) => {
+    const h = NORM(navn), ord = h.split(/[\s\-\/(),.]+/);
+    if (h === n || k === q.trim()) legg(k, 1, null);
+    else if (h.startsWith(n)) legg(k, 2, null);
+    else if (ord.some(o => o.startsWith(n))) legg(k, 3, null);
+    else if (n.length >= 3 && h.includes(n)) legg(k, 4, null);
+  });
+  return [...rang.entries()].sort((a, b) => a[1].r - b[1].r || YRKE[a[0]].niv - YRKE[b[0]].niv || YRKE[a[0]].navn.localeCompare(YRKE[b[0]].navn, "nb"))
+    .slice(0, 12).map(([k, v]) => ({k, via: v.via}));
+}
+function velgYrke(k, via) { tilstand.yrke = k; tilstand.funnetMed = via; oppdater(); document.getElementById("tYrke").scrollIntoView({block: "nearest"}); }
+function nivNavn(k) { const n = YRKE[k].niv; return n === 0 ? "alle yrker" : n === 1 ? "hovedgruppe" : n + "-siffernivå"; }
+function yrke() {
+  const k = tilstand.yrke, Y = YRKE[k], kj = tilstand.kjonn, sist = TY.length - 1, iF = TY.indexOf(iFjor(TY[sist]));
+  const s = yv(k), v = s[sist], alle = ySiste("0-9"), symb = (D.ysym[kj] || {})[k];
+  document.getElementById("yrkeSti").innerHTML = sti(k).slice(0, -1).map(c => `<button type="button" data-k="${c}">${esc(YRKE[c].navn)}</button>`).join('<span class="sep">›</span>');
+  document.querySelectorAll("#yrkeSti button").forEach(b => b.addEventListener("click", () => velgYrke(b.dataset.k, null)));
+  settTekst("tYrke", Y.navn + (k === "0-9" ? "" : ` (${k.replace("_01-03", "")})`));
+  const fm = document.getElementById("yrkeFunnet");
+  if (tilstand.funnetMed) { fm.hidden = false; fm.textContent = `Funnet med søkeordet «${tilstand.funnetMed.o}».` + (tilstand.funnetMed.usikker ? " Koblingen er vårt valg og dekker kanskje ikke hele det du søkte på." : ""); }
+  else fm.hidden = true;
+  const mangl = document.getElementById("yrkeMangler");
+  const harSerie = s.filter(x => x != null).length;
+  if (v == null) {
+    settTekst("yrkeTekst", "");
+    document.getElementById("yrkeTall").innerHTML = "";
+    mangl.hidden = false;
+    mangl.textContent = symb === ":" ? `Tallet for ${kv(TY[sist])}${hvemTekst(kj)} er ikke publisert, fordi det kunne avsløre opplysninger om enkeltpersoner. ${kj === "begge" ? "Prøv en overordnet gruppe." : "Prøv «Begge» eller en overordnet gruppe."}`
+      : harSerie ? `Det finnes ikke tall for ${kv(TY[sist])}${hvemTekst(kj)}. Figuren viser kvartalene som har tall.` : `Det finnes ingen tall for dette yrket${hvemTekst(kj)}.`;
+  } else {
+    mangl.hidden = harSerie === TY.length || !harSerie ? true : false;
+    if (!mangl.hidden) mangl.textContent = `Yrket har tall for ${harSerie} av ${TY.length} kvartaler. Hullene vises som brudd i linjen.`;
+    const e = D.yendr[kj][k], vf = s[iF], forsk = v - alle;
+    settTekst("yrkeTekst", `${pst(v)} av de avtalte dagsverkene${hvemTekst(kj)} gikk tapt til legemeldt fravær i ${kv(TY[sist])}. ` +
+      (k === "0-9" ? "" : Math.abs(forsk) < 0.25 ? `Det er omtrent som for alle yrker (${pst(alle)}).` : `Det er ${nb(Math.abs(forsk), 1)} prosentpoeng ${forsk > 0 ? "høyere" : "lavere"} enn for alle yrker (${pst(alle)}).`) +
+      (vf != null && e != null ? ` I ${kv(TY[iF])} var det ${pst(vf)}.` : ""));
+    document.getElementById("yrkeTall").innerHTML = [[pst(v), `Legemeldt, ${kvK(TY[sist])}`], [e == null ? "–" : sgn(e) + " prosent", `Endring fra ${kvK(TY[iF])}`], [pst(alle), "Alle yrker"]]
+      .map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
+  }
+  // figur
+  const {svg, w, h} = svgFor("figYrke", 230, `Legemeldt sykefravær for ${Y.navn} ${TY[0]}–${TY[sist]}, med alle yrker i grått`);
+  if (!harSerie) { svg.attr("height", 0); } else {
+    const ref = yv("0-9"), m = {l: 30, r: 96, t: 22, b: 26};
+    const x = d3.scaleLinear([0, sist], [m.l, w - m.r]), y = d3.scaleLinear([0, Math.ceil(d3.max(s.concat(ref).filter(z => z != null)) + 0.5)], [h - m.b, m.t]);
+    rutenett(svg, y, m.l, w - m.r, y.ticks(4), z => nb(z));
+    tekst(svg, 0, 12, "prosent, legemeldt", {farge: F.graT});
+    aarAkse(svg, x, TY, h - m.b, w < 520 ? 4 : 2);
+    const linje = d3.line().defined(d => d != null).x((d, i) => x(i)).y(d => y(d));
+    if (k !== "0-9") svg.append("path").attr("d", linje(ref)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 1.5);
+    svg.append("path").attr("d", linje(s)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+    const et = [];
+    if (k !== "0-9") et.push({y: y(ref[sist]), t: "Alle yrker", f: F.graT});
+    if (v != null) et.push({y: y(v), t: k === "0-9" ? "Alle yrker" : (Y.navn.length > 13 ? Y.navn.slice(0, 12) + "…" : Y.navn), f: F.gronn});
+    etiketterUtenOverlapp(et, 14).forEach(e => tekst(svg, x(sist) + 6, e.y + 4, e.t, {farge: e.f, vekt: 600, str: 12}));
+    svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, TY.length, px => Math.round(x.invert(px)),
+      i => `<b>${kv(TY[i])}</b><br>${esc(Y.navn)}: ${s[i] == null ? "mangler" : pst(s[i])}` + (k === "0-9" ? "" : `<br>Alle yrker: ${pst(ref[i])}`));
+  }
+  settTekst("kildeYrke", kilde(["12452"]) + " Endringen fra året før er publisert av SSB.");
+  tabellHTML("tabYrke", ["Kvartal", esc(Y.navn), "Alle yrker"], TY.map((t, i) => [kv(t), s[i] == null ? ((i === sist && symb) || "..") : nb(s[i], 1), nb(yv("0-9")[i], 1)]).reverse());
+  // undergrupper
+  const barn = BARN[k] || [];
+  document.getElementById("yrkeUnderBoks").hidden = !barn.length;
+  if (barn.length) {
+    settTekst("tYrkeUnder", `${barn.length === 1 ? "Undergruppe" : barn.length + " undergrupper"}, ${kvK(TY[sist])}`);
+    const sortert = barn.slice().sort((a, b) => (ySiste(b) ?? -1) - (ySiste(a) ?? -1));
+    document.getElementById("yrkeUnder").innerHTML = sortert.map(c => `<li><button type="button" class="bf-lenkeknapp" data-k="${c}">${esc(YRKE[c].navn)}</button><span>${ySiste(c) == null ? ((D.ysym[kj] || {})[c] === ":" ? "undertrykt" : "mangler") : nb(ySiste(c), 1)}</span></li>`).join("");
+    document.querySelectorAll("#yrkeUnder button").forEach(b => b.addEventListener("click", () => velgYrke(b.dataset.k, null)));
+  }
+}
+function yrkeTre() {
+  const el = document.getElementById("yrkeTreInnhold");
+  el.innerHTML = HOVEDGR.concat(["0b"]).map(h => {
+    const fire = D.yrker.filter(([k, , niv]) => niv === 4 && sti(k)[1] === h).sort((a, b) => a[1].localeCompare(b[1], "nb"));
+    return `<details><summary>${esc(YRKE[h].navn)} (${fire.length})</summary><ul>${fire.map(([k, n]) => `<li><button type="button" class="bf-lenkeknapp" data-k="${k}">${esc(n)}</button></li>`).join("")}</ul></details>`;
+  }).join("");
+  el.addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (b) velgYrke(b.dataset.k, null); });
+}
+
+// ---------- kommune ----------
+const KOM = Object.entries(D.kommuner).map(([k, v]) => ({k, ...v, deler: v.navn.split(" - ").map(NORM), n: NORM(v.navn)}));
+function sokKommune(q) {
+  const n = NORM(q); if (!n) return [];
+  const r = [];
+  KOM.forEach(o => {
+    let x = null;
+    if (o.deler.includes(n) || o.k === q.trim()) x = 0;
+    else if (o.deler.some(d => d.startsWith(n))) x = 1;
+    else if (o.n.split(/[\s\-]+/).some(d => d.startsWith(n))) x = 2;
+    else if (n.length >= 3 && o.n.includes(n)) x = 3;
+    if (x !== null) r.push([x, o.navn, o.k]);
+  });
+  return r.sort((a, b) => a[0] - b[0] || a[1].localeCompare(b[1], "nb")).slice(0, 12).map(z => ({k: z[2]}));
+}
+function velgKommune(k) { tilstand.kommune = k; oppdater(); document.getElementById("tKommune").scrollIntoView({block: "nearest"}); }
+function kommune() {
+  const k = tilstand.kommune, o = D.kommuner[k], n = TK.length, sist = n - 1;
+  const land = TK.map(t => D.hoved.begge.lege.uj[T.indexOf(t)]);
+  const iF = TK.indexOf(iFjor(TK[sist]));
+  settTekst("tKommune", o.navn.split(" - ")[0] === o.fylke ? o.navn : `${o.navn} (${o.fylke})`);
+  const forsk = o.pros[sist] - land[sist], spenn = d3.max(o.pros) - d3.min(o.pros);
+  settTekst("kommuneTekst", `${pst(o.pros[sist])} av de avtalte dagsverkene for lønnstakere bosatt i ${o.navn.split(" - ")[0]} gikk tapt til legemeldt fravær i ${kv(TK[sist])}. ` +
+    (Math.abs(forsk) < 0.25 ? `Det er omtrent som i hele landet (${pst(land[sist])}).` : `Det er ${nb(Math.abs(forsk), 1)} prosentpoeng ${forsk > 0 ? "høyere" : "lavere"} enn i hele landet (${pst(land[sist])}).`) +
+    (spenn >= 2 ? ` Tallene har svingt mellom ${nb(d3.min(o.pros), 1)} og ${nb(d3.max(o.pros), 1)} prosent siden ${TK[0].slice(0, 4)}. Små kommuner svinger mye fra kvartal til kvartal, så se på flere kvartaler før du trekker konklusjoner.` : ""));
+  document.getElementById("kommuneTall").innerHTML = [[pst(o.pros[sist]), `Legemeldt, ${kvK(TK[sist])}`], [o.endr[sist] == null ? "–" : sgn(o.endr[sist]) + " prosent", `Endring fra ${kvK(TK[iF])}`], [pst(land[sist]), "Hele landet"]]
+    .map(([a, b]) => `<div><b>${a}</b>${b}</div>`).join("");
+  const {svg, w, h} = svgFor("figKommune", 230, `Legemeldt sykefravær for ${o.navn} ${TK[0]}–${TK[sist]}, med hele landet i grått`);
+  const m = {l: 30, r: 96, t: 22, b: 26};
+  const x = d3.scalePoint(d3.range(n), [m.l, w - m.r]), y = d3.scaleLinear([0, Math.ceil(d3.max(o.pros.concat(land)) + 0.5)], [h - m.b, m.t]);
+  rutenett(svg, y, m.l, w - m.r, y.ticks(4), z => nb(z));
+  tekst(svg, 0, 12, "prosent, legemeldt", {farge: F.graT});
+  TK.forEach((t, i) => { if (t.endsWith("K1") || (w > 560 && t.endsWith("K3"))) tekst(svg, x(i), h - 8, t.endsWith("K1") ? t.slice(0, 4) : "3. kv.", {anker: "middle", farge: F.graT, str: 12}); });
+  const linje = d3.line((d, i) => x(i), d => y(d));
+  svg.append("path").attr("d", linje(land)).attr("fill", "none").attr("stroke", F.gra).attr("stroke-width", 2);
+  svg.append("path").attr("d", linje(o.pros)).attr("fill", "none").attr("stroke", F.gronn).attr("stroke-width", 2.5);
+  o.pros.forEach((v, i) => svg.append("circle").attr("cx", x(i)).attr("cy", y(v)).attr("r", 3).attr("fill", F.gronn));
+  const kort = o.navn.split(" - ")[0];
+  etiketterUtenOverlapp([{y: y(land[sist]), t: "Hele landet", f: F.graT}, {y: y(o.pros[sist]), t: kort.length > 13 ? kort.slice(0, 12) + "…" : kort, f: F.gronn}], 14)
+    .forEach(e => tekst(svg, x(sist) + 8, e.y + 4, e.t, {farge: e.f, vekt: 600, str: 12}));
+  svevFlate(svg, m.l, m.t, w - m.l - m.r, h - m.t - m.b, n, px => Math.round((px - m.l) / x.step()), i => `<b>${kv(TK[i])}</b><br>${esc(kort)}: ${pst(o.pros[i])}<br>Hele landet: ${pst(land[i])}`);
+  settTekst("kildeKommune", kilde(["12451", "12439"]) + " Hele landet er legemeldt, ikke sesongjustert, fra tabell 12439.");
+  tabellHTML("tabKommune", ["Kvartal", esc(kort), "Endring fra året før (prosent)", "Hele landet"], TK.map((t, i) => [kv(t), nb(o.pros[i], 1), o.endr[i] == null ? ".." : sgn(o.endr[i]), nb(land[i], 1)]).reverse());
+}
+function alleKommuner() {
+  const sist = TK.length - 1;
+  const rad = KOM.slice().sort((a, b) => a.navn.localeCompare(b.navn, "nb"));
+  tabellHTML("tabAlleKommuner", ["Kommune", "Fylke", `${kvK(TK[sist])} (prosent)`, "Endring fra året før (prosent)"],
+    rad.map(o => [`<button type="button" class="bf-lenkeknapp" data-k="${o.k}">${esc(o.navn)}</button>`, o.fylke, nb(o.pros[sist], 1), sgn(o.endr[sist])]));
+  document.getElementById("tabAlleKommuner").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (b) velgKommune(b.dataset.k); });
+}
+
+// ---------- søkefelt ----------
+function sokefelt(inpId, ulId, ingenId, sok, navn, velg, ingenTekst) {
+  const inp = document.getElementById(inpId), ul = document.getElementById(ulId), ingen = document.getElementById(ingenId);
+  let treff = [], aktiv = -1;
+  const lukk = () => { ul.hidden = true; inp.setAttribute("aria-expanded", "false"); inp.removeAttribute("aria-activedescendant"); aktiv = -1; };
+  const ta = t => { inp.value = ""; lukk(); ingen.hidden = true; velg(t); };
+  const tegn = () => {
+    ul.innerHTML = treff.map((t, i) => `<li role="option" id="${ulId}-${i}" aria-selected="${i === aktiv}">${navn(t)}</li>`).join("");
+    ul.hidden = !treff.length; inp.setAttribute("aria-expanded", treff.length ? "true" : "false");
+    if (aktiv >= 0) inp.setAttribute("aria-activedescendant", `${ulId}-${aktiv}`); else inp.removeAttribute("aria-activedescendant");
+  };
+  inp.addEventListener("input", () => {
+    treff = sok(inp.value); aktiv = treff.length ? 0 : -1; tegn();
+    ingen.hidden = !(inp.value.trim() && !treff.length);
+    if (!ingen.hidden) ingen.innerHTML = ingenTekst(esc(inp.value.trim()));
+  });
+  inp.addEventListener("keydown", e => {
+    if (e.key === "ArrowDown" && treff.length) { e.preventDefault(); aktiv = (aktiv + 1) % treff.length; tegn(); }
+    else if (e.key === "ArrowUp" && treff.length) { e.preventDefault(); aktiv = (aktiv - 1 + treff.length) % treff.length; tegn(); }
+    else if (e.key === "Enter" && aktiv >= 0) { e.preventDefault(); ta(treff[aktiv]); }
+    else if (e.key === "Escape") lukk();
+  });
+  ul.addEventListener("mousedown", e => { const li = e.target.closest("li"); if (li) { e.preventDefault(); ta(treff[+li.id.split("-").pop()]); } });
+  inp.addEventListener("blur", () => setTimeout(lukk, 120));
+  ingen.addEventListener("click", e => { const a = e.target.closest("a[data-apne]"); if (a) { e.preventDefault(); const d = document.getElementById(a.dataset.apne); d.open = true; d.scrollIntoView({block: "start"}); } });
+}
+
+// ---------- samlet ----------
+function bunn() {
+  const t = Object.entries(D.oppdatert).map(([k, v]) => `${k} (${v})`).join(", ");
+  const h = D.hentet.split("-").reverse().join(".");
+  document.getElementById("bunnKilder").innerHTML = `Tabeller i statistikkbanken, med dato for siste oppdatering: ${t}. Tallene ble hentet fra data.ssb.no ${h}. Neste publisering er 25. februar 2027.`;
+}
+function oppdater() {
+  skrivAdresse();
+  document.querySelectorAll("#velgKjonn button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === tilstand.kjonn));
+  lesehjelp(); topp(); navSsb(); varighet(); varighetTid(); kjonnFig(); hovedgrupper(); yrke(); kommune();
+}
+lesAdresse(); hode(); bunn(); yrkeTre(); alleKommuner();
+sokefelt("sokYrke", "forslagYrke", "sokYrkeIngen", sokYrke,
+  t => `${esc(YRKE[t.k].navn)} <small>${t.via ? "søkeord «" + esc(t.via.o) + "» · " : ""}${nivNavn(t.k)}</small>`,
+  t => velgYrke(t.k, t.via),
+  q => `Fant ikke noe yrke for «${q}». Prøv et annet ord, eller <a href="#" data-apne="yrkeTre">se alle yrker</a>.`);
+sokefelt("sokKommune", "forslagKommune", "sokKommuneIngen", sokKommune,
+  t => `${esc(D.kommuner[t.k].navn)} <small>${esc(D.kommuner[t.k].fylke)}</small>`,
+  t => velgKommune(t.k),
+  q => `Ingen kommune heter «${q}». Prøv en del av navnet, eller <a href="#" data-apne="alleKommuner">se alle kommuner</a>.`);
+oppdater();
+window.addEventListener("hashchange", () => { lesAdresse(); oppdater(); });
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(oppdater, 150); });
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{
+ "kortnavn": "sykefratot",
+ "statistikk": "Sykefravær",
+ "oppdatert_kilde": "2026-11-26",
+ "neste_publisering": "2027-02-25",
+ "datasett": [
+  {
+   "id": "hoved",
+   "tabell": "12439",
+   "svarer_paa": [
+    "Spørsmål 1: nivå og trend",
+    "Lesehjelp: SSB/Nav-bryter",
+    "Kjønnsvelger"
+   ],
+   "seksjon": [
+    "Toppgrafikk A",
+    "Konseptgrafikken (trinn 2–4)",
+    "SSB/Nav-bryter"
+   ],
+   "beskrivelse": "Sykefraværsprosent etter kjønn og type (egen-, legemeldt, alt): ujustert, sesongjustert, sesong- og influensajustert, publiserte endringsrater og sykefraværsdagsverk.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12439/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Sykefraver2]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+   "omfang": "3 kjønn × 3 typer × 9 statistikkvariabler × alle kvartaler fra 2000K2 (106 per 2026K3) = 8 586 celler"
+  },
+  {
+   "id": "varighet",
+   "tabell": "12946",
+   "svarer_paa": [
+    "Spørsmål 3: korte og lange fravær"
+   ],
+   "seksjon": [
+    "Seksjon C"
+   ],
+   "beskrivelse": "Sykefraværsdagsverk og -tilfeller etter type og varighet innenfor kvartalet, antall og prosent.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12946/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[VarighetTypeSyk]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+   "omfang": "3 kjønn × 8 varighetsgrupper × 4 statistikkvariabler × kvartaler fra 2015K1 (47) = 4 512 celler"
+  },
+  {
+   "id": "personer",
+   "tabell": "12446",
+   "svarer_paa": [
+    "Spørsmål 2: hva 6,7 prosent betyr"
+   ],
+   "seksjon": [
+    "Lesehjelp: personer og dagsverk"
+   ],
+   "beskrivelse": "Legemeldt sykefraværsprosent og andel og antall lønnstakere med legemelding, hele landet, 16–69 år.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12446/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0&valueCodes[Kjonn]=*&valueCodes[Alder]=16-69&valueCodes[ContentsCode]=Sykefraversprosent,ArbeidstakereSykePro,ArbeidstakereSykefra&valueCodes[Tid]=*",
+   "omfang": "3 kjønn × 3 statistikkvariabler × 106 kvartaler = 954 celler"
+  },
+  {
+   "id": "yrke",
+   "tabell": "12452",
+   "svarer_paa": [
+    "Spørsmål 4: hvem har høyest fravær"
+   ],
+   "seksjon": [
+    "Yrkesoppslag"
+   ],
+   "beskrivelse": "Legemeldt sykefraværsprosent etter yrke (STYRK08, 1–4 siffer) og kjønn, alle kvartaler fra 2015.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12452/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Yrke]=*&valueCodes[ContentsCode]=Sykefraversprosent&valueCodes[Tid]=*",
+   "omfang": "3 kjønn × 583 yrkeskoder × 47 kvartaler = 82 203 celler"
+  },
+  {
+   "id": "yrke_endring",
+   "tabell": "12452",
+   "svarer_paa": [
+    "Spørsmål 4"
+   ],
+   "seksjon": [
+    "Yrkesoppslag"
+   ],
+   "beskrivelse": "Publisert prosentvis endring fra samme kvartal året før, siste kvartal.",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12452/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Yrke]=*&valueCodes[ContentsCode]=SykefraversprosEndr&valueCodes[Tid]=top(1)",
+   "omfang": "3 kjønn × 583 yrkeskoder × 1 kvartal = 1 749 celler"
+  },
+  {
+   "id": "kommune",
+   "tabell": "12451",
+   "svarer_paa": [
+    "Spørsmål 4"
+   ],
+   "seksjon": [
+    "Min kommune"
+   ],
+   "beskrivelse": "Legemeldt sykefraværsprosent og publisert endring fra året før etter bostedskommune, begge kjønn, fra 2024K1 (gjeldende kommuneinndeling).",
+   "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12451/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=*&valueCodes[Kjonn]=0&valueCodes[ContentsCode]=Sykefraversprosent,SykefraversprosEndr&valueCodes[Tid]=from(2024K1)",
+   "omfang": "937 regionkoder × 2 statistikkvariabler × 11 kvartaler = 20 614 celler, hvorav 358 koder har tall (357 kommuner og 9999 Uoppgitt)"
+  }
+ ],
+ "manglende_verdier": {
+  "..": "Tall mangler. 12439: begge dagsverksvariablene før 2015 (1 062 celler). 12452: 5 549 celler, mest i kjønnsfordelte serier for yrker uten tall for ett kjønn. 12451: utgåtte kommunekoder i 2024 og publisert endring for 115 av dagens kommuner i 2024 (kommunene fikk nye koder i 2024).",
+  ".": "Kan ikke forekomme. 12439: endringsrater for 2000–2001 og ved bruddet i 2015 (ujusterte endringer 2015K1–K4, justerte 2015K1), 180 celler. 12451: utgåtte kommune- og fylkeskoder, 11 826 celler.",
+  ":": "Undertrykt av konfidensialitetshensyn. 12452: 327 celler i nivåserien, 23 yrker på 4-siffernivå i 2026K3 for begge kjønn."
+ },
+ "fallgruver": [
+  "Bruk publiserte endringsrater (EndringSesJust, ProsentvisEndring, SykefraversprosEndr). Endring regnet fra publiserte nivåer avviker i 54 av 104 kvartaler, opptil 0,2 (kontroll K3).",
+  "Sesongjusterte tall revideres fra 2015 ved hver publisering. Hent alltid hele serien på nytt.",
+  "Ujusterte tall før og etter 2015K1 er ikke sammenlignbare (a-ordningen, ny referanseuke). Marker bruddet.",
+  "Sykefraværsprosenten måler dagsverk. Andel lønnstakere med legemelding (12446) er et annet mål.",
+  "Varighet i 12946 gjelder bare dagene innenfor kvartalet.",
+  "Kommunetall (12451) er bare legemeldt, ikke sesongjustert, og etter bosted, ikke arbeidssted. Kode 9999 Uoppgitt kommune har verdien 0 uten statussymbol og skal ikke vises. Bare kodene med fire sifre og tall i 2026K3 er dagens 357 kommuner.",
+  "Yrke (12452) er bare legemeldt. Artikkelens utvalg «yrker med mer enn 15 000 jobber» kan ikke gjenskapes fra tabellen.",
+  "Egenmeldt på detaljert næringsnivå (12440) stemmer ikke med hovednæringene. Næring er utsatt til SN2025 (1. kvartal 2027).",
+  "Kjønnsdimensjonen har kodene 0 Begge kjønn, 1 Menn, 2 Kvinner. Rekkefølgen i svaret er 0, 2, 1."
+ ]
+}

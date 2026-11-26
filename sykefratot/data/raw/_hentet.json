@@ -1,0 +1,68 @@
+{
+ "hoved": {
+  "tabell": "12439",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12439/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Sykefraver2]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+  "hentet": "2026-11-26T12:45:14+00:00",
+  "updated": "2026-11-26T07:00:00Z",
+  "celler": 8586,
+  "statussymboler": {
+   ".": 180,
+   "..": 1062
+  },
+  "kilde": "data.ssb.no, PxWebApi v2, json-stat2, uendret"
+ },
+ "varighet": {
+  "tabell": "12946",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12946/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[VarighetTypeSyk]=*&valueCodes[ContentsCode]=*&valueCodes[Tid]=*",
+  "hentet": "2026-11-26T12:45:17+00:00",
+  "updated": "2026-11-26T07:00:00Z",
+  "celler": 4512,
+  "statussymboler": {},
+  "kilde": "data.ssb.no, PxWebApi v2, json-stat2, uendret"
+ },
+ "personer": {
+  "tabell": "12446",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12446/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=0&valueCodes[Kjonn]=*&valueCodes[Alder]=16-69&valueCodes[ContentsCode]=Sykefraversprosent,ArbeidstakereSykePro,ArbeidstakereSykefra&valueCodes[Tid]=*",
+  "hentet": "2026-11-26T12:45:21+00:00",
+  "updated": "2026-11-26T07:00:00Z",
+  "celler": 954,
+  "statussymboler": {},
+  "kilde": "data.ssb.no, PxWebApi v2, json-stat2, uendret"
+ },
+ "yrke": {
+  "tabell": "12452",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12452/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Yrke]=*&valueCodes[ContentsCode]=Sykefraversprosent&valueCodes[Tid]=*",
+  "hentet": "2026-11-26T12:45:27+00:00",
+  "updated": "2026-11-26T07:00:00Z",
+  "celler": 82203,
+  "statussymboler": {
+   "..": 5549,
+   ":": 327
+  },
+  "kilde": "data.ssb.no, PxWebApi v2, json-stat2, uendret"
+ },
+ "yrke_endring": {
+  "tabell": "12452",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12452/data?lang=no&outputFormat=json-stat2&valueCodes[Kjonn]=*&valueCodes[Yrke]=*&valueCodes[ContentsCode]=SykefraversprosEndr&valueCodes[Tid]=top(1)",
+  "hentet": "2026-11-26T12:45:31+00:00",
+  "updated": "2026-11-26T07:00:00Z",
+  "celler": 1749,
+  "statussymboler": {
+   ":": 139,
+   "..": 21
+  },
+  "kilde": "data.ssb.no, PxWebApi v2, json-stat2, uendret"
+ },
+ "kommune": {
+  "tabell": "12451",
+  "url": "https://data.ssb.no/api/pxwebapi/v2/tables/12451/data?lang=no&outputFormat=json-stat2&valueCodes[Region]=*&valueCodes[Kjonn]=0&valueCodes[ContentsCode]=Sykefraversprosent,SykefraversprosEndr&valueCodes[Tid]=from(2024K1)",
+  "hentet": "2026-11-26T12:45:35+00:00",
+  "updated": "2026-11-26T07:00:00Z",
+  "celler": 20614,
+  "statussymboler": {
+   "..": 1382,
+   ".": 11826
+  },
+  "kilde": "data.ssb.no, PxWebApi v2, json-stat2, uendret"
+ }
+}

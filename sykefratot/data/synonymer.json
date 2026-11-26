@@ -1,0 +1,359 @@
+{
+ "merknad": "Søkeord folk bruker, koblet til yrker i tabell 12452 (STYRK08). Listen er vårt valg og må leses av fagkontakten. Ord i «usikker» peker på et yrke som bare delvis dekker ordet, eller på flere yrker. lag_data.py stopper hvis en kode ikke finnes.",
+ "ord": {
+  "lærer": [
+   "2341",
+   "2330",
+   "2320",
+   "2342",
+   "2352"
+  ],
+  "lektor": [
+   "2330",
+   "2310"
+  ],
+  "adjunkt": [
+   "2341",
+   "2330"
+  ],
+  "barnehagelærer": [
+   "2342"
+  ],
+  "førskolelærer": [
+   "2342"
+  ],
+  "barnehageassistent": [
+   "5311"
+  ],
+  "assistent i barnehage": [
+   "5311"
+  ],
+  "sfo": [
+   "5311"
+  ],
+  "skoleassistent": [
+   "5312"
+  ],
+  "spesialpedagog": [
+   "2352"
+  ],
+  "sykepleier": [
+   "2223",
+   "2221"
+  ],
+  "spesialsykepleier": [
+   "2221"
+  ],
+  "helsesykepleier": [
+   "2221"
+  ],
+  "jordmor": [
+   "2221"
+  ],
+  "lege": [
+   "2211",
+   "2212"
+  ],
+  "fastlege": [
+   "2211"
+  ],
+  "overlege": [
+   "2212"
+  ],
+  "tannlege": [
+   "2261"
+  ],
+  "helsefagarbeider": [
+   "5321"
+  ],
+  "hjelpepleier": [
+   "5321"
+  ],
+  "omsorgsarbeider": [
+   "5321"
+  ],
+  "pleieassistent": [
+   "5329"
+  ],
+  "hjemmehjelp": [
+   "5322"
+  ],
+  "vernepleier": [
+   "2224"
+  ],
+  "fysioterapeut": [
+   "2264"
+  ],
+  "psykolog": [
+   "2634"
+  ],
+  "sosionom": [
+   "2635"
+  ],
+  "barnevernspedagog": [
+   "2635"
+  ],
+  "barnevern": [
+   "2635",
+   "3412"
+  ],
+  "miljøarbeider": [
+   "3412"
+  ],
+  "nav-veileder": [
+   "3353"
+  ],
+  "saksbehandler nav": [
+   "3353"
+  ],
+  "politi": [
+   "3355"
+  ],
+  "politibetjent": [
+   "3355"
+  ],
+  "brannmann": [
+   "5411"
+  ],
+  "brannkonstabel": [
+   "5411"
+  ],
+  "vekter": [
+   "5414"
+  ],
+  "soldat": [
+   "0310"
+  ],
+  "militær": [
+   "0110",
+   "0210",
+   "0310"
+  ],
+  "bussjåfør": [
+   "8331"
+  ],
+  "sjåfør": [
+   "8331",
+   "8332",
+   "8322"
+  ],
+  "lastebilsjåfør": [
+   "8332"
+  ],
+  "trailersjåfør": [
+   "8332"
+  ],
+  "drosjesjåfør": [
+   "8322"
+  ],
+  "taxisjåfør": [
+   "8322"
+  ],
+  "budbil": [
+   "8322"
+  ],
+  "lokfører": [
+   "8311"
+  ],
+  "t-banefører": [
+   "8311"
+  ],
+  "pilot": [
+   "3153"
+  ],
+  "flyger": [
+   "3153"
+  ],
+  "kabinansatt": [
+   "5111"
+  ],
+  "flyvertinne": [
+   "5111"
+  ],
+  "programmerer": [
+   "2512",
+   "2519"
+  ],
+  "utvikler": [
+   "2512",
+   "2513",
+   "2519"
+  ],
+  "it-konsulent": [
+   "2511",
+   "2512"
+  ],
+  "systemutvikler": [
+   "2512"
+  ],
+  "kokk": [
+   "5120",
+   "3434"
+  ],
+  "servitør": [
+   "5131"
+  ],
+  "kelner": [
+   "5131"
+  ],
+  "frisør": [
+   "5141"
+  ],
+  "butikkmedarbeider": [
+   "5223"
+  ],
+  "butikkansatt": [
+   "5223"
+  ],
+  "ekspeditør": [
+   "5223"
+  ],
+  "kasserer": [
+   "5223"
+  ],
+  "selger": [
+   "5223",
+   "3322"
+  ],
+  "renholder": [
+   "9112",
+   "9111"
+  ],
+  "vaskehjelp": [
+   "9111",
+   "9112"
+  ],
+  "rengjøring": [
+   "9112"
+  ],
+  "elektriker": [
+   "7411"
+  ],
+  "tømrer": [
+   "7115"
+  ],
+  "snekker": [
+   "7115"
+  ],
+  "rørlegger": [
+   "7126"
+  ],
+  "maler": [
+   "7131"
+  ],
+  "sveiser": [
+   "7212"
+  ],
+  "bilmekaniker": [
+   "7231"
+  ],
+  "mekaniker": [
+   "7231",
+   "7233"
+  ],
+  "advokat": [
+   "2611"
+  ],
+  "jurist": [
+   "2611"
+  ],
+  "revisor": [
+   "2411"
+  ],
+  "regnskapsfører": [
+   "3313"
+  ],
+  "økonom": [
+   "2631",
+   "1211"
+  ],
+  "journalist": [
+   "2642"
+  ],
+  "bibliotekar": [
+   "2622"
+  ],
+  "prest": [
+   "2636"
+  ],
+  "professor": [
+   "2310"
+  ],
+  "universitetslektor": [
+   "2310"
+  ],
+  "forsker": [
+   "2631",
+   "2632",
+   "2633"
+  ],
+  "rektor": [
+   "1345"
+  ],
+  "direktør": [
+   "1120"
+  ],
+  "kontoransatt": [
+   "4110"
+  ],
+  "kundeservice": [
+   "4222"
+  ],
+  "postbud": [
+   "4412"
+  ],
+  "lagerarbeider": [
+   "4321"
+  ],
+  "lagermedarbeider": [
+   "4321"
+  ],
+  "fisker": [
+   "6222"
+  ],
+  "ingeniør": [
+   "2141",
+   "2142",
+   "2144"
+  ],
+  "sivilingeniør": [
+   "2141",
+   "2142",
+   "2143",
+   "2144"
+  ],
+  "arkitekt": [
+   "2161"
+  ],
+  "farmasøyt": [
+   "2262"
+  ],
+  "resepsjonist": [
+   "4224",
+   "4226"
+  ]
+ },
+ "usikker": [
+  "jordmor",
+  "helsesykepleier",
+  "hjelpepleier",
+  "omsorgsarbeider",
+  "nav-veileder",
+  "saksbehandler nav",
+  "militær",
+  "budbil",
+  "kasserer",
+  "selger",
+  "it-konsulent",
+  "økonom",
+  "forsker",
+  "direktør",
+  "ingeniør",
+  "sivilingeniør",
+  "barnevern",
+  "professor",
+  "rektor",
+  "mekaniker",
+  "sjåfør"
+ ]
+}
