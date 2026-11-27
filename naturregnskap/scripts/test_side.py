@@ -3,18 +3,19 @@ from playwright.async_api import async_playwright
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 async def main():
     async with async_playwright() as p:
-        b = await p.chromium.launch()
+        exe = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"  # arbeidsområdet i Claude; ellers Playwrights egen
+        b = await p.chromium.launch(**({"executable_path": exe} if os.path.exists(exe) else {}))
         for w in (1280, 390):
             pg = await b.new_page(viewport={"width": w, "height": 900})
             errs = []
             pg.on("console", lambda m: errs.append(m.text) if m.type == "error" else None)
             pg.on("pageerror", lambda e: errs.append(str(e)))
-            for k in ["04", "05.1%2B06.1", "07", "02-03", "01", "12.2", "10%2B12.1", "05.2%2B06.2"]:
+            for k in ["04", "05.1%2B06.1", "07", "02-03", "01", "12.2", "10%2B12.1", "05.2%2B06.2", "08", "09", "11", "ukjent"]:
                 await pg.goto(f"file://{ROOT}/index.html#oko={k}")
                 await pg.wait_for_timeout(300)
                 sw = await pg.evaluate("document.documentElement.scrollWidth")
                 print(w, k, "scrollWidth", sw, "OK" if sw <= w else "FOR BRED")
-                if k in ("04", "07", "05.2%2B06.2"):
+                if k in ("04", "07", "05.2%2B06.2", "01", "10%2B12.1"):
                     await pg.screenshot(path=f"{ROOT}/docs/test/{w}-{k}.png", full_page=True)
             # klikk i figur
             await pg.goto(f"file://{ROOT}/index.html#oko=04")

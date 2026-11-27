@@ -1,0 +1,623 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "14852: Tilstandsregnskap. Uskalert, etter tilstandsindikator, økosystemtype og år",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
+ "note": [
+  "Uskalert variabel er den målte eller beregnede verdien i variabelens opprinnelige enhet, i motsetning til skalerte indikatorer med en verdi mellom 0 og 1. For hekkefugl  er variabelens enhet en prosent av bestandsestimater i 2010. Uskalerte variabler kan ikke sammenlignes direkte med hverandre. \n\nSe mer informasjon om den enkelte tilstandsindikatoren i Miljødirektoratets faktaark: https://miljodirektoratet.github.io/faktaark-tilstandsregnskap/",
+  "Usikkerhet ikke beregnet for\n1. Urbant grønt areal (nasjonal metode) i økossystemtype bebygd og opparbeidet areal.  \n2. Jordbruksmark med økologisk drift,  i økossystemtype jordbruksmark.  \n3. Konsentrasjon av svevestøv i byer,  i økossystemtype bebygd og opparbeidet areal.  \n4. Dødvedmengde,  i økossystemtype skog.  \n5. Trekronedekke,  i økossystemtype skog.",
+  "Usikkerhet angitt som standardavvik for\n1. Trekronedekke, i økosystemtype bebygd og opparbeidet areal.  \n2. Vannets pH verdi, i økosystemtype kystvann.",
+  "Usikkerhet angitt som 50% konfidensintervall for  \n1. Diversitet av arealtyper i jordbrukslandskapet, i økosystemtype jordbruksmark.  \n2. Hekkefugler, i økosystemtypene jordbruksmark, åpent lavland og skog.",
+  "Kun følgende variabler inngår i det nasjonale tilstandsregnskapet, mens øvrige variabler er beregnet for rapportering til Eurostat og anses ikke som nasjonalt relevante mål på økologisk tilstand:  \n1. Urbant grønt areal (nasjonal metode).  \n2. Trekronedekke i bebygd og opparbeidet areal.  \n3. Jordbruksmark med økologisk drift.  \n4. Diversitet av arealtyper i jordbrukslandskapet.  \n5. Hekkefugler.  \n6. Vannets pH-verdi.",
+  ".. = Tallgrunnlag mangler. Tall er ikke kommet inn i våre databaser eller er for usikre til å publiseres.",
+  ". = Ikke mulig å oppgi tall. Tall finnes ikke på dette tidspunktet fordi kategorien ikke var i bruk da tallene ble samlet inn."
+ ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
+ "id": [
+  "NaturregnTilstInd",
+  "Oekosystemtype",
+  "ContentsCode",
+  "Tid"
+ ],
+ "size": [
+  10,
+  6,
+  3,
+  1
+ ],
+ "dimension": {
+  "NaturregnTilstInd": {
+   "label": "tilstandsindikator",
+   "category": {
+    "index": {
+     "NO_URGR_004": 0,
+     "NO_URGR_005": 1,
+     "NO_URAQ_002": 2,
+     "NO_TCCD_XXX": 3,
+     "NO_BIRD_XXX": 4,
+     "NO_DWTO_001": 5,
+     "Pilot_JordOeko": 6,
+     "Pilot_JordDiv": 7,
+     "EU_kunstig_dekke": 8,
+     "NIVA_PH": 9
+    },
+    "label": {
+     "NO_URGR_004": "Urbant grønt areal (nasjonal metode) (prosent)",
+     "NO_URGR_005": "Urbant grønt areal (EU-metode) (prosent)",
+     "NO_URAQ_002": "Konsentrasjon av svevestøv i byer (µg/m3)",
+     "NO_TCCD_XXX": "Trekronedekke (prosent)",
+     "NO_BIRD_XXX": "Hekkefugler (prosent)",
+     "NO_DWTO_001": "Dødvedmengde (m3/ha)",
+     "Pilot_JordOeko": "Jordbruksmark med økologisk drift (prosent)",
+     "Pilot_JordDiv": "Diversitet av arealtyper i jordbrukslandskapet  (Shannons diversitetsindeks)",
+     "EU_kunstig_dekke": "Andel kunstig ugjennomtrengelig dekke (prosent)",
+     "NIVA_PH": "Vannets pH-verdi (pH)"
+    },
+    "note": {
+     "NO_URGR_004": [
+      "Andelen av bebygde områder som ikke er dekket av bygninger, asfalt eller andre harde flater. Følger FNs rammeverk for naturregnskap (SEEA EA)."
+     ],
+     "NO_URGR_005": [
+      "Andelen grønne arealer i hele kommuner i og rundt de største byene, for eksempel skog, fjell og våtmark. Beregnet etter krav i EU-forordning 2024/3024. Fordi norske kommuner har mye natur, blir andelen høyere enn med nasjonal metode."
+     ]
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "NaturregnTilstInd": "urn:ssb:classification:klass:959"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:959"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/959",
+      "label": "Kodeliste for Indikatorer og variabler i tilstandsregnskapet (nasjonalt naturregnskap)",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "Oekosystemtype": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "_T": 0,
+     "01": 1,
+     "02+03": 2,
+     "04": 3,
+     "05.02+06.02": 4,
+     "10+12.01": 5
+    },
+    "label": {
+     "_T": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02+03": "Jordbruksmark",
+     "04": "Skog",
+     "05.02+06.02": "Åpent lavland",
+     "10+12.01": "Kystvann"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype": "urn:ssb:classification:klass:961"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:961"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/961",
+      "label": "Kodeliste for økosystemtyper (EU-typologi)",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "OekologiskTilstand": 0,
+     "UsikkerhetNedre": 1,
+     "UsikkerhetOevre": 2
+    },
+    "label": {
+     "OekologiskTilstand": "Økologisk tilstand",
+     "UsikkerhetNedre": "Usikkerhet, nedre grense",
+     "UsikkerhetOevre": "Usikkerhet, øvre grense"
+    },
+    "unit": {
+     "OekologiskTilstand": {
+      "base": "indikator",
+      "decimals": 2
+     },
+     "UsikkerhetNedre": {
+      "base": "indikator",
+      "decimals": 2
+     },
+     "UsikkerhetOevre": {
+      "base": "indikator",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "OekologiskTilstand": "31.12.",
+     "UsikkerhetNedre": "31.12.",
+     "UsikkerhetOevre": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "OekologiskTilstand": "Other",
+     "UsikkerhetNedre": "Other",
+     "UsikkerhetOevre": "Other"
+    },
+    "priceType": {
+     "OekologiskTilstand": "NotApplicable",
+     "UsikkerhetNedre": "NotApplicable",
+     "UsikkerhetOevre": "NotApplicable"
+    },
+    "adjustment": {
+     "OekologiskTilstand": "None",
+     "UsikkerhetNedre": "None",
+     "UsikkerhetOevre": "None"
+    },
+    "alternativeText": {
+     "OekologiskTilstand": "Økologisk tilstand",
+     "UsikkerhetNedre": "Usikkerhet, nedre grense",
+     "UsikkerhetOevre": "Usikkerhet, øvre grense"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
+   }
+  }
+ },
+ "extension": {
+  "px": {
+   "infofile": "None",
+   "tableid": "14852",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "14852: Tilstandsregnskap. Uskalert,",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "NaturregnTilstInd",
+    "Oekosystemtype"
+   ],
+   "matrix": "14852",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   },
+   {
+    "name": "Marte Lindseth",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "98 03 69 42",
+    "mail": "dth@ssb.no",
+    "raw": "Marte Lindseth, Statistisk sentralbyrå# +47 98 03 69 42#dth@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  null,
+  null,
+  null,
+  77.89,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  88.89,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  5.47,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  12.4,
+  12.39,
+  12.41,
+  null,
+  null,
+  null,
+  54.87,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  79.66,
+  72.9,
+  86.75,
+  113.39,
+  109.2,
+  117,
+  79.66,
+  72.9,
+  86.75,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  9.92,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  4.3,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  0.57,
+  0.49,
+  0.67,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  1.98,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  8.04,
+  8.02,
+  8.05
+ ],
+ "status": {
+  "0": ".",
+  "1": ".",
+  "2": ".",
+  "4": "..",
+  "5": "..",
+  "6": ".",
+  "7": ".",
+  "8": ".",
+  "9": ".",
+  "10": ".",
+  "11": ".",
+  "12": ".",
+  "13": ".",
+  "14": ".",
+  "15": ".",
+  "16": ".",
+  "17": ".",
+  "18": ".",
+  "19": ".",
+  "20": ".",
+  "22": "..",
+  "23": "..",
+  "24": ".",
+  "25": ".",
+  "26": ".",
+  "27": ".",
+  "28": ".",
+  "29": ".",
+  "30": ".",
+  "31": ".",
+  "32": ".",
+  "33": ".",
+  "34": ".",
+  "35": ".",
+  "36": ".",
+  "37": ".",
+  "38": ".",
+  "40": "..",
+  "41": "..",
+  "42": ".",
+  "43": ".",
+  "44": ".",
+  "45": ".",
+  "46": ".",
+  "47": ".",
+  "48": ".",
+  "49": ".",
+  "50": ".",
+  "51": ".",
+  "52": ".",
+  "53": ".",
+  "54": ".",
+  "55": ".",
+  "56": ".",
+  "60": ".",
+  "61": ".",
+  "62": ".",
+  "64": "..",
+  "65": "..",
+  "66": ".",
+  "67": ".",
+  "68": ".",
+  "69": ".",
+  "70": ".",
+  "71": ".",
+  "72": ".",
+  "73": ".",
+  "74": ".",
+  "75": ".",
+  "76": ".",
+  "77": ".",
+  "87": ".",
+  "88": ".",
+  "89": ".",
+  "90": ".",
+  "91": ".",
+  "92": ".",
+  "93": ".",
+  "94": ".",
+  "95": ".",
+  "96": ".",
+  "97": ".",
+  "98": ".",
+  "100": "..",
+  "101": "..",
+  "102": ".",
+  "103": ".",
+  "104": ".",
+  "105": ".",
+  "106": ".",
+  "107": ".",
+  "108": ".",
+  "109": ".",
+  "110": ".",
+  "111": ".",
+  "112": ".",
+  "113": ".",
+  "115": "..",
+  "116": "..",
+  "117": ".",
+  "118": ".",
+  "119": ".",
+  "120": ".",
+  "121": ".",
+  "122": ".",
+  "123": ".",
+  "124": ".",
+  "125": ".",
+  "126": ".",
+  "127": ".",
+  "128": ".",
+  "129": ".",
+  "130": ".",
+  "131": ".",
+  "135": ".",
+  "136": ".",
+  "137": ".",
+  "138": ".",
+  "139": ".",
+  "140": ".",
+  "141": ".",
+  "142": ".",
+  "143": ".",
+  "145": "..",
+  "146": "..",
+  "147": ".",
+  "148": ".",
+  "149": ".",
+  "150": ".",
+  "151": ".",
+  "152": ".",
+  "153": ".",
+  "154": ".",
+  "155": ".",
+  "156": ".",
+  "157": ".",
+  "158": ".",
+  "159": ".",
+  "160": ".",
+  "161": ".",
+  "162": ".",
+  "163": ".",
+  "164": ".",
+  "165": ".",
+  "166": ".",
+  "167": ".",
+  "168": ".",
+  "169": ".",
+  "170": ".",
+  "171": ".",
+  "172": ".",
+  "173": ".",
+  "174": ".",
+  "175": ".",
+  "176": "."
+ }
+}

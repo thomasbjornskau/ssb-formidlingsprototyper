@@ -1,62 +1,58 @@
 {
  "version": "2.0",
  "class": "dataset",
- "label": "Tilstandsregnskap for våtmark, etter landsdel. Skalert (DUMMY)",
+ "label": "15015: Tilstandsregnskap for våtmark. Skalert (1=intakt, 0=helt ødelagt), etter landsdelsinndeling for naturregnskap og år",
  "source": "Statistisk sentralbyrå",
- "updated": "2026-11-10T12:00:00Z",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
  "note": [
-  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+  "Økologisk tilstand kan sees på som helsen til et økosystem. Tilstandsindikatorer er målbare elementer i økosystemet som sier noe om tilstanden. Verdien 1 betyr at økosystemet er i intakt tilstand, og verdien 0 tilsvarer helt ødelagt natur. \n\nSe mer informasjon om den enkelte tilstandsindikatoren i Miljødirektoratets faktaark: https://miljodirektoratet.github.io/faktaark-tilstandsregnskap/",
+  "Landsdelsinndelingen for naturregnskap samsvarer med inndelingen Miljødirektoratet bruker i datainnsamling og bearbeiding av data etter Naturindeksen og Fagsystem for økologisk tilstand, som inngår i naturregnskapet. Landsdelsinndeling er et regionalt nivå mellom fylke og hele landet. Landsdelene består av et helt antall fylker."
  ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
  "id": [
-  "Okosystem",
-  "Indikator",
-  "Egenskap",
-  "Region",
+  "LandsdelNaturregn",
+  "ContentsCode",
   "Tid"
  ],
  "size": [
-  1,
-  1,
-  1,
   6,
+  3,
   2
  ],
  "dimension": {
-  "Okosystem": {
-   "label": "hovedøkosystem",
-   "category": {
-    "index": {
-     "07": 0
-    },
-    "label": {
-     "07": "Våtmark"
-    }
-   }
-  },
-  "Indikator": {
-   "label": "tilstandsindikator",
-   "category": {
-    "index": {
-     "Naturindeks_VM": 0
-    },
-    "label": {
-     "Naturindeks_VM": "Naturindeks for våtmark"
-    }
-   }
-  },
-  "Egenskap": {
-   "label": "tilstandsegenskap",
-   "category": {
-    "index": {
-     "B1": 0
-    },
-    "label": {
-     "B1": "Biologisk mangfold"
-    }
-   }
-  },
-  "Region": {
-   "label": "landsdel",
+  "LandsdelNaturregn": {
+   "label": "landsdelsinndeling for naturregnskap",
    "category": {
     "index": {
      "0": 0,
@@ -67,12 +63,96 @@
      "5": 5
     },
     "label": {
-     "0": "Hele landet",
+     "0": "Hele Norge",
      "1": "Øst",
      "2": "Sør",
      "3": "Vest",
      "4": "Midt",
      "5": "Nord"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "0",
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "LandsdelNaturregn": "urn:ssb:classification:klass:967"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:967"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/967",
+      "label": "Kodeliste for Landsdelsinndeling for naturregnskap",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "OekologiskTilstand": 0,
+     "UsikkerhetNedre": 1,
+     "UsikkerhetOevre": 2
+    },
+    "label": {
+     "OekologiskTilstand": "Økologisk tilstand",
+     "UsikkerhetNedre": "95 prosent konfidensintervall, nedre grense",
+     "UsikkerhetOevre": "95 prosent konfidensintervall, øvre grense"
+    },
+    "unit": {
+     "OekologiskTilstand": {
+      "base": "indikator",
+      "decimals": 2
+     },
+     "UsikkerhetNedre": {
+      "base": "indikator",
+      "decimals": 2
+     },
+     "UsikkerhetOevre": {
+      "base": "indikator",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "OekologiskTilstand": "31.12.",
+     "UsikkerhetNedre": "31.12.",
+     "UsikkerhetOevre": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "OekologiskTilstand": "Other",
+     "UsikkerhetNedre": "Other",
+     "UsikkerhetOevre": "Other"
+    },
+    "priceType": {
+     "OekologiskTilstand": "NotApplicable",
+     "UsikkerhetNedre": "NotApplicable",
+     "UsikkerhetOevre": "NotApplicable"
+    },
+    "adjustment": {
+     "OekologiskTilstand": "None",
+     "UsikkerhetNedre": "None",
+     "UsikkerhetOevre": "None"
+    },
+    "alternativeText": {
+     "OekologiskTilstand": "Økologisk tilstand",
+     "UsikkerhetNedre": "95 prosent konfidensintervall, nedre grense",
+     "UsikkerhetOevre": "95 prosent konfidensintervall, øvre grense"
     }
    }
   },
@@ -87,25 +167,89 @@
      "2019": "2019",
      "2024": "2024"
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
    }
   }
  },
+ "extension": {
+  "px": {
+   "infofile": "None",
+   "tableid": "15015",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "15015: Tilstandsregnskap for våtmark. Skalert (1=intakt, 0=helt ødelagt),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "LandsdelNaturregn"
+   ],
+   "matrix": "15015",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Marte Lindseth",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "98 03 69 42",
+    "mail": "dth@ssb.no",
+    "raw": "Marte Lindseth, Statistisk sentralbyrå# +47 98 03 69 42#dth@ssb.no"
+   },
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   }
+  ]
+ },
  "value": [
-  0.63,
-  0.62,
-  0.58,
-  0.57,
-  0.61,
-  0.6,
   0.66,
-  0.65,
+  0.64,
   0.64,
   0.62,
+  0.68,
+  0.66,
+  0.68,
+  0.67,
+  0.64,
+  0.64,
+  0.7,
+  0.69,
+  0.51,
+  0.49,
+  0.49,
+  0.45,
+  0.53,
+  0.52,
+  0.48,
+  0.48,
+  0.45,
+  0.44,
+  0.5,
+  0.52,
+  0.7,
+  0.69,
+  0.68,
+  0.67,
+  0.72,
+  0.71,
+  0.67,
+  0.64,
   0.65,
+  0.61,
+  0.69,
   0.65
- ],
- "extension": {
-  "tabell": "15015",
-  "enhet": "skalert 0–1"
- }
+ ]
 }

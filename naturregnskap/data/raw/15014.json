@@ -1,108 +1,218 @@
 {
  "version": "2.0",
  "class": "dataset",
- "label": "Tilstandsregnskap for åpent lavland og jordbruksmark. Skalert (DUMMY)",
+ "label": "15014: Tilstandsregnskap for åpent lavland og jordbruksmark. Skalert (1=intakt, 0=helt ødelagt), etter tilstandsindikator, økosystemtype og år",
  "source": "Statistisk sentralbyrå",
- "updated": "2026-11-10T12:00:00Z",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
  "note": [
-  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+  "Økologisk tilstand kan sees på som helsen til et økosystem. Tilstandsindikatorer er målbare elementer i økosystemet som sier noe om tilstanden. Verdien 1 betyr at økosystemet er i intakt tilstand, og verdien 0 tilsvarer helt ødelagt natur. \n\nSe mer informasjon om den enkelte tilstandsindikatoren i Miljødirektoratets faktaark: https://miljodirektoratet.github.io/faktaark-tilstandsregnskap/",
+  "Usikkerhet angitt som 95% konfidensintervall for følgende indikatorer i økosystemtype åpent lavland:  \n1. Pollinatorpotensiale.  \n2. Vegetasjonsindikator for lys.  \n3. Vegetasjonsindikator for fosfor.  \n4. Vegetasjonsindikator for pH.  \n5. Vegetasjonsindikator for beite eller slått.  \n6. Vegetasjonsindikator for jordforstyrrelse i naturlig åpne systemer.  \n7. Vegetasjonsindikator for jordforstyrrelse i semi-naturlige systemer.  \n8. Vegetasjonsindikator for nitrogen.  \n9. Vegetasjonsindikator for fuktighet.  \n10. Naturindeks.",
+  ". = Ikke mulig å oppgi tall. Tall finnes ikke på dette tidspunktet fordi kategorien ikke var i bruk da tallene ble samlet inn."
  ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
  "id": [
-  "Okosystem",
-  "Indikator",
-  "Egenskap",
-  "Region",
+  "NaturregnTilstInd",
+  "Oekosystemtype",
+  "ContentsCode",
   "Tid"
  ],
  "size": [
+  12,
   2,
-  14,
-  7,
-  1,
+  3,
   1
  ],
  "dimension": {
-  "Okosystem": {
-   "label": "hovedøkosystem",
-   "category": {
-    "index": {
-     "02-03": 0,
-     "05.2+06.2": 1
-    },
-    "label": {
-     "02-03": "Jordbruksmark",
-     "05.2+06.2": "Åpent lavland"
-    }
-   }
-  },
-  "Indikator": {
+  "NaturregnTilstInd": {
    "label": "tilstandsindikator",
    "category": {
     "index": {
-     "NO_BUMB_XXX": 0,
+     "Naturindeks_AAL": 0,
      "NO_BFLY_XXX": 1,
-     "NO_POPO_001": 2,
-     "Pilot_JordOeko": 3,
-     "Pilot_JordDiv": 4,
-     "Naturindeks_AAL": 5,
-     "NO_ALIE_XXX": 6,
-     "NO_FUBS_001": 7,
-     "NO_FUJS_001": 8,
-     "NO_FUJN_001": 9,
-     "NO_SLIT_001": 10,
-     "NO_FULI_001": 11,
-     "NO_FUMO_XXX": 12,
-     "NO_FUHR_002": 13
+     "NO_BUMB_XXX": 2,
+     "NO_POPO_001": 3,
+     "NO_FUNI_XXX": 4,
+     "NO_FULI_001": 5,
+     "NO_FUMO_XXX": 6,
+     "NO_FUFO_001": 7,
+     "NO_FUPH_001": 8,
+     "NO_FUBS_001": 9,
+     "NO_FUJN_001": 10,
+     "NO_FUJS_001": 11
     },
     "label": {
-     "NO_BUMB_XXX": "Humler",
+     "Naturindeks_AAL": "Naturindeks",
      "NO_BFLY_XXX": "Dagsommerfugler",
-     "NO_POPO_001": "Pollinatorpotensiale",
-     "Pilot_JordOeko": "Jordbruksmark med økologisk drift",
-     "Pilot_JordDiv": "Diversitet av arealtyper i jordbrukslandskapet",
-     "Naturindeks_AAL": "Naturindeks for åpent lavland",
-     "NO_ALIE_XXX": "Fremmede plantearter",
-     "NO_FUBS_001": "Vegetasjonsindikator for beite eller slått",
-     "NO_FUJS_001": "Vegetasjonsindikator for jordforstyrrelse i semi-naturlige systemer",
-     "NO_FUJN_001": "Vegetasjonsindikator for jordforstyrrelse i naturlig åpne systemer",
-     "NO_SLIT_001": "Terrengskade",
+     "NO_BUMB_XXX": "Humler",
+     "NO_POPO_001": "Pollinatorpotensiale i semi-naturlig eng",
+     "NO_FUNI_XXX": "Vegetasjonsindikator for nitrogen",
      "NO_FULI_001": "Vegetasjonsindikator for lys",
      "NO_FUMO_XXX": "Vegetasjonsindikator for fuktighet",
-     "NO_FUHR_002": "Vegetasjonsindikator for varmekrav"
+     "NO_FUFO_001": "Vegetasjonsindikator for fosfor",
+     "NO_FUPH_001": "Vegetasjonsindikator for pH",
+     "NO_FUBS_001": "Vegetasjonsindikator for beite eller slått i semi-naturlig åpent lavland",
+     "NO_FUJN_001": "Vegetasjonsindikator for jordforstyrrelse i naturlig åpent lavland",
+     "NO_FUJS_001": "Vegetasjonsindikator for jordforstyrrelse i semi-naturlig åpent lavland"
+    },
+    "note": {
+     "NO_BFLY_XXX": [
+      "Usikkerhet angitt som 50% konfidensintervall."
+     ],
+     "NO_BUMB_XXX": [
+      "Usikkerhet angitt som 50% konfidensintervall."
+     ]
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "NaturregnTilstInd": "urn:ssb:classification:klass:959"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:959"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/959",
+      "label": "Kodeliste for Indikatorer og variabler i tilstandsregnskapet (nasjonalt naturregnskap)",
+      "type": "text/html"
+     }
+    ]
    }
   },
-  "Egenskap": {
-   "label": "tilstandsegenskap",
+  "Oekosystemtype": {
+   "label": "økosystemtype",
    "category": {
     "index": {
-     "TOT": 0,
-     "A1": 1,
-     "A2": 2,
-     "B1": 3,
-     "B2": 4,
-     "B3": 5,
-     "C1": 6
+     "02+03": 0,
+     "05.02+06.02": 1
     },
     "label": {
-     "TOT": "Alle egenskaper",
-     "A1": "Fysiske egenskaper",
-     "A2": "Kjemiske egenskaper",
-     "B1": "Biologisk mangfold",
-     "B2": "Strukturelle egenskaper",
-     "B3": "Funksjonelle egenskaper",
-     "C1": "Landskapsegenskaper"
+     "02+03": "Jordbruksmark",
+     "05.02+06.02": "Åpent lavland"
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype": "urn:ssb:classification:klass:961"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:961"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/961",
+      "label": "Kodeliste for økosystemtyper (EU-typologi)",
+      "type": "text/html"
+     }
+    ]
    }
   },
-  "Region": {
-   "label": "landsdel",
+  "ContentsCode": {
+   "label": "statistikkvariabel",
    "category": {
     "index": {
-     "0": 0
+     "OekologiskTilstand": 0,
+     "UsikkerhetNedre": 1,
+     "UsikkerhetOevre": 2
     },
     "label": {
-     "0": "Hele landet"
+     "OekologiskTilstand": "Økologisk tilstand",
+     "UsikkerhetNedre": "Usikkerhet, nedre grense",
+     "UsikkerhetOevre": "Usikkerhet, øvre grense"
+    },
+    "unit": {
+     "OekologiskTilstand": {
+      "base": "indikator",
+      "decimals": 2
+     },
+     "UsikkerhetNedre": {
+      "base": "indikator",
+      "decimals": 2
+     },
+     "UsikkerhetOevre": {
+      "base": "indikator",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "OekologiskTilstand": "31.12.",
+     "UsikkerhetNedre": "31.12.",
+     "UsikkerhetOevre": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "OekologiskTilstand": "Other",
+     "UsikkerhetNedre": "Other",
+     "UsikkerhetOevre": "Other"
+    },
+    "priceType": {
+     "OekologiskTilstand": "NotApplicable",
+     "UsikkerhetNedre": "NotApplicable",
+     "UsikkerhetOevre": "NotApplicable"
+    },
+    "adjustment": {
+     "OekologiskTilstand": "None",
+     "UsikkerhetNedre": "None",
+     "UsikkerhetOevre": "None"
+    },
+    "alternativeText": {
+     "OekologiskTilstand": "Økologisk tilstand",
+     "UsikkerhetNedre": "Usikkerhet, nedre grense",
+     "UsikkerhetOevre": "Usikkerhet, øvre grense"
     }
    }
   },
@@ -115,390 +225,158 @@
     "label": {
      "2024": "2024"
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
    }
   }
+ },
+ "extension": {
+  "px": {
+   "infofile": "None",
+   "tableid": "15014",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "15014: Tilstandsregnskap for åpent lavland og jordbruksmark. Skalert (1=intakt, 0=helt ødelagt),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "NaturregnTilstInd",
+    "Oekosystemtype"
+   ],
+   "matrix": "15014",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   },
+   {
+    "name": "Marte Lindseth",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "98 03 69 42",
+    "mail": "dth@ssb.no",
+    "raw": "Marte Lindseth, Statistisk sentralbyrå# +47 98 03 69 42#dth@ssb.no"
+   }
+  ]
  },
  "value": [
   null,
   null,
   null,
-  0.46,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.39,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.51,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.12,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.47,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.5,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.44,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
+  0.45,
+  0.41,
   0.48,
+  0.37,
+  0.35,
+  0.39,
+  0.37,
+  0.35,
+  0.39,
+  0.63,
+  0.6,
+  0.65,
+  0.63,
+  0.6,
+  0.65,
   null,
   null,
   null,
+  0.65,
+  0.63,
+  0.66,
   null,
   null,
   null,
+  0.83,
+  0.79,
+  0.87,
   null,
   null,
   null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
+  0.53,
+  0.52,
   0.55,
   null,
   null,
   null,
-  null,
-  null,
-  null,
-  0.82,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.38,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.52,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
-  0.6,
-  null,
-  null,
-  null,
-  null,
-  null,
-  null,
   0.74,
+  0.72,
+  0.75,
   null,
   null,
   null,
+  0.84,
+  0.8,
+  0.88,
   null,
   null,
   null,
-  null,
-  0.57,
-  null,
-  null,
-  null,
+  0.3,
+  0.27,
+  0.32,
   null,
   null,
   null,
+  0.64,
   0.63,
+  0.66,
   null,
   null,
   null,
+  0.86,
+  0.78,
+  0.91,
   null,
   null,
   null,
-  0.69,
-  null
+  0.35,
+  0.33,
+  0.37
  ],
- "extension": {
-  "tabell": "15014",
-  "enhet": "skalert 0–1"
- },
  "status": {
   "0": ".",
   "1": ".",
   "2": ".",
-  "4": ".",
-  "5": ".",
-  "6": ".",
-  "7": ".",
-  "8": ".",
-  "9": ".",
-  "11": ".",
-  "12": ".",
-  "13": ".",
-  "14": ".",
-  "15": ".",
-  "16": ".",
-  "17": ".",
   "18": ".",
+  "19": ".",
   "20": ".",
-  "21": ".",
-  "22": ".",
-  "23": ".",
   "24": ".",
   "25": ".",
-  "27": ".",
-  "28": ".",
-  "29": ".",
+  "26": ".",
   "30": ".",
   "31": ".",
   "32": ".",
-  "33": ".",
-  "35": ".",
   "36": ".",
   "37": ".",
   "38": ".",
-  "39": ".",
-  "40": ".",
-  "41": ".",
   "42": ".",
   "43": ".",
   "44": ".",
-  "45": ".",
-  "46": ".",
-  "47": ".",
   "48": ".",
   "49": ".",
   "50": ".",
-  "51": ".",
-  "52": ".",
-  "53": ".",
   "54": ".",
   "55": ".",
   "56": ".",
-  "57": ".",
-  "58": ".",
-  "59": ".",
   "60": ".",
   "61": ".",
   "62": ".",
-  "63": ".",
-  "64": ".",
-  "65": ".",
   "66": ".",
   "67": ".",
-  "68": ".",
-  "69": ".",
-  "70": ".",
-  "71": ".",
-  "72": ".",
-  "73": ".",
-  "74": ".",
-  "75": ".",
-  "76": ".",
-  "77": ".",
-  "78": ".",
-  "79": ".",
-  "80": ".",
-  "81": ".",
-  "82": ".",
-  "83": ".",
-  "84": ".",
-  "85": ".",
-  "86": ".",
-  "87": ".",
-  "88": ".",
-  "89": ".",
-  "90": ".",
-  "91": ".",
-  "92": ".",
-  "93": ".",
-  "94": ".",
-  "95": ".",
-  "96": ".",
-  "97": ".",
-  "98": ".",
-  "99": ".",
-  "100": ".",
-  "102": ".",
-  "103": ".",
-  "104": ".",
-  "105": ".",
-  "106": ".",
-  "107": ".",
-  "109": ".",
-  "110": ".",
-  "111": ".",
-  "112": ".",
-  "113": ".",
-  "114": ".",
-  "115": ".",
-  "116": ".",
-  "118": ".",
-  "119": ".",
-  "120": ".",
-  "121": ".",
-  "122": ".",
-  "123": ".",
-  "124": ".",
-  "125": ".",
-  "126": ".",
-  "127": ".",
-  "128": ".",
-  "129": ".",
-  "130": ".",
-  "131": ".",
-  "132": ".",
-  "133": ".",
-  "134": ".",
-  "135": ".",
-  "137": ".",
-  "138": ".",
-  "139": ".",
-  "140": ".",
-  "141": ".",
-  "142": ".",
-  "144": ".",
-  "145": ".",
-  "146": ".",
-  "147": ".",
-  "148": ".",
-  "149": ".",
-  "150": ".",
-  "152": ".",
-  "153": ".",
-  "154": ".",
-  "155": ".",
-  "156": ".",
-  "157": ".",
-  "159": ".",
-  "160": ".",
-  "161": ".",
-  "162": ".",
-  "163": ".",
-  "164": ".",
-  "166": ".",
-  "167": ".",
-  "168": ".",
-  "169": ".",
-  "170": ".",
-  "171": ".",
-  "173": ".",
-  "174": ".",
-  "175": ".",
-  "176": ".",
-  "177": ".",
-  "178": ".",
-  "179": ".",
-  "181": ".",
-  "182": ".",
-  "183": ".",
-  "184": ".",
-  "185": ".",
-  "186": ".",
-  "188": ".",
-  "189": ".",
-  "190": ".",
-  "191": ".",
-  "192": ".",
-  "193": ".",
-  "195": "."
+  "68": "."
  }
 }

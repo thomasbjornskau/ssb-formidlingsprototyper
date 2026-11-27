@@ -1,0 +1,497 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "14999: Temperaturregulering i byer (nasjonal metode) (grader celsius), etter økosystemtype, by og år",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
+ "note": [
+  "Byer er en gruppering av kommuner basert på urbaniseringsgrad (DEGURBA). DEGURBA inkluderer en kategorisering av byer, tettsteder og rurale områder.",
+  "Gjennomsnittlig kjøling viser hvor mange grader lavere lufttemperaturen i snitt er der økosystemtypen finnes, sammenlignet med om vegetasjonen ikke var der. Tallet påvirkes ikke av hvor stort areal økosystemtypen dekker, og tallene for de ulike økosystemtypene kan ikke summeres. Bidrag viser hvordan byens samlede kjøling fordeler seg på økosystemtypene, og avhenger også av hvor stort areal typen dekker. Bidragene summerer seg til «I alt», som er byens gjennomsnittlige kjøling. En økosystemtype med lite areal kan derfor ha høy gjennomsnittlig kjøling, men lite bidrag.",
+  "Akvatiske økosystemer antas ikke å ha vegetasjon som bidrar til kjøling i byer. Verdien er derfor satt til 0, og disse økosystemtypene er ikke vist i tabellen.",
+  ". = Ikke mulig å oppgi tall. Tall finnes ikke på dette tidspunktet fordi kategorien ikke var i bruk da tallene ble samlet inn."
+ ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
+ "id": [
+  "Oekosystemtype",
+  "Byer",
+  "ContentsCode",
+  "Tid"
+ ],
+ "size": [
+  12,
+  9,
+  2,
+  1
+ ],
+ "dimension": {
+  "Oekosystemtype": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "_T": 0,
+     "01": 1,
+     "02": 2,
+     "02+03": 3,
+     "03": 4,
+     "04": 5,
+     "05": 6,
+     "05.01+06.01": 7,
+     "05.02+06.02": 8,
+     "06": 9,
+     "07": 10,
+     "11": 11
+    },
+    "label": {
+     "_T": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02": "Dyrket mark",
+     "02+03": "Jordbruksmark",
+     "03": "Grasmark",
+     "04": "Skog",
+     "05": "Hei og buskmark",
+     "05.01+06.01": "Fastmark i fjellet",
+     "05.02+06.02": "Åpent lavland",
+     "06": "Lite vegetert mark og isbreer",
+     "07": "Våtmark",
+     "11": "Kyststrender, svaberg og dyner"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "_T",
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype": "urn:ssb:classification:klass:961"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:961"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/961",
+      "label": "Kodeliste for økosystemtyper (EU-typologi)",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "Byer": {
+   "label": "by",
+   "category": {
+    "index": {
+     "_T": 0,
+     "3201": 1,
+     "3222": 2,
+     "3224": 3,
+     "0301": 4,
+     "1103": 5,
+     "1108": 6,
+     "4601": 7,
+     "5001": 8
+    },
+    "label": {
+     "_T": "I alt",
+     "3201": "Bærum",
+     "3222": "Lørenskog",
+     "3224": "Rælingen",
+     "0301": "Oslo - Oslove",
+     "1103": "Stavanger",
+     "1108": "Sandnes",
+     "4601": "Bergen",
+     "5001": "Trondheim - Tråante"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "_T",
+    "show": "code_value"
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "GjsnittKjoling": 0,
+     "BidragKjoling": 1
+    },
+    "label": {
+     "GjsnittKjoling": "Gjennomsnittlig kjøling etter økosystemtype i byen",
+     "BidragKjoling": "Bidrag fra økosystemtype til kjøling i byen"
+    },
+    "unit": {
+     "GjsnittKjoling": {
+      "base": "grader celsius",
+      "decimals": 2
+     },
+     "BidragKjoling": {
+      "base": "grader celsius",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "GjsnittKjoling": "31.12.",
+     "BidragKjoling": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "GjsnittKjoling": "Other",
+     "BidragKjoling": "Other"
+    },
+    "priceType": {
+     "GjsnittKjoling": "NotApplicable",
+     "BidragKjoling": "NotApplicable"
+    },
+    "adjustment": {
+     "GjsnittKjoling": "None",
+     "BidragKjoling": "None"
+    },
+    "alternativeText": {
+     "GjsnittKjoling": "Gjennomsnittlig kjøling etter økosystemtype i byen",
+     "BidragKjoling": "Bidrag fra økosystemtype til kjøling i byen"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
+   }
+  }
+ },
+ "extension": {
+  "px": {
+   "infofile": "None",
+   "tableid": "14999",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "14999: Temperaturregulering i byer (nasjonal metode) (grader celsius),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "Oekosystemtype",
+    "Byer"
+   ],
+   "matrix": "14999",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Magnus Merkle",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 55 27 84",
+    "mail": "muk@ssb.no",
+    "raw": "Magnus Merkle, Statistisk sentralbyrå# +47 92 55 27 84#muk@ssb.no"
+   },
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  1,
+  1,
+  1.34,
+  1.34,
+  1.66,
+  1.66,
+  0.41,
+  0.41,
+  1.13,
+  1.13,
+  0.48,
+  0.48,
+  1.03,
+  1.03,
+  0.97,
+  0.97,
+  0.72,
+  0.72,
+  0.54,
+  0.23,
+  0.82,
+  0.36,
+  0.94,
+  0.38,
+  -0.02,
+  -0.01,
+  0.54,
+  0.31,
+  0.33,
+  0.23,
+  0.58,
+  0.18,
+  0.59,
+  0.18,
+  0.34,
+  0.15,
+  0.89,
+  0.08,
+  1.07,
+  0.12,
+  1.47,
+  0.24,
+  -0.1,
+  -0.01,
+  1.12,
+  0.02,
+  0.67,
+  0.1,
+  1.07,
+  0.24,
+  0.89,
+  0.02,
+  0.56,
+  0.08,
+  0.91,
+  0.1,
+  1.09,
+  0.13,
+  1.47,
+  0.24,
+  -0.09,
+  -0.01,
+  1.14,
+  0.02,
+  0.68,
+  0.12,
+  1.07,
+  0.34,
+  0.95,
+  0.06,
+  0.58,
+  0.09,
+  1.01,
+  0.02,
+  1.4,
+  0.01,
+  1.84,
+  0.01,
+  -0.07,
+  0,
+  1.38,
+  0,
+  0.86,
+  0.01,
+  1.09,
+  0.1,
+  0.99,
+  0.03,
+  0.83,
+  0.01,
+  1.51,
+  0.63,
+  1.91,
+  0.84,
+  2.4,
+  1.03,
+  0.72,
+  0.43,
+  2.01,
+  0.79,
+  1.02,
+  0.13,
+  1.41,
+  0.4,
+  1.24,
+  0.65,
+  1.2,
+  0.46,
+  0.9,
+  0.03,
+  1.05,
+  0.01,
+  1.17,
+  0,
+  0.04,
+  0,
+  1.4,
+  0,
+  0.87,
+  0.01,
+  1.2,
+  0.09,
+  0.8,
+  0.07,
+  0.78,
+  0,
+  0.73,
+  0.01,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  0.73,
+  0.04,
+  null,
+  null,
+  1.04,
+  0.02,
+  1.26,
+  0.01,
+  1.17,
+  0,
+  0.04,
+  0,
+  1.49,
+  0,
+  0.77,
+  0.01,
+  1.15,
+  0.1,
+  0.92,
+  0.03,
+  0.79,
+  0.01,
+  0.95,
+  0,
+  1.76,
+  0,
+  null,
+  null,
+  null,
+  null,
+  1.65,
+  0,
+  0.25,
+  0,
+  0.82,
+  0.01,
+  0.76,
+  0,
+  0.82,
+  0,
+  1.09,
+  0.01,
+  1.55,
+  0,
+  2.3,
+  0,
+  0.31,
+  0,
+  1.53,
+  0,
+  1.16,
+  0,
+  1.25,
+  0.01,
+  1.07,
+  0.01,
+  0.93,
+  0.01,
+  0.82,
+  0,
+  0.98,
+  0,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  0.71,
+  0,
+  1.05,
+  0,
+  0.82,
+  0,
+  0.76,
+  0
+ ],
+ "status": {
+  "128": ".",
+  "129": ".",
+  "130": ".",
+  "131": ".",
+  "132": ".",
+  "133": ".",
+  "134": ".",
+  "135": ".",
+  "136": ".",
+  "137": ".",
+  "138": ".",
+  "139": ".",
+  "142": ".",
+  "143": ".",
+  "166": ".",
+  "167": ".",
+  "168": ".",
+  "169": ".",
+  "202": ".",
+  "203": ".",
+  "204": ".",
+  "205": ".",
+  "206": ".",
+  "207": "."
+ }
+}

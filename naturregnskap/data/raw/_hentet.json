@@ -1,19 +1,74 @@
 {
- "hentet": "2026-11-10",
- "metode": "DUMMY med ekte KLASS-koder, laget av scripts/lag_dummy.py",
- "note": "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026.",
- "filer": [
-  "14967.json",
-  "14968.json",
-  "14994.json",
-  "14996.json",
-  "14998.json",
-  "15012.json",
-  "15013.json",
-  "15014.json",
-  "15015.json",
-  "15016.json",
-  "15036.json",
-  "utbygging.json"
- ]
+ "hentet": "2026-11-27",
+ "metode": "hent_data.py direkte mot PxWebApi v2",
+ "tabeller": {
+  "15036": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 11
+  },
+  "15038": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 16
+  },
+  "15012": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 792
+  },
+  "15013": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 432
+  },
+  "15014": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 72
+  },
+  "15015": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 36
+  },
+  "15016": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 306
+  },
+  "14852": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 180
+  },
+  "14967": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 234
+  },
+  "15000": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 216
+  },
+  "14997": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 144
+  },
+  "14995": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 60
+  },
+  "14999": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 216
+  },
+  "14998": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 390
+  },
+  "14968": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 65
+  },
+  "14994": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 1425
+  },
+  "14996": {
+   "updated": "2026-11-25T07:00:00Z",
+   "celler": 20
+  }
+ }
 }

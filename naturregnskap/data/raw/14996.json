@@ -1,29 +1,126 @@
 {
  "version": "2.0",
  "class": "dataset",
- "label": "Forsyning av tømmer (1000 m³) 2015–2024 (DUMMY)",
+ "label": "14996: Forsyning av tømmer (1000 m³), etter økosystemtjeneste og år",
  "source": "Statistisk sentralbyrå",
- "updated": "2026-11-10T12:00:00Z",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
  "note": [
-  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+  "Forsyning av tømmer er økosystemets bidrag både til veksten av trær og annen trerelatert biomasse i produktiv skog og avvirkning fra ikke-produktiv skog som høstes av økonomiske enheter til ulike bruksformål, inkludert tømmerproduksjon og energi."
  ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
  "id": [
-  "Okosystem",
+  "Oekosystemtjeneste",
+  "ContentsCode",
   "Tid"
  ],
  "size": [
+  2,
   1,
   10
  ],
  "dimension": {
-  "Okosystem": {
-   "label": "hovedøkosystem",
+  "Oekosystemtjeneste": {
+   "label": "økosystemtjeneste",
    "category": {
     "index": {
-     "04": 0
+     "03.01": 0,
+     "03.02": 1
     },
     "label": {
-     "04": "Skog"
+     "03.01": "Netto tilvekst av produktiv skog",
+     "03.02": "Avvirkning fra ikke-produktiv skog"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtjeneste": "urn:ssb:classification:klass:939"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:939"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/939",
+      "label": "Kodeliste for Økosystemtjenester",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "ForsyningToemmer": 0
+    },
+    "label": {
+     "ForsyningToemmer": "Forsyning av tømmer (1000 m³)"
+    },
+    "unit": {
+     "ForsyningToemmer": {
+      "base": "1000 m³",
+      "decimals": 0
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "ForsyningToemmer": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "ForsyningToemmer": "Other"
+    },
+    "priceType": {
+     "ForsyningToemmer": "NotApplicable"
+    },
+    "adjustment": {
+     "ForsyningToemmer": "None"
+    },
+    "alternativeText": {
+     "ForsyningToemmer": "Forsyning av tømmer (1000 m³)"
     }
    }
   },
@@ -54,23 +151,73 @@
      "2023": "2023",
      "2024": "2024"
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
    }
   }
  },
- "value": [
-  10200,
-  10650,
-  11000,
-  11400,
-  11050,
-  10900,
-  11300,
-  10500,
-  10600,
-  10800
- ],
  "extension": {
-  "tabell": "14996",
-  "enhet": "1000 m³"
- }
+  "px": {
+   "infofile": "None",
+   "tableid": "14996",
+   "decimals": 0,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "14996: Forsyning av tømmer (1000 m³),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "Oekosystemtjeneste"
+   ],
+   "matrix": "14996",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Marte Lindseth",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "98 03 69 42",
+    "mail": "dth@ssb.no",
+    "raw": "Marte Lindseth, Statistisk sentralbyrå# +47 98 03 69 42#dth@ssb.no"
+   },
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  26137,
+  26478,
+  24909,
+  24044,
+  23017,
+  22433,
+  21590,
+  21249,
+  21244,
+  21453,
+  74,
+  74,
+  76,
+  77,
+  78,
+  74,
+  82,
+  83,
+  81,
+  85
+ ]
 }

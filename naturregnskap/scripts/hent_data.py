@@ -1,6 +1,6 @@
 """Henter ekte data for naturregnskap fra PxWebApi v2 etter publisering 25.11.2026.
 Leser data/kilder.json og skriver data/raw/<id>.json. Bruk: python scripts/hent_data.py
-Bare standardbiblioteket. Kodene i url-ene må rettes mot de ekte kodelistene først."""
+Bare standardbiblioteket. URL-ene er rettet mot de publiserte tabellene 27.11.2026."""
 import json, os, sys, time, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 k = json.load(open(os.path.join(ROOT, "data", "kilder.json")))

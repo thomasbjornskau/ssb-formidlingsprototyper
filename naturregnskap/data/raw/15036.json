@@ -1,40 +1,130 @@
 {
  "version": "2.0",
  "class": "dataset",
- "label": "Utbredelse, etter hovedøkosystem 2024 (DUMMY)",
+ "label": "15036: Areal av hovedøkosystemtyper (nasjonal variant) (km²), etter region, økosystemtype og år",
  "source": "Statistisk sentralbyrå",
- "updated": "2026-11-10T12:00:00Z",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:arealstat"
+    },
+    "href": "https://www.ssb.no/arealstat",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:arealstat"
+    },
+    "href": "https://www.ssb.no/arealstat#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
  "note": [
-  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+  "Tidspunkt for statistikk er 31. desember, men data er fra 1. januar året etter (nærmeste data for rapportering)."
  ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "geo": [
+   "Region"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
  "id": [
-  "Okosystem",
-  "ContentsCode"
+  "Region",
+  "Oekosystemtype",
+  "ContentsCode",
+  "Tid"
  ],
  "size": [
-  12,
+  1,
+  11,
+  1,
   1
  ],
  "dimension": {
-  "Okosystem": {
-   "label": "hovedøkosystem",
+  "Region": {
+   "label": "region",
+   "note": [
+    "[Se liste over endringer i de regionale inndelingene](https://www.ssb.no/offentlig-sektor/kommunekatalog/endringer-i-de-regionale-inndelingene)."
+   ],
    "category": {
     "index": {
-     "00": 0,
-     "01": 1,
-     "02-03": 2,
-     "04": 3,
-     "05.1+06.1": 4,
-     "05.2+06.2": 5,
-     "07": 6,
-     "08": 7,
-     "09": 8,
-     "10+12.1": 9,
-     "11": 10,
-     "12.2": 11
+     "0": 0
     },
     "label": {
-     "00": "I alt",
+     "0": "Hele landet"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "0",
+    "show": "code_value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Region": "urn:ssb:classification:klass:104 urn:ssb:classification:klass:131"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:104"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/104",
+      "label": "Standard for fylkesinndeling",
+      "type": "text/html"
+     },
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:131"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/131",
+      "label": "Standard for kommuneinndeling",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "Oekosystemtype": {
+   "label": "økosystemtype",
+   "note": [
+    "Nasjonal variant for hovedøkosystemer."
+   ],
+   "category": {
+    "index": {
+     "01": 0,
+     "02-03": 1,
+     "04": 2,
+     "05.1+06.1": 3,
+     "05.2+06.2": 4,
+     "07": 5,
+     "08": 6,
+     "09": 7,
+     "10+12.1": 8,
+     "11": 9,
+     "12.2": 10
+    },
+    "label": {
      "01": "Bebygd og opparbeidet areal",
      "02-03": "Jordbruksmark",
      "04": "Skog",
@@ -47,6 +137,31 @@
      "11": "Kyststrender, svaberg og dyner",
      "12.2": "Åpent hav"
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype": "urn:ssb:classification:klass:988"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:988"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/988",
+      "label": "Standard for klassifisering av økosystemtyper",
+      "type": "text/html"
+     }
+    ]
    }
   },
   "ContentsCode": {
@@ -56,27 +171,103 @@
      "Areal": 0
     },
     "label": {
-     "Areal": "Areal (1000 hektar)"
+     "Areal": "Areal"
+    },
+    "unit": {
+     "Areal": {
+      "base": "km²",
+      "decimals": 2
+     }
     }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "Areal": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "Areal": "Stock"
+    },
+    "priceType": {
+     "Areal": "NotApplicable"
+    },
+    "adjustment": {
+     "Areal": "None"
+    },
+    "alternativeText": {
+     "Areal": "Areal"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
    }
   }
  },
- "value": [
-  240180,
-  650,
-  1100,
-  12100,
-  10300,
-  2600,
-  2300,
-  150,
-  1900,
-  9000,
-  80,
-  200000
- ],
  "extension": {
-  "tabell": "15036",
-  "enhet": "1000 hektar"
- }
+  "px": {
+   "infofile": "None",
+   "tableid": "15036",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "15036: Areal av hovedøkosystemtyper (nasjonal variant) (km²),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "Region",
+    "Oekosystemtype"
+   ],
+   "matrix": "15036",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Jørn Kristian Undelstvedt",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "94 50 68 64",
+    "mail": "jku@ssb.no",
+    "raw": "Jørn Kristian Undelstvedt, Statistisk sentralbyrå# +47 94 50 68 64#jku@ssb.no"
+   },
+   {
+    "name": "Erik Engelien",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "91 12 55 45",
+    "mail": "eer@ssb.no",
+    "raw": "Erik Engelien, Statistisk sentralbyrå# +47 91 12 55 45#eer@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  6301.88,
+  10490.19,
+  123680,
+  127118.53,
+  17721.43,
+  17033.4,
+  1626.87,
+  18665.9,
+  93775.9,
+  1139.58,
+  51685.48
+ ]
 }

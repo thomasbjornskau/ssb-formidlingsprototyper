@@ -1,0 +1,649 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "15000: Flomdemping (hektar), etter økosystemtype, landsdelsinndeling for naturregnskap og år",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
+ "note": [
+  ".. = Tallgrunnlag mangler. Tall er ikke kommet inn i våre databaser eller er for usikre til å publiseres.",
+  ". = Ikke mulig å oppgi tall. Tall finnes ikke på dette tidspunktet fordi kategorien ikke var i bruk da tallene ble samlet inn."
+ ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
+ "id": [
+  "Oekosystemtype",
+  "LandsdelNaturregn",
+  "ContentsCode",
+  "Tid"
+ ],
+ "size": [
+  18,
+  6,
+  2,
+  1
+ ],
+ "dimension": {
+  "Oekosystemtype": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "_T": 0,
+     "01": 1,
+     "02": 2,
+     "02+03": 3,
+     "03": 4,
+     "04": 5,
+     "05": 6,
+     "05.01+06.01": 7,
+     "05.02+06.02": 8,
+     "06": 9,
+     "07": 10,
+     "08": 11,
+     "09": 12,
+     "10": 13,
+     "10+12.01": 14,
+     "11": 15,
+     "12": 16,
+     "12.02": 17
+    },
+    "label": {
+     "_T": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02": "Dyrket mark",
+     "02+03": "Jordbruksmark",
+     "03": "Grasmark",
+     "04": "Skog",
+     "05": "Hei og buskmark",
+     "05.01+06.01": "Fastmark i fjellet",
+     "05.02+06.02": "Åpent lavland",
+     "06": "Lite vegetert mark og isbreer",
+     "07": "Våtmark",
+     "08": "Elver, bekker og kanaler",
+     "09": "Innsjøer og vannmagasiner",
+     "10": "Kystinnløp og overgangsvann",
+     "10+12.01": "Kystvann",
+     "11": "Kyststrender, svaberg og dyner",
+     "12": "Hav",
+     "12.02": "Åpent hav"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype": "urn:ssb:classification:klass:961"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:961"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/961",
+      "label": "Kodeliste for økosystemtyper (EU-typologi)",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "LandsdelNaturregn": {
+   "label": "landsdelsinndeling for naturregnskap",
+   "note": [
+    "Landsdelsinndelingen for naturregnskap samsvarer med inndelingen Miljødirektoratet bruker i datainnsamling og bearbeiding av data etter Naturindeksen og Fagsystem for økologisk tilstand, som inngår i naturregnskapet. Landsdelsinndeling er et regionalt nivå mellom fylke og hele landet. Landsdelene består av et helt antall fylker."
+   ],
+   "category": {
+    "index": {
+     "0": 0,
+     "1": 1,
+     "2": 2,
+     "3": 3,
+     "4": 4,
+     "5": 5
+    },
+    "label": {
+     "0": "Hele Norge",
+     "1": "Øst",
+     "2": "Sør",
+     "3": "Vest",
+     "4": "Midt",
+     "5": "Nord"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "0",
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "LandsdelNaturregn": "urn:ssb:classification:klass:967"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:967"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/967",
+      "label": "Kodeliste for Landsdelsinndeling for naturregnskap",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "Flomdemping": 0,
+     "EtterspFlomdemping": 1
+    },
+    "label": {
+     "Flomdemping": "Flomdemping",
+     "EtterspFlomdemping": "Etterspørsel etter flomdemping"
+    },
+    "note": {
+     "Flomdemping": [
+      "Økosystemtjenesten flomdemping er definert som økosystemenes bidrag til å dempe virkningene av flom i bebygde områder og jordbruksområder i flomutsatte soner."
+     ]
+    },
+    "unit": {
+     "Flomdemping": {
+      "base": "hektar",
+      "decimals": 0
+     },
+     "EtterspFlomdemping": {
+      "base": "hektar",
+      "decimals": 0
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "Flomdemping": "31.12.",
+     "EtterspFlomdemping": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "Flomdemping": "Other",
+     "EtterspFlomdemping": "Other"
+    },
+    "priceType": {
+     "Flomdemping": "NotApplicable",
+     "EtterspFlomdemping": "NotApplicable"
+    },
+    "adjustment": {
+     "Flomdemping": "None",
+     "EtterspFlomdemping": "None"
+    },
+    "alternativeText": {
+     "Flomdemping": "Flomdemping",
+     "EtterspFlomdemping": "Etterspørsel etter flomdemping"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
+   }
+  }
+ },
+ "extension": {
+  "px": {
+   "infofile": "None",
+   "tableid": "15000",
+   "decimals": 0,
+   "official-statistics": true,
+   "aggregallowed": true,
+   "copyright": false,
+   "language": "no",
+   "contents": "15000: Flomdemping (hektar),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "Oekosystemtype",
+    "LandsdelNaturregn"
+   ],
+   "matrix": "15000",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Magnus Merkle",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 55 27 84",
+    "mail": "muk@ssb.no",
+    "raw": "Magnus Merkle, Statistisk sentralbyrå# +47 92 55 27 84#muk@ssb.no"
+   },
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  154328,
+  292984,
+  64561,
+  128436,
+  18159,
+  32782,
+  20834,
+  40172,
+  28952,
+  53702,
+  21837,
+  37892,
+  13596,
+  null,
+  6074,
+  null,
+  1681,
+  null,
+  1869,
+  null,
+  2115,
+  null,
+  1860,
+  null,
+  42006,
+  null,
+  21482,
+  null,
+  3449,
+  null,
+  4519,
+  null,
+  7998,
+  null,
+  4558,
+  null,
+  44839,
+  null,
+  22036,
+  null,
+  3675,
+  null,
+  5869,
+  null,
+  8359,
+  null,
+  4901,
+  null,
+  2833,
+  null,
+  554,
+  null,
+  226,
+  null,
+  1349,
+  null,
+  361,
+  null,
+  342,
+  null,
+  82178,
+  null,
+  33808,
+  null,
+  11951,
+  null,
+  9957,
+  null,
+  14922,
+  null,
+  11549,
+  null,
+  8846,
+  null,
+  1741,
+  null,
+  497,
+  null,
+  2367,
+  null,
+  2088,
+  null,
+  2155,
+  null,
+  6413,
+  null,
+  1319,
+  null,
+  266,
+  null,
+  1691,
+  null,
+  1466,
+  null,
+  1673,
+  null,
+  4336,
+  null,
+  768,
+  null,
+  381,
+  null,
+  1187,
+  null,
+  991,
+  null,
+  1009,
+  null,
+  1902,
+  null,
+  345,
+  null,
+  149,
+  null,
+  512,
+  null,
+  369,
+  null,
+  528,
+  null,
+  2966,
+  null,
+  556,
+  null,
+  206,
+  null,
+  261,
+  null,
+  1099,
+  null,
+  845,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null
+ ],
+ "status": {
+  "13": "..",
+  "15": "..",
+  "17": "..",
+  "19": "..",
+  "21": "..",
+  "23": "..",
+  "25": "..",
+  "27": "..",
+  "29": "..",
+  "31": "..",
+  "33": "..",
+  "35": "..",
+  "37": "..",
+  "39": "..",
+  "41": "..",
+  "43": "..",
+  "45": "..",
+  "47": "..",
+  "49": "..",
+  "51": "..",
+  "53": "..",
+  "55": "..",
+  "57": "..",
+  "59": "..",
+  "61": "..",
+  "63": "..",
+  "65": "..",
+  "67": "..",
+  "69": "..",
+  "71": "..",
+  "73": "..",
+  "75": "..",
+  "77": "..",
+  "79": "..",
+  "81": "..",
+  "83": "..",
+  "85": "..",
+  "87": "..",
+  "89": "..",
+  "91": "..",
+  "93": "..",
+  "95": "..",
+  "97": "..",
+  "99": "..",
+  "101": "..",
+  "103": "..",
+  "105": "..",
+  "107": "..",
+  "109": "..",
+  "111": "..",
+  "113": "..",
+  "115": "..",
+  "117": "..",
+  "119": "..",
+  "121": "..",
+  "123": "..",
+  "125": "..",
+  "127": "..",
+  "129": "..",
+  "131": "..",
+  "132": ".",
+  "133": ".",
+  "134": ".",
+  "135": ".",
+  "136": ".",
+  "137": ".",
+  "138": ".",
+  "139": ".",
+  "140": ".",
+  "141": ".",
+  "142": ".",
+  "143": ".",
+  "144": ".",
+  "145": ".",
+  "146": ".",
+  "147": ".",
+  "148": ".",
+  "149": ".",
+  "150": ".",
+  "151": ".",
+  "152": ".",
+  "153": ".",
+  "154": ".",
+  "155": ".",
+  "156": ".",
+  "157": ".",
+  "158": ".",
+  "159": ".",
+  "160": ".",
+  "161": ".",
+  "162": ".",
+  "163": ".",
+  "164": ".",
+  "165": ".",
+  "166": ".",
+  "167": ".",
+  "168": ".",
+  "169": ".",
+  "170": ".",
+  "171": ".",
+  "172": ".",
+  "173": ".",
+  "174": ".",
+  "175": ".",
+  "176": ".",
+  "177": ".",
+  "178": ".",
+  "179": ".",
+  "180": ".",
+  "181": ".",
+  "182": ".",
+  "183": ".",
+  "184": ".",
+  "185": ".",
+  "186": ".",
+  "187": ".",
+  "188": ".",
+  "189": ".",
+  "190": ".",
+  "191": ".",
+  "192": ".",
+  "193": ".",
+  "194": ".",
+  "195": ".",
+  "196": ".",
+  "197": ".",
+  "198": ".",
+  "199": ".",
+  "200": ".",
+  "201": ".",
+  "202": ".",
+  "203": ".",
+  "204": ".",
+  "205": ".",
+  "206": ".",
+  "207": ".",
+  "208": ".",
+  "209": ".",
+  "210": ".",
+  "211": ".",
+  "212": ".",
+  "213": ".",
+  "214": ".",
+  "215": "."
+ }
+}

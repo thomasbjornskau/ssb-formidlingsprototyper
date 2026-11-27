@@ -1,0 +1,299 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "15038: Endring til bebygd og opparbeidet areal (km²), etter region, fra økosystemtype og år",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:arealstat"
+    },
+    "href": "https://www.ssb.no/arealstat",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:arealstat"
+    },
+    "href": "https://www.ssb.no/arealstat#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
+ "note": [
+  "Foreløpige tall. Endring 2018-2024",
+  "Endring til bebygd og opparbeidet areal etter økosystemtyper siste 7 år.",
+  ".. = Tallgrunnlag mangler. Tall er ikke kommet inn i våre databaser eller er for usikre til å publiseres.",
+  ". = Ikke mulig å oppgi tall. Tall finnes ikke på dette tidspunktet fordi kategorien ikke var i bruk da tallene ble samlet inn."
+ ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "geo": [
+   "Region"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
+ "id": [
+  "Region",
+  "Oekosystemtype1",
+  "ContentsCode",
+  "Tid"
+ ],
+ "size": [
+  1,
+  16,
+  1,
+  1
+ ],
+ "dimension": {
+  "Region": {
+   "label": "region",
+   "note": [
+    "[Se liste over endringer i de regionale inndelingene](https://www.ssb.no/offentlig-sektor/kommunekatalog/endringer-i-de-regionale-inndelingene)."
+   ],
+   "category": {
+    "index": {
+     "0": 0
+    },
+    "label": {
+     "0": "Hele landet"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "0",
+    "show": "code_value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Region": "urn:ssb:classification:klass:104 urn:ssb:classification:klass:131"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:104"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/104",
+      "label": "Standard for fylkesinndeling",
+      "type": "text/html"
+     },
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:131"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/131",
+      "label": "Standard for kommuneinndeling",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "Oekosystemtype1": {
+   "label": "fra økosystemtype",
+   "category": {
+    "index": {
+     "02": 0,
+     "02-03": 1,
+     "03": 2,
+     "04": 3,
+     "05": 4,
+     "05.1+06.1": 5,
+     "05.2+06.2": 6,
+     "06": 7,
+     "07": 8,
+     "08": 9,
+     "09": 10,
+     "10": 11,
+     "10+12.1": 12,
+     "11": 13,
+     "12": 14,
+     "12.2": 15
+    },
+    "label": {
+     "02": "Dyrket mark",
+     "02-03": "Jordbruksmark",
+     "03": "Grasmark",
+     "04": "Skog",
+     "05": "Hei og buskmark",
+     "05.1+06.1": "Fastmark i fjellet",
+     "05.2+06.2": "Åpent lavland",
+     "06": "Lite vegetert mark og isbreer",
+     "07": "Våtmark",
+     "08": "Elver, bekker og kanaler",
+     "09": "Innsjøer og vannmagasiner",
+     "10": "Kystinnløp og overgangsvann",
+     "10+12.1": "Kystvann",
+     "11": "Kyststrender, svaberg og dyner",
+     "12": "Hav",
+     "12.2": "Åpent hav"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype1": "urn:ssb:classification:klass:988"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:988"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/988",
+      "label": "Standard for klassifisering av økosystemtyper",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "Areal": 0
+    },
+    "label": {
+     "Areal": "Areal"
+    },
+    "unit": {
+     "Areal": {
+      "base": "km²",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "Areal": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "Areal": "Flow"
+    },
+    "priceType": {
+     "Areal": "NotApplicable"
+    },
+    "adjustment": {
+     "Areal": "None"
+    },
+    "alternativeText": {
+     "Areal": "Areal"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
+   }
+  }
+ },
+ "extension": {
+  "noteMandatory": {
+   "0": true
+  },
+  "px": {
+   "infofile": "None",
+   "tableid": "15038",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "15038: Endring til bebygd og opparbeidet areal (km²),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "Region",
+    "Oekosystemtype1"
+   ],
+   "matrix": "15038",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Jørn Kristian Undelstvedt",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "94 50 68 64",
+    "mail": "jku@ssb.no",
+    "raw": "Jørn Kristian Undelstvedt, Statistisk sentralbyrå# +47 94 50 68 64#jku@ssb.no"
+   },
+   {
+    "name": "Margrete Steinnes",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "95 73 55 54",
+    "mail": "ste@ssb.no",
+    "raw": "Margrete Steinnes, Statistisk sentralbyrå# +47 95 73 55 54#ste@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  34.62,
+  42.31,
+  7.69,
+  155.27,
+  20.11,
+  8.4,
+  22.58,
+  10.86,
+  5.5,
+  null,
+  null,
+  null,
+  null,
+  3.5,
+  null,
+  null
+ ],
+ "status": {
+  "9": "..",
+  "10": "..",
+  "11": ".",
+  "12": ".",
+  "14": ".",
+  "15": "."
+ }
+}

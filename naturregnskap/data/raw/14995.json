@@ -1,0 +1,314 @@
+{
+ "version": "2.0",
+ "class": "dataset",
+ "label": "14995: Pollinering av avlinger (1000 tonn), etter økosystemtjeneste, økosystemtype og år",
+ "source": "Statistisk sentralbyrå",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
+ "note": [
+  "Pollinering av avlinger defineres som økosystembidragene fra ville pollinatorer til produksjon av avlinger. Pollinering måles som pollinatoravhengige avlinger som kan tilskrives ville pollinatorer, fordelt på hovedtyper av pollinatoravhengige avlinger og økosystem. Akvatiske økosystemer antas ikke å være viktige habitater for pollinatorer etter EUs minimumsmetode for beregning av denne økosystemtjenesten. Verdien er derfor satt til 0, og disse økosystemtypene er ikke vist i tabellen."
+ ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
+ "id": [
+  "Oekosystemtjeneste",
+  "Oekosystemtype",
+  "ContentsCode",
+  "Tid"
+ ],
+ "size": [
+  5,
+  12,
+  1,
+  1
+ ],
+ "dimension": {
+  "Oekosystemtjeneste": {
+   "label": "økosystemtjeneste",
+   "category": {
+    "index": {
+     "02": 0,
+     "02.01.04": 1,
+     "02.01.06": 2,
+     "02.01.07": 3,
+     "02.01.08": 4
+    },
+    "label": {
+     "02": "Pollinering av avlinger",
+     "02.01.04": "Belgvekster",
+     "02.01.06": "Oljefrø",
+     "02.01.07": "Grønnsaker",
+     "02.01.08": "Frukt og bær"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "02",
+    "show": "code_value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtjeneste": "urn:ssb:classification:klass:939"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:939"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/939",
+      "label": "Kodeliste for Økosystemtjenester",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "Oekosystemtype": {
+   "label": "økosystemtype",
+   "category": {
+    "index": {
+     "_T": 0,
+     "01": 1,
+     "02": 2,
+     "02+03": 3,
+     "03": 4,
+     "04": 5,
+     "05": 6,
+     "05.01+06.01": 7,
+     "05.02+06.02": 8,
+     "06": 9,
+     "07": 10,
+     "11": 11
+    },
+    "label": {
+     "_T": "I alt",
+     "01": "Bebygd og opparbeidet areal",
+     "02": "Dyrket mark",
+     "02+03": "Jordbruksmark",
+     "03": "Grasmark",
+     "04": "Skog",
+     "05": "Hei og buskmark",
+     "05.01+06.01": "Fastmark i fjellet",
+     "05.02+06.02": "Åpent lavland",
+     "06": "Lite vegetert mark og isbreer",
+     "07": "Våtmark",
+     "11": "Kyststrender, svaberg og dyner"
+    }
+   },
+   "extension": {
+    "elimination": true,
+    "eliminationValueCode": "_T",
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "Oekosystemtype": "urn:ssb:classification:klass:961"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:961"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/961",
+      "label": "Kodeliste for økosystemtyper (EU-typologi)",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "PollineringAvlinger": 0
+    },
+    "label": {
+     "PollineringAvlinger": "Pollinering av avlinger (1000 tonn)"
+    },
+    "unit": {
+     "PollineringAvlinger": {
+      "base": "1000 tonn",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "PollineringAvlinger": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "PollineringAvlinger": "Other"
+    },
+    "priceType": {
+     "PollineringAvlinger": "NotApplicable"
+    },
+    "adjustment": {
+     "PollineringAvlinger": "None"
+    },
+    "alternativeText": {
+     "PollineringAvlinger": "Pollinering av avlinger (1000 tonn)"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
+   }
+  }
+ },
+ "extension": {
+  "px": {
+   "infofile": "None",
+   "tableid": "14995",
+   "decimals": 2,
+   "official-statistics": true,
+   "aggregallowed": true,
+   "copyright": false,
+   "language": "no",
+   "contents": "14995: Pollinering av avlinger (1000 tonn),",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "Oekosystemtjeneste",
+    "Oekosystemtype"
+   ],
+   "matrix": "14995",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   },
+   {
+    "name": "Marte Lindseth",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "98 03 69 42",
+    "mail": "dth@ssb.no",
+    "raw": "Marte Lindseth, Statistisk sentralbyrå# +47 98 03 69 42#dth@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  22.77,
+  1.35,
+  2.19,
+  2.6,
+  0.41,
+  15,
+  2.21,
+  0.27,
+  2.45,
+  0.5,
+  0.98,
+  0.12,
+  0.47,
+  0.03,
+  0.04,
+  0.05,
+  0.01,
+  0.31,
+  0.05,
+  0.01,
+  0.05,
+  0.01,
+  0.02,
+  0,
+  1.96,
+  0.12,
+  0.19,
+  0.22,
+  0.04,
+  1.29,
+  0.19,
+  0.02,
+  0.21,
+  0.04,
+  0.08,
+  0.01,
+  0.57,
+  0.03,
+  0.05,
+  0.06,
+  0.01,
+  0.37,
+  0.05,
+  0.01,
+  0.06,
+  0.01,
+  0.02,
+  0,
+  19.79,
+  1.18,
+  1.91,
+  2.26,
+  0.36,
+  13.03,
+  1.92,
+  0.23,
+  2.13,
+  0.44,
+  0.86,
+  0.1
+ ]
+}

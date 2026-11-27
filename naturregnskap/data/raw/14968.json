@@ -1,138 +1,460 @@
 {
  "version": "2.0",
  "class": "dataset",
- "label": "Regnskap for økosystemtjenester, etter anvendelse fra økonomisk enhet 2024 (DUMMY)",
+ "label": "14968: Regnskap for økosystemtjenester, etter økonomisk enhet og år",
  "source": "Statistisk sentralbyrå",
- "updated": "2026-11-10T12:00:00Z",
+ "updated": "2026-11-25T07:00:00Z",
+ "link": {
+  "related": [
+   {
+    "extension": {
+     "relation": "statistics-homepage",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn",
+    "label": "Statistikkside",
+    "type": "text/html"
+   },
+   {
+    "extension": {
+     "relation": "about-statistics",
+     "category": null,
+     "metaid": "KORTNAVN:naturregn"
+    },
+    "href": "https://www.ssb.no/naturregn#om-statistikken",
+    "label": "Definisjoner og forklaringer",
+    "type": "text/html"
+   }
+  ]
+ },
  "note": [
-  "DUMMYDATA: ekte kodelister fra KLASS, men oppdiktede tall og koblinger. Erstattes av ekte data etter 25.11.2026."
+  "Anvendelsen er ført på første bruker av tjenesten, ikke endelig bruker, og summen er lik tilgangen. Tjenestene måles i ulike enheter og kan ikke summeres på tvers. Husholdningers egenproduksjon av avlinger og ved inngår i produktinnsats i næringene. I tråd med SEEA EA føres global klimaregulering som konsum i offentlig forvaltning, på vegne av alle som har nytte av tjenesten, også utenfor Norge.",
+  ".. = Tallgrunnlag mangler. Tall er ikke kommet inn i våre databaser eller er for usikre til å publiseres."
  ],
+ "role": {
+  "time": [
+   "Tid"
+  ],
+  "metric": [
+   "ContentsCode"
+  ]
+ },
  "id": [
-  "Tjeneste",
-  "Bruker"
+  "OkonomiskEnhet",
+  "ContentsCode",
+  "Tid"
  ],
  "size": [
-  9,
-  6
+  5,
+  13,
+  1
  ],
  "dimension": {
-  "Tjeneste": {
-   "label": "økosystemtjeneste",
+  "OkonomiskEnhet": {
+   "label": "økonomisk enhet",
    "category": {
     "index": {
      "01": 0,
      "02": 1,
      "03": 2,
      "04": 3,
-     "05": 4,
-     "06": 5,
-     "07": 6,
-     "08": 7,
-     "09": 8
+     "05": 4
     },
     "label": {
-     "01": "Forsyning av avlinger",
-     "02": "Pollinering av avlinger",
-     "03": "Forsyning av tømmer",
-     "04": "Luftrensing",
-     "05": "Global klimaregulering",
-     "06": "Temperaturregulering i byer",
-     "07": "Naturbasert turisme",
-     "08": "Naturbasert rekreasjon",
-     "09": "Flomdemping"
-    }
-   }
-  },
-  "Bruker": {
-   "label": "anvendelse",
-   "category": {
-    "index": {
-     "00": 0,
-     "01": 1,
-     "02": 2,
-     "03": 3,
-     "04": 4,
-     "05": 5
-    },
-    "label": {
-     "00": "I alt",
      "01": "Produktinnsats (i næringene)",
      "02": "Konsum i offentlig forvaltning",
      "03": "Konsum i husholdningene",
      "04": "Bruttoinvestering i fast realkapital",
      "05": "Eksport"
     }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "value"
+   },
+   "link": {
+    "describedby": [
+     {
+      "extension": {
+       "01": "urn:ssb:conceptvariable:vardok:1787",
+       "02": "urn:ssb:conceptvariable:vardok:1751",
+       "03": "urn:ssb:conceptvariable:vardok:1770",
+       "04": "urn:ssb:conceptvariable:vardok:1741",
+       "05": "urn:ssb:conceptvariable:vardok:1760",
+       "OkonomiskEnhet": "urn:ssb:classification:klass:992"
+      }
+     }
+    ],
+    "related": [
+     {
+      "extension": {
+       "relation": "definitions",
+       "category": null,
+       "metaid": "urn:ssb:classification:klass:992"
+      },
+      "href": "https://www.ssb.no/klass/klassifikasjoner/992",
+      "label": "Kodeliste for Anvendelse av økosystemtjenester",
+      "type": "text/html"
+     }
+    ]
+   }
+  },
+  "ContentsCode": {
+   "label": "statistikkvariabel",
+   "category": {
+    "index": {
+     "NettoKarbonlagring": 0,
+     "Karbonlager": 1,
+     "Flomdemping": 2,
+     "TempRegByerNasj": 3,
+     "TempRegByerEU": 4,
+     "LuftrensingPM25": 5,
+     "LuftrensingPM10": 6,
+     "ForsyningAvlinger": 7,
+     "PollineringAvlinger": 8,
+     "NettoTilvekstSkog": 9,
+     "AvvirkIkkeProdSkog": 10,
+     "NaturbasertTurisme": 11,
+     "NaturbasertRekreasjo": 12
+    },
+    "label": {
+     "NettoKarbonlagring": "Global klimaregulering (årlige endringer i karbonlager)) (1000 tonn)",
+     "Karbonlager": "Global klimaregulering (karbonlager) (1000 tonn)",
+     "Flomdemping": "Flomdemping (hektar)",
+     "TempRegByerNasj": "Temperaturregulering i byer (nasjonal metode) (grader celsius)",
+     "TempRegByerEU": "Temperaturregulering i byer (EU-metode) (grader celcius)",
+     "LuftrensingPM25": "Luftrensing (PM2,5) (1000 tonn)",
+     "LuftrensingPM10": "Luftrensing (PM10) (1000 tonn)",
+     "ForsyningAvlinger": "Forsyning av avlinger (1000 tonn)",
+     "PollineringAvlinger": "Pollinering av avlinger (1000 tonn)",
+     "NettoTilvekstSkog": "Forsyning av tømmer (netto tilvekst av produktiv skog) (1000 m³)",
+     "AvvirkIkkeProdSkog": "Forsyning av tømmer (avvirkning fra ikke-produktiv skog) (1000 m³)",
+     "NaturbasertTurisme": "Naturbasert turisme (millioner overnattinger)",
+     "NaturbasertRekreasjo": "Naturbasert rekreasjon (millioner dagsturer)"
+    },
+    "note": {
+     "TempRegByerNasj": [
+      "Økosystemenes bidrag til temperaturreduksjon fra vegetasjon i tett befolkede områder og arealer innenfor 1km avstand fra disse, avgrenset til de åtte kommunene som er klassifisert som byer. Manglende satellittdata for overflatetemperatur er estimert og fylt inn før beregningen for å redusere risikoen for skjevhet i anslagene. Avgrensningen fanger bedre opp kjølingen der folk bor og jobber, i tråd med FNs rammeverk for naturregnskap (SEEA EA)."
+     ],
+     "TempRegByerEU": [
+      "Økosystemenes bidrag til temperaturreduksjon fra vegetasjon i hele kommunearealet i de åtte kommunene som er klassifisert som byer. Beregnet etter krav i EU-forordning 2024/3024. Manglende satellittdata for overflatetemperatur er ikke fylt inn. Fordi norske bykommuner også omfatter store ikke-urbane områder som for eksempel skog, beskriver tallene i mindre grad kjølingen i selve byene."
+     ],
+     "NaturbasertTurisme": [
+      "Konsum i husholdningene omfatter naturbaserte overnattinger blant personer bosatt i Norge, estimert ut fra rekreasjonsundersøkelsen og reisestatistikken. Eksport omfatter naturbaserte overnattinger blant utenlandske turister i Norge, estimert ut fra Innovasjon Norges turistundersøkelse."
+     ],
+     "NaturbasertRekreasjo": [
+      "Konsum i husholdningene omfatter naturbaserte dagsturer blant personer bosatt i Norge, estimert ut fra rekreasjonsundersøkelsen. Eksport omfatter naturbaserte dagsturer blant cruisepassasjerer ved anløp til norske havner, estimert ut fra passasjerdata fra Kystverket og Innovasjon Norges cruiseundersøkelse. Dagsturer blant andre utenlandske besøkende er ikke med."
+     ]
+    },
+    "unit": {
+     "NettoKarbonlagring": {
+      "base": "1000 tonn",
+      "decimals": 0
+     },
+     "Karbonlager": {
+      "base": "1000 tonn",
+      "decimals": 0
+     },
+     "Flomdemping": {
+      "base": "hektar",
+      "decimals": 0
+     },
+     "TempRegByerNasj": {
+      "base": "grader celsius",
+      "decimals": 2
+     },
+     "TempRegByerEU": {
+      "base": "grader celsius",
+      "decimals": 2
+     },
+     "LuftrensingPM25": {
+      "base": "1000 tonn",
+      "decimals": 2
+     },
+     "LuftrensingPM10": {
+      "base": "1000 tonn",
+      "decimals": 2
+     },
+     "ForsyningAvlinger": {
+      "base": "1000 tonn",
+      "decimals": 0
+     },
+     "PollineringAvlinger": {
+      "base": "1000 tonn",
+      "decimals": 2
+     },
+     "NettoTilvekstSkog": {
+      "base": "1000 m³",
+      "decimals": 0
+     },
+     "AvvirkIkkeProdSkog": {
+      "base": "1000 m³",
+      "decimals": 0
+     },
+     "NaturbasertTurisme": {
+      "base": "millioner",
+      "decimals": 2
+     },
+     "NaturbasertRekreasjo": {
+      "base": "millioner",
+      "decimals": 2
+     }
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "refperiod": {
+     "NettoKarbonlagring": "31.12.",
+     "Karbonlager": "31.12.",
+     "Flomdemping": "31.12.",
+     "TempRegByerNasj": "31.12.",
+     "TempRegByerEU": "31.12.",
+     "LuftrensingPM25": "31.12.",
+     "LuftrensingPM10": "31.12.",
+     "ForsyningAvlinger": "31.12.",
+     "PollineringAvlinger": "31.12.",
+     "NettoTilvekstSkog": "31.12.",
+     "AvvirkIkkeProdSkog": "31.12.",
+     "NaturbasertTurisme": "31.12.",
+     "NaturbasertRekreasjo": "31.12."
+    },
+    "show": "value",
+    "measuringType": {
+     "NettoKarbonlagring": "Other",
+     "Karbonlager": "Other",
+     "Flomdemping": "Other",
+     "TempRegByerNasj": "Other",
+     "TempRegByerEU": "Other",
+     "LuftrensingPM25": "Other",
+     "LuftrensingPM10": "Other",
+     "ForsyningAvlinger": "Other",
+     "PollineringAvlinger": "Other",
+     "NettoTilvekstSkog": "Other",
+     "AvvirkIkkeProdSkog": "Other",
+     "NaturbasertTurisme": "Other",
+     "NaturbasertRekreasjo": "Other"
+    },
+    "priceType": {
+     "NettoKarbonlagring": "NotApplicable",
+     "Karbonlager": "NotApplicable",
+     "Flomdemping": "NotApplicable",
+     "TempRegByerNasj": "NotApplicable",
+     "TempRegByerEU": "NotApplicable",
+     "LuftrensingPM25": "NotApplicable",
+     "LuftrensingPM10": "NotApplicable",
+     "ForsyningAvlinger": "NotApplicable",
+     "PollineringAvlinger": "NotApplicable",
+     "NettoTilvekstSkog": "NotApplicable",
+     "AvvirkIkkeProdSkog": "NotApplicable",
+     "NaturbasertTurisme": "NotApplicable",
+     "NaturbasertRekreasjo": "NotApplicable"
+    },
+    "adjustment": {
+     "NettoKarbonlagring": "None",
+     "Karbonlager": "None",
+     "Flomdemping": "None",
+     "TempRegByerNasj": "None",
+     "TempRegByerEU": "None",
+     "LuftrensingPM25": "None",
+     "LuftrensingPM10": "None",
+     "ForsyningAvlinger": "None",
+     "PollineringAvlinger": "None",
+     "NettoTilvekstSkog": "None",
+     "AvvirkIkkeProdSkog": "None",
+     "NaturbasertTurisme": "None",
+     "NaturbasertRekreasjo": "None"
+    },
+    "alternativeText": {
+     "NettoKarbonlagring": "Global klimaregulering (årlige endringer i karbonlager)) (1000 tonn)",
+     "Karbonlager": "Global klimaregulering (karbonlager) (1000 tonn)",
+     "Flomdemping": "Flomdemping (hektar)",
+     "TempRegByerNasj": "Temperaturregulering i byer (nasjonal metode) (grader celsius)",
+     "TempRegByerEU": "Temperaturregulering i byer (EU-metode) (grader celcius)",
+     "LuftrensingPM25": "Luftrensing (PM2,5) (1000 tonn)",
+     "LuftrensingPM10": "Luftrensing (PM10) (1000 tonn)",
+     "ForsyningAvlinger": "Forsyning av avlinger (1000 tonn)",
+     "PollineringAvlinger": "Pollinering av avlinger (1000 tonn)",
+     "NettoTilvekstSkog": "Forsyning av tømmer (netto tilvekst av produktiv skog) (1000 m³)",
+     "AvvirkIkkeProdSkog": "Forsyning av tømmer (avvirkning fra ikke-produktiv skog) (1000 m³)",
+     "NaturbasertTurisme": "Naturbasert turisme (millioner overnattinger)",
+     "NaturbasertRekreasjo": "Naturbasert rekreasjon (millioner dagsturer)"
+    }
+   }
+  },
+  "Tid": {
+   "label": "år",
+   "category": {
+    "index": {
+     "2024": 0
+    },
+    "label": {
+     "2024": "2024"
+    }
+   },
+   "extension": {
+    "elimination": false,
+    "show": "code"
    }
   }
  },
- "value": [
-  4200,
-  4200,
-  0,
-  0,
-  0,
-  0,
-  95,
-  95,
-  0,
-  0,
-  0,
-  0,
-  10800,
-  10800,
-  0,
-  0,
-  0,
-  0,
-  12.5,
-  0.0,
-  0.0,
-  12.5,
-  0.0,
-  0.0,
-  6055,
-  0,
-  6055,
-  0,
-  0,
-  0,
-  2.2,
-  0.0,
-  0.0,
-  2.2,
-  0.0,
-  0.0,
-  10600,
-  0,
-  0,
-  4770.0,
-  0,
-  5830.0,
-  188000,
-  0,
-  0,
-  188000,
-  0,
-  0,
-  980000,
-  0,
-  0,
-  980000,
-  0,
-  0
- ],
  "extension": {
-  "tabell": "14968",
-  "enheter": {
-   "01": "1000 tonn",
-   "02": "1000 tonn",
-   "03": "1000 m³",
-   "04": "1000 tonn",
-   "06": "grader celsius",
-   "07": "1000 overnattinger",
-   "08": "1000 dagsturer",
-   "09": "hektar",
-   "05": "1000 tonn karbon"
-  }
+  "px": {
+   "infofile": "None",
+   "tableid": "14968",
+   "decimals": 0,
+   "official-statistics": true,
+   "aggregallowed": false,
+   "copyright": false,
+   "language": "no",
+   "contents": "14968: Regnskap for økosystemtjenester,",
+   "descriptiondefault": false,
+   "heading": [
+    "ContentsCode",
+    "Tid"
+   ],
+   "stub": [
+    "OkonomiskEnhet"
+   ],
+   "matrix": "14968",
+   "subject-code": "nm",
+   "subject-area": "Natur og miljø"
+  },
+  "discontinued": null,
+  "contact": [
+   {
+    "name": "Marte Lindseth",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "98 03 69 42",
+    "mail": "dth@ssb.no",
+    "raw": "Marte Lindseth, Statistisk sentralbyrå# +47 98 03 69 42#dth@ssb.no"
+   },
+   {
+    "name": "Becky Cramer",
+    "organization": "Statistisk sentralbyrå",
+    "phone": "92 31 63 21",
+    "mail": "ily@ssb.no",
+    "raw": "Becky Cramer, Statistisk sentralbyrå# +47 92 31 63 21#ily@ssb.no"
+   }
+  ]
+ },
+ "value": [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  5990,
+  22.77,
+  21453,
+  85,
+  null,
+  null,
+  4263,
+  4615587,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  154328,
+  1,
+  0.78,
+  34.36,
+  51.34,
+  null,
+  null,
+  null,
+  null,
+  77.06,
+  596.06,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  15.33,
+  2.99
+ ],
+ "status": {
+  "0": "..",
+  "1": "..",
+  "2": "..",
+  "3": "..",
+  "4": "..",
+  "5": "..",
+  "6": "..",
+  "11": "..",
+  "12": "..",
+  "15": "..",
+  "16": "..",
+  "17": "..",
+  "18": "..",
+  "19": "..",
+  "20": "..",
+  "21": "..",
+  "22": "..",
+  "23": "..",
+  "24": "..",
+  "25": "..",
+  "26": "..",
+  "27": "..",
+  "33": "..",
+  "34": "..",
+  "35": "..",
+  "36": "..",
+  "39": "..",
+  "40": "..",
+  "41": "..",
+  "42": "..",
+  "43": "..",
+  "44": "..",
+  "45": "..",
+  "46": "..",
+  "47": "..",
+  "48": "..",
+  "49": "..",
+  "50": "..",
+  "51": "..",
+  "52": "..",
+  "53": "..",
+  "54": "..",
+  "55": "..",
+  "56": "..",
+  "57": "..",
+  "58": "..",
+  "59": "..",
+  "60": "..",
+  "61": "..",
+  "62": ".."
  }
 }
